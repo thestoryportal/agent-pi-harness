@@ -57,7 +57,9 @@ DANGEROUS_PATTERNS = [
 
 PROJECT_ROOT = Path(PROJECT_DIR).resolve()
 
-SHELL_COMPOSITION_MARKERS = [";", "&&", "||", "|", "`", "$(", "<<", ">>"]
+# Only block injection vectors, not normal shell operators.
+# &&, ||, | and ; are standard patterns used by every tool (gstack, uv, npm, etc.)
+SHELL_COMPOSITION_MARKERS = ["`", "$(", "<<", ">>"]
 
 FLAG_ALIASES = {
     "--recursive": "-r", "--force": "-f", "--verbose": "-v",
