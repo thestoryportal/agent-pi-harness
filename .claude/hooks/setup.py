@@ -80,7 +80,9 @@ def main():
     else:
         actions.append("db init skipped (Observe app not yet present)")
 
-    exit_code = 2 if has_failure else 0
+    # Exit 1 on failure (log-only, fail-open) — setup is not security-critical.
+    # A failed uv sync shouldn't block the entire session.
+    exit_code = 1 if has_failure else 0
     elapsed = int((time.monotonic() - start_time) * 1000)
     emit_event("Setup", HOOK_NAME, exit_code, {"actions": actions}, elapsed)
 

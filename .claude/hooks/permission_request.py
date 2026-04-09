@@ -22,9 +22,12 @@ except Exception:
 HOOK_NAME = "permission_request.py"
 handle_health_check(HOOK_NAME)
 
-ALLOWED_TOOLS = {"Write", "Edit", "Glob", "Grep"}
+ALLOWED_TOOLS = {"Read", "Write", "Edit", "Glob", "Grep"}
 
-ALLOWED_BASH_PREFIXES = ["mkdir", "uv", "find", "grep", "npm", "ls", "chmod", "touch", "mv", "cp", "git"]
+# Must match settings.json permissions.allow Bash entries exactly.
+# mv, cp, git are NOT here — they go through the normal permission prompt,
+# then pre_tool_use.py gates them by path/pattern.
+ALLOWED_BASH_PREFIXES = ["mkdir", "uv", "find", "grep", "npm", "ls", "chmod", "touch"]
 
 def main():
     import time

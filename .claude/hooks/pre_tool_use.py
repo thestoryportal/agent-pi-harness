@@ -38,7 +38,8 @@ IMMUTABLE_PATHS = [
     ".claude/logs/",
 ]
 
-ENV_PATTERN = re.compile(r"(^|\s|/)\.env(\s|$|\"|\')")
+# Matches .env, .env.local, .env.production, .env.development, etc.
+ENV_PATTERN = re.compile(r"(^|\s|/)\.env(\.\w+)?(\s|$|\"|\')")
 
 DANGEROUS_PATTERNS = [
     (r"\brm\s+.*-[a-z]*r[a-z]*f", "recursive force delete"),
@@ -58,8 +59,8 @@ DANGEROUS_PATTERNS = [
 PROJECT_ROOT = Path(PROJECT_DIR).resolve()
 
 # Only block injection vectors, not normal shell operators.
-# &&, ||, | and ; are standard patterns used by every tool (gstack, uv, npm, etc.)
-SHELL_COMPOSITION_MARKERS = ["`", "$(", "<<", ">>"]
+# &&, ||, |, ;, >> are standard patterns. Backticks and $() are injection vectors.
+SHELL_COMPOSITION_MARKERS = ["`", "$("]
 
 FLAG_ALIASES = {
     "--recursive": "-r", "--force": "-f", "--verbose": "-v",

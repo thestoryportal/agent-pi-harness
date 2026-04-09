@@ -45,10 +45,10 @@ def load_env_whitelist(logger) -> dict[str, str]:
     SECRET_PATTERNS = {"KEY", "TOKEN", "SECRET", "PASSWORD", "CREDENTIAL", "AUTH"}
 
     all_values = dotenv_values(env_file)
-    for k, v in all_values.items():
-        if v:
-            os.environ[k] = v
 
+    # Only load INJECT-marked, non-secret vars into os.environ.
+    # Secrets stay out of the process environment entirely — they're not
+    # inherited by child processes (hooks, subagents, Drive sessions).
     safe_values = {}
     for k, v in all_values.items():
         if k in inject_keys and v:
@@ -56,6 +56,7 @@ def load_env_whitelist(logger) -> dict[str, str]:
                 logger.log(f"DENIED injection of {k} (matches secret denylist)")
                 continue
             safe_values[k] = v
+            os.environ[k] = v
 
     logger.log(f"Loaded {len(all_values)} env vars, {len(safe_values)} whitelisted for injection")
     return safe_values
