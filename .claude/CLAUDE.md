@@ -50,7 +50,7 @@ Claude Code development sessions only.
 | Layer | Purpose | Invocation |
 |-------|---------|-----------|
 | 1. Skill | Direct capability | `just prime`, `just scout` |
-| 2. Subagent | Isolated agent sessions | `just build`, `just review` |
+| 2. Subagent | Isolated agent sessions | `just build`, `just harness-review` |
 | 3. Command | Saved workflows | `just cldi`, `just cldii` |
 | 4. Justfile | Composable recipes | All `just` commands |
 
