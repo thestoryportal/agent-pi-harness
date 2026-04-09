@@ -1,0 +1,8 @@
+{
+  "name": "arhugula",
+  "private": true,
+  "description": "Claude Code version pinning",
+  "dependencies": {
+    "@anthropic-ai/claude-code": "^1"
+  }
+}
