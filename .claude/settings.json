@@ -1,7 +1,7 @@
 {
   "statusLine": {
     "type": "command",
-    "command": "echo 'ArhuGula | hooks: 13 | fail-closed'",
+    "command": "echo 'ArhuGula | hooks: 13 | fail-open'",
     "padding": 0
   },
   "permissions": {
