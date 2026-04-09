@@ -1,0 +1,29 @@
+# ArhuGula Skill Catalog
+# Cross-device distribution manifest following the-library pattern.
+# Each entry maps to a backing .claude/commands/<name>.md file.
+
+skills:
+  prime:
+    description: Load full project context for orientation
+    command: prime.md
+    layer: 1  # Skill
+
+  scout:
+    description: Evaluate prompt quality (HOP/LOP pattern)
+    command: scout.md
+    layer: 1  # Skill
+
+  build:
+    description: Invoke builder subagent for implementation
+    command: build.md
+    layer: 2  # Subagent
+
+  review:
+    description: Multi-model consensus code review
+    command: review.md
+    layer: 2  # Subagent
+
+  migrate:
+    description: Database and schema migration
+    command: migrate.md
+    layer: 1  # Skill
