@@ -109,25 +109,28 @@ def handle_health_check(hook_name: str) -> None:
 
 
 def run_hook(main_fn, hook_name: str, *, security_critical: bool = False, event_type: str = "") -> None:
-    """Fail-closed wrapper. Catches ALL unhandled exceptions and exits 2.
+    """Fail-open wrapper matching IndyDevDan's default. Logs crashes, does not block.
 
-    This ensures that a crash (missing dep, runtime error, KeyboardInterrupt,
-    etc.) blocks the operation rather than silently allowing it. Security-critical
-    hooks (pre_tool_use, permission_request) MUST pass security_critical=True.
+    Crash behavior:
+    - Non-security hooks: log the crash, exit 1 (pass through — fail open)
+    - Security-critical hooks: log the crash, exit 2 (block — always fail closed)
+
+    When SP2 (Drive/Listen) ships unattended execution, add ARHUGULA_HOOK_MODE=closed
+    env var to make all hooks fail-closed for unattended runs.
     """
     try:
         main_fn()
-    except SystemExit as e:
-        code = e.code if isinstance(e.code, int) else 1
-        if security_critical and code not in (0, 2):
-            logger = Logger(hook_name)
-            logger.log(f"COERCED exit {code} -> 2 (security-critical hook)")
-            sys.exit(2)
+    except SystemExit:
         raise
     except BaseException as e:
         logger = Logger(hook_name)
-        logger.log(f"CRASH (fail-closed): {type(e).__name__}: {e}")
         etype = event_type or hook_name.replace(".py", "").title().replace("_", "")
-        emit_event(etype, hook_name, 2, {"crash": str(e)})
-        print(json.dumps({"error": f"Hook crashed: {hook_name}"}), file=sys.stderr)
-        sys.exit(2)
+        if security_critical:
+            logger.log(f"CRASH (fail-closed, security-critical): {type(e).__name__}: {e}")
+            emit_event(etype, hook_name, 2, {"crash": str(e)})
+            print(json.dumps({"error": f"Hook crashed: {hook_name}"}), file=sys.stderr)
+            sys.exit(2)
+        else:
+            logger.log(f"CRASH (fail-open): {type(e).__name__}: {e}")
+            emit_event(etype, hook_name, 1, {"crash": str(e)})
+            sys.exit(1)

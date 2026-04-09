@@ -56,7 +56,8 @@ Claude Code development sessions only.
 
 ## Hook Security Model
 
-- **Fail-closed**: hook crash = operation blocked (exit 2)
-- **Exit codes**: 0=allow, 1=log-only, 2=block
+- **Fail-open** (IndyDevDan default): non-security hook crash = pass through (exit 1)
+- **Security hooks always fail-closed**: pre_tool_use, permission_request crash = block (exit 2)
+- **Exit codes**: 0=allow, 1=log-only/pass-through, 2=block
 - **Health check**: `session_start.py` validates all hooks at session start
 - **Path protection**: `.env`, `~/.ssh/`, credentials blocked via `pre_tool_use.py`
