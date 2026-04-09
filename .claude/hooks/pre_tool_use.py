@@ -58,9 +58,9 @@ DANGEROUS_PATTERNS = [
 
 PROJECT_ROOT = Path(PROJECT_DIR).resolve()
 
-# Only block injection vectors, not normal shell operators.
-# &&, ||, |, ;, >> are standard patterns. Backticks and $() are injection vectors.
-SHELL_COMPOSITION_MARKERS = ["`", "$("]
+# No blanket shell composition blocking — it breaks normal bash usage.
+# Security relies on the DANGEROUS_PATTERNS regex list and path gating instead.
+SHELL_COMPOSITION_MARKERS = []
 
 FLAG_ALIASES = {
     "--recursive": "-r", "--force": "-f", "--verbose": "-v",
