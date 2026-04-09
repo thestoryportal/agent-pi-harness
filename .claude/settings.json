@@ -1,0 +1,33 @@
+{
+  "statusLine": "ArhuGula | hooks: 13 | fail-closed",
+  "permissions": {
+    "allow": [
+      "Bash(mkdir:*)",
+      "Bash(uv:*)",
+      "Bash(find:*)",
+      "Bash(grep:*)",
+      "Bash(npm:*)",
+      "Bash(ls:*)",
+      "Write",
+      "Edit",
+      "Bash(chmod:*)",
+      "Bash(touch:*)"
+    ],
+    "deny": []
+  },
+  "hooks": {
+    "PreToolUse": [{"hooks": [{"type": "command", "command": "uv run $CLAUDE_PROJECT_DIR/.claude/hooks/pre_tool_use.py"}]}],
+    "PostToolUse": [{"hooks": [{"type": "command", "command": "uv run $CLAUDE_PROJECT_DIR/.claude/hooks/post_tool_use.py"}]}],
+    "Notification": [{"hooks": [{"type": "command", "command": "uv run $CLAUDE_PROJECT_DIR/.claude/hooks/notification.py"}]}],
+    "Stop": [{"hooks": [{"type": "command", "command": "uv run $CLAUDE_PROJECT_DIR/.claude/hooks/stop.py"}]}],
+    "SubagentStop": [{"hooks": [{"type": "command", "command": "uv run $CLAUDE_PROJECT_DIR/.claude/hooks/subagent_stop.py"}]}],
+    "UserPromptSubmit": [{"hooks": [{"type": "command", "command": "uv run $CLAUDE_PROJECT_DIR/.claude/hooks/user_prompt_submit.py"}]}],
+    "PreCompact": [{"hooks": [{"type": "command", "command": "uv run $CLAUDE_PROJECT_DIR/.claude/hooks/pre_compact.py"}]}],
+    "SessionStart": [{"hooks": [{"type": "command", "command": "uv run $CLAUDE_PROJECT_DIR/.claude/hooks/session_start.py"}]}],
+    "SessionEnd": [{"hooks": [{"type": "command", "command": "uv run $CLAUDE_PROJECT_DIR/.claude/hooks/session_end.py"}]}],
+    "PermissionRequest": [{"hooks": [{"type": "command", "command": "uv run $CLAUDE_PROJECT_DIR/.claude/hooks/permission_request.py"}]}],
+    "PostToolUseFailure": [{"hooks": [{"type": "command", "command": "uv run $CLAUDE_PROJECT_DIR/.claude/hooks/post_tool_use_failure.py"}]}],
+    "SubagentStart": [{"hooks": [{"type": "command", "command": "uv run $CLAUDE_PROJECT_DIR/.claude/hooks/subagent_start.py"}]}],
+    "Setup": [{"hooks": [{"type": "command", "command": "uv run $CLAUDE_PROJECT_DIR/.claude/hooks/setup.py"}]}]
+  }
+}
