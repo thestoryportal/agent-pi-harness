@@ -21,8 +21,8 @@ build:
     claude --dangerously-skip-permissions "/build"
 
 # Multi-model consensus review
-review:
-    claude --dangerously-skip-permissions "/review"
+harness-review:
+    claude --dangerously-skip-permissions "/harness-review"
 
 # === Layer 3: Command — these recipes invoke Layer 3 slash commands ===
 

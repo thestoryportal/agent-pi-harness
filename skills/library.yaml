@@ -18,9 +18,9 @@ skills:
     command: build.md
     layer: 2  # Subagent
 
-  review:
+  harness-review:
     description: Multi-model consensus code review
-    command: review.md
+    command: harness-review.md
     layer: 2  # Subagent
 
   migrate:
