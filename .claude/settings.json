@@ -1,7 +1,7 @@
 {
   "statusLine": {
     "type": "command",
-    "command": "echo 'ArhuGula | hooks: 13 | fail-open'",
+    "command": "bash $CLAUDE_PROJECT_DIR/.claude/statusline.sh",
     "padding": 0
   },
   "permissions": {
