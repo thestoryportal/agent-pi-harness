@@ -1,5 +1,8 @@
 {
-  "statusLine": "ArhuGula | hooks: 13 | fail-closed",
+  "statusLine": {
+    "type": "text",
+    "text": "ArhuGula | hooks: 13 | fail-closed"
+  },
   "permissions": {
     "allow": [
       "Bash(mkdir:*)",
