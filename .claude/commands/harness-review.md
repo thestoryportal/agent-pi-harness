@@ -36,26 +36,37 @@ Read the full specification document. Extract:
 
 ### Step 3 — Fan Out to Analysis Agents
 
+Dispatch three specialist agents in parallel:
+
 **Convention Compliance** (via @validator):
 - File naming conventions (lowercase-with-hyphens, underscores for hooks)
 - Code style and lint compliance
 - Schema conventions (if SQL present)
+- Error handling patterns and edge cases
 
 **Spec Compliance** (via @spec-checker):
-- Requirements coverage
-- Missing artifacts
-- Deviations from spec
+- Requirements coverage against the source of truth
+- Missing artifacts listed in the spec
+- Deviations from IndyDevDan patterns
+- Source attribution verification (code matches repo snapshot)
+
+**Security Review** (via @security):
+- Command injection vectors (regex bypass, script escape, TOCTOU)
+- Path traversal and symlink attacks
+- Data exposure (secrets in logs, hook output, events)
+- Hook bypass scenarios (crash behavior, role confusion)
 
 ### Step 4 — Aggregate Report
 
-Produce a unified review report:
+Collect findings from all three agents and produce a unified review report:
 
 ## Review: [Spec ID]
 
 ### Summary
 - Files changed: N
-- Convention violations: N
-- Spec deviations: N
+- Convention violations: N (from @validator)
+- Spec deviations: N (from @spec-checker)
+- Security findings: N (from @security)
 - Missing requirements: N
 
 ### Priority Findings
@@ -65,10 +76,10 @@ Produce a unified review report:
 - **P3 (nit):** ...
 
 ### Detailed Findings
-Per-dimension analysis from each subagent.
+Per-agent analysis with file paths and line references.
 
 ### Recommended Action Items
-Ordered list of fixes.
+Ordered list of fixes by priority.
 
 ## Error Handling
 

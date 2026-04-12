@@ -16,11 +16,15 @@ scout:
 
 # === Layer 2: Subagent — interactive session with agent-backed commands ===
 
+# Create implementation plan from scout output (architect agent)
+plan:
+    claude "/plan"
+
 # Implementation via builder agent
 build:
     claude "/build"
 
-# Multi-model consensus review
+# Multi-agent consensus review (validator + spec-checker + security)
 harness-review:
     claude "/harness-review"
 
