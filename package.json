@@ -4,5 +4,14 @@
   "description": "Claude Code version pinning",
   "dependencies": {
     "@anthropic-ai/claude-code": "^1"
+  },
+  "devDependencies": {
+    "promptfoo": "^0"
+  },
+  "scripts": {
+    "eval:builder": ". .env && promptfoo eval -c ./tests/prompts/builder/promptfooconfig.yaml -t ./tests/prompts/builder/test.yaml -p ./tests/prompts/builder/prompt.txt --no-cache --output ./tests/prompts/builder/output.json",
+    "eval:validator": ". .env && promptfoo eval -c ./tests/prompts/validator/promptfooconfig.yaml -t ./tests/prompts/validator/test.yaml -p ./tests/prompts/validator/prompt.txt --no-cache --output ./tests/prompts/validator/output.json",
+    "eval:scout": ". .env && promptfoo eval -c ./tests/prompts/scout/promptfooconfig.yaml -t ./tests/prompts/scout/test.yaml -p ./tests/prompts/scout/prompt.txt --no-cache --output ./tests/prompts/scout/output.json",
+    "promptfoo:view": "promptfoo view"
   }
 }

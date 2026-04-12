@@ -1,0 +1,19 @@
+# Prompt Testing — Scout Agent
+# Source: llm-prompt-testing-quick-start (IndyDevDan)
+# SP11 features: T01 (promptfoo config), T04 (template variables: static + dynamic)
+
+description: "Scout agent prompt evaluation"
+
+providers:
+  - id: anthropic:messages:claude-sonnet-4-5-20250929
+    label: claude-sonnet-4-5
+  - id: openai:gpt-4o-mini
+    label: gpt-4o-mini
+  - id: groq:llama-3.3-70b-versatile
+    label: groq-llama-3.3
+
+prompts:
+  - file://./prompt.txt
+
+tests:
+  - file://./test.yaml
