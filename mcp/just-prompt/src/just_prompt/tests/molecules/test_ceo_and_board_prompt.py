@@ -23,6 +23,13 @@ def test_wrap_board_response():
     assert result.endswith("</board_member_response>")
 
 
+def test_wrap_board_response_escapes_xml_chars():
+    """XML-dangerous characters in model name are escaped."""
+    result = _wrap_board_response('model&"name<>', "resp")
+    assert 'model="{safe}"'.format(safe='model&amp;&quot;name&lt;&gt;') in result
+    assert "&" not in result.split('model="')[1].split('"')[0].replace("&amp;", "").replace("&quot;", "").replace("&lt;", "").replace("&gt;", "")
+
+
 @patch("just_prompt.molecules.ceo_and_board_prompt.ModelRouter")
 def test_ceo_and_board_full_flow(mock_router, tmp_path):
     """Full flow: fan-out, collection, CEO synthesis."""

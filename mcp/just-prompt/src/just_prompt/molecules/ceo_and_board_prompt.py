@@ -1,5 +1,6 @@
 """CEO-and-board multi-model consensus tool."""
 
+import html
 import logging
 from concurrent.futures import ThreadPoolExecutor, as_completed
 from pathlib import Path
@@ -20,7 +21,7 @@ DEFAULT_CEO_MODEL = "openai:o3"
 
 def _wrap_board_response(model: str, response: str) -> str:
     """Wrap a board member response in an XML envelope."""
-    safe_model = model.replace('"', '&quot;')
+    safe_model = html.escape(model, quote=True)
     return (
         f'<board_member_response model="{safe_model}">\n'
         f"{response}\n"

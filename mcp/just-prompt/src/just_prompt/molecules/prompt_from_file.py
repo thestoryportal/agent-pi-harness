@@ -18,7 +18,12 @@ def _get_allowed_root() -> Path:
             os.getcwd(),
         )
         root = os.getcwd()
-    return Path(root).resolve()
+    resolved = Path(root).resolve()
+    if resolved == Path(resolved.anchor):
+        raise ValueError(
+            f"JUST_PROMPT_ALLOWED_ROOT must not resolve to filesystem root, got: {resolved}"
+        )
+    return resolved
 
 
 def _validate_path_within_root(p: Path, label: str) -> Path:
