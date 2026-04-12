@@ -68,7 +68,7 @@ def main():
             ["uvx", "ruff", "check", file_path],
             capture_output=True,
             text=True,
-            timeout=25
+            timeout=20
         )
 
         stdout = result.stdout.strip()

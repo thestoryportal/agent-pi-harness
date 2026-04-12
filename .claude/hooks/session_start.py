@@ -166,21 +166,23 @@ def detect_environment() -> str:
     return "PRODUCTION — Exercise extreme caution"
 
 
-SHELL_METACHAR_RE = re.compile(r'[;|&`$(){}!<>\n\r]')
+SAFE_PATH_RE = re.compile(r'^[A-Za-z0-9/_. -]+$')
 
 
 def validate_project_dir(logger) -> bool:
-    """Reject CLAUDE_PROJECT_DIR if it contains shell metacharacters.
+    """Reject CLAUDE_PROJECT_DIR if it contains unsafe characters.
 
     Hook commands in settings.json and command frontmatter interpolate
-    $CLAUDE_PROJECT_DIR via the shell. A path containing ;, $, backticks,
-    pipes, or other metacharacters enables command injection (S-04).
+    $CLAUDE_PROJECT_DIR via the shell. Only alphanumerics, slashes,
+    underscores, dots, spaces, and hyphens are allowed. Everything else
+    (quotes, backslash, $, backticks, glob chars, etc.) is rejected.
+    Allowlist approach — safer than enumerating every dangerous character.
     """
     project_dir = os.environ.get("CLAUDE_PROJECT_DIR", "")
     if not project_dir:
         return True
-    if SHELL_METACHAR_RE.search(project_dir):
-        logger.log(f"SECURITY: CLAUDE_PROJECT_DIR contains shell metacharacters: {project_dir!r}")
+    if not SAFE_PATH_RE.match(project_dir):
+        logger.log(f"SECURITY: CLAUDE_PROJECT_DIR contains unsafe characters: {project_dir!r}")
         return False
     return True
 
