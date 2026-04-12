@@ -166,8 +166,9 @@ def complete_task(
 ) -> dict:
     """Transition in_progress → completed.
 
-    Raises ValueError if task not found or not in_progress.
+    Raises ValueError if task not found, not in_progress, or task_id invalid.
     """
+    _validate_id(task_id, "task_id")
     target = task_path or TASK_FILE
     result: list[dict] = []
 
