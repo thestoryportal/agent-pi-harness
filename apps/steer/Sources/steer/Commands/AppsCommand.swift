@@ -57,8 +57,23 @@ struct AppsCommand: ParsableCommand {
         var json = false
 
         func run() throws {
+            // Reject path traversal and shell metacharacters in app name.
+            // Allowed: letters, numbers, spaces, hyphens, underscores, dots (but not "..").
+            let allowedChars = CharacterSet.alphanumerics
+                .union(CharacterSet(charactersIn: " -_."))
+            if name.isEmpty || name.contains("/") || name.contains("\0")
+                || name.contains("..") || name.hasPrefix(".")
+                || name.unicodeScalars.contains(where: { !allowedChars.contains($0) }) {
+                printError("Invalid app name: '\(name)' (must contain only letters, numbers, spaces, hyphens, underscores, dots; no path separators)")
+            }
+
             let path = "/Applications/\(name).app"
-            let url = URL(fileURLWithPath: path)
+            let resolvedURL = URL(fileURLWithPath: path).standardizedFileURL
+            // Defense in depth: resolved path must still be inside /Applications
+            if !resolvedURL.path.hasPrefix("/Applications/") {
+                printError("App path escapes /Applications: \(resolvedURL.path)")
+            }
+            let url = resolvedURL
 
             let semaphore = DispatchSemaphore(value: 0)
             var launchError: Error?

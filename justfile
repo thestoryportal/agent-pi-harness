@@ -249,10 +249,6 @@ pi-harness:
 steer-build:
     cd apps/steer && swift build -c release 2>&1
 
-# Run a steer command (usage: just steer "see --screen 0 --json")
-steer CMD:
-    apps/steer/.build/release/steer {{CMD}}
-
 # Take a screenshot of the primary screen
 steer-see:
     apps/steer/.build/release/steer see --screen 0 --json

@@ -140,8 +140,12 @@ struct WindowCommand: ParsableCommand {
             }
             var closeButtonRef: CFTypeRef?
             AXUIElementCopyAttributeValue(window, kAXCloseButtonAttribute as CFString, &closeButtonRef)
-            if let closeButton = closeButtonRef {
-                AXUIElementPerformAction(closeButton as! AXUIElement, kAXPressAction as CFString)
+            if let closeButton = closeButtonRef,
+               CFGetTypeID(closeButton) == AXUIElementGetTypeID() {
+                let elem = unsafeBitCast(closeButton, to: AXUIElement.self)
+                AXUIElementPerformAction(elem, kAXPressAction as CFString)
+            } else {
+                printError("Close button not available for '\(app)'")
             }
 
             struct CloseOutput: Codable { let action: String; let app: String }

@@ -57,13 +57,15 @@ enum OCRHelper {
         return elements
     }
 
+    private static let storeFilename = "ocr_store.json"
+
     static func storeElements(_ elements: [OCRElement]) throws {
         let data = try JSONEncoder().encode(elements)
-        try data.write(to: URL(fileURLWithPath: "/tmp/steer_ocr_store.json"))
+        try SecureTmp.writeAtomic(data, to: storeFilename)
     }
 
     static func loadStoredElements() -> [OCRElement] {
-        guard let data = try? Data(contentsOf: URL(fileURLWithPath: "/tmp/steer_ocr_store.json")),
+        guard let data = SecureTmp.readVerified(storeFilename),
               let elements = try? JSONDecoder().decode([OCRElement].self, from: data) else {
             return []
         }

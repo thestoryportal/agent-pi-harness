@@ -31,7 +31,7 @@ enum ScreenCapture {
             throw SteerError.screenshotFailed("CGDisplayCreateImage returned nil — Screen Recording permission may be required")
         }
 
-        let path = "/tmp/steer_screen_\(screenIndex)_\(Int(Date().timeIntervalSince1970)).png"
+        let path = try SecureTmp.outputPath(prefix: "screen_\(screenIndex)", ext: "png")
         try writePNG(image, to: path)
 
         return ScreenshotResult(
@@ -70,10 +70,8 @@ enum ScreenCapture {
             throw SteerError.screenshotFailed("Failed to capture windows for \(name) — Screen Recording permission may be required")
         }
 
-        let safeName = name.replacingOccurrences(of: " ", with: "_")
-            .lowercased()
-            .filter { $0.isLetter || $0.isNumber || $0 == "_" || $0 == "-" }
-        let path = "/tmp/steer_app_\(safeName)_\(Int(Date().timeIntervalSince1970)).png"
+        let safeName = name.replacingOccurrences(of: " ", with: "_").lowercased()
+        let path = try SecureTmp.outputPath(prefix: "app_\(safeName)", ext: "png")
         try writePNG(image, to: path)
 
         return ScreenshotResult(

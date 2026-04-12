@@ -8,15 +8,15 @@ struct Snapshot: Codable {
 }
 
 enum SnapshotStore {
-    private static let path = "/tmp/steer_snapshot.json"
+    private static let filename = "snapshot.json"
 
     static func save(_ snapshot: Snapshot) {
         guard let data = try? JSONEncoder().encode(snapshot) else { return }
-        try? data.write(to: URL(fileURLWithPath: path))
+        try? SecureTmp.writeAtomic(data, to: filename)
     }
 
     static func load() -> Snapshot? {
-        guard let data = try? Data(contentsOf: URL(fileURLWithPath: path)),
+        guard let data = SecureTmp.readVerified(filename),
               let snapshot = try? JSONDecoder().decode(Snapshot.self, from: data) else {
             return nil
         }
