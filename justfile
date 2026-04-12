@@ -260,3 +260,41 @@ steer-apps:
 # OCR the primary screen
 steer-ocr:
     apps/steer/.build/release/steer ocr --screen 0 --store --json
+
+# === SP14: Browser Automation ===
+
+# Playwright skill — direct headless/headed capability test
+test-playwright-skill headed="true" prompt="Get the current date, then go to https://simonwillison.net/, find the latest blog post, summarize it, and give it a rating out of 10.":
+    claude "/playwright-bowser (headed: {{headed}}) {{prompt}}"
+
+# Chrome MCP skill — direct (requires claude --chrome session)
+test-chrome-skill prompt="Get the current date, then go to https://simonwillison.net/, find the latest blog post, summarize it, and give it a rating out of 10.":
+    claude --chrome "/claude-bowser {{prompt}}"
+
+# Playwright subagent — isolated parallel browser session
+test-playwright-agent headed="true" prompt="Get the current date, then go to https://simonwillison.net/, find the latest blog post, summarize it, and give it a rating out of 10.":
+    claude "Use a @playwright-bowser-agent to do this: (headed: {{headed}}) {{prompt}}"
+
+# Chrome subagent — single-instance browser (requires --chrome)
+test-chrome-agent prompt="Get the current date, then go to https://simonwillison.net/, find the latest blog post, summarize it, and give it a rating out of 10.":
+    claude --chrome "Use a @claude-bowser-agent to do this: {{prompt}}"
+
+# QA agent — structured user story validation
+test-qa headed="true" prompt="Navigate to https://news.ycombinator.com/. Verify the front page loads with posts. Click 'More' to go to the next page. Verify page 2 loads with a new set of posts. Go back to page 1. Click into the first post's comments link. Verify the comments page loads and at least one comment is visible.":
+    claude "Use a @bowser-qa-agent: (headed: {{headed}}) {{prompt}}"
+
+# Run a saved browser automation workflow via hop-automate (requires --chrome for claude-bowser workflows)
+hop workflow="amazon-add-to-cart" prompt="pack of 10 sketch notebooks" *flags="":
+    export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 && claude --chrome "/bowser:hop-automate {{workflow}} {{prompt}} {{flags}}"
+
+# UI Review — parallel user story validation across all YAML stories in ai_review/user_stories/
+ui-review headed="headed" filter="" *flags="":
+    export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 && claude "/ui-review {{headed}} {{filter}} {{flags}}"
+
+# Amazon add-to-cart — multiple items in one shot (requires --chrome)
+automate-amazon prompt="m4 mac mini with top specs, flowers for valentines day, pack of 10 sketch notebooks":
+    just hop amazon-add-to-cart "{{prompt}}"
+
+# Summarize a blog's latest post (headless, no auth needed)
+summarize-blog url="https://simonwillison.net/":
+    claude "/bowser:hop-automate blog-summarizer \"{{url}}\" playwright headless"

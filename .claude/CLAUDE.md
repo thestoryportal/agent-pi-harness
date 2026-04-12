@@ -113,7 +113,7 @@ See Source of Truth Section 8 for priority order. Fix structural issues (Section
 | SP11 | Prompt Testing | BUILT | 4 | llm-prompt-testing |
 | SP12 | Pi Integration + Harness Spec | BUILT | 14 | pi-agent, pi-vs-claude-code, harness-spec |
 | SP13 | Steer (Swift GUI) | BUILT | 3 | mac-mini-agent |
-| SP14 | Browser Automation | **NEXT** | 6 | bowser |
+| SP14 | Browser Automation | **NEXT** | 8 | bowser |
 | SP15 | E2B Sandboxes | NOT STARTED | 4 | agent-sandboxes |
 
 ## Hook Security Model

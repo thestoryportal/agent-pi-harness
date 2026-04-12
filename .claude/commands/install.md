@@ -24,9 +24,11 @@ Run each command. Report PASS/FAIL for each step.
 2. `xcode-select --install` (skip if already installed, required for sub-project 4)
 3. `npm install -g @anthropic-ai/claude-code` (if not already installed)
 4. Pi Agent: `bun add -g @mariozechner/pi-coding-agent` (global install via bun)
-5. `uv sync`
-6. `cp .env.example .env` (if .env does not exist)
-7. `sudo pmset -a sleep 0 displaysleep 0 disksleep 0 powernap 0` (macOS only)
+5. Playwright CLI: `npm install -g @playwright/cli@latest` (required for SP14 playwright-bowser skill)
+6. Playwright browsers: `npx playwright install chromium` (one-time Chromium download for headless runs)
+7. `uv sync`
+8. `cp .env.example .env` (if .env does not exist)
+9. `sudo pmset -a sleep 0 displaysleep 0 disksleep 0 powernap 0` (macOS only)
 
 ## Phase 2: Verify
 
@@ -43,6 +45,9 @@ Run each check. Report PASS/FAIL/SKIP with actual version.
 | 7 | claude | `claude --version` | pinned range |
 | 8 | node | `node --version` | 22.x |
 | 9 | pi | `pi --version` | any |
+| 10 | playwright-cli | `playwright-cli --version` | any (SP14 playwright-bowser skill) |
+| 11 | playwright chromium | `npx playwright install --dry-run chromium` | installed (SP14 headless runs) |
+| 12 | chrome mcp | `claude mcp list \| grep -i chrome` | `claude --chrome` support (SP14 claude-bowser skill; SKIP if not yet configured) |
 
 ## Report
 
