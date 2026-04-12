@@ -68,10 +68,13 @@ struct AppsCommand: ParsableCommand {
             }
 
             let path = "/Applications/\(name).app"
-            let resolvedURL = URL(fileURLWithPath: path).standardizedFileURL
-            // Defense in depth: resolved path must still be inside /Applications
-            if !resolvedURL.path.hasPrefix("/Applications/") {
-                printError("App path escapes /Applications: \(resolvedURL.path)")
+            // Resolve symlinks (not just lexical normalization). Without this,
+            // /Applications/Legit.app → /tmp/evil.app would pass the hasPrefix
+            // check while launching an arbitrary binary.
+            let resolvedURL = URL(fileURLWithPath: path).resolvingSymlinksInPath()
+            let resolvedPath = resolvedURL.path
+            if !resolvedPath.hasPrefix("/Applications/") {
+                printError("App path escapes /Applications after symlink resolution: \(resolvedPath)")
             }
             let url = resolvedURL
 

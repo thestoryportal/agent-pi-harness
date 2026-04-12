@@ -64,15 +64,19 @@ enum SecureTmp {
     }
 
     /// Atomically write data to a file inside the secure directory.
-    /// Uses write-to-temp-then-rename to avoid TOCTOU between create and write.
+    /// Uses write-to-temp-then-rename. The temp file is opened with O_EXCL|O_NOFOLLOW
+    /// so we never follow a symlink and never clobber an existing file. rename(2)
+    /// is atomic and operates on directory entries — it does NOT follow symlinks
+    /// at the destination, so a symlinked finalPath would be replaced (not written
+    /// through) by the rename. No pre-rename lstat is needed.
     static func writeAtomic(_ data: Data, to filename: String) throws {
         let finalPath = try path(for: filename)
         let tmpPath = "\(finalPath).tmp.\(getpid())"
 
-        // Remove any pre-existing temp file (could be a symlink)
+        // Remove any pre-existing temp file from a prior crashed run.
         unlink(tmpPath)
 
-        // O_CREAT | O_EXCL | O_NOFOLLOW: fail if file exists or is a symlink
+        // O_CREAT | O_EXCL | O_NOFOLLOW: fail if file exists or is a symlink.
         let fd = open(tmpPath, O_WRONLY | O_CREAT | O_EXCL | O_NOFOLLOW, 0o600)
         if fd < 0 {
             let err = String(cString: strerror(errno))
@@ -90,20 +94,9 @@ enum SecureTmp {
             throw SteerError.screenshotFailed("Short write to \(tmpPath)")
         }
 
-        // Verify the final path, if it exists, is not a symlink — then rename
-        var st = stat()
-        if lstat(finalPath, &st) == 0 {
-            let isSymlink = (st.st_mode & S_IFMT) == S_IFLNK
-            if isSymlink {
-                unlink(tmpPath)
-                throw SteerError.screenshotFailed("\(finalPath) is a symlink — refusing to overwrite")
-            }
-            if st.st_uid != getuid() {
-                unlink(tmpPath)
-                throw SteerError.screenshotFailed("\(finalPath) is owned by another user")
-            }
-        }
-
+        // rename(2) is atomic and replaces the destination directory entry.
+        // It does not follow symlinks at the destination, so a symlinked
+        // finalPath gets replaced by our regular file (not written through).
         if rename(tmpPath, finalPath) != 0 {
             let err = String(cString: strerror(errno))
             unlink(tmpPath)
@@ -112,21 +105,42 @@ enum SecureTmp {
     }
 
     /// Read data from a file inside the secure directory, verifying it's a regular
-    /// file owned by us. Returns nil if the file does not exist or fails validation.
+    /// file owned by us. Closes the TOCTOU window by opening with O_NOFOLLOW and
+    /// validating the file descriptor via fstat() before reading. Returns nil if
+    /// the file does not exist or fails validation.
     static func readVerified(_ filename: String) -> Data? {
         guard let p = try? path(for: filename) else { return nil }
 
-        var st = stat()
-        guard lstat(p, &st) == 0 else { return nil }
+        // O_NOFOLLOW: fail with ELOOP if final component is a symlink.
+        let fd = open(p, O_RDONLY | O_NOFOLLOW)
+        if fd < 0 {
+            return nil
+        }
+        defer { close(fd) }
 
-        // Reject symlinks, non-regular files, and foreign-owned files
-        let isSymlink = (st.st_mode & S_IFMT) == S_IFLNK
+        // fstat the OPEN descriptor (not the path) to ensure the verification
+        // applies to the same inode we're about to read from. This closes the
+        // lstat→open TOCTOU that the previous implementation had.
+        var st = stat()
+        guard fstat(fd, &st) == 0 else { return nil }
+
         let isRegular = (st.st_mode & S_IFMT) == S_IFREG
-        if isSymlink || !isRegular || st.st_uid != getuid() {
+        if !isRegular || st.st_uid != getuid() {
             return nil
         }
 
-        return try? Data(contentsOf: URL(fileURLWithPath: p))
+        // Read the entire file from the verified descriptor.
+        let size = Int(st.st_size)
+        guard size >= 0 else { return nil }
+        var data = Data(count: size)
+        let readBytes = data.withUnsafeMutableBytes { buf -> Int in
+            guard let base = buf.baseAddress else { return -1 }
+            return read(fd, base, size)
+        }
+        if readBytes != size {
+            return nil
+        }
+        return data
     }
 
     /// Build a path for an output file (screenshot, OCR PNG) that the agent will read.
