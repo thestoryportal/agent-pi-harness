@@ -162,18 +162,17 @@ def main():
         target = Path(sys.argv[1])
         log(f"Target (from arg): {target}")
     else:
-        target = Path(".")
-        log(f"Target (default): {target}")
+        log("No file path provided, skipping validation")
+        print(json.dumps({}))
+        return
 
     if target.is_file() and target.suffix == ".html":
         log(f"Validating single file: {target.name}")
         errors = validate_html(target)
-    elif target.is_dir():
-        log(f"Validating directory: {target}")
-        errors = validate_directory(target)
     else:
-        errors = [f"Target is not an HTML file or directory: {target}"]
-        log(f"- Invalid target: {target}")
+        log(f"Skipping non-HTML target: {target}")
+        print(json.dumps({}))
+        return
 
     if errors:
         log(f"RESULT: BLOCK ({len(errors)} errors)")

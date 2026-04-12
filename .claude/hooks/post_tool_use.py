@@ -112,9 +112,11 @@ def validate_external(file_path: str, validator_name: str, hook_data: dict, logg
         return None
 
     # S-03: Strip potentially sensitive content before passing to subprocess
+    # N-01: Use the caller's extracted file_path (handles Bash redirection),
+    # not hook_data's tool_input.file_path (missing for Bash tool calls)
     safe_data = {
         "tool_name": hook_data.get("tool_name", ""),
-        "tool_input": {"file_path": hook_data.get("tool_input", {}).get("file_path", "")},
+        "tool_input": {"file_path": file_path},
     }
 
     try:

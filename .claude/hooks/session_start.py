@@ -7,6 +7,7 @@
 
 import json
 import os
+import re
 import subprocess
 import sys
 import uuid
@@ -165,10 +166,37 @@ def detect_environment() -> str:
     return "PRODUCTION — Exercise extreme caution"
 
 
+SHELL_METACHAR_RE = re.compile(r'[;|&`$(){}!<>\n\r]')
+
+
+def validate_project_dir(logger) -> bool:
+    """Reject CLAUDE_PROJECT_DIR if it contains shell metacharacters.
+
+    Hook commands in settings.json and command frontmatter interpolate
+    $CLAUDE_PROJECT_DIR via the shell. A path containing ;, $, backticks,
+    pipes, or other metacharacters enables command injection (S-04).
+    """
+    project_dir = os.environ.get("CLAUDE_PROJECT_DIR", "")
+    if not project_dir:
+        return True
+    if SHELL_METACHAR_RE.search(project_dir):
+        logger.log(f"SECURITY: CLAUDE_PROJECT_DIR contains shell metacharacters: {project_dir!r}")
+        return False
+    return True
+
+
 def main():
     import time
     logger = Logger("session_start")
     start_time = time.monotonic()
+
+    # S-04: Validate CLAUDE_PROJECT_DIR before any hooks use it in shell commands
+    if not validate_project_dir(logger):
+        msg = "CLAUDE_PROJECT_DIR contains shell metacharacters — session blocked"
+        logger.log(msg)
+        print(f"BLOCKED: {msg}", file=sys.stderr)
+        emit_event("SessionStart", HOOK_NAME, 2, {"reason": "unsafe_project_dir"})
+        sys.exit(2)
 
     input_data = read_stdin()
     session_id = resolve_session_id(logger)
