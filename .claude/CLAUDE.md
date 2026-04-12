@@ -49,7 +49,7 @@ These rules prevent scope drift, invented features, and missed gaps:
 
 2. **Follow the sub-project priority order.** Section 8 of the source of truth defines
    priority order. Do not skip ahead. Do not reorder without explicit user approval.
-   Current: SP6 → SP7 → SP9 → ...
+   Current: SP7 → SP9 → ...
 
 3. **No invented components.** If a feature does not exist in any IndyDevDan repo
    (code, architecture doc, or concept), do not add it. The goal is identical replication.
@@ -75,7 +75,7 @@ These rules prevent scope drift, invented features, and missed gaps:
 | Read a slash command | `.claude/commands/` |
 | Check subagent definitions | `.claude/agents/` |
 | Review settings/permissions | `.claude/settings.json` |
-| Check skill catalog | `skills/library.yaml` |
+| Check skill catalog | `~/.claude/skills/library/library.yaml` (global catalog) |
 | View environment config | `.env.example` |
 | Check feature status | `~/Projects/indydevdan-harness-research/docs/superpowers/specs/arhugula-source-of-truth.md` |
 
@@ -105,8 +105,8 @@ See Source of Truth Section 8 for priority order. Fix structural issues (Section
 | SP3 | Validation Pipeline | BUILT | 8 | agentic-finance-review, hooks-mastery |
 | SP4 | Multi-Model | BUILT | 7 | just-prompt |
 | SP5 | Knowledge Base | BUILT | 7 | pocket-pick |
-| SP6 | Library Distribution | **NEXT** | 6 | the-library |
-| SP7 | Single-File Agents | NOT STARTED | 9 | single-file-agents |
+| SP6 | Library Distribution | BUILT | 6 | the-library |
+| SP7 | Single-File Agents | **NEXT** | 9 | single-file-agents |
 | SP8 | Drive + Listen + Direct | BUILT | 15 | mac-mini-agent |
 | SP9 | Orchestration | NOT STARTED | 11 | bowser, comprehensive-ref, infinite-agentic-loop |
 | SP10 | Drop Zones | NOT STARTED | 4 | agentic-drop-zones |

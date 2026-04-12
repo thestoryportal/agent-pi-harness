@@ -1,88 +1,11 @@
-# ArhuGula Skill Catalog
-# Cross-device distribution manifest following the-library pattern.
-# Skills map to .claude/skills/<name>/SKILL.md
-# Commands map to .claude/commands/<name>.md
+# ArhuGula Skill Catalog — Project Pointer
+#
+# The canonical library catalog lives at ~/.claude/skills/library/library.yaml
+# (single global catalog following the-library pattern).
+#
+# This file is retained as a project-level reference pointing to the global catalog.
+# All CRUD operations (/library add, use, push, remove, sync) operate on the global file.
+#
+# To view or edit the catalog: ~/.claude/skills/library/library.yaml
 
-skills:
-  prime:
-    description: Load full project context for orientation
-    location: .claude/skills/prime/SKILL.md
-    layer: 1  # Skill
-
-  scout:
-    description: Read a spec, identify implementation units, produce structured JSON task list
-    location: .claude/skills/scout/SKILL.md
-    layer: 1  # Skill
-
-  damage-control:
-    description: Defense-in-depth security hooks — blocks dangerous commands and protects sensitive files
-    location: .claude/skills/damage-control/SKILL.md
-    layer: 1  # Skill
-
-mcp:
-  just-prompt:
-    description: Multi-model MCP server — prompt Anthropic, OpenAI, Gemini, Groq, DeepSeek, Ollama via unified interface
-    location: mcp/just-prompt/
-    tools: [prompt, prompt_from_file, prompt_from_file_to_file, ceo_and_board, list_providers, list_models]
-
-  pocket-pick:
-    description: SQLite-backed personal knowledge base MCP server with FTS5 search
-    location: mcp/pocket-pick/
-    tools: [pocket_add, pocket_add_file, pocket_find, pocket_list, pocket_list_tags, pocket_remove, pocket_get, pocket_backup, pocket_to_file_by_id]
-
-commands:
-  architect:
-    description: Create implementation plan from scout output (architect agent)
-    location: .claude/commands/architect.md
-    layer: 2  # Subagent
-    agent: architect
-
-  build:
-    description: Execute implementation task with validation hooks active (builder agent)
-    location: .claude/commands/build.md
-    layer: 2  # Subagent
-    agent: builder
-
-  harness-review:
-    description: Multi-agent consensus review (validator + spec-checker + security)
-    location: .claude/commands/harness-review.md
-    layer: 2  # Subagent
-    agents: [validator, spec-checker, security]
-
-  install:
-    description: Two-phase bootstrap — install tools and verify environment
-    location: .claude/commands/install.md
-    layer: 3  # Command
-
-  maintain:
-    description: Session maintenance — verify environment health
-    location: .claude/commands/maintain.md
-    layer: 3  # Command
-
-  migrate:
-    description: Database and schema migration
-    location: .claude/commands/migrate.md
-    layer: 3  # Command
-
-agents:
-  builder:
-    description: Implementation agent — writes code
-    tools: [Bash, Read, Edit, Write, Glob, Grep]
-  validator:
-    description: Read-only verification — reviews code for correctness
-    tools: [Read, Grep, Glob]
-  spec-checker:
-    description: Spec compliance — verifies implementation matches spec
-    tools: [Read, Grep, Glob]
-  schema-reviewer:
-    description: Schema validation — reviews data schemas and configs
-    tools: [Read, Grep, Glob]
-  architect:
-    description: System design — creates implementation plans (read-only)
-    tools: [Read, Grep, Glob]
-  scout-agent:
-    description: File discovery — fast context reduction (read-only)
-    tools: [Read, Grep, Glob]
-  security:
-    description: Security review — adversarial testing (read-only)
-    tools: [Read, Grep, Glob]
+catalog: ~/.claude/skills/library/library.yaml
