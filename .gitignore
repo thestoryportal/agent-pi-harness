@@ -25,3 +25,7 @@ tests/prompts/**/output.json
 
 # Pi Agent
 .pi/agent-sessions/
+
+# Swift
+.build/
+.swiftpm/
