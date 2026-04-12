@@ -8,6 +8,14 @@ allowed-tools:
   - Edit
   - Bash
 agent: builder
+hooks:
+  PostToolUse:
+    - matcher: "Write|Edit"
+      hooks:
+        - type: command
+          command: "uv run \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/validators/ruff_validator.py"
+        - type: command
+          command: "uv run \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/validators/ty_validator.py"
 ---
 
 # /build — Implementation Execution

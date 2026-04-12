@@ -5,6 +5,19 @@
       "command": "npx",
       "args": ["-y", "@context7/mcp"],
       "env": {}
+    },
+    "just-prompt": {
+      "type": "stdio",
+      "command": "uv",
+      "args": [
+        "--directory",
+        "/Users/robertrhu/Projects/arhugula/mcp/just-prompt",
+        "run",
+        "just-prompt",
+        "--default-models",
+        "anthropic:claude-sonnet-4-20250514,openai:o4-mini:high,gemini:gemini-2.5-flash-preview-04-17"
+      ],
+      "env": {}
     }
   }
 }

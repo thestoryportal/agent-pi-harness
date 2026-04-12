@@ -49,7 +49,7 @@ These rules prevent scope drift, invented features, and missed gaps:
 
 2. **Follow the sub-project priority order.** Section 8 of the source of truth defines
    priority order. Do not skip ahead. Do not reorder without explicit user approval.
-   Current: Fix structural issues (Section 3) → SP2 → SP3 → SP4 → SP5 → ...
+   Current: SP4 → SP5 → SP6 → SP7 → ...
 
 3. **No invented components.** If a feature does not exist in any IndyDevDan repo
    (code, architecture doc, or concept), do not add it. The goal is identical replication.
@@ -101,9 +101,9 @@ See Source of Truth Section 8 for priority order. Fix structural issues (Section
 | SP | Name | Status | Features | Source |
 |----|------|--------|:--------:|--------|
 | SP1 | CC Harness | BUILT | 40 | hooks-mastery, install-maintain, damage-control |
-| SP2 | Security Hardening | **NEXT** | 6 | damage-control |
-| SP3 | Validation Pipeline | NOT STARTED | 8 | agentic-finance-review, hooks-mastery |
-| SP4 | Multi-Model | NOT STARTED | 7 | just-prompt |
+| SP2 | Security Hardening | BUILT | 6 | damage-control |
+| SP3 | Validation Pipeline | BUILT | 8 | agentic-finance-review, hooks-mastery |
+| SP4 | Multi-Model | **NEXT** | 7 | just-prompt |
 | SP5 | Knowledge Base | NOT STARTED | 7 | pocket-pick |
 | SP6 | Library Distribution | NOT STARTED | 6 | the-library |
 | SP7 | Single-File Agents | NOT STARTED | 9 | single-file-agents |

@@ -11,6 +11,7 @@ node_modules/
 
 # Claude Code
 .claude/logs/
+.claude/hooks/validators/*.log
 
 # macOS
 .DS_Store

@@ -5,9 +5,11 @@
 # ///
 """PostToolUse hook: validate output + emit metadata event.
 
-Validators (run after Write/Edit/Bash that affect .py or .sql files):
+Validators (run after Write/Edit/Bash that affect supported file types):
   - ruff: lint Python files, block on errors for self-correction
   - schema: check SQL for public schema, bare TIMESTAMP, ENUM usage
+  - csv: parse and balance validation for CSV files (via external validator)
+  - html: structure and image validation for HTML files (via external validator)
 
 Self-correction: output {"decision": "block", "reason": "..."} on stdout
 with exit 0. Claude reads the reason and fixes the issue automatically.
@@ -41,54 +43,9 @@ def extract_file_path(tool_name: str, tool_input: dict) -> str | None:
                 parts = cmd.split(marker)
                 if len(parts) > 1:
                     candidate = parts[-1].strip().split()[0].strip("'\"")
-                    if candidate.endswith(".py") or candidate.endswith(".sql"):
+                    if candidate.endswith((".py", ".sql", ".csv", ".html")):
                         return candidate
     return None
-
-
-def validate_ruff(file_path: str, logger: Logger) -> dict | None:
-    if not file_path.endswith(".py"):
-        return None
-    abs_path = Path(file_path) if Path(file_path).is_absolute() else Path(PROJECT_DIR) / file_path
-    if not abs_path.exists():
-        return None
-    try:
-        result = subprocess.run(
-            ["ruff", "check", str(abs_path), "--output-format", "json"],
-            capture_output=True, text=True, timeout=10,
-        )
-    except FileNotFoundError:
-        logger.log("ruff not found on PATH, skipping lint validation")
-        return None
-    except subprocess.TimeoutExpired:
-        logger.log("ruff timed out, skipping")
-        return None
-
-    if result.returncode == 0:
-        return None
-
-    try:
-        errors = json.loads(result.stdout)
-    except json.JSONDecodeError:
-        errors = []
-
-    if not errors:
-        return None
-
-    MAX_ERRORS = 5
-    summary_lines = []
-    for err in errors[:MAX_ERRORS]:
-        code = err.get("code", "?")
-        msg = err.get("message", "?")
-        row = err.get("location", {}).get("row", "?")
-        summary_lines.append(f"  line {row}: {code} {msg}")
-    if len(errors) > MAX_ERRORS:
-        summary_lines.append(f"  ... and {len(errors) - MAX_ERRORS} more errors")
-
-    return {
-        "decision": "block",
-        "reason": f"Ruff lint errors in {file_path}:\n" + "\n".join(summary_lines),
-    }
 
 
 SQL_CHECKS = [
@@ -141,6 +98,49 @@ def validate_sql(file_path: str, tool_input: dict) -> dict | None:
     }
 
 
+def validate_external(file_path: str, validator_name: str, hook_data: dict, logger: Logger) -> dict | None:
+    """Run a standalone validator script from .claude/hooks/validators/ via subprocess."""
+    # S-01: Sanitize validator_name to prevent path traversal
+    validator_name = Path(validator_name).name
+    validators_dir = (Path(PROJECT_DIR) / ".claude" / "hooks" / "validators").resolve()
+    validator_script = (validators_dir / validator_name).resolve()
+    if not validator_script.parent == validators_dir:
+        logger.log(f"SECURITY: {validator_name} escapes validators directory, blocked")
+        return None
+    if not validator_script.exists():
+        logger.log(f"{validator_name} not found, skipping")
+        return None
+
+    # S-03: Strip potentially sensitive content before passing to subprocess
+    safe_data = {
+        "tool_name": hook_data.get("tool_name", ""),
+        "tool_input": {"file_path": hook_data.get("tool_input", {}).get("file_path", "")},
+    }
+
+    try:
+        result = subprocess.run(
+            ["uv", "run", str(validator_script)],
+            input=json.dumps(safe_data),
+            capture_output=True, text=True, timeout=30,
+        )
+    except subprocess.TimeoutExpired:
+        logger.log(f"{validator_name} timed out, skipping")
+        return None
+    except Exception as e:
+        logger.log(f"{validator_name} error: {e}")
+        return None
+
+    if not result.stdout.strip():
+        return None
+    try:
+        out = json.loads(result.stdout)
+        if out.get("decision") == "block":
+            return out
+    except json.JSONDecodeError:
+        pass
+    return None
+
+
 def main():
     import time
     logger = Logger("post_tool_use")
@@ -157,9 +157,16 @@ def main():
 
     validation_result = None
     if file_path:
-        validation_result = validate_ruff(file_path, logger)
-        if not validation_result:
+        if file_path.endswith(".py"):
+            validation_result = validate_external(file_path, "ruff_validator.py", d, logger)
+            if not validation_result:
+                validation_result = validate_external(file_path, "ty_validator.py", d, logger)
+        if not validation_result and file_path.endswith(".sql"):
             validation_result = validate_sql(file_path, tool_input)
+        if not validation_result and file_path.endswith(".csv"):
+            validation_result = validate_external(file_path, "csv_single_validator.py", d, logger)
+        if not validation_result and file_path.endswith(".html"):
+            validation_result = validate_external(file_path, "html_validator.py", d, logger)
 
     payload = {"tool": tool_name, "exit_code": tool_exit_code, "output_preview": stdout_preview}
     if file_path:
