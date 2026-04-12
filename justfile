@@ -81,6 +81,40 @@ review-headless SPEC:
         --workflow-id harness-review \
         --invocation-type headless
 
+# === SP7: Single-File Agents ===
+
+# Bash/editor agent
+sfa-bash PROMPT:
+    uv run agents/sfa/sfa_bash_editor_agent.py --prompt "{{PROMPT}}"
+
+# DuckDB query agent
+sfa-duckdb DB PROMPT:
+    uv run agents/sfa/sfa_duckdb_agent.py --db "{{DB}}" --prompt "{{PROMPT}}"
+
+# SQLite query agent
+sfa-sqlite DB PROMPT:
+    uv run agents/sfa/sfa_sqlite_agent.py --db "{{DB}}" --prompt "{{PROMPT}}"
+
+# Polars CSV analysis agent
+sfa-polars INPUT PROMPT:
+    uv run agents/sfa/sfa_polars_csv_agent.py --input "{{INPUT}}" --prompt "{{PROMPT}}"
+
+# JQ JSON processing agent
+sfa-jq EXE:
+    uv run agents/sfa/sfa_jq_agent.py --exe "{{EXE}}"
+
+# Meta-prompt generator
+sfa-metaprompt PURPOSE INSTRUCTIONS:
+    uv run agents/sfa/sfa_meta_prompt_agent.py --purpose "{{PURPOSE}}" --instructions "{{INSTRUCTIONS}}"
+
+# Codebase context discovery agent
+sfa-context PROMPT DIR="." EXT="py":
+    uv run agents/sfa/sfa_codebase_context_agent.py --prompt "{{PROMPT}}" --directory "{{DIR}}" --extensions {{EXT}}
+
+# Self-correcting SQL agent
+sfa-sql-correcting DB PROMPT:
+    uv run agents/sfa/sfa_self_correcting_sql_agent.py --db "{{DB}}" --prompt "{{PROMPT}}"
+
 # === Layer 4: Just — infrastructure app recipes ===
 
 # Start Listen job server
