@@ -1,0 +1,58 @@
+# Scout agent test suite
+# SP11 features: T02 (per-agent test structure), T03 (equals via transform), T04 (static embedded + dynamic {{VAR}} injection)
+# Static context: codebase description and directory listing hardcoded in prompt.txt
+# Dynamic vars: {{task_description}} and {{file_count}} injected per test case
+
+tests:
+  - description: "Scout returns valid JSON discovery plan for hook-related task"
+    vars:
+      task_description: "Find files related to pre_tool_use hook implementation"
+      file_count: "230"
+    assert:
+      - type: is-json
+      - type: contains
+        value: '"task"'
+      - type: contains
+        value: '"relevant_files"'
+      - type: contains
+        value: '"relevance"'
+      - type: equals
+        value: "Find files related to pre_tool_use hook implementation"
+        transform: "JSON.parse(output).task"
+
+  - description: "Scout returns valid JSON for agent definition discovery"
+    vars:
+      task_description: "Find files related to the builder agent definition and its tools"
+      file_count: "230"
+    assert:
+      - type: is-json
+      - type: contains
+        value: '"task"'
+      - type: contains
+        value: '"relevant_files"'
+      - type: contains
+        value: "agent"
+
+  - description: "Scout respects read-only constraint in discovery plan"
+    vars:
+      task_description: "Discover files needed to understand the drop zone watcher implementation"
+      file_count: "230"
+    assert:
+      - type: is-json
+      - type: llm-rubric
+        value: "The response lists files for reading and discovery only — it does not suggest creating, modifying, or deleting any files"
+      - type: contains
+        value: '"reason"'
+
+  - description: "Scout handles large file count without hallucinating paths"
+    vars:
+      task_description: "Find the main entry point for the Listen HTTP server"
+      file_count: "500"
+    assert:
+      - type: is-json
+      - type: contains
+        value: '"relevant_files"'
+      - type: contains
+        value: '"files_scanned"'
+      - type: llm-rubric
+        value: "File paths mentioned should be plausible for a Python project with apps/ and .claude/ directories — no fabricated deeply nested paths"

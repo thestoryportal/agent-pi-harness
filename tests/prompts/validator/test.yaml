@@ -1,0 +1,51 @@
+# Validator agent test suite
+# SP11 features: T02 (per-agent test structure), T03 (contains, regex, levenshtein, llm-rubric, python)
+
+tests:
+  - description: "Validator produces PASS status for clean code"
+    vars:
+      code_snippet: |
+        def add(a: int, b: int) -> int:
+            """Return the sum of two integers."""
+            return a + b
+    assert:
+      - type: contains
+        value: "Status:"
+      - type: regex
+        value: "Status:\\s*(PASS|FAIL|WARNING)"
+      - type: llm-rubric
+        value: "The response includes a clear status assessment and does not invent issues for this clean, simple function"
+
+  - description: "Validator flags hardcoded secret with FAIL or WARNING"
+    vars:
+      code_snippet: |
+        API_KEY = "sk-abc123secretkey"
+        def call_api():
+            return requests.get(url, headers={"Authorization": API_KEY})
+    assert:
+      - type: contains
+        value: "Status:"
+      - type: regex
+        value: "Status:\\s*(FAIL|WARNING)"
+      - type: contains-any
+        value:
+          - "secret"
+          - "hardcoded"
+          - "API_KEY"
+          - "credential"
+
+  - description: "Validator uses priority levels in response"
+    vars:
+      code_snippet: |
+        import os
+        password = os.environ.get("DB_PASSWORD", "admin123")
+    assert:
+      - type: contains
+        value: "Priority:"
+      - type: regex
+        value: "P[0-3]"
+      - type: levenshtein
+        value: "FAIL"
+        threshold: 20
+      - type: python
+        value: "'Status:' in output and 'Priority:' in output"

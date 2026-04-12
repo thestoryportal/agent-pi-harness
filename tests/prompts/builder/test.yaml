@@ -1,0 +1,35 @@
+# Builder agent test suite
+# SP11 features: T02 (per-agent test structure), T03 (is-json, contains, equals), T04 (dynamic vars)
+
+tests:
+  - description: "Builder produces valid JSON with code key for sum function"
+    vars:
+      task_description: "Write a Python function that takes a list of integers and returns their sum"
+    assert:
+      - type: is-json
+      - type: contains
+        value: '"code"'
+      - type: contains
+        value: "def "
+      - type: not:equals
+        value: ""
+
+  - description: "Builder produces valid JSON with filename following naming convention"
+    vars:
+      task_description: "Write a Python function that reverses a string and returns the result"
+    assert:
+      - type: is-json
+      - type: contains
+        value: '"filename"'
+      - type: contains
+        value: ".py"
+
+  - description: "Builder includes test guidance in response"
+    vars:
+      task_description: "Write a Python function that checks if a number is prime"
+    assert:
+      - type: is-json
+      - type: contains
+        value: '"tests"'
+      - type: contains
+        value: "def "
