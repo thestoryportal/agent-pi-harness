@@ -96,47 +96,73 @@ def check_read(tool_input: dict, rules: dict) -> tuple[str, str | None]:
 
 
 # ============================================================================
-# MCP TOOL GATES (SP14 round-3 hardening — namespace-agnostic)
+# MCP TOOL GATES (SP14 round-4 hardening — token-sequence matching)
 # ============================================================================
 # Any MCP tool (regardless of server namespace) whose name contains an
-# arbitrary-JS execution primitive as a segment is blocked. The original
-# SP14 hardening gated only mcp__claude_in_chrome__* tools; round-2 review
-# found two bypasses:
-#   1. Any other MCP server namespace exposing execute_script evaded the gate.
-#   2. Depth-3 tool names like mcp__claude_in_chrome__execute_script__v2
-#      had a final segment of "v2" which didn't match the blocked-suffix list.
-# Round-3 fix: check EVERY segment of the tool name, not just the last, and
-# apply the check to ALL mcp__* tools, not just the claude_in_chrome namespace.
+# arbitrary-JS execution primitive as a token sequence is blocked.
+#
+# Evolution:
+#   r1: gated only mcp__claude_in_chrome__* by prefix.
+#   r2: round-1 review found alternate namespaces and depth-3 tool names
+#       bypassed the prefix/suffix check.
+#   r3: extended to all mcp__* namespaces, iterated all __-split segments.
+#   r4: round-3 review found single-underscore suffix (execute_script_v2)
+#       and hyphen-delimited (execute-script) variants bypassed the exact
+#       frozenset membership test. Round-4 fix:
+#         1. Normalize hyphens to underscores.
+#         2. Split every segment by underscore into atomic tokens.
+#         3. Match blocked primitives as a CONTIGUOUS TOKEN SUBSEQUENCE.
+#       This defeats: execute_script_v2, execute-script, run-code,
+#       execute___script (double underscore), etc. False positives like
+#       "retrieval" (contains "eval" as a substring) are avoided because
+#       "retrieval" is one atomic token and "eval" != "retrieval".
 
-# Segments in a tool name that indicate arbitrary JavaScript execution
-# against a live browser. Matched case-insensitively against ANY segment
-# of the tool name (not just the final one).
-MCP_JS_EXEC_SEGMENTS = frozenset({
-    "execute_script",
-    "eval",
-    "evaluate",
-    "run_script",
-    "run_code",
+# Each entry is a tuple of lowercase atomic tokens representing an
+# arbitrary-JS primitive. A tool name matches if any of these tuples
+# appears as a contiguous subsequence in the tool name's tokenization.
+MCP_JS_EXEC_TOKEN_SEQS: frozenset[tuple[str, ...]] = frozenset({
+    ("execute", "script"),
+    ("run", "script"),
+    ("run", "code"),
+    ("eval",),
+    ("evaluate",),
 })
+
+
+def _atomize(tool_name: str) -> list[str]:
+    """Tokenize an MCP tool name into lowercase atomic tokens.
+
+    Normalizes by splitting on __, then replacing - with _ within each
+    segment, then splitting on _. Empty tokens are dropped. Used by
+    check_mcp_tool() for token-sequence matching.
+    """
+    tokens: list[str] = []
+    for seg in tool_name.lower().split("__"):
+        for atom in seg.replace("-", "_").split("_"):
+            if atom:
+                tokens.append(atom)
+    return tokens
 
 
 def check_mcp_tool(tool_name: str) -> tuple[str, str | None]:
     """Gate mcp__* tool invocations (all namespaces).
 
-    Blocks any tool whose name contains an arbitrary-JS execution primitive
-    as ANY segment. Passive Chrome MCP tools (navigate, click, screenshot,
-    snapshot, etc.) pass through — they are still logged by post_tool_use
-    so an auditor can review the session.
+    Blocks any tool whose atomic-token sequence contains an arbitrary-JS
+    execution primitive as a contiguous subsequence. Passive MCP tools
+    (navigate, click, screenshot, snapshot, etc.) pass through and are
+    logged via the ALLOW emit at main()'s fallthrough.
     """
-    segments = [seg.lower() for seg in tool_name.split("__")]
-    for seg in segments:
-        if seg in MCP_JS_EXEC_SEGMENTS:
-            return (
-                "block",
-                f"MCP arbitrary-JS primitive blocked: {tool_name}. "
-                f"execute_script / eval against a live browser session is "
-                f"an identity-exfiltration vector and has no allowlist.",
-            )
+    tokens = _atomize(tool_name)
+    for seq in MCP_JS_EXEC_TOKEN_SEQS:
+        n = len(seq)
+        for i in range(len(tokens) - n + 1):
+            if tuple(tokens[i:i + n]) == seq:
+                return (
+                    "block",
+                    f"MCP arbitrary-JS primitive blocked: {tool_name}. "
+                    f"execute_script / eval against a live browser session "
+                    f"is an identity-exfiltration vector and has no allowlist.",
+                )
     return "allow", None
 
 
@@ -160,19 +186,23 @@ def main():
     tool_input = input_data.get("tool_input", {})
 
     # MCP tools (all namespaces): gate arbitrary-JS primitives BEFORE the
-    # catch-all early exit. Only emit-and-exit if the tool is actually
-    # blocked; passive MCP tools fall through to the catch-all early exit.
+    # catch-all early exit. BLOCK emits an event and exits 2. ALLOW emits
+    # an explicit PreToolUse allow event (so the pre-execution audit trail
+    # is consistent even if post_tool_use later fails) and then exits 0.
     if tool_name.startswith("mcp__"):
         decision, reason = check_mcp_tool(tool_name)
+        elapsed = int((time.monotonic() - start_time) * 1000)
         if decision == "block":
-            elapsed = int((time.monotonic() - start_time) * 1000)
             payload = {"tool": tool_name, "decision": decision, "reason": reason}
             emit_event("PreToolUse", HOOK_NAME, 2, payload, elapsed)
             logger.log(f"BLOCKED: {tool_name} — {reason}")
             print(json.dumps({"error": reason}), file=sys.stderr)
             sys.exit(2)
-        # Passive MCP tools are allowed and logged via post_tool_use;
-        # fall through to the catch-all early exit below.
+        # ALLOW path — emit an explicit audit event so passive MCP
+        # invocations always appear in the PreToolUse event stream.
+        emit_event("PreToolUse", HOOK_NAME, 0, {"tool": tool_name, "decision": "allow"}, elapsed)
+        logger.log(f"ALLOW: {tool_name}")
+        sys.exit(0)
 
     # Only handle Read, Glob, Grep — other tools have their own hooks
     if tool_name not in ("Read", "Glob", "Grep"):

@@ -190,22 +190,42 @@ bashToolPatterns:
   - pattern: '\bplaywright-cli\b.*\$\('
     reason: playwright-cli with subshell expansion (zero-access-path exfiltration vector)
 
-  # SP14 round-3: block playwright-cli with a shell-variable subcommand.
-  # Attack: `SUBCMD=run-code; playwright-cli $SUBCMD "document.cookie"`
+  # SP14 round-4: block playwright-cli invocations using POSIX backtick
+  # command substitution — the r3 pattern above only covers $() syntax.
+  # Attack: playwright-cli fill e1 "`cat ~/.ssh/id_rsa`"
+  - pattern: '\bplaywright-cli\b.*`'
+    reason: playwright-cli with backtick command substitution (zero-access-path exfiltration vector)
+
+  # SP14 round-3 (r4 patch for lowercase/digit vars): block playwright-cli
+  # with a shell-variable subcommand. Attack:
+  #   SUBCMD=run-code; playwright-cli $SUBCMD "document.cookie"
   # defers the run-code/eval literal and bypasses the patterns above.
-  # Matches both `$VAR` and `${VAR}` in the first non-flag argument slot,
-  # optionally quoted.
-  - pattern: '\bplaywright-cli\b(\s+-\S+)*\s+["'']?\$[A-Z_{]'
+  # Matches `$VAR`, `${VAR}`, `$var`, `$1`, `${var}` in the first non-flag
+  # argument slot, optionally quoted. Character class covers upper, lower,
+  # digits, underscore, and `{` (for brace-style).
+  - pattern: '\bplaywright-cli\b(\s+-\S+)*\s+["'']?\$[A-Za-z0-9_{]'
     reason: playwright-cli with shell-variable subcommand (run-code/eval bypass vector)
 
   # ---------------------------------------------------------------------------
-  # CURL FILE-UPLOAD EXFILTRATION (SP14 round-3 hardening)
-  # curl -F file=@<path> / --form file=@<path> uploads arbitrary filesystem
-  # content via multipart POST. This is the partner half of the exfil chain
-  # when combined with `playwright-cli screenshot --filename=/tmp/...`.
+  # FILE-UPLOAD EXFILTRATION (SP14 round-3 + round-4 hardening)
+  # Multiple primitives can upload arbitrary filesystem content via HTTP.
+  # Block all known forms: curl multipart, curl raw, curl PUT, and wget.
+  # These are the partner half of the exfil chain when combined with
+  # `playwright-cli screenshot --filename=/tmp/...`.
+  # NOTE: `-` placed last in `[A-Za-z0-9_-]` is a literal dash (not a
+  # range), which is the correct placement for character-class dashes.
   # ---------------------------------------------------------------------------
-  - pattern: '\bcurl\b.*(-F|--form)\s+[A-Za-z0-9_-]+=@'
-    reason: curl multipart file upload (exfiltration vector)
+  - pattern: '\bcurl\b.*(-F|--form)\s+[''"]?[A-Za-z0-9_-]+=@'
+    reason: curl multipart file upload (-F / --form with @path)
+
+  - pattern: '\bcurl\b.*--data-binary\s+[''"]?@'
+    reason: curl raw binary upload (--data-binary @path)
+
+  - pattern: '\bcurl\b.*\s-T\s+[''"]?[^-\s]'
+    reason: curl PUT file upload (-T)
+
+  - pattern: '\bwget\b.*(--post-file|--body-file)='
+    reason: wget file upload (--post-file / --body-file)
 
   # ---------------------------------------------------------------------------
   # SQL DESTRUCTIVE OPERATIONS (catastrophic)
