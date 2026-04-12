@@ -20,18 +20,14 @@ projects with Claude Code agents, hooks, and orchestrated workflows.
 n8n remains the sole runtime orchestrator for production data flows. This harness augments
 Claude Code development sessions only.
 
-## Canonical Source Documents
-
-The following documents in the research repo are the source of truth for all implementation:
+## Canonical Source Document
 
 | Document | Path | Role |
 |----------|------|------|
-| **v2 Design Spec** | `~/Projects/indydevdan-harness-research/docs/superpowers/specs/2026-04-09-arhugula-design-v2.md` | Master architecture, sub-project definitions, dependency graph |
-| **Feature Inventory** | `~/Projects/indydevdan-harness-research/docs/superpowers/specs/feature-inventory.md` | Exhaustive catalog of 136 features with BUILT/GAP/INVENTED status |
-| **Method Synthesis** | `~/Projects/indydevdan-harness-research/docs/03-indydevdan/method-synthesis.md` | 14 foundational principles |
-| **Comprehensive Reference** | `~/Projects/indydevdan-harness-research/docs/IndyDevDan Comprehensive/indydevdan_method_comprehensive_reference.md` | 5-layer stack, skill taxonomy |
+| **Source of Truth** | `~/Projects/indydevdan-harness-research/docs/superpowers/specs/arhugula-source-of-truth.md` | **THE** canonical document. 101 features, 19 patterns, 14 principles, 15 sub-projects. Drives all implementation. |
 
-The v1 spec (`2026-04-09-arhugula-design.md`) is SUPERSEDED. Do not use it for new work.
+All prior specs (v1, v2, feature-inventory.md) are SUPERSEDED by this document.
+Reference docs (method-synthesis, comprehensive reference, repo analyses) remain as background material.
 
 ## Source Precedence
 
@@ -46,35 +42,29 @@ The v1 spec (`2026-04-09-arhugula-design.md`) is SUPERSEDED. Do not use it for n
 
 These rules prevent scope drift, invented features, and missed gaps:
 
-1. **Check the Feature Inventory BEFORE building anything.** Read `feature-inventory.md`
-   and verify the feature is classified as GAP or SPEC-ONLY (not INVENTED or DEFERRED).
-   If a feature is INVENTED, do not build it. If it is DEFERRED, explain why it should
-   be reclassified before proceeding.
+1. **Check the Source of Truth BEFORE building anything.** Read `arhugula-source-of-truth.md`
+   Section 4 and verify the feature is classified as GAP (not REJECTED).
+   If a feature is REJECTED, do not build it. If it is not in the document, it is not
+   in scope — flag it as NON-INDYDEVDAN and get user approval.
 
-2. **Follow the v2 sub-project sequence.** The v2 spec defines 15 sub-projects with a
-   dependency graph. Do not skip ahead. Do not reorder without explicit user approval.
-   Current sequence: SP2 (Security) → SP3 (Validation) → SP4 (Multi-Model) → SP5 (Knowledge Base)
-   → SP6 (Library) → SP7 (SFA) → SP8 (Drive+Listen+Direct, BUILT) → SP9 (Orchestration) → ...
+2. **Follow the sub-project priority order.** Section 8 of the source of truth defines
+   priority order. Do not skip ahead. Do not reorder without explicit user approval.
+   Current: Fix structural issues (Section 3) → SP2 → SP3 → SP4 → SP5 → ...
 
 3. **No invented components.** If a feature does not exist in any IndyDevDan repo
-   (code, architecture doc, or concept), do not add it. The goal is identical replication,
-   not enhancement. If you believe an enhancement is warranted, flag it explicitly as
-   NON-INDYDEVDAN and get user approval before implementing.
+   (code, architecture doc, or concept), do not add it. The goal is identical replication.
+   The REJECTED list (Section 7) is final — do not re-propose rejected features.
 
-4. **Verify source attribution.** For every component you build, identify the source repo
-   (damage-control, hooks-mastery, just-prompt, pocket-pick, etc.) and source type
-   (code exists, architecture doc, concept only). Code-exists sources can be referenced
-   directly. Architecture-doc sources require greenfield implementation matching the
-   documented interface. Concept-only sources require design before implementation.
+4. **Verify source attribution.** For every component, identify the source repo and
+   whether code exists or is concept-only. Check the repo snapshot in
+   `research/repo-snapshots/` for actual implementation patterns to follow.
 
-5. **Use the IndyDevDan planning workflow.** The planning pipeline is:
-   `/scout` (decompose spec) → `/build` (implement each unit) → `/harness-review` (verify).
-   External planning tools (gstack /create-implementation-plan, /plan-ceo-review, etc.)
-   may supplement but do not replace this pipeline.
+5. **Use the IndyDevDan planning workflow.** The pipeline is:
+   `/scout` (decompose) → `/build` (implement) → `/harness-review` (verify).
+   External tools (gstack) may supplement but do not replace this pipeline.
 
-6. **Update the Feature Inventory after each sub-project.** When a feature moves from
-   GAP to BUILT, update `feature-inventory.md` in the research repo with the commit hash
-   and date.
+6. **Update the Source of Truth after each sub-project.** When a feature moves from
+   GAP to BUILT, update `arhugula-source-of-truth.md` Section 4 with the date.
 
 ## Directory Navigation
 
@@ -87,8 +77,7 @@ These rules prevent scope drift, invented features, and missed gaps:
 | Review settings/permissions | `.claude/settings.json` |
 | Check skill catalog | `skills/library.yaml` |
 | View environment config | `.env.example` |
-| Check feature status | `~/Projects/indydevdan-harness-research/docs/superpowers/specs/feature-inventory.md` |
-| Read master spec | `~/Projects/indydevdan-harness-research/docs/superpowers/specs/2026-04-09-arhugula-design-v2.md` |
+| Check feature status | `~/Projects/indydevdan-harness-research/docs/superpowers/specs/arhugula-source-of-truth.md` |
 
 ## Naming Conventions
 
@@ -107,23 +96,25 @@ These rules prevent scope drift, invented features, and missed gaps:
 
 ## Sub-Project Status
 
-| SP | Name | Status | Features |
-|----|------|--------|----------|
-| SP1 | CC Harness | BUILT | 40/40 features |
-| SP2 | Security Hardening | NOT STARTED | 6 features (3.08-3.13) |
-| SP3 | Validation Pipeline | NOT STARTED | 8 features (6.01-6.08) |
-| SP4 | Multi-Model (just-prompt) | NOT STARTED | 7 features (7.01-7.07) |
-| SP5 | Knowledge Base (pocket-pick) | NOT STARTED | 7 features (8.01-8.07) |
-| SP6 | Library Distribution | NOT STARTED | 6 features (9.02-9.07) |
-| SP7 | Single-File Agents | NOT STARTED | 9 features (10.01-10.09) |
-| SP8 | Drive + Listen + Direct | BUILT | 15 features |
-| SP9 | Orchestration | NOT STARTED | 8 features (11.01-11.08) |
-| SP10 | Drop Zones | NOT STARTED | 4 features (14.01-14.04) |
-| SP11 | Prompt Testing | NOT STARTED | 4 features (15.02-15.05) |
-| SP12 | Pi Integration | NOT STARTED | Depends on SP8 |
-| SP13 | Steer (Swift GUI) | NOT STARTED | Depends on SP8 |
-| SP14 | Browser Automation (bowser) | NOT STARTED | 6 features |
-| SP15 | E2B Sandboxes | NOT STARTED | 4 features |
+See Source of Truth Section 8 for priority order. Fix structural issues (Section 3) first.
+
+| SP | Name | Status | Features | Source |
+|----|------|--------|:--------:|--------|
+| SP1 | CC Harness | BUILT | 40 | hooks-mastery, install-maintain, damage-control |
+| SP2 | Security Hardening | **NEXT** | 6 | damage-control |
+| SP3 | Validation Pipeline | NOT STARTED | 8 | agentic-finance-review, hooks-mastery |
+| SP4 | Multi-Model | NOT STARTED | 7 | just-prompt |
+| SP5 | Knowledge Base | NOT STARTED | 7 | pocket-pick |
+| SP6 | Library Distribution | NOT STARTED | 6 | the-library |
+| SP7 | Single-File Agents | NOT STARTED | 9 | single-file-agents |
+| SP8 | Drive + Listen + Direct | BUILT | 15 | mac-mini-agent |
+| SP9 | Orchestration | NOT STARTED | 11 | bowser, comprehensive-ref, infinite-agentic-loop |
+| SP10 | Drop Zones | NOT STARTED | 4 | agentic-drop-zones |
+| SP11 | Prompt Testing | NOT STARTED | 4 | llm-prompt-testing |
+| SP12 | Pi Integration | NOT STARTED | 3 | pi-agent |
+| SP13 | Steer (Swift GUI) | NOT STARTED | 3 | mac-mini-agent |
+| SP14 | Browser Automation | NOT STARTED | 6 | bowser |
+| SP15 | E2B Sandboxes | NOT STARTED | 4 | agent-sandboxes |
 
 ## Hook Security Model
 
