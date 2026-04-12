@@ -25,6 +25,11 @@ mcp:
     location: mcp/just-prompt/
     tools: [prompt, prompt_from_file, prompt_from_file_to_file, ceo_and_board, list_providers, list_models]
 
+  pocket-pick:
+    description: SQLite-backed personal knowledge base MCP server with FTS5 search
+    location: mcp/pocket-pick/
+    tools: [pocket_add, pocket_add_file, pocket_find, pocket_list, pocket_list_tags, pocket_remove, pocket_get, pocket_backup, pocket_to_file_by_id]
+
 commands:
   architect:
     description: Create implementation plan from scout output (architect agent)
