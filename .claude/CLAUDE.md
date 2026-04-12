@@ -49,7 +49,7 @@ These rules prevent scope drift, invented features, and missed gaps:
 
 2. **Follow the sub-project priority order.** Section 8 of the source of truth defines
    priority order. Do not skip ahead. Do not reorder without explicit user approval.
-   Current: SP5 → SP6 → SP7 → ...
+   Current: SP6 → SP7 → SP9 → ...
 
 3. **No invented components.** If a feature does not exist in any IndyDevDan repo
    (code, architecture doc, or concept), do not add it. The goal is identical replication.
@@ -104,8 +104,8 @@ See Source of Truth Section 8 for priority order. Fix structural issues (Section
 | SP2 | Security Hardening | BUILT | 6 | damage-control |
 | SP3 | Validation Pipeline | BUILT | 8 | agentic-finance-review, hooks-mastery |
 | SP4 | Multi-Model | BUILT | 7 | just-prompt |
-| SP5 | Knowledge Base | **NEXT** | 7 | pocket-pick |
-| SP6 | Library Distribution | NOT STARTED | 6 | the-library |
+| SP5 | Knowledge Base | BUILT | 7 | pocket-pick |
+| SP6 | Library Distribution | **NEXT** | 6 | the-library |
 | SP7 | Single-File Agents | NOT STARTED | 9 | single-file-agents |
 | SP8 | Drive + Listen + Direct | BUILT | 15 | mac-mini-agent |
 | SP9 | Orchestration | NOT STARTED | 11 | bowser, comprehensive-ref, infinite-agentic-loop |
