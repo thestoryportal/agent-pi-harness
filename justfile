@@ -206,3 +206,39 @@ pi-listen:
 # Pi with full ArhuGula integration (Drive + Listen + damage-control)
 pi-full:
     pi -e extensions/drive-dispatch.ts -e extensions/listen-submit.ts -e extensions/damage-control.ts -e extensions/theme-cycler.ts
+
+# Pi with pi-pi meta-agent (builds Pi components via expert research)
+pi-pi:
+    pi -e extensions/pi-pi.ts -e extensions/theme-cycler.ts
+
+# Pi with cross-agent compatibility (loads .claude/ commands + agents)
+pi-cross:
+    pi -e extensions/cross-agent.ts -e extensions/theme-cycler.ts
+
+# Pi with system prompt selector (/system to pick agent persona)
+pi-system:
+    pi -e extensions/system-select.ts -e extensions/minimal.ts -e extensions/theme-cycler.ts
+
+# Pi with subagent widget (/sub, /subcont, /subclear)
+pi-sub:
+    pi -e extensions/subagent-widget.ts -e extensions/theme-cycler.ts
+
+# Pi with agent-im chat room (scaffold)
+pi-im:
+    pi -e extensions/agent-im.ts -e extensions/theme-cycler.ts
+
+# Pi with agent-forge evolutionary tools (scaffold)
+pi-forge:
+    pi -e extensions/agent-forge.ts -e extensions/theme-cycler.ts
+
+# Pi with chronicle state machine (scaffold)
+pi-chronicle:
+    pi -e extensions/chronicle.ts -e extensions/agent-team.ts -e extensions/theme-cycler.ts
+
+# Pi with domain ownership enforcement + team dispatch
+pi-team-safe:
+    pi -e extensions/agent-team.ts -e extensions/domain-ownership.ts -e extensions/theme-cycler.ts
+
+# Pi with full harness: team + domain + damage-control + chain
+pi-harness:
+    pi -e extensions/agent-team.ts -e extensions/domain-ownership.ts -e extensions/damage-control.ts -e extensions/agent-chain.ts -e extensions/theme-cycler.ts
