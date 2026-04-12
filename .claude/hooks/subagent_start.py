@@ -11,6 +11,7 @@ is handled by agent frontmatter (O07) and PreToolUse hooks (SP2).
 """
 
 import os
+import re
 import sys
 from pathlib import Path
 
@@ -25,6 +26,7 @@ HOOK_NAME = "subagent_start.py"
 handle_health_check(HOOK_NAME)
 
 AGENTS_DIR = Path(PROJECT_DIR) / ".claude" / "agents"
+_SAFE_AGENT_TYPE = re.compile(r"^[a-zA-Z0-9_-]+$")
 
 
 def _parse_frontmatter(filepath: Path) -> dict:
@@ -58,24 +60,31 @@ def main():
     agent_id = d.get("agent_id", "unknown")
     agent_type = d.get("agent_type", "unknown")
 
-    # Read agent frontmatter for tool isolation info
-    agent_file = AGENTS_DIR / f"{agent_type}.md"
+    # Validate agent_type to prevent path traversal (S-01)
     tools = None
     disallowed_tools = None
 
-    if agent_file.exists():
-        fm = _parse_frontmatter(agent_file)
-        tools = fm.get("tools")
-        disallowed_tools = fm.get("disallowedTools")
+    if not _SAFE_AGENT_TYPE.match(agent_type):
         logger.log(
             f"SubagentStart: {agent_id} ({agent_type}) "
-            f"| allowed={tools} | disallowed={disallowed_tools}"
+            f"| REJECTED: invalid agent_type (path traversal risk)"
         )
     else:
-        logger.log(
-            f"SubagentStart: {agent_id} ({agent_type}) "
-            f"| WARNING: no agent definition at {agent_file}"
-        )
+        agent_file = AGENTS_DIR / f"{agent_type}.md"
+
+        if agent_file.exists():
+            fm = _parse_frontmatter(agent_file)
+            tools = fm.get("tools")
+            disallowed_tools = fm.get("disallowedTools")
+            logger.log(
+                f"SubagentStart: {agent_id} ({agent_type}) "
+                f"| allowed={tools} | disallowed={disallowed_tools}"
+            )
+        else:
+            logger.log(
+                f"SubagentStart: {agent_id} ({agent_type}) "
+                f"| WARNING: no agent definition for {agent_type}"
+            )
 
     payload = {
         "agent_id": agent_id,
