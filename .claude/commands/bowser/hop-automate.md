@@ -32,18 +32,22 @@ Parse `$ARGUMENTS` to extract these variables:
 
 1. If no `$ARGUMENTS` provided, list all available workflows in `.claude/commands/bowser/` (excluding `hop-automate.md`) and stop.
 2. Extract WORKFLOW from the first argument.
-3. Use Glob to check that `.claude/commands/bowser/{WORKFLOW}.md` exists. If not found, list available workflows and stop with an error message.
-4. Parse remaining arguments for keywords (SKILL, MODE, VISION) and collect leftover text as PROMPT.
+3. **Validate WORKFLOW against an allowlist** (SP14 hardening — path traversal protection):
+   - WORKFLOW must match the regex `^[a-z0-9][a-z0-9-]*$` (lowercase alphanumerics + hyphens only, must start with a letter or digit).
+   - Reject if WORKFLOW contains any of: `/`, `\`, `..`, leading/trailing whitespace, `~`, `$`, or any other path metacharacters.
+   - If validation fails, stop immediately with: `"Invalid workflow name '{WORKFLOW}'. Workflow names must be lowercase alphanumerics with hyphens only."` Do NOT attempt any file operations with a rejected name.
+4. Use Glob to check that `.claude/commands/bowser/{WORKFLOW}.md` exists. If not found, list available workflows and stop with an error message.
+5. Parse remaining arguments for keywords (SKILL, MODE, VISION) and collect leftover text as PROMPT.
 
 ### Phase 2: Load Workflow
 
-5. Read `.claude/commands/bowser/{WORKFLOW}.md`.
-6. Check the workflow's frontmatter for `defaults:` — if present, use those as base values for SKILL, MODE, and VISION. Any keyword overrides from step 4 take priority over workflow defaults.
-7. Extract the workflow content (everything after the frontmatter `---` block). This contains the browser automation steps.
+6. Read `.claude/commands/bowser/{WORKFLOW}.md`.
+7. Check the workflow's frontmatter for `defaults:` — if present, use those as base values for SKILL, MODE, and VISION. Any keyword overrides from step 5 take priority over workflow defaults.
+8. Extract the workflow content (everything after the frontmatter `---` block). This contains the browser automation steps.
 
 ### Phase 3: Execute
 
-8. Execute the resolved skill (`/playwright-bowser` or `/claude-bowser`) with a combined prompt:
+9. Execute the resolved skill (`/playwright-bowser` or `/claude-bowser`) with a combined prompt:
 
 ```
 (headed: {MODE}) (vision: {VISION})
@@ -53,7 +57,7 @@ Parse `$ARGUMENTS` to extract these variables:
 
 ### Phase 4: Report
 
-9. Report the results back to the user, including:
-   - Which workflow was run
-   - Which skill and mode were used
-   - The skill's output/results
+10. Report the results back to the user, including:
+    - Which workflow was run
+    - Which skill and mode were used
+    - The skill's output/results

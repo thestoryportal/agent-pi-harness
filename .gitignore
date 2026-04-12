@@ -29,3 +29,10 @@ tests/prompts/**/output.json
 # Swift
 .build/
 .swiftpm/
+
+# SP14 Browser Automation (bowser) — screenshots and run artifacts
+# QA screenshots may contain authenticated page content, session tokens,
+# PII, or secrets visible in the DOM. Never commit them.
+screenshots/
+ai_review/runs/
+ai_review/screenshots/

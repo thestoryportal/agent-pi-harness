@@ -161,6 +161,23 @@ bashToolPatterns:
     ask: true
 
   # ---------------------------------------------------------------------------
+  # PLAYWRIGHT-CLI ARBITRARY JS PRIMITIVES (SP14 hardening)
+  # playwright-cli run-code / eval execute arbitrary JavaScript in the
+  # browser context — reachable via prompt injection in a YAML story.
+  # Block outright. playwright-cli upload can exfiltrate filesystem paths
+  # to remote sites; ask-gate it.
+  # ---------------------------------------------------------------------------
+  - pattern: '\bplaywright-cli\b.*\brun-code\b'
+    reason: playwright-cli run-code (arbitrary JavaScript execution in browser)
+
+  - pattern: '\bplaywright-cli\b.*\beval\b'
+    reason: playwright-cli eval (arbitrary JavaScript expression in browser)
+
+  - pattern: '\bplaywright-cli\b.*\bupload\b'
+    reason: playwright-cli upload (file uploaded to remote site)
+    ask: true
+
+  # ---------------------------------------------------------------------------
   # SHELL SAFETY (continued)
   # ---------------------------------------------------------------------------
   # ---------------------------------------------------------------------------

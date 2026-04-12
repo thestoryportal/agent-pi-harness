@@ -24,7 +24,7 @@ Run each command. Report PASS/FAIL for each step.
 2. `xcode-select --install` (skip if already installed, required for sub-project 4)
 3. `npm install -g @anthropic-ai/claude-code` (if not already installed)
 4. Pi Agent: `bun add -g @mariozechner/pi-coding-agent` (global install via bun)
-5. Playwright CLI: `npm install -g @playwright/cli@latest` (required for SP14 playwright-bowser skill)
+5. Playwright CLI: `npm install -g --ignore-scripts @playwright/cli@latest` (required for SP14 playwright-bowser skill; `--ignore-scripts` blocks arbitrary postinstall code, which is a supply-chain risk per SP14 round-2 hardening S-07)
 6. Playwright browsers: `npx playwright install chromium` (one-time Chromium download for headless runs)
 7. `uv sync`
 8. `cp .env.example .env` (if .env does not exist)

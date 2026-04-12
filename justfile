@@ -288,7 +288,8 @@ hop workflow="amazon-add-to-cart" prompt="pack of 10 sketch notebooks" *flags=""
     export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 && claude --chrome "/bowser:hop-automate {{workflow}} {{prompt}} {{flags}}"
 
 # UI Review — parallel user story validation across all YAML stories in ai_review/user_stories/
-ui-review headed="headed" filter="" *flags="":
+# headed defaults to "false" (matches /ui-review command's own default). Pass headed="true" or "headed" to see the browser.
+ui-review headed="false" filter="" *flags="":
     export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 && claude "/ui-review {{headed}} {{filter}} {{flags}}"
 
 # Amazon add-to-cart — multiple items in one shot (requires --chrome)

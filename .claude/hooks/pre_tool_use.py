@@ -3,13 +3,16 @@
 # requires-python = ">=3.12"
 # dependencies = ["pyyaml"]
 # ///
-"""PreToolUse hook: Read/Glob/Grep zero-access protection (catch-all).
+"""PreToolUse hook: Read/Glob/Grep zero-access protection + MCP gates (catch-all).
 
 Bash, Edit, and Write tools are handled by their own per-tool hooks
 (bash_damage_control.py, edit_damage_control.py, write_damage_control.py).
-This hook catches Read, Glob, and Grep tools and blocks access to
-zeroAccessPaths only — these tools cannot modify files, so readOnlyPaths
-and noDeletePaths do not apply.
+This hook catches:
+  - Read, Glob, Grep — blocks access to zeroAccessPaths
+  - mcp__claude_in_chrome__* — blocks arbitrary-JS primitives (execute_script,
+    eval) because Chrome MCP tools run against the user's real browser session
+    (cookies, localStorage, authenticated identities) with no other hook
+    coverage. SP14 added claude-bowser which depends on these tools.
 
 Exit codes: 0=allow, 2=block. This is a security-critical hook — never exit 1.
 """
@@ -89,6 +92,50 @@ def check_read(tool_input: dict, rules: dict) -> tuple[str, str | None]:
     return "allow", None
 
 
+# ============================================================================
+# CHROME MCP TOOL GATES (SP14 hardening)
+# ============================================================================
+# claude-bowser drives the user's real Chrome via mcp__claude_in_chrome__*
+# tools. These tools are NOT covered by bash_damage_control.py because
+# they are MCP-invoked, not Bash-invoked. Any arbitrary-JS primitive reached
+# this way has the user's full authenticated identity (Gmail, GitHub,
+# banking, etc.). Block execute_script / eval outright.
+
+# Tools that execute arbitrary JavaScript in the browser context —
+# always blocked. Matched as the final segment of the tool name so
+# variants like `mcp__claude_in_chrome__execute_script` and
+# `mcp__claude-in-chrome__execute_script` both resolve.
+MCP_CHROME_BLOCKED_SUFFIXES = (
+    "execute_script",
+    "eval",
+    "evaluate",
+    "run_script",
+    "run_code",
+)
+
+
+def check_mcp_chrome(tool_name: str) -> tuple[str, str | None]:
+    """Gate mcp__claude_in_chrome__* tool invocations.
+
+    Blocks any tool whose final name segment is an arbitrary-JS execution
+    primitive. All other Chrome MCP tools (navigate, click, screenshot,
+    etc.) pass through — they are still logged by post_tool_use so an
+    auditor can review the session.
+    """
+    parts = tool_name.split("__")
+    if len(parts) < 2:
+        return "allow", None
+    suffix = parts[-1].lower()
+    if suffix in MCP_CHROME_BLOCKED_SUFFIXES:
+        return (
+            "block",
+            f"Chrome MCP arbitrary-JS primitive blocked: {tool_name}. "
+            f"execute_script / eval on the user's real browser session is "
+            f"an identity-exfiltration vector and has no allowlist.",
+        )
+    return "allow", None
+
+
 def load_patterns() -> dict:
     patterns_path = Path(PROJECT_DIR) / ".claude" / "hooks" / "patterns.yaml"
     with open(patterns_path) as f:
@@ -107,6 +154,23 @@ def main():
 
     tool_name = input_data.get("tool_name", "")
     tool_input = input_data.get("tool_input", {})
+
+    # Chrome MCP tools: gate arbitrary-JS primitives BEFORE the catch-all
+    # early exit. Other Chrome MCP tools pass through as log-only.
+    if tool_name.startswith("mcp__claude_in_chrome") or tool_name.startswith("mcp__claude-in-chrome"):
+        decision, reason = check_mcp_chrome(tool_name)
+        elapsed = int((time.monotonic() - start_time) * 1000)
+        payload = {"tool": tool_name, "decision": decision}
+        if reason:
+            payload["reason"] = reason
+        if decision == "block":
+            emit_event("PreToolUse", HOOK_NAME, 2, payload, elapsed)
+            logger.log(f"BLOCKED: {tool_name} — {reason}")
+            print(json.dumps({"error": reason}), file=sys.stderr)
+            sys.exit(2)
+        emit_event("PreToolUse", HOOK_NAME, 0, payload, elapsed)
+        logger.log(f"ALLOW: {tool_name}")
+        sys.exit(0)
 
     # Only handle Read, Glob, Grep — other tools have their own hooks
     if tool_name not in ("Read", "Glob", "Grep"):

@@ -25,7 +25,7 @@ You are a QA validation agent. Execute user stories against web apps using the `
 ## Workflow
 
 1. **Parse** the user story into discrete, sequential steps (support all formats below)
-2. **Setup** — derive a named session from the story, create the screenshots subdirectory via `mkdir -p`. If VISION is `true`, prefix all `playwright-cli` commands with `PLAYWRIGHT_MCP_CAPS=vision` for the entire session.
+2. **Setup** — derive a named session from the story **prefixed with a fresh 16-char random hex nonce** (SP14 round-2 hardening, defeats cross-session cookie enumeration between parallel fan-out agents): `-s=<nonce>-<story-kebab-name>` where `<nonce>` is generated via `uuidgen | tr -d - | head -c 16 | tr '[:upper:]' '[:lower:]'`. Never use a session name that is guessable from the YAML story name alone. Create the screenshots subdirectory via `mkdir -p`. If VISION is `true`, prefix all `playwright-cli` commands with `PLAYWRIGHT_MCP_CAPS=vision` for the entire session.
 3. **Execute each step sequentially:**
    a. Perform the action using `playwright-bowser` skill commands
    b. Take a screenshot: `playwright-cli -s=<session> screenshot --filename=<SCREENSHOTS_DIR>/<run-dir>/<##_step-name>.png`
