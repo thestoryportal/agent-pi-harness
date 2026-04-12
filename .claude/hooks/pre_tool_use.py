@@ -144,9 +144,9 @@ MCP_JS_EXEC_TOKEN_SEQS: frozenset[tuple[str, ...]] = frozenset({
     ("run", "code"),
     ("eval",),
     ("evaluate",),
-    # Concatenated-name variants (r5 + r6): MCP tool names that combine
-    # the primitive into a single token with no separator. Covers the
-    # `-script`, `-code`, and `-js` suffix families.
+    # Concatenated-name variants (r5 + r6 + r7): MCP tool names that
+    # combine the primitive into a single token with no separator.
+    # Covers the `-script`, `-code`, `-js`, and `javascript` families.
     ("executescript",),
     ("runscript",),
     ("runcode",),
@@ -154,6 +154,7 @@ MCP_JS_EXEC_TOKEN_SEQS: frozenset[tuple[str, ...]] = frozenset({
     ("runjs",),
     ("execjs",),
     ("executejs",),
+    ("javascript",),
 })
 
 
