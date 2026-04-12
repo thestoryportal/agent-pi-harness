@@ -1,8 +1,27 @@
 """Send a prompt from a file to multiple LLM models."""
 
+import os
 from pathlib import Path
 
 from just_prompt.molecules.prompt import prompt as prompt_fn
+
+
+def _get_allowed_root() -> Path:
+    """Return the allowed root directory, checked at call time."""
+    return Path(
+        os.environ.get("JUST_PROMPT_ALLOWED_ROOT", os.getcwd())
+    ).resolve()
+
+
+def _validate_path_within_root(p: Path, label: str) -> Path:
+    """Resolve a path and ensure it falls within the allowed root."""
+    resolved = p.resolve()
+    allowed = _get_allowed_root()
+    if not str(resolved).startswith(str(allowed)):
+        raise ValueError(
+            f"{label} must be within {allowed}, got: {resolved}"
+        )
+    return resolved
 
 
 def prompt_from_file(
@@ -21,6 +40,7 @@ def prompt_from_file(
     path = Path(abs_file_path)
     if not path.is_absolute():
         raise ValueError(f"abs_file_path must be absolute, got: {abs_file_path}")
+    path = _validate_path_within_root(path, "abs_file_path")
     if not path.exists():
         raise FileNotFoundError(f"Prompt file not found: {abs_file_path}")
 
@@ -50,6 +70,7 @@ def prompt_from_file_to_file(
         raise ValueError(
             f"abs_output_dir must be absolute, got: {abs_output_dir}"
         )
+    output_path = _validate_path_within_root(output_path, "abs_output_dir")
     output_path.mkdir(parents=True, exist_ok=True)
 
     file_paths: dict[str, str] = {}

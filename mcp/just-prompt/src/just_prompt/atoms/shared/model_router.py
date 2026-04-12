@@ -4,7 +4,7 @@ Model router for dispatching requests to the appropriate provider.
 
 import importlib
 import logging
-from typing import List
+from typing import List  # noqa: UP035 — kept for compat
 
 from .data_types import ModelProviders
 from .utils import split_provider_and_model
@@ -16,6 +16,9 @@ class ModelRouter:
     """
     Routes requests to the appropriate provider based on the model string.
     """
+
+    # Allowlisted provider names for importlib safety
+    _VALID_PROVIDERS = frozenset(p.full_name for p in ModelProviders)
 
     @staticmethod
     def validate_and_correct_model(provider_name: str, model_name: str) -> str:
@@ -29,6 +32,9 @@ class ModelRouter:
         Returns:
             Validated and potentially corrected model name
         """
+        if provider_name not in ModelRouter._VALID_PROVIDERS:
+            raise ValueError(f"Unknown provider: {provider_name}")
+
         # Early return for our thinking token models to bypass validation
         thinking_models = [
             "claude-3-7-sonnet-20250219",

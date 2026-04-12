@@ -94,4 +94,4 @@ line="${line} $(printf "${DIMWHITE}hooks:%s fail-open${RESET}" "$hook_count")"
 
 line="${line} $(printf "${DIMWHITE}%s${RESET}" "$(date +%H:%M)")"
 
-printf "%b\n" "$line"
+printf "%s\n" "$line"

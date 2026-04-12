@@ -9,6 +9,12 @@ from just_prompt.molecules.ceo_and_board_prompt import (
 )
 
 
+@pytest.fixture(autouse=True)
+def _allow_tmp_path(tmp_path, monkeypatch):
+    """Allow tmp_path as the root for path validation in all tests."""
+    monkeypatch.setenv("JUST_PROMPT_ALLOWED_ROOT", str(tmp_path))
+
+
 def test_wrap_board_response():
     """XML envelope wraps model and response correctly."""
     result = _wrap_board_response("openai:gpt-4o", "test response")

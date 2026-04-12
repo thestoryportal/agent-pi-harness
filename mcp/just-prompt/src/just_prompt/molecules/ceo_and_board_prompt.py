@@ -6,6 +6,7 @@ from pathlib import Path
 
 from just_prompt.atoms.shared.model_router import ModelRouter
 from just_prompt.molecules.prompt import get_default_models
+from just_prompt.molecules.prompt_from_file import _validate_path_within_root  # S-01/S-02 fix
 
 logger = logging.getLogger(__name__)
 
@@ -52,6 +53,7 @@ def ceo_and_board(
         raise ValueError(
             f"abs_file_path must be absolute, got: {abs_file_path}"
         )
+    path = _validate_path_within_root(path, "abs_file_path")
     if not path.exists():
         raise FileNotFoundError(f"Prompt file not found: {abs_file_path}")
 
@@ -60,6 +62,7 @@ def ceo_and_board(
         raise ValueError(
             f"abs_output_dir must be absolute, got: {abs_output_dir}"
         )
+    output_path = _validate_path_within_root(output_path, "abs_output_dir")
 
     original_prompt = path.read_text(encoding="utf-8")
     board_models = models_prefixed_by_provider or get_default_models()

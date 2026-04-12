@@ -1,2 +1,0 @@
-[console_scripts]
-just-prompt = just_prompt.__main__:main

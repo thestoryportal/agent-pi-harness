@@ -49,7 +49,7 @@ These rules prevent scope drift, invented features, and missed gaps:
 
 2. **Follow the sub-project priority order.** Section 8 of the source of truth defines
    priority order. Do not skip ahead. Do not reorder without explicit user approval.
-   Current: SP4 → SP5 → SP6 → SP7 → ...
+   Current: SP5 → SP6 → SP7 → ...
 
 3. **No invented components.** If a feature does not exist in any IndyDevDan repo
    (code, architecture doc, or concept), do not add it. The goal is identical replication.

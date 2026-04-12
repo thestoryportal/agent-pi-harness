@@ -9,6 +9,12 @@ from just_prompt.molecules.prompt_from_file import (
 )
 
 
+@pytest.fixture(autouse=True)
+def _allow_tmp_path(tmp_path, monkeypatch):
+    """Allow tmp_path as the root for path validation in all tests."""
+    monkeypatch.setenv("JUST_PROMPT_ALLOWED_ROOT", str(tmp_path))
+
+
 @patch("just_prompt.molecules.prompt_from_file.prompt_fn")
 def test_prompt_from_file_reads_and_dispatches(mock_prompt_fn, tmp_path):
     """Reads file content and dispatches to prompt."""
