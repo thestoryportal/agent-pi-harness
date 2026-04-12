@@ -27,14 +27,18 @@ from apps.observe.broadcast import broadcaster
 
 def create_app(db_path: str | Path | None = None) -> FastAPI:
     """Create the FastAPI app. db_path is configurable for testing."""
-    app = FastAPI(title="ArhuGula Observe", version="0.1.0")
+    from contextlib import asynccontextmanager
 
     _db_path = Path(db_path) if db_path else Path(__file__).parent / "events.db"
 
-    @app.on_event("startup")
-    async def startup():
+    @asynccontextmanager
+    async def lifespan(app: FastAPI):
         init_db(_db_path)
-        asyncio.create_task(_poll_loop(_db_path))
+        task = asyncio.create_task(_poll_loop(_db_path))
+        yield
+        task.cancel()
+
+    app = FastAPI(title="ArhuGula Observe", version="0.1.0", lifespan=lifespan)
 
     @app.get("/health")
     async def health():

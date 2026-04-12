@@ -46,14 +46,14 @@
   <div class="filters">
     <div>
       <label>Type</label><br>
-      <select v-model="filterType" @change="applyFilters">
+      <select v-model="filterType">
         <option value="">All</option>
         <option v-for="t in eventTypes" :key="t" :value="t">{{ t }}</option>
       </select>
     </div>
     <div>
       <label>Session</label><br>
-      <input v-model="filterSession" @input="applyFilters" placeholder="session_id...">
+      <input v-model="filterSession" placeholder="session_id...">
     </div>
   </div>
 
@@ -146,8 +146,6 @@ createApp({
       expanded.value = expanded.value === id ? null : id;
     }
 
-    function applyFilters() { /* reactive via computed */ }
-
     function connectWS() {
       const proto = location.protocol === 'https:' ? 'wss:' : 'ws:';
       ws = new WebSocket(proto + '//' + location.host + '/ws');
@@ -160,15 +158,20 @@ createApp({
         try {
           const event = JSON.parse(msg.data);
           events.value.unshift(event);
-        } catch {}
+        } catch (e) {
+          console.warn('Failed to parse WS message:', e);
+        }
       };
     }
 
     async function loadInitial() {
       try {
         const res = await fetch('/api/events?limit=200');
+        if (!res.ok) { console.warn('Failed to load events:', res.status); return; }
         events.value = await res.json();
-      } catch {}
+      } catch (e) {
+        console.warn('Failed to fetch events:', e);
+      }
     }
 
     onMounted(() => {
@@ -181,7 +184,7 @@ createApp({
       if (reconnectTimer) clearTimeout(reconnectTimer);
     });
 
-    return { events, expanded, wsConnected, filterType, filterSession, eventTypes, filtered, formatTime, truncate, exitLabel, formatPayload, toggle, applyFilters };
+    return { events, expanded, wsConnected, filterType, filterSession, eventTypes, filtered, formatTime, truncate, exitLabel, formatPayload, toggle };
   }
 }).mount('#app');
 </script>

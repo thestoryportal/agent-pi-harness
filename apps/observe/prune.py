@@ -37,13 +37,9 @@ def prune_sqlite(cutoff: datetime, db_path: Path) -> None:
     if not db_path.exists():
         return
     try:
-        import sqlite3
-        conn = sqlite3.connect(str(db_path), isolation_level=None)
-        conn.execute("PRAGMA busy_timeout=500")
-        cursor = conn.execute("DELETE FROM events WHERE timestamp < ?", (cutoff.isoformat(),))
-        deleted = cursor.rowcount
-        conn.execute("VACUUM")
-        conn.close()
+        from apps.observe.db import delete_before, vacuum
+        deleted = delete_before(cutoff.isoformat(), db_path=db_path)
+        vacuum(db_path=db_path)
         print(f"SQLite: pruned {deleted} events, vacuumed")
     except Exception as e:
         print(f"SQLite prune error: {e}", file=sys.stderr)

@@ -76,8 +76,9 @@ def query_events(
     """Query events with optional filters. Returns list of dicts, newest first."""
     conn = get_connection(db_path)
     try:
-        clauses = []
-        params: list = []
+        # clauses contains only static predicate strings — user input goes in params only
+        clauses: list[str] = []
+        params: list[str | int] = []
         if event_type:
             clauses.append("event_type = ?")
             params.append(event_type)
