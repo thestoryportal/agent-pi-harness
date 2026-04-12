@@ -111,7 +111,8 @@ def emit_event(
     # Try SQLite if DB file exists
     if DB_PATH.exists():
         try:
-            sys.path.insert(0, PROJECT_DIR)
+            if PROJECT_DIR not in sys.path:
+                sys.path.insert(0, PROJECT_DIR)
             from apps.observe.db import insert_event as db_insert
             db_insert(event_type, session_id, ts, hook_name, exit_code, payload_str, duration_ms, db_path=DB_PATH)
             return

@@ -4,8 +4,11 @@ Usage: uv run apps/observe/main.py
 """
 
 import asyncio
+import logging
 import os
 from pathlib import Path
+
+logger = logging.getLogger(__name__)
 
 import uvicorn
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect, Query
@@ -89,8 +92,8 @@ async def _poll_loop(db_path: Path) -> None:
                 await broadcaster.broadcast(event)
                 if event["id"] > last_id:
                     last_id = event["id"]
-        except Exception:
-            pass  # Transient DB errors should not crash the poll loop
+        except Exception as e:
+            logger.warning("Poll loop error (will retry): %s", e)
 
 
 if __name__ == "__main__":

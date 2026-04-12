@@ -1,24 +1,13 @@
 """Tmux session management — create, list, kill."""
 
-import json
-import os
 import subprocess
-from datetime import datetime, timezone
 
 
-def _emit_observe(event_type: str, payload: dict) -> None:
-    """Emit lifecycle event to Observe SQLite. Silently skips if unavailable."""
+def _emit(event_type: str, exit_code: int, payload: dict) -> None:
+    """Emit lifecycle event to Observe. Silently skips if unavailable."""
     try:
-        from apps.observe.db import insert_event
-        session_id = os.environ.get("ARHUGULA_SESSION_ID", "unknown")
-        insert_event(
-            event_type=event_type,
-            session_id=session_id,
-            timestamp=datetime.now(timezone.utc).isoformat(),
-            hook_name="drive",
-            exit_code=0 if event_type == "session.spawned" else 1,
-            payload=json.dumps(payload),
-        )
+        from apps.observe.db import emit_observe_event
+        emit_observe_event(event_type, "drive", exit_code, payload)
     except Exception:
         pass
 
@@ -30,7 +19,7 @@ def create_session(name: str) -> bool:
         capture_output=True, text=True,
     )
     if result.returncode == 0:
-        _emit_observe("session.spawned", {"tmux_session": name})
+        _emit("session.spawned", 0, {"tmux_session": name})
     return result.returncode == 0
 
 
@@ -52,5 +41,5 @@ def kill_session(name: str) -> bool:
         capture_output=True, text=True,
     )
     if result.returncode == 0:
-        _emit_observe("session.failed", {"tmux_session": name, "reason": "killed"})
+        _emit("session.failed", 0, {"tmux_session": name, "reason": "killed"})
     return result.returncode == 0

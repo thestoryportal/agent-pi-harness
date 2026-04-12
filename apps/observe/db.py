@@ -4,8 +4,9 @@ Canonical schema from spec Section 9.1. WAL mode set at creation (non-negotiable
 PRAGMA busy_timeout=500 on every connection as write-lock backstop.
 """
 
+import json
+import os
 import sqlite3
-from datetime import datetime, timezone
 from pathlib import Path
 
 DEFAULT_DB_PATH = Path(__file__).parent / "events.db"
@@ -124,6 +125,45 @@ def vacuum(db_path: Path = DEFAULT_DB_PATH) -> None:
         conn.execute("VACUUM")
     finally:
         conn.close()
+
+
+def get_session_id() -> str:
+    """Resolve session ID using the same priority chain as _base.py.
+
+    CLAUDE_SESSION_ID > ARHUGULA_SESSION_ID > "unknown".
+    """
+    return os.environ.get("CLAUDE_SESSION_ID") or os.environ.get("ARHUGULA_SESSION_ID") or "unknown"
+
+
+def emit_observe_event(
+    event_type: str,
+    hook_name: str,
+    exit_code: int,
+    payload: dict | None = None,
+    duration_ms: int | None = None,
+    db_path: Path = DEFAULT_DB_PATH,
+) -> None:
+    """High-level emit: resolves session_id, serializes payload, inserts.
+
+    Used by Drive and other app-layer code that can't import _base.py.
+    Silently skips if DB doesn't exist or insert fails.
+    """
+    if not db_path.exists():
+        return
+    try:
+        from datetime import datetime, timezone
+        insert_event(
+            event_type=event_type,
+            session_id=get_session_id(),
+            timestamp=datetime.now(timezone.utc).isoformat(),
+            hook_name=hook_name,
+            exit_code=exit_code,
+            payload=json.dumps(payload) if payload else None,
+            duration_ms=duration_ms,
+            db_path=db_path,
+        )
+    except Exception:
+        pass  # Observability failures must never block app operations
 
 
 def get_max_id(db_path: Path = DEFAULT_DB_PATH) -> int:
