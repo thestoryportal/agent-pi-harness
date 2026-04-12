@@ -8,6 +8,8 @@ enum SteerError: LocalizedError {
     case elementNotFound(String)
     case ocrFailed(String)
     case timeout(String)
+    case inputFailed(String)
+    case invalidArgument(String)
 
     var errorDescription: String? {
         switch self {
@@ -25,6 +27,10 @@ enum SteerError: LocalizedError {
             return msg
         case .timeout(let msg):
             return "Timeout: \(msg)"
+        case .inputFailed(let msg):
+            return "Input event failed: \(msg)"
+        case .invalidArgument(let msg):
+            return "Invalid argument: \(msg)"
         }
     }
 }

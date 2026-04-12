@@ -119,12 +119,7 @@ struct AppsCommand: ParsableCommand {
             guard let app = apps.first(where: {
                 $0.localizedName?.localizedCaseInsensitiveContains(name) == true
             }) else {
-                if json {
-                    printError("App '\(name)' not found")
-                } else {
-                    print("Error: App '\(name)' not found")
-                    return
-                }
+                printError("App '\(name)' not found")
             }
 
             app.activate()

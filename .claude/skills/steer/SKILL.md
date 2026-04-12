@@ -131,3 +131,16 @@ IDs regenerate with each snapshot. Always use IDs from the most recent `steer se
 - **Use `--json` always** — structured output is reliable
 - **Write all files to /tmp** — never write output files into the project directory
 - **Run `steer help <cmd>`** if you're unsure about a command's flags
+
+## Sensitive Data Warning
+
+`steer clipboard read`, `steer focus`, and `steer see` may capture sensitive content
+(passwords, API keys, 2FA codes, private text fields). The output is plain JSON on
+stdout — anything that captures or logs the command output (Claude Code session logs,
+hook events, terminal scrollback) will retain that content.
+
+- **Do not** run `steer clipboard read` while a password manager has copied a credential
+- **Do not** run `steer see` on screens showing sensitive forms unless the output is
+  routed to a redacting consumer
+- Secure text fields (`AXSecureTextField`) are automatically redacted in `value` output,
+  but not all apps mark password fields with that role

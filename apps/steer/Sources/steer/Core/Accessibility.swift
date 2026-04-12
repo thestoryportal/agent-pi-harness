@@ -38,10 +38,11 @@ enum AccessibilityHelper {
         let systemWide = AXUIElementCreateSystemWide()
         var focusedRef: CFTypeRef?
         let result = AXUIElementCopyAttributeValue(systemWide, kAXFocusedUIElementAttribute as CFString, &focusedRef)
-        guard result == .success, let focused = focusedRef else { return nil }
-        // CFTypeRef → AXUIElement: AXUIElement is a CFTypeRef alias, so this cast is safe
-        // but we guard it anyway for robustness
-        let elem = focused as! AXUIElement  // swiftlint:disable:this force_cast
+        guard result == .success, let focused = focusedRef,
+              CFGetTypeID(focused) == AXUIElementGetTypeID() else {
+            return nil
+        }
+        let elem = unsafeBitCast(focused, to: AXUIElement.self)
         var counters: [String: Int] = [:]
         return extractElement(elem, counters: &counters)
     }
@@ -75,15 +76,20 @@ enum AccessibilityHelper {
         AXUIElementCopyAttributeValue(element, kAXDescriptionAttribute as CFString, &descRef)
         let desc = descRef as? String
 
-        var valueRef: CFTypeRef?
-        AXUIElementCopyAttributeValue(element, kAXValueAttribute as CFString, &valueRef)
-        let value = valueRef as? String
+        // Redact value field for secure text fields (passwords) and other sensitive roles
+        // to prevent secret leakage via see/focus output (S-06).
+        let isSensitive = role == "AXSecureTextField"
+        var value: String?
+        if !isSensitive {
+            var valueRef: CFTypeRef?
+            AXUIElementCopyAttributeValue(element, kAXValueAttribute as CFString, &valueRef)
+            value = valueRef as? String
+        }
 
         var posRef: CFTypeRef?
         AXUIElementCopyAttributeValue(element, kAXPositionAttribute as CFString, &posRef)
         var position = CGPoint.zero
-        if let posVal = posRef {
-            // AXValue is a CFTypeRef; use unsafeBitCast since conditional cast is not allowed
+        if let posVal = posRef, CFGetTypeID(posVal) == AXValueGetTypeID() {
             let axValue = unsafeBitCast(posVal, to: AXValue.self)
             AXValueGetValue(axValue, .cgPoint, &position)
         }
@@ -91,7 +97,7 @@ enum AccessibilityHelper {
         var sizeRef: CFTypeRef?
         AXUIElementCopyAttributeValue(element, kAXSizeAttribute as CFString, &sizeRef)
         var size = CGSize.zero
-        if let sizeVal = sizeRef {
+        if let sizeVal = sizeRef, CFGetTypeID(sizeVal) == AXValueGetTypeID() {
             let axValue = unsafeBitCast(sizeVal, to: AXValue.self)
             AXValueGetValue(axValue, .cgSize, &size)
         }

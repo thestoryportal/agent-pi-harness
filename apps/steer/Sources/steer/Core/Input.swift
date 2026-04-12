@@ -15,9 +15,11 @@ enum InputHelper {
         let downType: CGEventType = button == .left ? .leftMouseDown : .rightMouseDown
         let upType: CGEventType = button == .left ? .leftMouseUp : .rightMouseUp
 
-        guard let downEvent = CGEvent(mouseEventSource: nil, mouseType: downType, mouseCursorPosition: point, mouseButton: button),
-              let upEvent = CGEvent(mouseEventSource: nil, mouseType: upType, mouseCursorPosition: point, mouseButton: button) else {
-            return
+        guard let downEvent = CGEvent(mouseEventSource: nil, mouseType: downType, mouseCursorPosition: point, mouseButton: button) else {
+            throw SteerError.inputFailed("Failed to create mouseDown event at (\(x), \(y))")
+        }
+        guard let upEvent = CGEvent(mouseEventSource: nil, mouseType: upType, mouseCursorPosition: point, mouseButton: button) else {
+            throw SteerError.inputFailed("Failed to create mouseUp event at (\(x), \(y))")
         }
 
         downEvent.post(tap: .cghidEventTap)
@@ -30,7 +32,7 @@ enum InputHelper {
         for char in text.utf16 {
             guard let downEvent = CGEvent(keyboardEventSource: nil, virtualKey: 0, keyDown: true),
                   let upEvent = CGEvent(keyboardEventSource: nil, virtualKey: 0, keyDown: false) else {
-                continue
+                throw SteerError.inputFailed("Failed to create keyboard event for character")
             }
             var chars = [char]
             downEvent.keyboardSetUnicodeString(stringLength: 1, unicodeString: &chars)
@@ -44,8 +46,12 @@ enum InputHelper {
     static func sendHotkey(combo: String) throws {
         try ensureAccessibility()
         let parts = combo.lowercased().split(separator: "+").map(String.init)
+        guard !parts.isEmpty else {
+            throw SteerError.invalidArgument("Empty hotkey combo")
+        }
+
         var flags: CGEventFlags = []
-        var keyCode: CGKeyCode = 0
+        var keyCode: CGKeyCode?
 
         for part in parts {
             switch part {
@@ -58,13 +64,20 @@ enum InputHelper {
             case "alt", "option", "opt":
                 flags.insert(.maskAlternate)
             default:
-                keyCode = keyCodeFor(part)
+                guard let code = keyCodeFor(part) else {
+                    throw SteerError.invalidArgument("Unknown key '\(part)' in hotkey '\(combo)'")
+                }
+                keyCode = code
             }
         }
 
-        guard let downEvent = CGEvent(keyboardEventSource: nil, virtualKey: keyCode, keyDown: true),
-              let upEvent = CGEvent(keyboardEventSource: nil, virtualKey: keyCode, keyDown: false) else {
-            return
+        guard let finalKeyCode = keyCode else {
+            throw SteerError.invalidArgument("Hotkey '\(combo)' has no non-modifier key")
+        }
+
+        guard let downEvent = CGEvent(keyboardEventSource: nil, virtualKey: finalKeyCode, keyDown: true),
+              let upEvent = CGEvent(keyboardEventSource: nil, virtualKey: finalKeyCode, keyDown: false) else {
+            throw SteerError.inputFailed("Failed to create hotkey events for '\(combo)'")
         }
 
         downEvent.flags = flags
@@ -76,12 +89,14 @@ enum InputHelper {
 
     static func scroll(direction: String, amount: Int, x: Double? = nil, y: Double? = nil) throws {
         try ensureAccessibility()
-        let (dx, dy): (Int32, Int32) = switch direction {
-        case "up": (0, Int32(amount))
-        case "down": (0, Int32(-amount))
-        case "left": (Int32(amount), 0)
-        case "right": (Int32(-amount), 0)
-        default: (0, 0)
+        let (dx, dy): (Int32, Int32)
+        switch direction {
+        case "up": (dx, dy) = (0, Int32(amount))
+        case "down": (dx, dy) = (0, Int32(-amount))
+        case "left": (dx, dy) = (Int32(amount), 0)
+        case "right": (dx, dy) = (Int32(-amount), 0)
+        default:
+            throw SteerError.invalidArgument("Invalid scroll direction '\(direction)' (expected: up, down, left, right)")
         }
 
         if let x = x, let y = y {
@@ -91,7 +106,7 @@ enum InputHelper {
         }
 
         guard let scrollEvent = CGEvent(scrollWheelEvent2Source: nil, units: .pixel, wheelCount: 2, wheel1: dy, wheel2: dx, wheel3: 0) else {
-            return
+            throw SteerError.inputFailed("Failed to create scroll event")
         }
         scrollEvent.post(tap: CGEventTapLocation.cghidEventTap)
     }
@@ -102,7 +117,9 @@ enum InputHelper {
         let to = CGPoint(x: toX, y: toY)
         let steps = max(Int(duration / 0.016), 10)
 
-        guard let downEvent = CGEvent(mouseEventSource: nil, mouseType: .leftMouseDown, mouseCursorPosition: from, mouseButton: .left) else { return }
+        guard let downEvent = CGEvent(mouseEventSource: nil, mouseType: .leftMouseDown, mouseCursorPosition: from, mouseButton: .left) else {
+            throw SteerError.inputFailed("Failed to create drag mouseDown event")
+        }
         downEvent.post(tap: .cghidEventTap)
 
         for i in 1...steps {
@@ -110,16 +127,20 @@ enum InputHelper {
             let x = fromX + (toX - fromX) * t
             let y = fromY + (toY - fromY) * t
             let point = CGPoint(x: x, y: y)
-            guard let dragEvent = CGEvent(mouseEventSource: nil, mouseType: .leftMouseDragged, mouseCursorPosition: point, mouseButton: .left) else { continue }
+            guard let dragEvent = CGEvent(mouseEventSource: nil, mouseType: .leftMouseDragged, mouseCursorPosition: point, mouseButton: .left) else {
+                throw SteerError.inputFailed("Failed to create dragged event at (\(x), \(y))")
+            }
             dragEvent.post(tap: .cghidEventTap)
             Thread.sleep(forTimeInterval: duration / Double(steps))
         }
 
-        guard let upEvent = CGEvent(mouseEventSource: nil, mouseType: .leftMouseUp, mouseCursorPosition: to, mouseButton: .left) else { return }
+        guard let upEvent = CGEvent(mouseEventSource: nil, mouseType: .leftMouseUp, mouseCursorPosition: to, mouseButton: .left) else {
+            throw SteerError.inputFailed("Failed to create drag mouseUp event")
+        }
         upEvent.post(tap: .cghidEventTap)
     }
 
-    private static func keyCodeFor(_ key: String) -> CGKeyCode {
+    private static func keyCodeFor(_ key: String) -> CGKeyCode? {
         switch key {
         case "return", "enter": return 0x24
         case "escape", "esc": return 0x35
@@ -189,7 +210,7 @@ enum InputHelper {
         case ".": return 0x2F
         case "/": return 0x2C
         case "`": return 0x32
-        default: return 0
+        default: return nil
         }
     }
 }

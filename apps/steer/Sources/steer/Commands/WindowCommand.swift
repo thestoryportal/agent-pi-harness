@@ -30,7 +30,9 @@ struct WindowCommand: ParsableCommand {
                 printError("No window found for '\(app)'")
             }
             var point = CGPoint(x: x, y: y)
-            guard let value = AXValueCreate(.cgPoint, &point) else { return }
+            guard let value = AXValueCreate(.cgPoint, &point) else {
+                printError("Failed to create CGPoint AXValue for move")
+            }
             AXUIElementSetAttributeValue(window, kAXPositionAttribute as CFString, value)
 
             struct MoveOutput: Codable { let action: String; let app: String; let x: Double; let y: Double }
@@ -62,7 +64,9 @@ struct WindowCommand: ParsableCommand {
                 printError("No window found for '\(app)'")
             }
             var size = CGSize(width: width, height: height)
-            guard let value = AXValueCreate(.cgSize, &size) else { return }
+            guard let value = AXValueCreate(.cgSize, &size) else {
+                printError("Failed to create CGSize AXValue for resize")
+            }
             AXUIElementSetAttributeValue(window, kAXSizeAttribute as CFString, value)
 
             struct ResizeOutput: Codable { let action: String; let app: String; let width: Double; let height: Double }
