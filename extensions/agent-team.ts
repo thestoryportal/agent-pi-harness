@@ -33,6 +33,8 @@ interface AgentDef {
 	tools: string;
 	systemPrompt: string;
 	file: string;
+	role: "orchestrator" | "lead" | "worker";
+	model: string;
 }
 
 interface AgentState {
@@ -98,6 +100,8 @@ function parseAgentFile(filePath: string): AgentDef | null {
 			tools: frontmatter.tools || "read,grep,find,ls",
 			systemPrompt: match[2].trim(),
 			file: filePath,
+			role: (frontmatter.role as any) || "worker",
+			model: frontmatter.model || "",
 		};
 	} catch {
 		return null;
@@ -215,8 +219,9 @@ export default function (pi: ExtensionAPI) {
 			: state.status === "done" ? "✓" : "✗";
 
 		const name = displayName(state.def.name);
-		const nameStr = theme.fg("accent", theme.bold(truncate(name, w)));
-		const nameVisible = Math.min(name.length, w);
+		const roleBadge = state.def.role === "lead" ? " [LEAD]" : "";
+		const nameStr = theme.fg("accent", theme.bold(truncate(name + roleBadge, w)));
+		const nameVisible = Math.min((name + roleBadge).length, w);
 
 		const statusStr = `${statusIcon} ${state.status}`;
 		const timeStr = state.status !== "idle" ? ` ${Math.round(state.elapsed / 1000)}s` : "";
@@ -335,9 +340,9 @@ export default function (pi: ExtensionAPI) {
 			updateWidget();
 		}, 1000);
 
-		const model = ctx.model
-			? `${ctx.model.provider}/${ctx.model.id}`
-			: "openrouter/google/gemini-3-flash-preview";
+		// Use per-agent model from frontmatter if available, otherwise inherit from session
+		const model = state.def.model
+			|| (ctx.model ? `${ctx.model.provider}/${ctx.model.id}` : "openrouter/google/gemini-3-flash-preview");
 
 		// Session file for this agent
 		const agentKey = state.def.name.toLowerCase().replace(/\s+/g, "-");
@@ -638,25 +643,61 @@ export default function (pi: ExtensionAPI) {
 	// ── System Prompt Override ───────────────────
 
 	pi.on("before_agent_start", async (_event, _ctx) => {
-		// Build dynamic agent catalog from active team only
-		const agentCatalog = Array.from(agentStates.values())
-			.map(s => `### ${displayName(s.def.name)}\n**Dispatch as:** \`${s.def.name}\`\n${s.def.description}\n**Tools:** ${s.def.tools}`)
+		// 3-tier hierarchy: orchestrator dispatches to leads, leads delegate to workers
+		const leads = Array.from(agentStates.values()).filter(s => s.def.role === "lead");
+		const workers = Array.from(agentStates.values()).filter(s => s.def.role === "worker");
+		const hasLeads = leads.length > 0;
+
+		// If no leads exist in the team, fall back to flat dispatch (all agents are targets)
+		const dispatchTargets = hasLeads ? leads : Array.from(agentStates.values());
+
+		const leadCatalog = dispatchTargets
+			.map(s => {
+				const roleTag = s.def.role === "lead" ? " [LEAD]" : "";
+				const modelTag = s.def.model ? ` (${s.def.model})` : "";
+				return `### ${displayName(s.def.name)}${roleTag}${modelTag}\n**Dispatch as:** \`${s.def.name}\`\n${s.def.description}\n**Tools:** ${s.def.tools}`;
+			})
+			.join("\n\n");
+
+		const workerCatalog = workers
+			.map(s => {
+				const modelTag = s.def.model ? ` (${s.def.model})` : "";
+				return `### ${displayName(s.def.name)} [WORKER]${modelTag}\n**Name:** \`${s.def.name}\`\n${s.def.description}`;
+			})
 			.join("\n\n");
 
 		const teamMembers = Array.from(agentStates.values()).map(s => displayName(s.def.name)).join(", ");
 
+		const hierarchySection = hasLeads
+			? `## 3-Tier Hierarchy
+Orchestrator (you) → Team Leads → Workers
+Dispatch ONLY to team leads. Leads decompose and delegate to workers.
+Do NOT dispatch directly to workers — leads handle that.
+
+## Team Leads (your dispatch targets)
+
+${leadCatalog}
+
+## Workers (leads delegate to these — you do not dispatch to them directly)
+
+${workerCatalog}`
+			: `## Agents (flat team — no leads defined)
+
+${leadCatalog}`;
+
 		return {
-			systemPrompt: `You are a dispatcher agent. You coordinate specialist agents to accomplish tasks.
+			systemPrompt: `You are a dispatcher orchestrator. You coordinate specialist agents to accomplish tasks.
 You do NOT have direct access to the codebase. You MUST delegate all work through
 agents using the dispatch_agent tool.
 
 ## Active Team: ${activeTeamName}
 Members: ${teamMembers}
-You can ONLY dispatch to agents listed below. Do not attempt to dispatch to agents outside this team.
+
+${hierarchySection}
 
 ## How to Work
 - Analyze the user's request and break it into clear sub-tasks
-- Choose the right agent(s) for each sub-task
+${hasLeads ? "- Dispatch to TEAM LEADS only — they will further delegate to workers" : "- Choose the right agent(s) for each sub-task"}
 - Dispatch tasks using the dispatch_agent tool
 - Review results and dispatch follow-up agents if needed
 - If a task fails, try a different agent or adjust the task description
@@ -665,13 +706,9 @@ You can ONLY dispatch to agents listed below. Do not attempt to dispatch to agen
 ## Rules
 - NEVER try to read, write, or execute code directly — you have no such tools
 - ALWAYS use dispatch_agent to get work done
-- You can chain agents: use scout to explore, then builder to implement
+${hasLeads ? "- Dispatch to leads, NOT workers — respect the hierarchy" : "- You can chain agents: use scout to explore, then builder to implement"}
 - You can dispatch the same agent multiple times with different tasks
-- Keep tasks focused — one clear objective per dispatch
-
-## Agents
-
-${agentCatalog}`,
+- Keep tasks focused — one clear objective per dispatch`,
 		};
 	});
 
