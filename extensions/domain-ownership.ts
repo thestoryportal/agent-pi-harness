@@ -87,7 +87,10 @@ export default function (pi: ExtensionAPI) {
 	pi.on("session_start", async (_event, ctx) => {
 		applyExtensionDefaults(import.meta.url, ctx);
 
-		// Identify which agent we are via DOMAIN_OWNER tag in system prompt
+		// Identify which agent we are via DOMAIN_OWNER tag in system prompt.
+		// SECURITY: The tag is parsed from the system prompt which may include
+		// user-controlled task text. We validate the extracted name against a
+		// strict allowlist pattern AND verify a matching agent file exists.
 		const systemPrompt = ctx.getSystemPrompt();
 		const match = systemPrompt.match(/DOMAIN_OWNER:\s*(\S+)/);
 		if (!match) {
@@ -100,9 +103,33 @@ export default function (pi: ExtensionAPI) {
 		}
 		agentName = match[1].trim();
 
+		// S-08/S-06: Validate agent name to prevent path traversal and identity spoofing.
+		// Only lowercase letters, digits, and hyphens allowed (matches agent file naming convention).
+		if (!/^[a-z][a-z0-9-]*$/.test(agentName)) {
+			ctx.ui.notify(
+				`Domain-Ownership: Invalid agent name "${agentName}" — must be lowercase alphanumeric with hyphens. Enforcement inactive.`,
+				"error",
+			);
+			enforcementActive = false;
+			return;
+		}
+
 		// Find this agent's .md file and parse domain: from frontmatter
 		const agentsDir = path.join(ctx.cwd, ".pi", "agents");
 		const agentFile = path.join(agentsDir, `${agentName}.md`);
+
+		// Belt-and-suspenders: verify resolved path stays inside agents directory
+		const resolvedAgentFile = path.resolve(agentFile);
+		const resolvedAgentsDir = path.resolve(agentsDir);
+		if (!resolvedAgentFile.startsWith(resolvedAgentsDir + path.sep)) {
+			ctx.ui.notify(
+				`Domain-Ownership: Agent file path escapes agents directory — enforcement inactive.`,
+				"error",
+			);
+			enforcementActive = false;
+			return;
+		}
+
 		if (!fs.existsSync(agentFile)) {
 			ctx.ui.notify(
 				`Domain-Ownership: Agent file not found for "${agentName}" — enforcement inactive.`,
