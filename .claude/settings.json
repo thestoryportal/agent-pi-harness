@@ -25,7 +25,8 @@
       "Bash(which:*)",
       "Bash(test:*)",
       "Bash(cp:*)",
-      "Bash(cat:*)"
+      "Bash(cat:*)",
+      "Skill"
     ],
     "deny": []
   },
