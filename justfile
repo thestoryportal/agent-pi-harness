@@ -176,3 +176,33 @@ eval-all:
 # Open promptfoo results UI
 promptfoo-view:
     npx promptfoo view
+
+# === SP12: Pi Integration ===
+
+# Launch Pi (default TUI)
+pi:
+    pi
+
+# Pi with agent-team orchestrator + theme cycler
+pi-team:
+    pi -e extensions/agent-team.ts -e extensions/theme-cycler.ts
+
+# Pi with agent-chain sequential pipeline + theme cycler
+pi-chain:
+    pi -e extensions/agent-chain.ts -e extensions/theme-cycler.ts
+
+# Pi with damage-control safety rules + minimal + theme cycler
+pi-safe:
+    pi -e extensions/damage-control.ts -e extensions/minimal.ts -e extensions/theme-cycler.ts
+
+# Pi with ArhuGula Drive dispatch
+pi-drive:
+    pi -e extensions/drive-dispatch.ts -e extensions/minimal.ts -e extensions/theme-cycler.ts
+
+# Pi with ArhuGula Listen job submission
+pi-listen:
+    pi -e extensions/listen-submit.ts -e extensions/minimal.ts -e extensions/theme-cycler.ts
+
+# Pi with full ArhuGula integration (Drive + Listen + damage-control)
+pi-full:
+    pi -e extensions/drive-dispatch.ts -e extensions/listen-submit.ts -e extensions/damage-control.ts -e extensions/theme-cycler.ts

@@ -1,9 +1,11 @@
 {
   "name": "arhugula",
   "private": true,
-  "description": "Claude Code version pinning",
+  "type": "module",
+  "description": "Claude Code version pinning + Pi extension runtime",
   "dependencies": {
-    "@anthropic-ai/claude-code": "^1"
+    "@anthropic-ai/claude-code": "^2.1.104",
+    "yaml": "^2.8.3"
   },
   "devDependencies": {
     "promptfoo": "0.121.4"

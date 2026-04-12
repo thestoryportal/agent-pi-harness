@@ -22,3 +22,6 @@ tests/prompts/**/output.json
 
 # uv
 .python-version
+
+# Pi Agent
+.pi/agent-sessions/

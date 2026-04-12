@@ -23,7 +23,7 @@ Run each command. Report PASS/FAIL for each step.
 1. `brew install tmux just uv yq node@22`
 2. `xcode-select --install` (skip if already installed, required for sub-project 4)
 3. `npm install -g @anthropic-ai/claude-code` (if not already installed)
-4. Pi Agent: **SKIP — TBD until sub-project 5**
+4. Pi Agent: `bun add -g @mariozechner/pi-coding-agent` (global install via bun)
 5. `uv sync`
 6. `cp .env.example .env` (if .env does not exist)
 7. `sudo pmset -a sleep 0 displaysleep 0 disksleep 0 powernap 0` (macOS only)
@@ -42,8 +42,7 @@ Run each check. Report PASS/FAIL/SKIP with actual version.
 | 6 | yq | `yq --version` | 4.0+ |
 | 7 | claude | `claude --version` | pinned range |
 | 8 | node | `node --version` | 22.x |
-| 9 | pi | `pi --version` | SKIP — sub-project 5 |
-| 10 | ipi | `ipi --version` | SKIP — sub-project 5 |
+| 9 | pi | `pi --version` | any |
 
 ## Report
 
