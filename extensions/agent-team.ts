@@ -21,7 +21,7 @@ import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
 import { Type } from "@sinclair/typebox";
 import { Text, type AutocompleteItem, truncateToWidth, visibleWidth } from "@mariozechner/pi-tui";
 import { spawn } from "child_process";
-import { readdirSync, readFileSync, existsSync, mkdirSync, unlinkSync } from "fs";
+import { readdirSync, readFileSync, existsSync, mkdirSync, unlinkSync, statSync } from "fs";
 import { join, resolve } from "path";
 import { applyExtensionDefaults } from "./themeMap.ts";
 
@@ -121,13 +121,30 @@ function scanAgentDirs(cwd: string): AgentDef[] {
 	for (const dir of dirs) {
 		if (!existsSync(dir)) continue;
 		try {
-			for (const file of readdirSync(dir)) {
-				if (!file.endsWith(".md")) continue;
-				const fullPath = resolve(dir, file);
-				const def = parseAgentFile(fullPath);
-				if (def && !seen.has(def.name.toLowerCase())) {
-					seen.add(def.name.toLowerCase());
-					agents.push(def);
+			for (const entry of readdirSync(dir)) {
+				const fullPath = resolve(dir, entry);
+				if (entry.endsWith(".md")) {
+					const def = parseAgentFile(fullPath);
+					if (def && !seen.has(def.name.toLowerCase())) {
+						seen.add(def.name.toLowerCase());
+						agents.push(def);
+					}
+				} else {
+					// One-level subdirectory scan (e.g., .pi/agents/pi-pi/)
+					try {
+						const stat = statSync(fullPath);
+						if (stat.isDirectory()) {
+							for (const subFile of readdirSync(fullPath)) {
+								if (!subFile.endsWith(".md")) continue;
+								const subPath = resolve(fullPath, subFile);
+								const def = parseAgentFile(subPath);
+								if (def && !seen.has(def.name.toLowerCase())) {
+									seen.add(def.name.toLowerCase());
+									agents.push(def);
+								}
+							}
+						}
+					} catch {}
 				}
 			}
 		} catch {}
