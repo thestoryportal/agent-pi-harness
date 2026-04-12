@@ -24,37 +24,40 @@ struct WaitCommand: ParsableCommand {
     var json = false
 
     func run() throws {
+        // Validate inputs: --for requires --app so we can re-query the live AX tree.
+        // Without --app the previous behavior read a stale on-disk snapshot that
+        // never refreshed, leading to false positives or infinite spins.
+        if app == nil && self.`for` == nil {
+            printError("wait requires --app and/or --for")
+        }
+        if app == nil && self.`for` != nil {
+            printError("--for requires --app (cannot search elements without an app context)")
+        }
+
         let start = Date()
 
         while Date().timeIntervalSince(start) < timeout {
-            if let appName = app {
-                let running = NSWorkspace.shared.runningApplications
-                let found = running.contains { $0.localizedName?.localizedCaseInsensitiveContains(appName) == true }
+            guard let appName = app else { break }
+            let running = NSWorkspace.shared.runningApplications
+            let found = running.contains { $0.localizedName?.localizedCaseInsensitiveContains(appName) == true }
 
-                if found {
-                    if let searchText = self.`for` {
-                        if let pid = AccessibilityHelper.findAppPID(name: appName) {
-                            let elements = AccessibilityHelper.buildTree(pid: pid)
-                            let q = searchText.lowercased()
-                            let match = elements.contains {
-                                ($0.label?.lowercased().contains(q) ?? false) ||
-                                ($0.value?.lowercased().contains(q) ?? false)
-                            }
-                            if match {
-                                outputSuccess(target: searchText, elapsed: Date().timeIntervalSince(start))
-                                return
-                            }
+            if found {
+                if let searchText = self.`for` {
+                    // Re-query the live AX tree on every iteration to avoid stale state.
+                    if let pid = AccessibilityHelper.findAppPID(name: appName) {
+                        let elements = AccessibilityHelper.buildTree(pid: pid)
+                        let q = searchText.lowercased()
+                        let match = elements.contains {
+                            ($0.label?.lowercased().contains(q) ?? false) ||
+                            ($0.value?.lowercased().contains(q) ?? false)
                         }
-                    } else {
-                        outputSuccess(target: appName, elapsed: Date().timeIntervalSince(start))
-                        return
+                        if match {
+                            outputSuccess(target: searchText, elapsed: Date().timeIntervalSince(start))
+                            return
+                        }
                     }
-                }
-            } else if let searchText = self.`for` {
-                // Search without app context — use stored snapshot
-                let matches = SnapshotStore.findByText(searchText)
-                if !matches.isEmpty {
-                    outputSuccess(target: searchText, elapsed: Date().timeIntervalSince(start))
+                } else {
+                    outputSuccess(target: appName, elapsed: Date().timeIntervalSince(start))
                     return
                 }
             }

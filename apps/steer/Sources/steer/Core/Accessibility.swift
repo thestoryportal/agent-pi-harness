@@ -47,8 +47,13 @@ enum AccessibilityHelper {
         return extractElement(elem, counters: &counters)
     }
 
+    /// Maximum AX tree recursion depth. Complex Electron / web wrappers can produce
+    /// trees with 30+ levels (CEF embeds, native bridges, modal stacks). 40 is high
+    /// enough to capture most real-world apps while bounding worst-case stack use.
+    private static let maxTreeDepth = 40
+
     private static func walkElement(_ element: AXUIElement, elements: inout [AXElement], counters: inout [String: Int], depth: Int) {
-        guard depth < 20 else { return }
+        guard depth < maxTreeDepth else { return }
 
         if let axElem = extractElement(element, counters: &counters) {
             elements.append(axElem)
