@@ -65,29 +65,11 @@ def read_stdin() -> dict:
         return {}
 
 
-def emit_event(
-    event_type: str,
-    hook_name: str,
-    exit_code: int,
-    payload: dict | None = None,
-    duration_ms: int | None = None,
-) -> None:
-    """Emit a structured event to JSONL fallback log.
+DB_PATH = Path(PROJECT_DIR) / "apps" / "observe" / "events.db"
 
-    In sub-project 3 (Observe), this will attempt SQLite INSERT first
-    with retry-once-then-JSONL fallback. For sub-project 1, JSONL only.
-    The JSONL fallback uses a reduced schema: `id` column omitted
-    (auto-increment meaningful only in SQLite context).
-    """
-    event = {
-        "event_type": event_type,
-        "session_id": get_session_id(),
-        "timestamp": datetime.now(timezone.utc).isoformat(),
-        "hook_name": hook_name,
-        "exit_code": exit_code,
-        "payload": json.dumps(payload) if payload is not None else None,
-        "duration_ms": duration_ms,
-    }
+
+def _emit_to_jsonl(event: dict) -> None:
+    """Write event to JSONL fallback log."""
     LOGS_DIR.mkdir(parents=True, exist_ok=True)
     events_file = LOGS_DIR / "events.jsonl"
     with open(events_file, "a") as f:
@@ -96,6 +78,56 @@ def emit_event(
             f.write(json.dumps(event) + "\n")
         finally:
             fcntl.flock(f.fileno(), fcntl.LOCK_UN)
+
+
+def emit_event(
+    event_type: str,
+    hook_name: str,
+    exit_code: int,
+    payload: dict | None = None,
+    duration_ms: int | None = None,
+) -> None:
+    """Emit a structured event to SQLite (preferred) or JSONL (fallback).
+
+    SQLite path: attempt INSERT via apps.observe.db. On ImportError, skip
+    retry and fall through to JSONL. On sqlite3.OperationalError, retry
+    once after 50ms. On any other failure, fall through to JSONL.
+    JSONL path: always available, used when DB is absent or write fails.
+    """
+    session_id = get_session_id()
+    ts = datetime.now(timezone.utc).isoformat()
+    payload_str = json.dumps(payload) if payload is not None else None
+
+    event = {
+        "event_type": event_type,
+        "session_id": session_id,
+        "timestamp": ts,
+        "hook_name": hook_name,
+        "exit_code": exit_code,
+        "payload": payload_str,
+        "duration_ms": duration_ms,
+    }
+
+    # Try SQLite if DB file exists
+    if DB_PATH.exists():
+        try:
+            sys.path.insert(0, PROJECT_DIR)
+            from apps.observe.db import insert_event as db_insert
+            db_insert(event_type, session_id, ts, hook_name, exit_code, payload_str, duration_ms, db_path=DB_PATH)
+            return
+        except ImportError:
+            pass  # No retry on import failure, direct to JSONL
+        except Exception:
+            # Retry once after 50ms for transient errors (e.g., database locked)
+            try:
+                time.sleep(0.05)
+                from apps.observe.db import insert_event as db_insert
+                db_insert(event_type, session_id, ts, hook_name, exit_code, payload_str, duration_ms, db_path=DB_PATH)
+                return
+            except Exception:
+                pass  # Fall through to JSONL
+
+    _emit_to_jsonl(event)
 
 
 def hook_output(hook_event_name: str, additional_context: str = "") -> str:
