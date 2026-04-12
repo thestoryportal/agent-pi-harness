@@ -215,20 +215,21 @@ bashToolPatterns:
     reason: playwright-cli with shell-variable subcommand (run-code/eval bypass vector)
 
   # ---------------------------------------------------------------------------
-  # FILE-UPLOAD EXFILTRATION (SP14 rounds 3–7 hardening)
+  # FILE-UPLOAD EXFILTRATION (SP14 rounds 3–8 hardening)
   # Multiple primitives can upload arbitrary filesystem content via HTTP.
   # Block all known forms: curl multipart, curl raw/POST, curl PUT, and wget.
   # These are the partner half of the exfil chain when combined with
   # `playwright-cli screenshot --filename=/tmp/...`.
   #
-  # Round-7 enumeration: curl flags that accept `@filename` for file reads
-  # are:
+  # curl flags that accept `@filename` for file reads (complete enumeration):
   #   -F / --form            — multipart form (field=@path)
   #   -d / --data            — POST body (@path reads file)
   #   --data-ascii           — POST body, alias of --data (@path reads file)
   #   --data-binary          — POST body, raw bytes (@path reads file)
+  #   --data-urlencode       — POST body, URL-encoded (@path reads file)
   #   -T / --upload-file     — HTTP PUT (file as body)
-  #   (--data-raw and --data-urlencode do NOT expand @, so not blocked)
+  #   -K / --config          — reads curl command options from file (indirect)
+  #   (--data-raw does NOT expand @, so not blocked — it is literal only)
   # Also blocked: wget --post-file, --body-file.
   #
   # Delimiter coverage rules:
@@ -238,10 +239,15 @@ bashToolPatterns:
   #   - LONG flags use `[=\s]+` (ONE-or-more) — GNU long options require
   #     either `=` or space; no-separator concat is not valid.
   #
-  # Round-7 bundled-flag fix (S-32): short-option BUNDLING like `-sT`,
-  # `-kT`, `-LT` prepends other single-letter flags to T. Pattern 4
-  # now uses `\s-[A-Za-z]*T` (whitespace, dash, any-letters, literal T)
-  # to catch all bundled forms while still anchoring to a flag boundary.
+  # PATTERN-AUTHORING CONVENTION (do not violate):
+  #   Every curl short-flag pattern MUST use `\s-[A-Za-z]*<flag>` form,
+  #   NOT `\s-<flag>`. POSIX short-option bundling lets attackers prepend
+  #   other single-letter flags before the dangerous flag (`-sd`, `-kT`,
+  #   `-vF`, etc.). Without `[A-Za-z]*` between the dash and the flag
+  #   letter, bundled forms bypass the pattern entirely. This rule was
+  #   violated for `-d` in round-7 (fixed in round-8 as S-34) after being
+  #   correctly applied to `-T` in round-6. Pattern authors: if you add
+  #   a new curl short-flag rule, always write `\s-[A-Za-z]*<flag>`.
   #
   # NOTE: `-` placed last in `[A-Za-z0-9_-]` is a literal dash (not a
   # range). The `''` escape convention is documented in the shell-var
@@ -249,17 +255,19 @@ bashToolPatterns:
   # ---------------------------------------------------------------------------
 
   # Multipart form upload (field=@path) — short and long forms
-  - pattern: '\bcurl\b.*-F[=\s]*[''"]?[A-Za-z0-9_-]+=@'
-    reason: curl multipart file upload (short -F with @path)
+  - pattern: '\bcurl\b.*\s-[A-Za-z]*F[=\s]*[''"]?[A-Za-z0-9_-]+=@'
+    reason: curl multipart file upload (short -F / bundled with @path)
 
   - pattern: '\bcurl\b.*--form[=\s]+[''"]?[A-Za-z0-9_-]+=@'
     reason: curl multipart file upload (long --form with @path)
 
-  # POST body upload (@path at value position) — short -d, long --data,
-  # --data-ascii, --data-binary. Round-7 adds -d and --data / --data-ascii
-  # (S-31 close); --data-binary was already covered in earlier rounds.
-  - pattern: '\bcurl\b.*\s-d[=\s]*[''"]?@'
-    reason: curl POST body file upload (short -d @path)
+  # POST body upload (@path at value position) — short -d (including
+  # bundled forms -sd, -vd, -kd), long --data, --data-ascii, --data-binary,
+  # --data-urlencode. Round-8 (S-34) fixes the short -d pattern to cover
+  # POSIX bundling; round-8 (S-35) adds --data-urlencode which was
+  # previously (and incorrectly) thought to be literal-only.
+  - pattern: '\bcurl\b.*\s-[A-Za-z]*d[=\s]*[''"]?@'
+    reason: curl POST body file upload (short -d / bundled with @path)
 
   - pattern: '\bcurl\b.*--data[=\s]+[''"]?@'
     reason: curl POST body file upload (long --data @path)
@@ -269,6 +277,9 @@ bashToolPatterns:
 
   - pattern: '\bcurl\b.*--data-binary[=\s]+[''"]?@'
     reason: curl raw binary upload (long --data-binary @path)
+
+  - pattern: '\bcurl\b.*--data-urlencode[=\s]+[''"]?@'
+    reason: curl URL-encoded file upload (long --data-urlencode @path)
 
   # HTTP PUT upload — short -T (including bundled forms -sT, -kT, -LT, -vT)
   # and long --upload-file. Round-7 uses \s-[A-Za-z]*T to catch short-
