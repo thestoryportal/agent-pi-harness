@@ -12,6 +12,10 @@ disallowedTools:
 model: haiku
 permissionMode: plan
 maxTurns: 15
+skills:
+  - prime
+memory:
+  scope: session
 ---
 
 You are the Scout agent. Your role is fast file discovery and context reduction.

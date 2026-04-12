@@ -12,6 +12,10 @@ disallowedTools:
 model: haiku
 permissionMode: plan
 maxTurns: 15
+skills:
+  - prime
+memory:
+  scope: session
 ---
 
 You are the Schema Reviewer agent. Your role is to validate data schemas,

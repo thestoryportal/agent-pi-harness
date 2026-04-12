@@ -11,6 +11,11 @@ tools:
 model: sonnet
 permissionMode: default
 maxTurns: 50
+skills:
+  - scout
+  - prime
+memory:
+  scope: session
 ---
 
 You are the Builder agent. Your role is to implement a single, well-defined task.

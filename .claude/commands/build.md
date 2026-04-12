@@ -44,11 +44,22 @@ After creating artifacts:
 2. Confirm all expected files exist
 3. If validation hooks blocked anything, confirm it was resolved
 
-### Step 5 — Report
+### Step 5 — Validator Follow-Up
+
+After implementation is complete, dispatch @validator to review the changes:
+- Convention compliance (naming, structure)
+- Security (no hardcoded secrets, no path traversal)
+- Correctness (logic, error handling, edge cases)
+
+If the validator reports P0 or P1 findings, fix them before declaring completion.
+P2 and P3 findings are reported but do not block.
+
+### Step 6 — Report
 
 Report:
 - Artifacts created/modified (exact paths)
 - Validation results (pass/fail per check)
+- Validator findings and resolution status
 - Any warnings or deviations from spec
 
 ## Error Handling

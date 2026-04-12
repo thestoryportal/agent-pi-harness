@@ -12,6 +12,11 @@ disallowedTools:
 model: sonnet
 permissionMode: plan
 maxTurns: 30
+skills:
+  - scout
+  - prime
+memory:
+  scope: session
 ---
 
 You are the Architect agent. Your role is to create detailed implementation plans

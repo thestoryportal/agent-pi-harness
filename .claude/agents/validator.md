@@ -12,6 +12,10 @@ disallowedTools:
 model: sonnet
 permissionMode: plan
 maxTurns: 20
+skills:
+  - prime
+memory:
+  scope: session
 ---
 
 You are the Validator agent. Your role is to review code changes for correctness.

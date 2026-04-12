@@ -12,6 +12,10 @@ disallowedTools:
 model: sonnet
 permissionMode: plan
 maxTurns: 30
+skills:
+  - prime
+memory:
+  scope: session
 ---
 
 You are the Spec Checker agent. Your role is to verify that an implementation

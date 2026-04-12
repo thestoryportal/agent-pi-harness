@@ -12,6 +12,10 @@ disallowedTools:
 model: sonnet
 permissionMode: plan
 maxTurns: 25
+skills:
+  - prime
+memory:
+  scope: session
 ---
 
 You are the Security agent. Your role is adversarial review of code changes.
