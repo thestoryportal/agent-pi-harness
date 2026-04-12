@@ -1,3 +1,4 @@
+import AppKit
 import ApplicationServices
 import CoreGraphics
 import Foundation
@@ -9,17 +10,52 @@ enum InputHelper {
         }
     }
 
+    /// Clamp a raw coordinate pair to the union of all attached display rects.
+    /// This is defense in depth against snapshot poisoning (S-R2-05): even if
+    /// a poisoned snapshot.json supplies arbitrary coordinates, mouse events
+    /// can never land outside the visible display surface.
+    ///
+    /// Note: NSScreen origin is bottom-left; CGEvent uses top-left. We work in
+    /// CG coordinates throughout (matching what the AX tree returns).
+    static func clampToDisplays(x: Double, y: Double) -> (x: Double, y: Double) {
+        let screens = NSScreen.screens
+        guard !screens.isEmpty else { return (x, y) }
+
+        // Compute the union of all screen frames in CG coordinates.
+        // The primary display has its top-left at (0, 0) in CG space.
+        let mainHeight = screens.first?.frame.height ?? 0
+        var unionMinX = Double.infinity
+        var unionMinY = Double.infinity
+        var unionMaxX = -Double.infinity
+        var unionMaxY = -Double.infinity
+
+        for screen in screens {
+            let f = screen.frame
+            // Convert AppKit (bottom-left origin) to CG (top-left origin).
+            let cgY = mainHeight - f.origin.y - f.height
+            unionMinX = min(unionMinX, Double(f.origin.x))
+            unionMinY = min(unionMinY, Double(cgY))
+            unionMaxX = max(unionMaxX, Double(f.origin.x + f.width))
+            unionMaxY = max(unionMaxY, Double(cgY + f.height))
+        }
+
+        let clampedX = min(max(x, unionMinX), unionMaxX - 1)
+        let clampedY = min(max(y, unionMinY), unionMaxY - 1)
+        return (clampedX, clampedY)
+    }
+
     static func mouseClick(x: Double, y: Double, button: CGMouseButton = .left) throws {
         try ensureAccessibility()
-        let point = CGPoint(x: x, y: y)
+        let (cx, cy) = clampToDisplays(x: x, y: y)
+        let point = CGPoint(x: cx, y: cy)
         let downType: CGEventType = button == .left ? .leftMouseDown : .rightMouseDown
         let upType: CGEventType = button == .left ? .leftMouseUp : .rightMouseUp
 
         guard let downEvent = CGEvent(mouseEventSource: nil, mouseType: downType, mouseCursorPosition: point, mouseButton: button) else {
-            throw SteerError.inputFailed("Failed to create mouseDown event at (\(x), \(y))")
+            throw SteerError.inputFailed("Failed to create mouseDown event at (\(cx), \(cy))")
         }
         guard let upEvent = CGEvent(mouseEventSource: nil, mouseType: upType, mouseCursorPosition: point, mouseButton: button) else {
-            throw SteerError.inputFailed("Failed to create mouseUp event at (\(x), \(y))")
+            throw SteerError.inputFailed("Failed to create mouseUp event at (\(cx), \(cy))")
         }
 
         downEvent.post(tap: .cghidEventTap)
@@ -100,8 +136,11 @@ enum InputHelper {
         }
 
         if let x = x, let y = y {
-            let moveEvent = CGEvent(mouseEventSource: nil, mouseType: .mouseMoved, mouseCursorPosition: CGPoint(x: x, y: y), mouseButton: .left)
-            moveEvent?.post(tap: .cghidEventTap)
+            let (cx, cy) = clampToDisplays(x: x, y: y)
+            guard let moveEvent = CGEvent(mouseEventSource: nil, mouseType: .mouseMoved, mouseCursorPosition: CGPoint(x: cx, y: cy), mouseButton: .left) else {
+                throw SteerError.inputFailed("Failed to create scroll move event at (\(cx), \(cy))")
+            }
+            moveEvent.post(tap: .cghidEventTap)
             Thread.sleep(forTimeInterval: 0.05)
         }
 
@@ -113,8 +152,10 @@ enum InputHelper {
 
     static func drag(fromX: Double, fromY: Double, toX: Double, toY: Double, duration: Double = 0.5) throws {
         try ensureAccessibility()
-        let from = CGPoint(x: fromX, y: fromY)
-        let to = CGPoint(x: toX, y: toY)
+        let (sx, sy) = clampToDisplays(x: fromX, y: fromY)
+        let (tx, ty) = clampToDisplays(x: toX, y: toY)
+        let from = CGPoint(x: sx, y: sy)
+        let to = CGPoint(x: tx, y: ty)
         let steps = max(Int(duration / 0.016), 10)
 
         guard let downEvent = CGEvent(mouseEventSource: nil, mouseType: .leftMouseDown, mouseCursorPosition: from, mouseButton: .left) else {
@@ -124,8 +165,8 @@ enum InputHelper {
 
         for i in 1...steps {
             let t = Double(i) / Double(steps)
-            let x = fromX + (toX - fromX) * t
-            let y = fromY + (toY - fromY) * t
+            let x = sx + (tx - sx) * t
+            let y = sy + (ty - sy) * t
             let point = CGPoint(x: x, y: y)
             guard let dragEvent = CGEvent(mouseEventSource: nil, mouseType: .leftMouseDragged, mouseCursorPosition: point, mouseButton: .left) else {
                 throw SteerError.inputFailed("Failed to create dragged event at (\(x), \(y))")

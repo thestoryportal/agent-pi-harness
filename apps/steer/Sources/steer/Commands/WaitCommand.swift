@@ -35,8 +35,14 @@ struct WaitCommand: ParsableCommand {
         }
 
         let start = Date()
+        let deadline = start.addingTimeInterval(timeout)
 
-        while Date().timeIntervalSince(start) < timeout {
+        // Loop structure: check the condition first, then sleep only if there's
+        // time remaining. Previous loop structure (`while elapsed < timeout`)
+        // checked the condition before the sleep, meaning the last iteration
+        // started near `timeout - interval` and the deadline could be missed
+        // by up to `interval` seconds.
+        while true {
             guard let appName = app else { break }
             let running = NSWorkspace.shared.runningApplications
             let found = running.contains { $0.localizedName?.localizedCaseInsensitiveContains(appName) == true }
@@ -62,7 +68,12 @@ struct WaitCommand: ParsableCommand {
                 }
             }
 
-            Thread.sleep(forTimeInterval: interval)
+            let now = Date()
+            if now >= deadline { break }
+            // Sleep for `interval` or remaining time, whichever is shorter,
+            // so we never overshoot the deadline.
+            let remaining = deadline.timeIntervalSince(now)
+            Thread.sleep(forTimeInterval: min(interval, remaining))
         }
 
         let target = self.`for` ?? app ?? "unknown"

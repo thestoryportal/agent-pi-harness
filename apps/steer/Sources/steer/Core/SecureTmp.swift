@@ -39,10 +39,15 @@ enum SecureTmp {
             if st.st_uid != getuid() {
                 throw SteerError.screenshotFailed("\(path) is not owned by current user")
             }
-            // Tighten mode if needed
+            // Tighten mode if needed. Throw on chmod failure rather than
+            // silently continuing — if we can't enforce 0700 the directory
+            // may be readable by other processes, weakening tamper protection.
             let perms = st.st_mode & 0o777
             if perms != 0o700 {
-                _ = chmod(path, 0o700)
+                if chmod(path, 0o700) != 0 {
+                    let err = String(cString: strerror(errno))
+                    throw SteerError.screenshotFailed("Failed to enforce mode 0700 on \(path): \(err)")
+                }
             }
             return
         }

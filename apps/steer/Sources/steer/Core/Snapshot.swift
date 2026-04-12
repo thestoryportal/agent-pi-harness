@@ -11,8 +11,17 @@ enum SnapshotStore {
     private static let filename = "snapshot.json"
 
     static func save(_ snapshot: Snapshot) {
-        guard let data = try? JSONEncoder().encode(snapshot) else { return }
-        try? SecureTmp.writeAtomic(data, to: filename)
+        // Surface errors to stderr instead of silently dropping. A failed save
+        // means the next `click --id B1` will report "element not found" with
+        // no breadcrumb pointing to the actual cause (write permission, full
+        // disk, secure tmp dir issue).
+        do {
+            let data = try JSONEncoder().encode(snapshot)
+            try SecureTmp.writeAtomic(data, to: filename)
+        } catch {
+            let warning = "warning: snapshot save failed: \(error.localizedDescription)\n"
+            FileHandle.standardError.write(Data(warning.utf8))
+        }
     }
 
     static func load() -> Snapshot? {
