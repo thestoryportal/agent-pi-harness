@@ -58,6 +58,20 @@ def test_prompt_from_file_to_file_relative_output_raises(
         )
 
 
+def test_prompt_from_file_path_traversal_blocked(tmp_path):
+    """Path outside allowed root raises ValueError."""
+    with pytest.raises(ValueError, match="must be within"):
+        prompt_from_file("/etc/passwd")
+
+
+def test_prompt_from_file_to_file_output_traversal_blocked(tmp_path):
+    """Output dir outside allowed root raises ValueError."""
+    prompt_file = tmp_path / "prompt.txt"
+    prompt_file.write_text("test")
+    with pytest.raises(ValueError, match="must be within"):
+        prompt_from_file_to_file(str(prompt_file), ["openai:gpt-4o"], "/tmp")
+
+
 @patch("just_prompt.molecules.prompt_from_file.prompt_fn")
 def test_prompt_from_file_to_file_saves(mock_prompt_fn, tmp_path):
     """Saves each model response as a markdown file."""

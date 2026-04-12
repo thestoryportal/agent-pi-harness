@@ -1,23 +1,31 @@
 """Send a prompt from a file to multiple LLM models."""
 
+import logging
 import os
 from pathlib import Path
 
 from just_prompt.molecules.prompt import prompt as prompt_fn
 
+logger = logging.getLogger(__name__)
+
 
 def _get_allowed_root() -> Path:
     """Return the allowed root directory, checked at call time."""
-    return Path(
-        os.environ.get("JUST_PROMPT_ALLOWED_ROOT", os.getcwd())
-    ).resolve()
+    root = os.environ.get("JUST_PROMPT_ALLOWED_ROOT")
+    if root is None:
+        logger.warning(
+            "JUST_PROMPT_ALLOWED_ROOT not set — defaulting to cwd (%s)",
+            os.getcwd(),
+        )
+        root = os.getcwd()
+    return Path(root).resolve()
 
 
 def _validate_path_within_root(p: Path, label: str) -> Path:
     """Resolve a path and ensure it falls within the allowed root."""
     resolved = p.resolve()
     allowed = _get_allowed_root()
-    if not str(resolved).startswith(str(allowed)):
+    if not resolved.is_relative_to(allowed):
         raise ValueError(
             f"{label} must be within {allowed}, got: {resolved}"
         )

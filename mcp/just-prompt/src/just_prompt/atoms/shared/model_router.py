@@ -4,7 +4,7 @@ Model router for dispatching requests to the appropriate provider.
 
 import importlib
 import logging
-from typing import List  # noqa: UP035 — kept for compat
+import os
 
 from .data_types import ModelProviders
 from .utils import split_provider_and_model
@@ -60,8 +60,6 @@ class ModelRouter:
                 return model_name
 
             # Model needs correction - use the default correction model
-            import os
-
             correction_model = os.environ.get(
                 "CORRECTION_MODEL", "anthropic:claude-3-7-sonnet-20250219"
             )
@@ -134,7 +132,7 @@ class ModelRouter:
             raise
 
     @staticmethod
-    def route_list_models(provider_name: str) -> List[str]:
+    def route_list_models(provider_name: str) -> list[str]:
         """
         Route a list_models request to the appropriate provider.
 

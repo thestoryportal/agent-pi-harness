@@ -58,6 +58,23 @@ def test_ceo_and_board_full_flow(mock_router, tmp_path):
     assert mock_router.route_prompt.call_count == 3
 
 
+def test_ceo_and_board_path_traversal_blocked(tmp_path):
+    """Path outside allowed root raises ValueError."""
+    with pytest.raises(ValueError, match="must be within"):
+        ceo_and_board(abs_file_path="/etc/passwd")
+
+
+def test_ceo_and_board_output_traversal_blocked(tmp_path):
+    """Output dir outside allowed root raises ValueError."""
+    prompt_file = tmp_path / "prompt.txt"
+    prompt_file.write_text("test")
+    with pytest.raises(ValueError, match="must be within"):
+        ceo_and_board(
+            abs_file_path=str(prompt_file),
+            abs_output_dir="/tmp",
+        )
+
+
 def test_ceo_and_board_relative_path_raises():
     """Relative input path raises ValueError."""
     with pytest.raises(ValueError, match="must be absolute"):

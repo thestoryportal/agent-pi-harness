@@ -6,7 +6,7 @@ from pathlib import Path
 
 from just_prompt.atoms.shared.model_router import ModelRouter
 from just_prompt.molecules.prompt import get_default_models
-from just_prompt.molecules.prompt_from_file import _validate_path_within_root  # S-01/S-02 fix
+from just_prompt.molecules.prompt_from_file import _validate_path_within_root
 
 logger = logging.getLogger(__name__)
 
@@ -20,8 +20,9 @@ DEFAULT_CEO_MODEL = "openai:o3"
 
 def _wrap_board_response(model: str, response: str) -> str:
     """Wrap a board member response in an XML envelope."""
+    safe_model = model.replace('"', '&quot;')
     return (
-        f'<board_member_response model="{model}">\n'
+        f'<board_member_response model="{safe_model}">\n'
         f"{response}\n"
         f"</board_member_response>"
     )
