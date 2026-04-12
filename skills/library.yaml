@@ -15,9 +15,9 @@ skills:
     layer: 1  # Skill
 
 commands:
-  plan:
+  architect:
     description: Create implementation plan from scout output (architect agent)
-    location: .claude/commands/plan.md
+    location: .claude/commands/architect.md
     layer: 2  # Subagent
     agent: architect
 

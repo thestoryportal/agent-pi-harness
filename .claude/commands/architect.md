@@ -4,12 +4,12 @@ argument-hint: "[scout-output or spec-path]"
 agent: architect
 ---
 
-# /plan — Implementation Plan Creation
+# /architect — Implementation Plan Creation
 
 ## Purpose
 
 Create a detailed implementation plan by delegating to the Architect agent. This is the
-second step in the Scout-Plan-Build pipeline: `/scout` → `/plan` → `/build`.
+second step in the Scout-Plan-Build pipeline: `/scout` → `/architect` → `/build`.
 
 ## Variables
 
@@ -52,7 +52,7 @@ Output the plan for user review. The plan is consumed by `/build` for execution.
 # Full Scout-Plan-Build pipeline:
 /scout ~/Projects/indydevdan-harness-research/docs/superpowers/specs/arhugula-source-of-truth.md
 # Review scout output, then:
-/plan [scout output or spec path]
+/architect [scout output or spec path]
 # Review plan, then for each unit:
 /build [unit description from plan]
 # After all units built:
