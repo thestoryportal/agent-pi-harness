@@ -152,3 +152,27 @@ dropzone:
 # Start Drop Zone watcher with custom config
 dropzone-config CONFIG:
     uv run apps/dropzone/main.py watch --config "{{CONFIG}}"
+
+# === SP11: Prompt Testing ===
+
+# Evaluate builder agent prompt tests
+eval-builder:
+    npm run eval:builder
+
+# Evaluate validator agent prompt tests
+eval-validator:
+    npm run eval:validator
+
+# Evaluate scout agent prompt tests
+eval-scout:
+    npm run eval:scout
+
+# Evaluate all agent prompt tests
+eval-all:
+    npm run eval:builder
+    npm run eval:validator
+    npm run eval:scout
+
+# Open promptfoo results UI
+promptfoo-view:
+    npx promptfoo view
