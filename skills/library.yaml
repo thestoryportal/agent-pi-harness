@@ -14,6 +14,11 @@ skills:
     location: .claude/skills/scout/SKILL.md
     layer: 1  # Skill
 
+  damage-control:
+    description: Defense-in-depth security hooks — blocks dangerous commands and protects sensitive files
+    location: .claude/skills/damage-control/SKILL.md
+    layer: 1  # Skill
+
 commands:
   architect:
     description: Create implementation plan from scout output (architect agent)

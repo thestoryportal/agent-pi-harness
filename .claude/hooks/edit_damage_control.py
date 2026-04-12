@@ -3,15 +3,14 @@
 # requires-python = ">=3.12"
 # dependencies = ["pyyaml"]
 # ///
-"""PreToolUse hook: Read/Glob/Grep zero-access protection (catch-all).
+"""PreToolUse hook: Edit tool damage control.
 
-Bash, Edit, and Write tools are handled by their own per-tool hooks
-(bash_damage_control.py, edit_damage_control.py, write_damage_control.py).
-This hook catches Read, Glob, and Grep tools and blocks access to
-zeroAccessPaths only — these tools cannot modify files, so readOnlyPaths
-and noDeletePaths do not apply.
+Blocks edits to protected files via zeroAccessPaths and readOnlyPaths.
+Covers Edit, MultilineEdit, and NotebookEdit tools.
+Adapted from disler/claude-code-damage-control edit-tool-damage-control.py.
 
-Exit codes: 0=allow, 2=block. This is a security-critical hook — never exit 1.
+Exit codes: 0=allow, 2=block.
+This is a security-critical hook — never exit 1.
 """
 
 import fnmatch
@@ -20,6 +19,7 @@ import os
 import sys
 import time
 from pathlib import Path
+from typing import Any
 
 PROJECT_DIR = os.environ.get("CLAUDE_PROJECT_DIR", os.getcwd())
 sys.path.insert(0, str(Path(PROJECT_DIR) / ".claude" / "hooks"))
@@ -29,7 +29,7 @@ try:
 except Exception:
     sys.exit(2)
 
-HOOK_NAME = "pre_tool_use.py"
+HOOK_NAME = "edit_damage_control.py"
 handle_health_check(HOOK_NAME)
 
 PROJECT_ROOT = str(Path(PROJECT_DIR).resolve())
@@ -40,10 +40,18 @@ def is_glob_pattern(pattern: str) -> bool:
 
 
 def match_path(file_path: str, pattern: str) -> bool:
-    """Match file path against pattern, supporting prefix, glob, and relative patterns."""
+    """Match file path against pattern, supporting prefix, glob, and relative patterns.
+
+    Resolves symlinks to prevent traversal bypass via pre-existing symlinks.
+    """
     expanded_pattern = os.path.expanduser(pattern)
     normalized = os.path.normpath(file_path)
     expanded_normalized = os.path.expanduser(normalized)
+    # Resolve symlinks to catch traversal (e.g., symlink -> ~/.aws/credentials)
+    try:
+        resolved = str(Path(expanded_normalized).resolve())
+    except (OSError, ValueError):
+        resolved = expanded_normalized
 
     # Resolve relative patterns against project root
     if not os.path.isabs(expanded_pattern):
@@ -65,26 +73,37 @@ def match_path(file_path: str, pattern: str) -> bool:
         abs_pattern_lower = abs_pattern.lower()
         if fnmatch.fnmatch(expanded_normalized.lower(), abs_pattern_lower):
             return True
+        # Also check resolved path (follows symlinks)
+        resolved_basename = os.path.basename(resolved).lower()
+        if fnmatch.fnmatch(resolved_basename, expanded_pattern_lower):
+            return True
+        if fnmatch.fnmatch(resolved.lower(), expanded_pattern_lower):
+            return True
         return False
     else:
         if expanded_normalized.startswith(expanded_pattern) or expanded_normalized == expanded_pattern.rstrip("/"):
             return True
         if expanded_normalized.startswith(abs_pattern) or expanded_normalized == abs_pattern.rstrip("/"):
             return True
+        # Also check resolved path (follows symlinks)
+        if resolved.startswith(expanded_pattern) or resolved == expanded_pattern.rstrip("/"):
+            return True
+        if resolved.startswith(abs_pattern) or resolved == abs_pattern.rstrip("/"):
+            return True
         return False
 
 
-def check_read(tool_input: dict, rules: dict) -> tuple[str, str | None]:
-    """Check Read/Glob/Grep tool inputs against zeroAccessPaths."""
-    file_path = tool_input.get("file_path", "") or tool_input.get("path", "")
-    pattern = tool_input.get("pattern", "")
-    check_str = file_path or pattern
-    if not check_str:
-        return "allow", None
-
+def check_path(file_path: str, rules: dict[str, Any]) -> tuple[str, str | None]:
+    """Check if file_path is blocked. Returns (decision, reason)."""
+    # Check zero-access paths first (no access at all)
     for zero_path in rules.get("zeroAccessPaths", []):
-        if match_path(check_str, zero_path):
-            return "block", f"Read/search of protected path: {zero_path}"
+        if match_path(file_path, zero_path):
+            return "block", f"Edit blocked: zero-access path {zero_path}"
+
+    # Check read-only paths (edits not allowed)
+    for readonly in rules.get("readOnlyPaths", []):
+        if match_path(file_path, readonly):
+            return "block", f"Edit blocked: read-only path {readonly}"
 
     return "allow", None
 
@@ -96,7 +115,7 @@ def load_patterns() -> dict:
 
 
 def main():
-    logger = Logger("pre_tool_use")
+    logger = Logger("edit_damage_control")
     start_time = time.monotonic()
 
     input_data = read_stdin()
@@ -108,8 +127,12 @@ def main():
     tool_name = input_data.get("tool_name", "")
     tool_input = input_data.get("tool_input", {})
 
-    # Only handle Read, Glob, Grep — other tools have their own hooks
-    if tool_name not in ("Read", "Glob", "Grep"):
+    # Check Edit, MultilineEdit, and NotebookEdit tools
+    if tool_name not in ("Edit", "MultilineEdit", "NotebookEdit"):
+        sys.exit(0)
+
+    file_path = tool_input.get("file_path", "")
+    if not file_path:
         sys.exit(0)
 
     try:
@@ -120,10 +143,10 @@ def main():
         print(json.dumps({"error": f"patterns.yaml load failed: {e}"}), file=sys.stderr)
         sys.exit(2)
 
-    decision, reason = check_read(tool_input, rules)
+    decision, reason = check_path(file_path, rules)
     elapsed = int((time.monotonic() - start_time) * 1000)
 
-    payload = {"tool": tool_name, "decision": decision}
+    payload = {"tool": tool_name, "decision": decision, "file_path": file_path}
     if reason:
         payload["reason"] = reason
 

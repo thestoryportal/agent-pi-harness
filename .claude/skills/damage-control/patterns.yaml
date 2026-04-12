@@ -1,5 +1,7 @@
-# patterns.yaml — ArhuGula security rules
-# Location: .claude/hooks/patterns.yaml
+# patterns.yaml — ArhuGula security rules (DISTRIBUTION COPY)
+# Authoritative copy: .claude/hooks/patterns.yaml
+# This file is a snapshot for the distributable skill package.
+# To update, copy from .claude/hooks/patterns.yaml after making changes there.
 # Read by: bash_damage_control.py, edit_damage_control.py, write_damage_control.py, pre_tool_use.py
 # Format: YAML rule engine adapted from disler/claude-code-damage-control
 # Add new rules here without modifying hook Python code.

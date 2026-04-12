@@ -19,7 +19,7 @@ try:
     from dotenv import dotenv_values
     from _base import Logger, emit_event, handle_health_check, hook_output, read_stdin, run_hook
 except Exception:
-    import sys; sys.exit(2)
+    sys.exit(2)
 
 HOOK_NAME = "session_start.py"
 handle_health_check(HOOK_NAME)
@@ -82,6 +82,7 @@ REQUIRED_HOOKS = [
     "notification.py", "stop.py", "user_prompt_submit.py", "pre_compact.py",
     "subagent_start.py", "subagent_stop.py", "session_end.py",
     "permission_request.py", "post_tool_use_failure.py",
+    "bash_damage_control.py", "edit_damage_control.py", "write_damage_control.py",
 ]
 
 
