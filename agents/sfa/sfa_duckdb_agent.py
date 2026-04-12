@@ -158,6 +158,15 @@ AGENT_PROMPT = """<purpose>
 """
 
 
+def _validate_table_name(table_name: str) -> str:
+    """Validate that a table name contains only safe identifier characters."""
+    import re
+
+    if not re.match(r"^[A-Za-z0-9_]+$", table_name):
+        raise ValueError(f"Invalid table name: {table_name!r}")
+    return table_name
+
+
 def list_tables(reasoning: str) -> List[str]:
     """Returns a list of tables in the database.
 
@@ -195,6 +204,7 @@ def describe_table(reasoning: str, table_name: str) -> str:
         String containing table schema information
     """
     try:
+        table_name = _validate_table_name(table_name)
         result = subprocess.run(
             ["duckdb", DB_PATH, "-c", f"DESCRIBE {table_name};"],
             text=True,
@@ -223,8 +233,9 @@ def sample_table(reasoning: str, table_name: str, row_sample_size: int) -> str:
         String containing sample rows in readable format
     """
     try:
+        table_name = _validate_table_name(table_name)
         result = subprocess.run(
-            ["duckdb", DB_PATH, "-c", f"SELECT * FROM {table_name} LIMIT {row_sample_size};"],
+            ["duckdb", DB_PATH, "-c", f"SELECT * FROM {table_name} LIMIT {int(row_sample_size)};"],
             text=True,
             capture_output=True,
         )
