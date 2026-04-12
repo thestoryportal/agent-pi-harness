@@ -144,3 +144,11 @@ jobs:
 # Prune Observe events older than retention window
 db-prune:
     uv run apps/observe/prune.py
+
+# Start Drop Zone watcher (uses drops.yaml in cwd)
+dropzone:
+    uv run apps/dropzone/main.py watch
+
+# Start Drop Zone watcher with custom config
+dropzone-config CONFIG:
+    uv run apps/dropzone/main.py watch --config "{{CONFIG}}"

@@ -1,0 +1,28 @@
+# Example drop zone configuration.
+# Copy to drops.yaml and customize for your setup.
+#
+# Each zone watches a directory for file events and dispatches
+# to an agent backend with a rendered prompt template.
+
+drop_zones:
+  - name: "Text Processing Zone"
+    file_patterns: ["*.txt", "*.md"]
+    reusable_prompt: ".claude/commands/process_text.md"
+    zone_dirs: ["apps/dropzone/zones/text_zone"]
+    events: ["created"]
+    agent: "claude_code"
+    model: "sonnet"
+    mcp_server_file: null
+    create_zone_dir_if_not_exists: true
+    skip_permissions: false  # set true to use --dangerously-skip-permissions
+
+  - name: "Gemini Analysis Zone"
+    file_patterns: ["*.json", "*.csv"]
+    reusable_prompt: ".claude/commands/analyze_data.md"
+    zone_dirs: ["apps/dropzone/zones/data_zone"]
+    events: ["created", "modified"]
+    agent: "gemini_cli"
+    model: "gemini-2.5-pro"
+    mcp_server_file: null
+    create_zone_dir_if_not_exists: true
+    skip_permissions: false
