@@ -109,7 +109,7 @@ sfa-metaprompt PURPOSE INSTRUCTIONS:
 
 # Codebase context discovery agent
 sfa-context PROMPT DIR="." EXT="py":
-    uv run agents/sfa/sfa_codebase_context_agent.py --prompt "{{PROMPT}}" --directory "{{DIR}}" --extensions {{EXT}}
+    uv run agents/sfa/sfa_codebase_context_agent.py --prompt "{{PROMPT}}" --directory "{{DIR}}" --extensions "{{EXT}}"
 
 # Self-correcting SQL agent
 sfa-sql-correcting DB PROMPT:
