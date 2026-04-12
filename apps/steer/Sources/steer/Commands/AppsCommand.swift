@@ -59,12 +59,15 @@ struct AppsCommand: ParsableCommand {
         func run() throws {
             // Reject path traversal and shell metacharacters in app name.
             // Allowed: letters, numbers, spaces, hyphens, underscores, dots (but not "..").
+            // Use `throw` not `printError` so the compiler enforces non-fall-through
+            // via Swift's error-propagation rules — defense in depth against future
+            // refactors that might accidentally drop the guard's terminator.
             let allowedChars = CharacterSet.alphanumerics
                 .union(CharacterSet(charactersIn: " -_."))
             if name.isEmpty || name.contains("/") || name.contains("\0")
                 || name.contains("..") || name.hasPrefix(".")
                 || name.unicodeScalars.contains(where: { !allowedChars.contains($0) }) {
-                printError("Invalid app name: '\(name)' (must contain only letters, numbers, spaces, hyphens, underscores, dots; no path separators)")
+                throw SteerError.invalidArgument("app name '\(name)' (must contain only letters, numbers, spaces, hyphens, underscores, dots; no path separators)")
             }
 
             let path = "/Applications/\(name).app"
@@ -74,7 +77,7 @@ struct AppsCommand: ParsableCommand {
             let resolvedURL = URL(fileURLWithPath: path).resolvingSymlinksInPath()
             let resolvedPath = resolvedURL.path
             if !resolvedPath.hasPrefix("/Applications/") {
-                printError("App path escapes /Applications after symlink resolution: \(resolvedPath)")
+                throw SteerError.invalidArgument("app path escapes /Applications after symlink resolution: \(resolvedPath)")
             }
             let url = resolvedURL
 

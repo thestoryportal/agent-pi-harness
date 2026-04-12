@@ -27,17 +27,22 @@ struct TypeCommand: ParsableCommand {
 
         try InputHelper.typeText(text)
 
+        // Do NOT echo the typed text in output. `steer type` is commonly used to
+        // type passwords, API keys, and 2FA codes — embedding the value in JSON
+        // would leak it to session logs, hook events, and stdout consumers.
+        // Report only the length so callers can verify the type completed without
+        // exposing the content.
         struct TypeOutput: Codable {
             let action: String
-            let text: String
+            let charsTyped: Int
             let into: String?
         }
 
-        let output = TypeOutput(action: "type", text: text, into: into)
+        let output = TypeOutput(action: "type", charsTyped: text.count, into: into)
         if json {
             printJSON(output)
         } else {
-            print("Typed: \"\(text)\"")
+            print("Typed \(text.count) character\(text.count == 1 ? "" : "s")")
         }
     }
 }

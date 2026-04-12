@@ -145,10 +145,18 @@ enum SecureTmp {
 
     /// Build a path for an output file (screenshot, OCR PNG) that the agent will read.
     /// The path is inside the secure directory but the filename is unique per call.
+    /// Both `prefix` and `ext` are filtered to alphanumerics + `_`/`-` to prevent
+    /// any possibility of path component injection or log/JSON escape via the
+    /// resulting filename being embedded in agent-visible output.
     static func outputPath(prefix: String, ext: String) throws -> String {
         try ensureDirectory()
         let uuid = UUID().uuidString.lowercased()
-        let safePrefix = prefix.filter { $0.isLetter || $0.isNumber || $0 == "_" || $0 == "-" }
-        return try path(for: "\(safePrefix)_\(uuid).\(ext)")
+        let safeChars: (Character) -> Bool = { $0.isLetter || $0.isNumber || $0 == "_" || $0 == "-" }
+        let safePrefix = prefix.filter(safeChars)
+        let safeExt = ext.filter(safeChars)
+        if safeExt.isEmpty {
+            throw SteerError.invalidArgument("outputPath ext must contain at least one safe character")
+        }
+        return try path(for: "\(safePrefix)_\(uuid).\(safeExt)")
     }
 }
