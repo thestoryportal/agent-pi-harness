@@ -15,7 +15,17 @@
       "Write",
       "Edit",
       "Bash(chmod:*)",
-      "Bash(touch:*)"
+      "Bash(touch:*)",
+      "Bash(brew:*)",
+      "Bash(tmux:*)",
+      "Bash(just:*)",
+      "Bash(yq:*)",
+      "Bash(node:*)",
+      "Bash(xcode-select:*)",
+      "Bash(which:*)",
+      "Bash(test:*)",
+      "Bash(cp:*)",
+      "Bash(cat:*)"
     ],
     "deny": []
   },

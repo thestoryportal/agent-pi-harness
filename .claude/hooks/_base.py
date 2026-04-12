@@ -6,6 +6,7 @@ NOTE: This is a library module, not a standalone script. No PEP 723 shebang need
 Only uses stdlib imports — all dependencies belong in the calling hook's PEP 723 block.
 """
 
+import fcntl
 import json
 import os
 import sys
@@ -90,7 +91,11 @@ def emit_event(
     LOGS_DIR.mkdir(parents=True, exist_ok=True)
     events_file = LOGS_DIR / "events.jsonl"
     with open(events_file, "a") as f:
-        f.write(json.dumps(event) + "\n")
+        fcntl.flock(f.fileno(), fcntl.LOCK_EX)
+        try:
+            f.write(json.dumps(event) + "\n")
+        finally:
+            fcntl.flock(f.fileno(), fcntl.LOCK_UN)
 
 
 def hook_output(hook_event_name: str, additional_context: str = "") -> str:
