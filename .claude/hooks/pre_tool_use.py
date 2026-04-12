@@ -96,36 +96,53 @@ def check_read(tool_input: dict, rules: dict) -> tuple[str, str | None]:
 
 
 # ============================================================================
-# MCP TOOL GATES (SP14 round-4 hardening — token-sequence matching)
+# MCP TOOL GATES (SP14 round-5 hardening — token-sequence matching)
 # ============================================================================
 # Any MCP tool (regardless of server namespace) whose name contains an
 # arbitrary-JS execution primitive as a token sequence is blocked.
 #
 # Evolution:
-#   r1: gated only mcp__claude_in_chrome__* by prefix.
-#   r2: round-1 review found alternate namespaces and depth-3 tool names
-#       bypassed the prefix/suffix check.
-#   r3: extended to all mcp__* namespaces, iterated all __-split segments.
-#   r4: round-3 review found single-underscore suffix (execute_script_v2)
-#       and hyphen-delimited (execute-script) variants bypassed the exact
-#       frozenset membership test. Round-4 fix:
-#         1. Normalize hyphens to underscores.
-#         2. Split every segment by underscore into atomic tokens.
-#         3. Match blocked primitives as a CONTIGUOUS TOKEN SUBSEQUENCE.
-#       This defeats: execute_script_v2, execute-script, run-code,
-#       execute___script (double underscore), etc. False positives like
-#       "retrieval" (contains "eval" as a substring) are avoided because
-#       "retrieval" is one atomic token and "eval" != "retrieval".
+#   r1: gated only mcp__claude_in_chrome__* by prefix; only final segment
+#       suffix-checked against a set of primitives (execute_script, etc.).
+#   r2: r1 review found that a depth-3 tool name like
+#       mcp__claude_in_chrome__execute_script__v2 has a final segment of
+#       "v2" and bypassed the suffix check. r2 switched to any-segment
+#       exact-match across all __-split segments, still scoped to the
+#       claude_in_chrome namespace.
+#   r3: r2 review found that any other MCP server namespace evaded the
+#       claude_in_chrome prefix gate, and that a single-underscore suffix
+#       like execute_script_v2 still bypassed segment exact-match. r3
+#       extended the gate to all mcp__* namespaces.
+#   r4: r3 review found that r3's per-segment exact match still failed
+#       on execute_script_v2 (suffix) and execute-script (hyphen). r4
+#       introduced token-sequence matching: normalize hyphens, split on
+#       underscore, look for primitive tuples as contiguous subsequences.
+#       Also added single-token entries for concatenated-name variants.
+#   r5: r4 review found four new delimiter-form bypasses in the round-4
+#       upload patterns (curl --data-binary=@, wget --post-file <space>,
+#       etc.). r5 is primarily a patterns.yaml sweep to cover both `=`
+#       and ` ` delimiter forms, plus single-token MCP entries below
+#       to close the concatenated-name variant (S-26).
+#
+# False-positive avoidance: "retrieval" contains "eval" as a substring
+# but is one atomic token, so ("eval",) != ("retrieval",). "medieval"
+# same logic. A legitimate MCP tool named mcp__db__retrieval is allowed.
 
 # Each entry is a tuple of lowercase atomic tokens representing an
 # arbitrary-JS primitive. A tool name matches if any of these tuples
 # appears as a contiguous subsequence in the tool name's tokenization.
+# Single-token entries cover concatenated-name variants (e.g.
+# "executescript" with no internal separator — an unusual MCP naming
+# choice that round-4 missed).
 MCP_JS_EXEC_TOKEN_SEQS: frozenset[tuple[str, ...]] = frozenset({
     ("execute", "script"),
     ("run", "script"),
     ("run", "code"),
     ("eval",),
     ("evaluate",),
+    ("executescript",),
+    ("runscript",),
+    ("runcode",),
 })
 
 

@@ -196,35 +196,46 @@ bashToolPatterns:
   - pattern: '\bplaywright-cli\b.*`'
     reason: playwright-cli with backtick command substitution (zero-access-path exfiltration vector)
 
-  # SP14 round-3 (r4 patch for lowercase/digit vars): block playwright-cli
-  # with a shell-variable subcommand. Attack:
+  # SP14 round-3 (r5 patch: extended char class to include shell specials).
+  # Block playwright-cli with a shell-variable subcommand. Attack:
   #   SUBCMD=run-code; playwright-cli $SUBCMD "document.cookie"
   # defers the run-code/eval literal and bypasses the patterns above.
-  # Matches `$VAR`, `${VAR}`, `$var`, `$1`, `${var}` in the first non-flag
-  # argument slot, optionally quoted. Character class covers upper, lower,
-  # digits, underscore, and `{` (for brace-style).
-  - pattern: '\bplaywright-cli\b(\s+-\S+)*\s+["'']?\$[A-Za-z0-9_{]'
+  # Matches any `$X` where X is a non-whitespace non-quote character,
+  # covering `$VAR`, `$var`, `$1`, `${var}`, `$@`, `$*`, `$#`, `$?`, `$!`.
+  # Note: `[''"]?` inside a YAML single-quoted scalar — `''` is the YAML
+  # escape for a literal single quote, so this character class is `["']?`
+  # (optional single or double quote).
+  - pattern: '\bplaywright-cli\b(\s+-\S+)*\s+["'']?\$[^\s''"]'
     reason: playwright-cli with shell-variable subcommand (run-code/eval bypass vector)
 
   # ---------------------------------------------------------------------------
-  # FILE-UPLOAD EXFILTRATION (SP14 round-3 + round-4 hardening)
+  # FILE-UPLOAD EXFILTRATION (SP14 round-3 + round-4 + round-5 hardening)
   # Multiple primitives can upload arbitrary filesystem content via HTTP.
   # Block all known forms: curl multipart, curl raw, curl PUT, and wget.
   # These are the partner half of the exfil chain when combined with
   # `playwright-cli screenshot --filename=/tmp/...`.
+  #
+  # Round-5 symmetric delimiter sweep: every long-option pattern accepts
+  # BOTH `--flag=value` (equals) AND `--flag value` (space). Round-4
+  # missed this asymmetry and the r4 review found two HIGH bypasses
+  # (S-23 curl --data-binary=@; S-24 wget --post-file <space>).
+  #
+  # YAML escape note: `[''"]?` is `['"]?` at regex-compile time — the
+  # `''` is the YAML single-quote-in-single-quoted-scalar escape sequence.
+  #
   # NOTE: `-` placed last in `[A-Za-z0-9_-]` is a literal dash (not a
   # range), which is the correct placement for character-class dashes.
   # ---------------------------------------------------------------------------
-  - pattern: '\bcurl\b.*(-F|--form)\s+[''"]?[A-Za-z0-9_-]+=@'
+  - pattern: '\bcurl\b.*(-F|--form)[=\s]+[''"]?[A-Za-z0-9_-]+=@'
     reason: curl multipart file upload (-F / --form with @path)
 
-  - pattern: '\bcurl\b.*--data-binary\s+[''"]?@'
+  - pattern: '\bcurl\b.*--data-binary[=\s]+[''"]?@'
     reason: curl raw binary upload (--data-binary @path)
 
-  - pattern: '\bcurl\b.*\s-T\s+[''"]?[^-\s]'
-    reason: curl PUT file upload (-T)
+  - pattern: '\bcurl\b.*\s(-T|--upload-file)[=\s]+[''"]?[^-\s]'
+    reason: curl PUT file upload (-T / --upload-file)
 
-  - pattern: '\bwget\b.*(--post-file|--body-file)='
+  - pattern: '\bwget\b.*(--post-file|--body-file)[=\s]'
     reason: wget file upload (--post-file / --body-file)
 
   # ---------------------------------------------------------------------------
