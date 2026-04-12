@@ -53,22 +53,20 @@ def is_within_project(path_str: str) -> bool:
 
 def check_path_protection(file_path: str, protected_paths: list[str]) -> bool:
     expanded_file = os.path.expanduser(file_path)
+    try:
+        resolved_file = str(Path(expanded_file).resolve())
+    except (OSError, ValueError):
+        resolved_file = expanded_file
     for pattern in protected_paths:
         expanded_pattern = os.path.expanduser(pattern)
-        if fnmatch.fnmatch(expanded_file, expanded_pattern):
-            return True
-        if fnmatch.fnmatch(file_path, pattern):
-            return True
-        if expanded_pattern.endswith("/") and (
-            expanded_file.startswith(expanded_pattern)
-            or file_path.startswith(pattern)
-        ):
-            return True
-        if not expanded_pattern.endswith("/") and (
-            expanded_file.startswith(expanded_pattern)
-            or file_path.startswith(pattern)
-        ):
-            return True
+        abs_pattern = str(PROJECT_ROOT / expanded_pattern) if not Path(expanded_pattern).is_absolute() else expanded_pattern
+        for fp in (file_path, expanded_file, resolved_file):
+            if fnmatch.fnmatch(fp, abs_pattern) or fnmatch.fnmatch(fp, expanded_pattern):
+                return True
+            if abs_pattern.endswith("/") and fp.startswith(abs_pattern):
+                return True
+            if not abs_pattern.endswith("/") and fp.startswith(abs_pattern):
+                return True
     return False
 
 
