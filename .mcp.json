@@ -18,6 +18,17 @@
         "anthropic:claude-sonnet-4-20250514,openai:o4-mini:high,gemini:gemini-2.5-flash-preview-04-17"
       ],
       "env": {}
+    },
+    "pocket-pick": {
+      "type": "stdio",
+      "command": "uv",
+      "args": [
+        "--directory",
+        "/Users/robertrhu/Projects/arhugula/mcp/pocket-pick",
+        "run",
+        "mcp-server-pocket-pick"
+      ],
+      "env": {}
     }
   }
 }
