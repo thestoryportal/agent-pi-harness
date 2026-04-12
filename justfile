@@ -242,3 +242,25 @@ pi-team-safe:
 # Pi with full harness: team + domain + damage-control + chain
 pi-harness:
     pi -e extensions/agent-team.ts -e extensions/domain-ownership.ts -e extensions/damage-control.ts -e extensions/agent-chain.ts -e extensions/theme-cycler.ts
+
+# === SP13: Steer GUI Automation ===
+
+# Build steer Swift CLI (release mode)
+steer-build:
+    cd apps/steer && swift build -c release 2>&1
+
+# Run a steer command (usage: just steer "see --screen 0 --json")
+steer CMD:
+    apps/steer/.build/release/steer {{CMD}}
+
+# Take a screenshot of the primary screen
+steer-see:
+    apps/steer/.build/release/steer see --screen 0 --json
+
+# List running apps
+steer-apps:
+    apps/steer/.build/release/steer apps list --json
+
+# OCR the primary screen
+steer-ocr:
+    apps/steer/.build/release/steer ocr --screen 0 --store --json
