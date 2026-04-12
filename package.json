@@ -6,7 +6,7 @@
     "@anthropic-ai/claude-code": "^1"
   },
   "devDependencies": {
-    "promptfoo": "^0"
+    "promptfoo": "0.121.4"
   },
   "scripts": {
     "eval:builder": ". .env && promptfoo eval -c ./tests/prompts/builder/promptfooconfig.yaml -t ./tests/prompts/builder/test.yaml -p ./tests/prompts/builder/prompt.txt --no-cache --output ./tests/prompts/builder/output.json",

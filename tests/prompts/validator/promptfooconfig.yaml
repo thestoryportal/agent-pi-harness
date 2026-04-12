@@ -6,11 +6,18 @@ description: "Validator agent prompt evaluation"
 
 providers:
   - id: anthropic:messages:claude-sonnet-4-5-20250929
-    label: claude-sonnet-4-5
+    label: anthropic
   - id: openai:gpt-4o-mini
-    label: gpt-4o-mini
+    label: openai
+  - id: google:gemini-2.5-flash
+    label: gemini
   - id: groq:llama-3.3-70b-versatile
-    label: groq-llama-3.3
+    label: groq
+  # DeepSeek and Ollama deferred — require DEEPSEEK_API_KEY and local Ollama server respectively
+  # - id: deepseek:deepseek-chat
+  #   label: deepseek
+  # - id: ollama:chat:llama3.3
+  #   label: ollama
 
 prompts:
   - file://./prompt.txt
