@@ -19,6 +19,12 @@ skills:
     location: .claude/skills/damage-control/SKILL.md
     layer: 1  # Skill
 
+mcp:
+  just-prompt:
+    description: Multi-model MCP server — prompt Anthropic, OpenAI, Gemini, Groq, DeepSeek, Ollama via unified interface
+    location: mcp/just-prompt/
+    tools: [prompt, prompt_from_file, prompt_from_file_to_file, ceo_and_board, list_providers, list_models]
+
 commands:
   architect:
     description: Create implementation plan from scout output (architect agent)

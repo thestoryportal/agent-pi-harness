@@ -103,8 +103,8 @@ See Source of Truth Section 8 for priority order. Fix structural issues (Section
 | SP1 | CC Harness | BUILT | 40 | hooks-mastery, install-maintain, damage-control |
 | SP2 | Security Hardening | BUILT | 6 | damage-control |
 | SP3 | Validation Pipeline | BUILT | 8 | agentic-finance-review, hooks-mastery |
-| SP4 | Multi-Model | **NEXT** | 7 | just-prompt |
-| SP5 | Knowledge Base | NOT STARTED | 7 | pocket-pick |
+| SP4 | Multi-Model | BUILT | 7 | just-prompt |
+| SP5 | Knowledge Base | **NEXT** | 7 | pocket-pick |
 | SP6 | Library Distribution | NOT STARTED | 6 | the-library |
 | SP7 | Single-File Agents | NOT STARTED | 9 | single-file-agents |
 | SP8 | Drive + Listen + Direct | BUILT | 15 | mac-mini-agent |
