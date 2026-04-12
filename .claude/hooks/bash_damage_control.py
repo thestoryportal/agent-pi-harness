@@ -231,12 +231,19 @@ def _check_single_command(command: str, rules: dict[str, Any]) -> tuple[str, str
             return "allow", None
 
     # 1. Check bashToolPatterns (may block or ask)
+    # Per-rule case sensitivity: default is IGNORECASE (safer for most
+    # commands), but rules may set `case_sensitive: true` to opt out.
+    # This is required for rules that distinguish between uppercase and
+    # lowercase short flags where the two forms mean different things
+    # (e.g., curl -K config vs curl -k insecure). Added in SP14 round-9.
     for item in rules.get("bashToolPatterns", []):
         pattern = item.get("pattern", "")
         reason = item.get("reason", "Blocked by pattern")
         should_ask = item.get("ask", False)
+        case_sensitive = item.get("case_sensitive", False)
+        flags = 0 if case_sensitive else re.IGNORECASE
         try:
-            if re.search(pattern, command, re.IGNORECASE):
+            if re.search(pattern, command, flags):
                 if should_ask:
                     return "ask", reason
                 return "block", f"Blocked: {reason}"

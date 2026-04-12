@@ -278,8 +278,12 @@ bashToolPatterns:
   - pattern: '\bcurl\b.*--data-binary[=\s]+[''"]?@'
     reason: curl raw binary upload (long --data-binary @path)
 
-  - pattern: '\bcurl\b.*--data-urlencode[=\s]+[''"]?@'
-    reason: curl URL-encoded file upload (long --data-urlencode @path)
+  # --data-urlencode has TWO file-reading forms per curl docs:
+  #   --data-urlencode @file       (raw file contents URL-encoded)
+  #   --data-urlencode name@file   (file contents URL-encoded as named param)
+  # The [A-Za-z0-9_-]* before @ covers both forms in a single pattern.
+  - pattern: '\bcurl\b.*--data-urlencode[=\s]+[''"]?[A-Za-z0-9_-]*@'
+    reason: curl URL-encoded file upload (long --data-urlencode @path / name@path)
 
   # HTTP PUT upload — short -T (including bundled forms -sT, -kT, -LT, -vT)
   # and long --upload-file. Round-7 uses \s-[A-Za-z]*T to catch short-
@@ -293,6 +297,26 @@ bashToolPatterns:
   # wget upload flags — equivalent to curl --data/--data-binary
   - pattern: '\bwget\b.*(--post-file|--body-file)[=\s]+'
     reason: wget file upload (--post-file / --body-file)
+
+  # curl -K / --config indirect file read (SP14 round-9 hardening, S-38).
+  # A curl config file can embed ANY curl option, including --data @file
+  # and --upload-file. The file read happens inside curl's config parser
+  # at execution time, so the `@` never appears in the bash command string
+  # and no @-anchored pattern above can catch it. Block the config-load
+  # primitive itself.
+  #
+  # Short -K uses case-sensitive matching because -k (lowercase) is
+  # --insecure, a common flag. Under the hook's default IGNORECASE,
+  # [A-Za-z]*K would match -k and produce a false positive on every
+  # `curl -k https://...` command. The case_sensitive: true opt-out
+  # (added in round-9 via bash_damage_control.py) preserves curl's own
+  # case semantics.
+  - pattern: '\bcurl\b.*\s-[A-Za-z]*K[=\s]*[A-Za-z0-9_/.-]'
+    reason: curl config file read (short -K / bundled)
+    case_sensitive: true
+
+  - pattern: '\bcurl\b.*--config[=\s]'
+    reason: curl config file read (long --config)
 
   # ---------------------------------------------------------------------------
   # SQL DESTRUCTIVE OPERATIONS (catastrophic)
