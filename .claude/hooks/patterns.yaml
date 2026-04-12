@@ -202,40 +202,57 @@ bashToolPatterns:
   # defers the run-code/eval literal and bypasses the patterns above.
   # Matches any `$X` where X is a non-whitespace non-quote character,
   # covering `$VAR`, `$var`, `$1`, `${var}`, `$@`, `$*`, `$#`, `$?`, `$!`.
-  # Note: `[''"]?` inside a YAML single-quoted scalar — `''` is the YAML
-  # escape for a literal single quote, so this character class is `["']?`
-  # (optional single or double quote).
+  #
+  # YAML ESCAPE NOTE (applies here and to the curl patterns below):
+  # Inside a YAML single-quoted scalar, `''` (two single quotes) is the
+  # escape sequence for a literal single quote. So `[''"]?` at YAML parse
+  # time becomes `['"]?` at regex compile time (optional single or double
+  # quote). Similarly `[^\s''"]` becomes `[^\s'"]` (negated class: not
+  # whitespace, not single quote, not double quote). If you edit these
+  # patterns, preserve the `''` escape or the character class will silently
+  # break.
   - pattern: '\bplaywright-cli\b(\s+-\S+)*\s+["'']?\$[^\s''"]'
     reason: playwright-cli with shell-variable subcommand (run-code/eval bypass vector)
 
   # ---------------------------------------------------------------------------
-  # FILE-UPLOAD EXFILTRATION (SP14 round-3 + round-4 + round-5 hardening)
+  # FILE-UPLOAD EXFILTRATION (SP14 rounds 3 + 4 + 5 + 6 hardening)
   # Multiple primitives can upload arbitrary filesystem content via HTTP.
   # Block all known forms: curl multipart, curl raw, curl PUT, and wget.
   # These are the partner half of the exfil chain when combined with
   # `playwright-cli screenshot --filename=/tmp/...`.
   #
-  # Round-5 symmetric delimiter sweep: every long-option pattern accepts
-  # BOTH `--flag=value` (equals) AND `--flag value` (space). Round-4
-  # missed this asymmetry and the r4 review found two HIGH bypasses
-  # (S-23 curl --data-binary=@; S-24 wget --post-file <space>).
+  # Delimiter coverage rules:
+  #   - SHORT flags (-F, -T) use `[=\s]*` (ZERO-or-more) — POSIX short-
+  #     option concatenation allows no separator at all: `curl -Ffield=@x`
+  #     and `curl -T/path` are valid curl invocations.
+  #   - LONG flags (--form, --data-binary, --post-file, --body-file,
+  #     --upload-file) use `[=\s]+` (ONE-or-more) — GNU long options
+  #     require either `=` or space; no-separator form is not valid.
   #
-  # YAML escape note: `[''"]?` is `['"]?` at regex-compile time — the
-  # `''` is the YAML single-quote-in-single-quoted-scalar escape sequence.
+  # Round-6 closes two P2-HIGH bypasses (S-27, S-28) found by the r5
+  # review: r5 used `[=\s]+` (one-or-more) for -F and -T, blocking
+  # `curl -F field=@x` but missing `curl -Ffield=@x`.
   #
   # NOTE: `-` placed last in `[A-Za-z0-9_-]` is a literal dash (not a
   # range), which is the correct placement for character-class dashes.
+  # The `''` escape convention is documented in the shell-var block above.
   # ---------------------------------------------------------------------------
-  - pattern: '\bcurl\b.*(-F|--form)[=\s]+[''"]?[A-Za-z0-9_-]+=@'
-    reason: curl multipart file upload (-F / --form with @path)
+  - pattern: '\bcurl\b.*-F[=\s]*[''"]?[A-Za-z0-9_-]+=@'
+    reason: curl multipart file upload (short -F with @path)
+
+  - pattern: '\bcurl\b.*--form[=\s]+[''"]?[A-Za-z0-9_-]+=@'
+    reason: curl multipart file upload (long --form with @path)
 
   - pattern: '\bcurl\b.*--data-binary[=\s]+[''"]?@'
     reason: curl raw binary upload (--data-binary @path)
 
-  - pattern: '\bcurl\b.*\s(-T|--upload-file)[=\s]+[''"]?[^-\s]'
-    reason: curl PUT file upload (-T / --upload-file)
+  - pattern: '\bcurl\b.*\s-T[=\s]*[''"]?[^-\s]'
+    reason: curl PUT file upload (short -T)
 
-  - pattern: '\bwget\b.*(--post-file|--body-file)[=\s]'
+  - pattern: '\bcurl\b.*--upload-file[=\s]+[''"]?[^-\s]'
+    reason: curl PUT file upload (long --upload-file)
+
+  - pattern: '\bwget\b.*(--post-file|--body-file)[=\s]+'
     reason: wget file upload (--post-file / --body-file)
 
   # ---------------------------------------------------------------------------

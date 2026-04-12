@@ -96,7 +96,11 @@ def check_read(tool_input: dict, rules: dict) -> tuple[str, str | None]:
 
 
 # ============================================================================
-# MCP TOOL GATES (SP14 round-5 hardening — token-sequence matching)
+# MCP TOOL GATES (SP14 round-6 hardening — single-token concat variants)
+# Token-sequence matching was introduced in r4. r5 added the first batch
+# of single-token concatenated-name entries (executescript, runscript,
+# runcode). r6 adds the `*js` family (evaljs, runjs, execjs, executejs)
+# after the r5 review flagged them as remaining supply-chain vectors.
 # ============================================================================
 # Any MCP tool (regardless of server namespace) whose name contains an
 # arbitrary-JS execution primitive as a token sequence is blocked.
@@ -140,9 +144,16 @@ MCP_JS_EXEC_TOKEN_SEQS: frozenset[tuple[str, ...]] = frozenset({
     ("run", "code"),
     ("eval",),
     ("evaluate",),
+    # Concatenated-name variants (r5 + r6): MCP tool names that combine
+    # the primitive into a single token with no separator. Covers the
+    # `-script`, `-code`, and `-js` suffix families.
     ("executescript",),
     ("runscript",),
     ("runcode",),
+    ("evaljs",),
+    ("runjs",),
+    ("execjs",),
+    ("executejs",),
 })
 
 
