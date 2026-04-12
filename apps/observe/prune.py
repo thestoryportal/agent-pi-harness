@@ -32,12 +32,33 @@ def parse_retention_days() -> int:
     return days
 
 
+def prune_sqlite(cutoff: datetime, db_path: Path) -> None:
+    """Prune SQLite events older than cutoff, then VACUUM."""
+    if not db_path.exists():
+        return
+    try:
+        import sqlite3
+        conn = sqlite3.connect(str(db_path), isolation_level=None)
+        conn.execute("PRAGMA busy_timeout=500")
+        cursor = conn.execute("DELETE FROM events WHERE timestamp < ?", (cutoff.isoformat(),))
+        deleted = cursor.rowcount
+        conn.execute("VACUUM")
+        conn.close()
+        print(f"SQLite: pruned {deleted} events, vacuumed")
+    except Exception as e:
+        print(f"SQLite prune error: {e}", file=sys.stderr)
+
+
 def main():
     project_dir = os.environ.get("CLAUDE_PROJECT_DIR", os.getcwd())
     events_file = Path(project_dir) / ".claude" / "logs" / "events.jsonl"
+    db_path = Path(project_dir) / "apps" / "observe" / "events.db"
 
     retention_days = parse_retention_days()
     cutoff = datetime.now(timezone.utc) - timedelta(days=retention_days)
+
+    # Prune SQLite first
+    prune_sqlite(cutoff, db_path)
 
     # Hold LOCK_EX for the full read-truncate-write cycle so concurrent
     # hook appenders (which also flock in _base.emit_event) cannot interleave.

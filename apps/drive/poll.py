@@ -1,6 +1,9 @@
 """Poll tmux sessions for Sentinel completion tokens."""
 
+import json
+import os
 import subprocess
+from datetime import datetime, timezone
 
 from apps.drive.sentinel import parse_sentinel
 
@@ -18,6 +21,25 @@ def poll_session(session_name: str, token: str) -> int | None:
     """Poll a session for Sentinel completion.
 
     Returns exit code (int) if done, None if still running.
+    Emits session.completed to Observe when done.
     """
     output = capture_pane(session_name)
-    return parse_sentinel(output, token)
+    exit_code = parse_sentinel(output, token)
+    if exit_code is not None:
+        try:
+            from apps.observe.db import insert_event
+            session_id = os.environ.get("ARHUGULA_SESSION_ID", "unknown")
+            insert_event(
+                event_type="session.completed",
+                session_id=session_id,
+                timestamp=datetime.now(timezone.utc).isoformat(),
+                hook_name="drive",
+                exit_code=exit_code,
+                payload=json.dumps({
+                    "tmux_session": session_name,
+                    "sentinel": f"__DONE_{token}:{exit_code}",
+                }),
+            )
+        except Exception:
+            pass
+    return exit_code
