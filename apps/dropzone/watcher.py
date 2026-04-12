@@ -69,7 +69,9 @@ class DropZoneEventHandler(FileSystemEventHandler):
         if event_type not in self.zone.events:
             return
 
-        # Security: reject symlinks and paths that escape zone boundaries
+        # Security: reject symlinks and paths that escape zone boundaries.
+        # Note: TOCTOU window exists between is_symlink/is_within_zone/resolve —
+        # accepted risk for a dev harness (requires local attacker with shell access).
         if file_path.is_symlink():
             self.console.print(
                 f"[bold red]{self.zone.name}[/] — rejected symlink: {file_path}"
@@ -112,6 +114,8 @@ class DropZoneEventHandler(FileSystemEventHandler):
                 dest = archive_file(file_path)
                 self.console.print(f"[dim]archived → {dest}[/]")
         except Exception as e:
-            self.console.print(
-                f"[bold red]{self.zone.name}[/] — error handling {abs_path}: {e}"
-            )
+            import sys
+            msg = f"{self.zone.name} — error handling {abs_path}: {e}"
+            self.console.print(f"[bold red]{msg}[/]")
+            # Durable output to stderr for headless/redirected runs
+            print(f"DROPZONE ERROR: {msg}", file=sys.stderr)

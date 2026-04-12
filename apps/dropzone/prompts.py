@@ -3,22 +3,25 @@
 import re
 from pathlib import Path
 
-# Reject filenames containing prompt-injection patterns (instruction overrides,
-# shell metacharacters in sequence, or embedded newlines).
-_UNSAFE_FILENAME_RE = re.compile(
-    r"[\n\r]"                       # embedded newlines
-    r"|ignore\s+previous"           # common prompt injection prefix
-    r"|system\s*:"                  # role injection
-    r"|<\s*/?\s*(?:system|user)\b"  # XML-style role tags
-)
+# Reject paths containing prompt-injection patterns anywhere in the full path
+# (directory components included, not just the basename).
+_UNSAFE_PATH_RE = re.compile(
+    r"[\n\r\x00-\x08\x0b\x0c\x0e-\x1f]"  # control characters
+    r"|ignore\s+previous"                   # common prompt injection prefix
+    r"|system\s*:"                          # role injection
+    r"|<\s*/?\s*(?:system|user)\b"          # XML-style role tags
+, re.IGNORECASE)
 
 
 def sanitize_file_path(file_path: str) -> str:
-    """Reject file paths whose basename contains prompt-injection patterns."""
-    basename = Path(file_path).name
-    if _UNSAFE_FILENAME_RE.search(basename.lower()):
+    """Reject file paths containing prompt-injection patterns or control chars.
+
+    Checks the FULL path (all directory components + filename), not just the
+    basename, to prevent injection via crafted directory names.
+    """
+    if _UNSAFE_PATH_RE.search(file_path):
         raise ValueError(
-            f"Filename rejected — contains unsafe pattern: {basename!r}"
+            f"Path rejected — contains unsafe pattern: {file_path!r}"
         )
     return file_path
 
