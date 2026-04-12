@@ -144,3 +144,10 @@ hook events, terminal scrollback) will retain that content.
   routed to a redacting consumer
 - Secure text fields (`AXSecureTextField`) are automatically redacted in `value` output,
   but not all apps mark password fields with that role
+- `steer wait --for "<text>"` matches against both element labels AND value fields,
+  so it can poll for sensitive content appearing in a field. Treat it as equivalent
+  to `steer see` for sensitivity purposes — don't use it to wait for text inside a
+  field that may contain secrets
+- `steer type "<text>"` does NOT echo the typed text in JSON output (only `chars_typed`
+  count is reported), so typing passwords is safe from log leakage — but the typed
+  characters still land in the focused application, which may have its own logging

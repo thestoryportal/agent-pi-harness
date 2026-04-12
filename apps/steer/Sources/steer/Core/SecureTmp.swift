@@ -76,9 +76,15 @@ enum SecureTmp {
     /// through) by the rename. No pre-rename lstat is needed.
     static func writeAtomic(_ data: Data, to filename: String) throws {
         let finalPath = try path(for: filename)
-        let tmpPath = "\(finalPath).tmp.\(getpid())"
+        // Use a random UUID suffix for the temp file rather than the PID. PID
+        // leaks process identity to anything that can see the directory listing
+        // (only same-UID processes given the 0700 dir, but defense in depth).
+        // UUID is also collision-free across concurrent steer invocations.
+        let randomSuffix = UUID().uuidString.lowercased()
+        let tmpPath = "\(finalPath).tmp.\(randomSuffix)"
 
-        // Remove any pre-existing temp file from a prior crashed run.
+        // Remove any pre-existing temp file at this exact path (collision is
+        // statistically impossible with UUID, but be defensive).
         unlink(tmpPath)
 
         // O_CREAT | O_EXCL | O_NOFOLLOW: fail if file exists or is a symlink.

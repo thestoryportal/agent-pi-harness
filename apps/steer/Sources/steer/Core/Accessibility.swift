@@ -61,9 +61,18 @@ enum AccessibilityHelper {
 
         var childrenRef: CFTypeRef?
         let result = AXUIElementCopyAttributeValue(element, kAXChildrenAttribute as CFString, &childrenRef)
-        guard result == .success, let children = childrenRef as? [AXUIElement] else { return }
+        guard result == .success, let cfChildren = childrenRef else { return }
 
-        for child in children {
+        // Type-check the CFArray explicitly before iterating. The Swift bridge
+        // `cfChildren as? [AXUIElement]` works in practice but isn't statically
+        // guaranteed for CFTypeRef returns. Verify CFTypeID and pull elements
+        // out via CFArray APIs to make the type contract explicit.
+        guard CFGetTypeID(cfChildren) == CFArrayGetTypeID() else { return }
+        let array = unsafeBitCast(cfChildren, to: CFArray.self)
+        let count = CFArrayGetCount(array)
+        for i in 0..<count {
+            guard let raw = CFArrayGetValueAtIndex(array, i) else { continue }
+            let child = Unmanaged<AXUIElement>.fromOpaque(raw).takeUnretainedValue()
             walkElement(child, elements: &elements, counters: &counters, depth: depth + 1)
         }
     }

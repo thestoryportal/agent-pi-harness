@@ -33,7 +33,10 @@ struct WindowCommand: ParsableCommand {
             guard let value = AXValueCreate(.cgPoint, &point) else {
                 printError("Failed to create CGPoint AXValue for move")
             }
-            AXUIElementSetAttributeValue(window, kAXPositionAttribute as CFString, value)
+            let setResult = AXUIElementSetAttributeValue(window, kAXPositionAttribute as CFString, value)
+            if setResult != .success {
+                printError("Failed to move \(app) window: AX error \(setResult.rawValue)")
+            }
 
             struct MoveOutput: Codable { let action: String; let app: String; let x: Double; let y: Double }
             if json {
@@ -67,7 +70,10 @@ struct WindowCommand: ParsableCommand {
             guard let value = AXValueCreate(.cgSize, &size) else {
                 printError("Failed to create CGSize AXValue for resize")
             }
-            AXUIElementSetAttributeValue(window, kAXSizeAttribute as CFString, value)
+            let setResult = AXUIElementSetAttributeValue(window, kAXSizeAttribute as CFString, value)
+            if setResult != .success {
+                printError("Failed to resize \(app) window: AX error \(setResult.rawValue)")
+            }
 
             struct ResizeOutput: Codable { let action: String; let app: String; let width: Double; let height: Double }
             if json {
@@ -91,7 +97,10 @@ struct WindowCommand: ParsableCommand {
             guard let window = getAppWindow(name: app) else {
                 printError("No window found for '\(app)'")
             }
-            AXUIElementSetAttributeValue(window, kAXMinimizedAttribute as CFString, true as CFTypeRef)
+            let setResult = AXUIElementSetAttributeValue(window, kAXMinimizedAttribute as CFString, true as CFTypeRef)
+            if setResult != .success {
+                printError("Failed to minimize \(app) window: AX error \(setResult.rawValue)")
+            }
 
             struct MinOutput: Codable { let action: String; let app: String }
             if json {
@@ -118,7 +127,10 @@ struct WindowCommand: ParsableCommand {
             var currentValue: CFTypeRef?
             AXUIElementCopyAttributeValue(window, "AXFullScreen" as CFString, &currentValue)
             let isFullscreen = (currentValue as? Bool) ?? false
-            AXUIElementSetAttributeValue(window, "AXFullScreen" as CFString, (!isFullscreen) as CFTypeRef)
+            let setResult = AXUIElementSetAttributeValue(window, "AXFullScreen" as CFString, (!isFullscreen) as CFTypeRef)
+            if setResult != .success {
+                printError("Failed to toggle fullscreen for \(app): AX error \(setResult.rawValue)")
+            }
 
             struct FSOutput: Codable { let action: String; let app: String; let fullscreen: Bool }
             if json {
