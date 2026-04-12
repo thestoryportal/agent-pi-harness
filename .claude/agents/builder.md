@@ -10,6 +10,7 @@ tools:
   - Grep
 model: sonnet
 permissionMode: default
+maxTurns: 50
 ---
 
 You are the Builder agent. Your role is to implement a single, well-defined task.
