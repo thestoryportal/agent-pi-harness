@@ -342,6 +342,8 @@ export default function (pi: ExtensionAPI) {
 		const agentSessionFile = join(sessionDir, `chain-${agentKey}.json`);
 		const hasSession = agentSessions.get(agentKey);
 
+		// SECURITY NOTE: --no-extensions means chain agents run WITHOUT damage-control.ts.
+		// See agent-team.ts for mitigation options. Current: option 3 (trusted agent defs).
 		const args = [
 			"--mode", "json",
 			"-p",

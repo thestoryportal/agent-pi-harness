@@ -177,7 +177,11 @@ export default function (pi: ExtensionAPI) {
 
 		async execute(_toolCallId, params) {
 			const { job_id } = params as { job_id: string };
-			const result = await listenFetch(`/job/${job_id}`);
+			// Validate job_id to prevent path traversal / header injection
+			if (!/^[a-zA-Z0-9_-]+$/.test(job_id)) {
+				return { content: [{ type: "text", text: `Error: Invalid job_id format. Must be alphanumeric with hyphens/underscores.` }] };
+			}
+			const result = await listenFetch(`/job/${encodeURIComponent(job_id)}`);
 
 			if (result.error) {
 				return {
@@ -246,7 +250,11 @@ export default function (pi: ExtensionAPI) {
 
 		async execute(_toolCallId, params) {
 			const { job_id } = params as { job_id: string };
-			const result = await listenFetch(`/job/${job_id}`, {
+			// Validate job_id to prevent path traversal / header injection
+			if (!/^[a-zA-Z0-9_-]+$/.test(job_id)) {
+				return { content: [{ type: "text", text: `Error: Invalid job_id format. Must be alphanumeric with hyphens/underscores.` }] };
+			}
+			const result = await listenFetch(`/job/${encodeURIComponent(job_id)}`, {
 				method: "DELETE",
 			});
 

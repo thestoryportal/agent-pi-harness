@@ -9,6 +9,14 @@
  * Full implementation requires: jiti dynamic loading, TypeBox schema parsing,
  * sandbox execution with stack trace feedback for self-healing.
  *
+ * SECURITY WARNING: forge-registry.json stores arbitrary TypeScript source code
+ * submitted by LLM agents. DO NOT implement jiti dynamic loading without:
+ *   1. Human review gate — forged tools must be approved before execution
+ *   2. Cryptographic signing — verify tool source has not been tampered with
+ *   3. Sandbox execution — run forged code in an isolated context, not the main Pi process
+ * Without these gates, any agent session can pre-position persistent arbitrary code
+ * that executes with full Node.js privileges when loading is wired in.
+ *
  * Usage: pi -e extensions/agent-forge.ts
  *
  * Tools provided:

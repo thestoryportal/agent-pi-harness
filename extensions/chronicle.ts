@@ -73,6 +73,11 @@ function getLedgerPath(cwd: string, workflowId: string): string {
 
 function appendLedger(cwd: string, workflowId: string, entry: LedgerEntry): void {
 	const ledgerPath = getLedgerPath(cwd, workflowId);
+	const chroniclesDir = path.resolve(cwd, CHRONICLES_DIR);
+	// Guard: never write outside the chronicles directory
+	if (!path.resolve(ledgerPath).startsWith(chroniclesDir)) {
+		throw new Error(`Ledger path escapes chronicles directory: ${ledgerPath}`);
+	}
 	fs.mkdirSync(path.dirname(ledgerPath), { recursive: true });
 	fs.appendFileSync(ledgerPath, JSON.stringify(entry) + "\n");
 }
@@ -126,7 +131,9 @@ export default function (pi: ExtensionAPI) {
 				return { content: [{ type: "text", text: "Error: states_json must be valid JSON" }] };
 			}
 
-			const workflowId = `${name.toLowerCase().replace(/\s+/g, "-")}-${Date.now()}`;
+			// Sanitize name to prevent path traversal in ledger file paths
+			const safeName = name.toLowerCase().replace(/[^a-z0-9_-]/g, "-").replace(/-+/g, "-").slice(0, 64);
+			const workflowId = `${safeName}-${Date.now()}`;
 			const definition: WorkflowDefinition = {
 				id: workflowId,
 				name,

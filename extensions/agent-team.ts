@@ -344,6 +344,15 @@ export default function (pi: ExtensionAPI) {
 		const agentSessionFile = join(sessionDir, `${agentKey}.json`);
 
 		// Build args — first run creates session, subsequent runs resume
+		// SECURITY NOTE: --no-extensions means subagents run WITHOUT damage-control.ts.
+		// Pi's extension-layer safety rules do not apply to spawned subagents.
+		// Mitigation options:
+		//   1. Load damage-control for subagents: replace --no-extensions with
+		//      -e extensions/damage-control.ts (adds ~200ms startup per dispatch)
+		//   2. Rely on Claude Code pre_tool_use.py hooks (only if subagent runs
+		//      via Claude Code, not bare Pi)
+		//   3. Accept the risk for trusted agent definitions only
+		// Current: option 3 — agent .md files are developer-authored, not LLM-generated.
 		const args = [
 			"--mode", "json",
 			"-p",
