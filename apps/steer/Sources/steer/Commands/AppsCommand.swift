@@ -58,16 +58,22 @@ struct AppsCommand: ParsableCommand {
 
         func run() throws {
             // Reject path traversal and shell metacharacters in app name.
-            // Allowed: letters, numbers, spaces, hyphens, underscores, dots (but not "..").
+            // Allowlist is restricted to ASCII letters, numbers, spaces, hyphens,
+            // underscores, and dots. CharacterSet.alphanumerics is Unicode-aware
+            // (includes Cyrillic, Arabic, full-width forms, etc.), which widens
+            // the surface beyond what the validation comment promises and could
+            // interact unexpectedly with macOS path normalization.
+            //
             // Use `throw` not `printError` so the compiler enforces non-fall-through
             // via Swift's error-propagation rules — defense in depth against future
             // refactors that might accidentally drop the guard's terminator.
-            let allowedChars = CharacterSet.alphanumerics
-                .union(CharacterSet(charactersIn: " -_."))
+            let allowedASCII: Set<Character> = Set(
+                "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789 -_."
+            )
             if name.isEmpty || name.contains("/") || name.contains("\0")
                 || name.contains("..") || name.hasPrefix(".")
-                || name.unicodeScalars.contains(where: { !allowedChars.contains($0) }) {
-                throw SteerError.invalidArgument("app name '\(name)' (must contain only letters, numbers, spaces, hyphens, underscores, dots; no path separators)")
+                || name.contains(where: { !allowedASCII.contains($0) }) {
+                throw SteerError.invalidArgument("app name '\(name)' (must contain only ASCII letters, numbers, spaces, hyphens, underscores, dots; no path separators)")
             }
 
             let path = "/Applications/\(name).app"

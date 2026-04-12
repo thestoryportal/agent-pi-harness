@@ -36,6 +36,12 @@ struct TypeCommand: ParsableCommand {
             let action: String
             let charsTyped: Int
             let into: String?
+
+            enum CodingKeys: String, CodingKey {
+                case action
+                case charsTyped = "chars_typed"
+                case into
+            }
         }
 
         let output = TypeOutput(action: "type", charsTyped: text.count, into: into)

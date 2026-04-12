@@ -34,6 +34,12 @@ struct WaitCommand: ParsableCommand {
             printError("--for requires --app (cannot search elements without an app context)")
         }
 
+        // Floor the polling interval to prevent CPU exhaustion via small or
+        // negative values. Each iteration walks the full AX tree (up to depth 40),
+        // so an interval of 0 or 0.001 turns this into a tight spin that consumes
+        // 100% CPU and stalls system-wide AX operations until --timeout fires.
+        let effectiveInterval = max(interval, 0.1)
+
         let start = Date()
         let deadline = start.addingTimeInterval(timeout)
 
@@ -70,10 +76,10 @@ struct WaitCommand: ParsableCommand {
 
             let now = Date()
             if now >= deadline { break }
-            // Sleep for `interval` or remaining time, whichever is shorter,
-            // so we never overshoot the deadline.
+            // Sleep for `effectiveInterval` or remaining time, whichever is
+            // shorter, so we never overshoot the deadline.
             let remaining = deadline.timeIntervalSince(now)
-            Thread.sleep(forTimeInterval: min(interval, remaining))
+            Thread.sleep(forTimeInterval: min(effectiveInterval, remaining))
         }
 
         let target = self.`for` ?? app ?? "unknown"
