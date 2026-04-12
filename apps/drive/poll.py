@@ -19,6 +19,8 @@ def poll_session(session_name: str, token: str) -> int | None:
 
     Returns exit code (int) if done, None if still running.
     Emits session.completed to Observe when done.
+    Note: returns None indefinitely for dead sessions (tmux session
+    no longer exists). Callers should handle timeout externally.
     """
     output = capture_pane(session_name)
     exit_code = parse_sentinel(output, token)

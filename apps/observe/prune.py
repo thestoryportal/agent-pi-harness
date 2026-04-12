@@ -88,7 +88,9 @@ def main():
                     ts = datetime.fromisoformat(event.get("timestamp", ""))
                 except (json.JSONDecodeError, ValueError, TypeError):
                     # Keep unparseable lines (don't lose data) but count them
-                    # so the retention leak is observable.
+                    # so the retention leak is observable. Note: malformed lines
+                    # accumulate indefinitely since they have no parseable timestamp.
+                    # This is intentional — losing data is worse than a slow leak.
                     malformed += 1
                     kept.append(line)
                     continue

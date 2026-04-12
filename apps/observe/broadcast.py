@@ -23,13 +23,15 @@ class Broadcaster:
 
     async def broadcast(self, event: dict) -> None:
         """Send event to all connected clients. Remove disconnected ones."""
-        dead = set()
+        dead: set[WebSocket] = set()
         message = json.dumps(event)
         for ws in self._clients:
             try:
                 await ws.send_text(message)
             except Exception:
                 dead.add(ws)
+        if dead:
+            logger.debug("Pruned %d dead WebSocket client(s)", len(dead))
         self._clients -= dead
 
     @property
