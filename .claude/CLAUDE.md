@@ -49,7 +49,7 @@ These rules prevent scope drift, invented features, and missed gaps:
 
 2. **Follow the sub-project priority order.** Section 8 of the source of truth defines
    priority order. Do not skip ahead. Do not reorder without explicit user approval.
-   Current: SP9 → SP10 → ...
+   Current: SP10 → SP11 → ...
 
 3. **No invented components.** If a feature does not exist in any IndyDevDan repo
    (code, architecture doc, or concept), do not add it. The goal is identical replication.
@@ -108,8 +108,8 @@ See Source of Truth Section 8 for priority order. Fix structural issues (Section
 | SP6 | Library Distribution | BUILT | 6 | the-library |
 | SP7 | Single-File Agents | BUILT | 9 | single-file-agents |
 | SP8 | Drive + Listen + Direct | BUILT | 15 | mac-mini-agent |
-| SP9 | Orchestration | **NEXT** | 11 | bowser, comprehensive-ref, infinite-agentic-loop |
-| SP10 | Drop Zones | NOT STARTED | 4 | agentic-drop-zones |
+| SP9 | Orchestration | BUILT | 11 | bowser, comprehensive-ref, infinite-agentic-loop |
+| SP10 | Drop Zones | **NEXT** | 4 | agentic-drop-zones |
 | SP11 | Prompt Testing | NOT STARTED | 4 | llm-prompt-testing |
 | SP12 | Pi Integration | NOT STARTED | 3 | pi-agent |
 | SP13 | Steer (Swift GUI) | NOT STARTED | 3 | mac-mini-agent |

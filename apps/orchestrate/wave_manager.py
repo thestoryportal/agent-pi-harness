@@ -42,7 +42,7 @@ def infer_mode(count: int) -> WaveMode:
 
 def plan_waves(
     items: list,
-    mode: WaveMode,
+    mode: str,
     batch_size: int = DEFAULT_BATCH_SIZE,
     max_waves: int | None = None,
 ) -> list[dict]:
