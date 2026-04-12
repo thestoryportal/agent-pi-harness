@@ -166,7 +166,7 @@ def detect_environment() -> str:
     return "PRODUCTION — Exercise extreme caution"
 
 
-SAFE_PATH_RE = re.compile(r'^[A-Za-z0-9/_. -]+$')
+SAFE_PATH_RE = re.compile(r'\A[A-Za-z0-9/_. -]+\Z')
 
 
 def validate_project_dir(logger) -> bool:
