@@ -118,6 +118,52 @@ def run_health_checks(logger) -> list[str]:
     return failures
 
 
+def get_git_context(logger) -> list[str]:
+    """Collect git state for session context injection."""
+    lines = []
+    def run(cmd):
+        try:
+            result = subprocess.run(
+                cmd, shell=True, capture_output=True, text=True,
+                cwd=PROJECT_DIR, timeout=5,
+            )
+            return result.stdout.strip()
+        except (subprocess.TimeoutExpired, OSError):
+            return ""
+
+    branch = run("git rev-parse --abbrev-ref HEAD")
+    if branch:
+        lines.append(f"Branch: {branch}")
+
+    dirty_count = run("git status --porcelain | wc -l").strip()
+    if dirty_count and int(dirty_count) > 0:
+        lines.append(f"Dirty files: {dirty_count}")
+        dirty_files = run("git status --porcelain")
+        if dirty_files:
+            lines.append(f"Changes:\n{dirty_files}")
+
+    recent = run("git log --oneline -5")
+    if recent:
+        lines.append(f"Recent commits:\n{recent}")
+
+    diff_stat = run("git diff --stat")
+    if diff_stat:
+        lines.append(f"Diff summary:\n{diff_stat}")
+
+    return lines
+
+
+def detect_environment() -> str:
+    """Detect local vs production from DATABASE_URL."""
+    db_url = os.environ.get("DATABASE_URL", "")
+    if not db_url:
+        return "UNKNOWN — DATABASE_URL not set"
+    local_hosts = ["localhost", "127.0.0.1", "host.docker.internal"]
+    if any(h in db_url for h in local_hosts):
+        return "LOCAL"
+    return "PRODUCTION — Exercise extreme caution"
+
+
 def main():
     import time
     logger = Logger("session_start")
@@ -136,15 +182,24 @@ def main():
         sys.exit(2)
 
     context_parts = [f"Session ID: {session_id}"]
+
+    env_mode = detect_environment()
+    context_parts.append(f"Environment: {env_mode}")
+
+    git_lines = get_git_context(logger)
+    if git_lines:
+        context_parts.extend(git_lines)
+
     if safe_env:
         env_summary = ", ".join(f"{k}={v}" for k, v in safe_env.items())
-        context_parts.append(f"Environment: {env_summary}")
+        context_parts.append(f"Injected env: {env_summary}")
+
     context_parts.append(f"All {len(REQUIRED_HOOKS)} hooks passed health check.")
 
     elapsed = int((time.monotonic() - start_time) * 1000)
     emit_event("SessionStart", HOOK_NAME, 0, {"session_id": session_id}, elapsed)
 
-    print(json.dumps({"message": "\n".join(context_parts)}))
+    print(hook_output("SessionStart", "\n".join(context_parts)))
     sys.exit(0)
 
 

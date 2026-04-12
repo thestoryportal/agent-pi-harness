@@ -1,13 +1,15 @@
 #!/usr/bin/env -S uv run --script
 # /// script
 # requires-python = ">=3.12"
-# dependencies = []
+# dependencies = ["pyyaml"]
 # ///
-"""PreToolUse hook: intercept destructive operations, gate mv/cp by path.
+"""PreToolUse hook: YAML-driven security rules with three-tier path protection.
 
 Exit codes: 0=allow, 2=block. This is a security-critical hook — never exit 1.
+Rules are loaded from patterns.yaml — add new rules there, not here.
 """
 
+import fnmatch
 import json
 import os
 import re
@@ -18,54 +20,26 @@ from pathlib import Path
 PROJECT_DIR = os.environ.get("CLAUDE_PROJECT_DIR", os.getcwd())
 sys.path.insert(0, str(Path(PROJECT_DIR) / ".claude" / "hooks"))
 try:
+    import yaml
     from _base import Logger, emit_event, handle_health_check, read_stdin, run_hook
 except Exception:
-    import sys; sys.exit(2)
+    sys.exit(2)
 
 HOOK_NAME = "pre_tool_use.py"
 handle_health_check(HOOK_NAME)
 
-ZERO_ACCESS_PATHS = [
-    os.path.expanduser("~/.ssh"), "~/.ssh", "$HOME/.ssh", "${HOME}/.ssh",
-    os.path.expanduser("~/.aws"), "~/.aws", "$HOME/.aws", "${HOME}/.aws",
-    os.path.expanduser("~/.gnupg"), "~/.gnupg", "$HOME/.gnupg", "${HOME}/.gnupg",
-    os.path.expanduser("~/.config/gh"), "~/.config/gh",
-]
-
-IMMUTABLE_PATHS = [
-    ".claude/hooks/",
-    ".claude/settings.json",
-    ".claude/logs/",
-]
-
-# Matches .env, .env.local, .env.production, .env.development, etc.
-ENV_PATTERN = re.compile(r"(^|\s|/)\.env(\.\w+)?(\s|$|\"|\')")
-
-DANGEROUS_PATTERNS = [
-    (r"\brm\s+.*-[a-z]*r[a-z]*f", "recursive force delete"),
-    (r"\brm\s+.*-[a-z]*f[a-z]*r", "recursive force delete"),
-    (r"\brm\s+-rf\s+[/~]", "destructive rm at root/home"),
-    (r"\bgit\s+push\s+.*--force", "force push"),
-    (r"\bgit\s+push\s+-f\b", "force push"),
-    (r"\bgit\s+reset\s+--hard", "hard reset"),
-    (r"\bgit\s+clean\s+-[a-z]*f", "git clean force"),
-    (r"\bDROP\s+(TABLE|DATABASE)\b", "SQL DROP"),
-    (r"\bDELETE\s+FROM\s+\w+\s*;", "unguarded DELETE"),
-    (r"\bcurl\s+.*\|\s*(bash|sh|zsh)", "pipe to shell"),
-    (r"\bchmod\s+777\b", "world-writable permissions"),
-    (r"\bchown\s+-R\b", "recursive chown"),
-]
-
 PROJECT_ROOT = Path(PROJECT_DIR).resolve()
-
-# No blanket shell composition blocking — it breaks normal bash usage.
-# Security relies on the DANGEROUS_PATTERNS regex list and path gating instead.
-SHELL_COMPOSITION_MARKERS = []
 
 FLAG_ALIASES = {
     "--recursive": "-r", "--force": "-f", "--verbose": "-v",
     "--interactive": "-i", "--preserve": "-p", "--hard": "--hard",
 }
+
+
+def load_patterns() -> dict:
+    patterns_path = Path(PROJECT_DIR) / ".claude" / "hooks" / "patterns.yaml"
+    with open(patterns_path, "r") as f:
+        return yaml.safe_load(f)
 
 
 def is_within_project(path_str: str) -> bool:
@@ -77,21 +51,29 @@ def is_within_project(path_str: str) -> bool:
         return False
 
 
-def touches_zero_access(command: str) -> str | None:
-    expanded = os.path.expanduser(os.path.expandvars(command))
-    for zap in ZERO_ACCESS_PATHS:
-        if zap in command or zap in expanded:
-            return zap
-    if ENV_PATTERN.search(command) or ENV_PATTERN.search(expanded):
-        return ".env"
-    return None
+def check_path_protection(file_path: str, protected_paths: list[str]) -> bool:
+    expanded_file = os.path.expanduser(file_path)
+    for pattern in protected_paths:
+        expanded_pattern = os.path.expanduser(pattern)
+        if fnmatch.fnmatch(expanded_file, expanded_pattern):
+            return True
+        if fnmatch.fnmatch(file_path, pattern):
+            return True
+        if expanded_pattern.endswith("/") and (
+            expanded_file.startswith(expanded_pattern)
+            or file_path.startswith(pattern)
+        ):
+            return True
+        if not expanded_pattern.endswith("/") and (
+            expanded_file.startswith(expanded_pattern)
+            or file_path.startswith(pattern)
+        ):
+            return True
+    return False
 
 
-def touches_immutable(path_str: str) -> str | None:
-    for imm in IMMUTABLE_PATHS:
-        if imm in path_str:
-            return imm
-    return None
+def check_env_pattern(text: str) -> bool:
+    return bool(re.search(r"(^|\s|/)\.env(\.\w+)?(\s|$|\"|\')", text))
 
 
 def normalize_command(command: str) -> str:
@@ -111,20 +93,39 @@ def normalize_command(command: str) -> str:
     return " ".join(normalized)
 
 
-def check_bash_command(command: str) -> tuple[str, str | None]:
-    for marker in SHELL_COMPOSITION_MARKERS:
-        if marker in command:
-            return "block", f"Shell composition detected ({marker}) — fail closed"
+def check_bash_exclusions(command: str, exclusions: list[dict]) -> bool:
+    for entry in exclusions:
+        if re.search(entry["pattern"], command, re.IGNORECASE):
+            return True
+    return False
 
-    zap = touches_zero_access(command)
-    if zap:
-        return "block", f"Access to protected path: {zap}"
+
+def check_bash_patterns(command: str, norm: str, patterns: list[dict]) -> tuple[str, str | None]:
+    for entry in patterns:
+        if re.search(entry["pattern"], command, re.IGNORECASE) or re.search(entry["pattern"], norm, re.IGNORECASE):
+            if entry.get("ask"):
+                return "ask", entry["reason"]
+            return "block", entry["reason"]
+    return "allow", None
+
+
+def check_bash_command(command: str, rules: dict) -> tuple[str, str | None]:
+    if check_bash_exclusions(command, rules.get("bashToolExclusions", [])):
+        return "allow", None
+
+    expanded = os.path.expanduser(os.path.expandvars(command))
+    zero_paths = rules.get("zeroAccessPaths", [])
+    for zap in zero_paths:
+        exp_zap = os.path.expanduser(zap)
+        if exp_zap in command or exp_zap in expanded or zap in command:
+            return "block", f"Access to protected path: {zap}"
+    if check_env_pattern(command) or check_env_pattern(expanded):
+        return "block", "Access to protected path: .env"
 
     norm = normalize_command(command)
-
-    for pattern, description in DANGEROUS_PATTERNS:
-        if re.search(pattern, command, re.IGNORECASE) or re.search(pattern, norm, re.IGNORECASE):
-            return "block", f"Dangerous operation: {description}"
+    result = check_bash_patterns(command, norm, rules.get("bashToolPatterns", []))
+    if result[0] != "allow":
+        return result
 
     for cmd in ["mv", "cp", "ln"]:
         match = re.search(rf"\b{cmd}\s+(.+)", command)
@@ -138,10 +139,16 @@ def check_bash_command(command: str) -> tuple[str, str | None]:
                 if not is_within_project(p):
                     return "block", f"{cmd} path outside project: {p}"
 
+    no_delete = rules.get("noDeletePaths", [])
+    if no_delete and re.search(r"\brm\s+", command):
+        for nd_path in no_delete:
+            if nd_path in command or nd_path in expanded:
+                return "block", f"Delete blocked in accumulation-only path: {nd_path}"
+
     return "allow", None
 
 
-def check_read(tool_input: dict) -> tuple[str, str | None]:
+def check_read(tool_input: dict, rules: dict) -> tuple[str, str | None]:
     file_path = tool_input.get("file_path", "") or tool_input.get("path", "")
     pattern = tool_input.get("pattern", "")
     check_str = file_path or pattern
@@ -151,28 +158,43 @@ def check_read(tool_input: dict) -> tuple[str, str | None]:
         resolved = str(Path(os.path.expanduser(check_str)).resolve())
     except (OSError, ValueError):
         resolved = check_str
-    zap = touches_zero_access(resolved)
-    if not zap:
-        zap = touches_zero_access(check_str)
-    if zap:
-        return "block", f"Read/search of protected path: {zap}"
+
+    zero_paths = rules.get("zeroAccessPaths", [])
+    for zap in zero_paths:
+        exp_zap = os.path.expanduser(zap)
+        if exp_zap in resolved or exp_zap in check_str or zap in check_str:
+            return "block", f"Read/search of protected path: {zap}"
+    if check_env_pattern(resolved) or check_env_pattern(check_str):
+        return "block", "Read/search of protected path: .env"
+
     return "allow", None
 
 
-def check_write_edit(tool_input: dict) -> tuple[str, str | None]:
+def check_write_edit(tool_name: str, tool_input: dict, rules: dict) -> tuple[str, str | None]:
     file_path = tool_input.get("file_path", "")
     if not file_path:
         return "allow", None
     try:
         resolved = str(Path(os.path.expanduser(file_path)).resolve())
     except (OSError, ValueError):
-        return "block", f"Write/Edit path unresolvable — fail closed"
-    zap = touches_zero_access(resolved)
-    if zap:
-        return "block", f"Write/Edit to protected path (resolved): {zap}"
-    imm = touches_immutable(file_path) or touches_immutable(resolved)
-    if imm:
-        return "block", f"Write/Edit to immutable harness path: {imm}"
+        return "block", "Write/Edit path unresolvable — fail closed"
+
+    zero_paths = rules.get("zeroAccessPaths", [])
+    for zap in zero_paths:
+        exp_zap = os.path.expanduser(zap)
+        if exp_zap in resolved or exp_zap in file_path or zap in file_path:
+            return "block", f"Write/Edit to protected path: {zap}"
+    if check_env_pattern(resolved) or check_env_pattern(file_path):
+        return "block", "Write/Edit to protected path: .env"
+
+    read_only = rules.get("readOnlyPaths", [])
+    if check_path_protection(file_path, read_only) or check_path_protection(resolved, read_only):
+        return "block", f"Write/Edit to read-only path: {file_path}"
+
+    no_delete = rules.get("noDeletePaths", [])
+    if tool_name == "Write" and (check_path_protection(file_path, no_delete) or check_path_protection(resolved, no_delete)):
+        return "ask", f"Overwriting file in accumulation-only path. Confirm? ({file_path})"
+
     return "allow", None
 
 
@@ -190,18 +212,25 @@ def main():
     tool_name = input_data.get("tool_name", "")
     tool_input = input_data.get("tool_input", {})
 
+    try:
+        rules = load_patterns()
+    except Exception as e:
+        logger.log(f"BLOCKED: patterns.yaml load failed — {e} (fail-closed)")
+        emit_event("PreToolUse", HOOK_NAME, 2, {"error": f"patterns.yaml: {e}"})
+        print(json.dumps({"error": f"patterns.yaml load failed: {e}"}), file=sys.stderr)
+        sys.exit(2)
+
     decision = "allow"
     reason = None
 
     if tool_name == "Bash":
         command = tool_input.get("command", "")
-        decision, reason = check_bash_command(command)
+        decision, reason = check_bash_command(command, rules)
     elif tool_name in ("Write", "Edit"):
-        decision, reason = check_write_edit(tool_input)
+        decision, reason = check_write_edit(tool_name, tool_input, rules)
     elif tool_name in ("Read", "Glob", "Grep"):
-        decision, reason = check_read(tool_input)
+        decision, reason = check_read(tool_input, rules)
 
-    exit_code = 0 if decision == "allow" else 2
     elapsed = int((time.monotonic() - start_time) * 1000)
 
     payload = {"tool": tool_name, "decision": decision}
@@ -210,13 +239,24 @@ def main():
     if reason:
         payload["reason"] = reason
 
-    emit_event("PreToolUse", HOOK_NAME, exit_code, payload, elapsed)
-
-    if decision == "block":
+    if decision == "ask":
+        emit_event("PreToolUse", HOOK_NAME, 0, payload, elapsed)
+        logger.log(f"ASK: {tool_name} — {reason}")
+        print(json.dumps({
+            "hookSpecificOutput": {
+                "hookEventName": "PreToolUse",
+                "permissionDecision": "ask",
+                "permissionDecisionReason": reason,
+            }
+        }))
+        sys.exit(0)
+    elif decision == "block":
+        emit_event("PreToolUse", HOOK_NAME, 2, payload, elapsed)
         logger.log(f"BLOCKED: {tool_name} — {reason}")
         print(json.dumps({"error": reason}), file=sys.stderr)
         sys.exit(2)
     else:
+        emit_event("PreToolUse", HOOK_NAME, 0, payload, elapsed)
         logger.log(f"ALLOW: {tool_name}")
         sys.exit(0)
 

@@ -1,0 +1,137 @@
+# patterns.yaml — ArhuGula security rules
+# Location: .claude/hooks/patterns.yaml
+# Read by: pre_tool_use.py
+# Format: YAML rule engine adapted from disler/claude-code-damage-control
+# Add new rules here without modifying hook Python code.
+
+# ──────────────────────────────────────────────────────────────────
+# BASH TOOL PATTERNS
+# Regex patterns matched against the full Bash command string.
+# Default action: block (exit 2). Set ask: true to escalate instead.
+# ──────────────────────────────────────────────────────────────────
+
+bashToolPatterns:
+  # Destructive filesystem operations
+  - pattern: '\brm\s+.*-[a-zA-Z]*r[a-zA-Z]*f'
+    reason: "Blocked: recursive force delete"
+  - pattern: '\brm\s+.*-[a-zA-Z]*f[a-zA-Z]*r'
+    reason: "Blocked: recursive force delete"
+  - pattern: '\brm\s+-rf\s+[/~]'
+    reason: "Blocked: destructive rm at root/home"
+  - pattern: '\bchmod\s+777\b'
+    reason: "Blocked: world-writable permissions"
+  - pattern: '\bsudo\s+rm'
+    reason: "Blocked: sudo rm — elevated deletion not permitted"
+  - pattern: '\bchown\s+-R\b'
+    reason: "Blocked: recursive chown"
+
+  # Git safety — ask, don't block
+  - pattern: '\bgit\s+push\s+.*--force'
+    reason: "Force push detected. This rewrites remote history."
+    ask: true
+  - pattern: '\bgit\s+push\s+-f\b'
+    reason: "Force push detected."
+    ask: true
+  - pattern: '\bgit\s+push.*\bmain\b'
+    reason: "Pushing directly to main branch."
+    ask: true
+  - pattern: '\bgit\s+push.*\bmaster\b'
+    reason: "Pushing directly to master branch."
+    ask: true
+  - pattern: '\bgit\s+reset\s+--hard'
+    reason: "Hard reset discards uncommitted changes."
+    ask: true
+  - pattern: '\bgit\s+clean\s+-[a-z]*f'
+    reason: "git clean -f removes untracked files."
+    ask: true
+
+  # Dangerous SQL operations
+  - pattern: '\bDROP\s+(TABLE|DATABASE|SCHEMA)\b'
+    reason: "Blocked: DROP operation detected. Use migrations with soft delete."
+  - pattern: '\bDELETE\s+FROM\s+\w+\s*;'
+    reason: "Blocked: DELETE without WHERE clause."
+  - pattern: '\bTRUNCATE\s+TABLE'
+    reason: "Blocked: TRUNCATE TABLE destroys all data."
+
+  # SQL convention violations
+  - pattern: '\bCREATE\s+TYPE\s+.*\s+AS\s+ENUM'
+    reason: "Blocked: PostgreSQL ENUMs not allowed. Use CHECK constraints."
+  - pattern: '\bCREATE\s+TABLE\s+public\.'
+    reason: "Blocked: public schema not allowed. Use the project's designated schema."
+  - pattern: '\bALTER\s+TABLE\s+public\.'
+    reason: "Blocked: public schema not allowed."
+
+  # Shell safety
+  - pattern: '\bcurl\s+.*\|\s*(bash|sh|zsh)'
+    reason: "Blocked: pipe to shell"
+
+# ──────────────────────────────────────────────────────────────────
+# ZERO ACCESS PATHS
+# Absolute block — no tool (Bash, Edit, Write, Read) may access these.
+# These contain secrets, credentials, or keys that must never appear
+# in Claude Code context.
+# ──────────────────────────────────────────────────────────────────
+
+zeroAccessPaths:
+  - "~/.ssh/"
+  - "~/.aws/"
+  - "~/.gnupg/"
+  - "~/.config/op/"
+  - "~/.config/gh/"
+  - ".env"
+  - ".envrc"
+  - "**/.env.local"
+  - "**/.env.production"
+  - "**/credentials.json"
+  - "**/service-account*.json"
+
+# ──────────────────────────────────────────────────────────────────
+# READ-ONLY PATHS
+# Edit and Write tools are blocked. Bash read operations (cat, grep,
+# head, tail) are allowed. These files define project structure and
+# must not be modified by Claude Code during normal sessions.
+# ──────────────────────────────────────────────────────────────────
+
+readOnlyPaths:
+  - ".claude/hooks/"
+  - ".claude/settings.json"
+  - ".claude/logs/"
+
+# ──────────────────────────────────────────────────────────────────
+# NO-DELETE PATHS
+# Files in these paths cannot be deleted. Write (overwrite) triggers
+# an ask decision. Edit (modify) is allowed. These are accumulation-
+# only directories where history matters.
+# ──────────────────────────────────────────────────────────────────
+
+noDeletePaths:
+  - "database/migrations/"
+  - "prompts/"
+
+# ──────────────────────────────────────────────────────────────────
+# BASH TOOL EXCLUSIONS
+# Allowlist for operations that would otherwise be caught by
+# zeroAccessPaths or bash patterns. Checked BEFORE blocking rules.
+# ──────────────────────────────────────────────────────────────────
+
+bashToolExclusions:
+  - pattern: '\bcat\s+\.env\.example'
+    reason: "Reading .env.example is safe — no secrets"
+  - pattern: '\bcat\s+\.envrc\.example'
+    reason: "Reading .envrc.example is safe — no secrets"
+  - pattern: '\bgrep\s+.*\.(envrc|env)\.'
+    reason: "Grepping for .envrc/.env references in code is safe"
+  - pattern: '\brm\s+.*\.pyc$'
+    reason: "Removing .pyc files is safe"
+  - pattern: '\brm\s+.*__pycache__'
+    reason: "Removing pycache is safe"
+  - pattern: '\brm\s+.*node_modules'
+    reason: "Removing node_modules is safe"
+  - pattern: '\bls\s+.*\.claude/hooks/'
+    reason: "Listing hook files is safe"
+  - pattern: '\bcat\s+.*\.claude/hooks/'
+    reason: "Reading hook source code is safe for debugging"
+  - pattern: '\bhead\s+.*\.claude/hooks/'
+    reason: "Reading hook headers is safe"
+  - pattern: '\bwc\s+.*\.claude/hooks/'
+    reason: "Counting lines in hook files is safe"

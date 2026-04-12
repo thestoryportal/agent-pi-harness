@@ -1,16 +1,57 @@
 ---
-description: Invoke builder subagent for implementation tasks
+description: "Execute an implementation task with validation hooks active via builder agent"
+allowed-tools:
+  - Read
+  - Glob
+  - Grep
+  - Write
+  - Edit
+  - Bash
+agent: builder
 ---
 
-# /build — Builder Dispatch
+# /build — Implementation Execution
 
 ## Purpose
 
-Dispatch the builder subagent to implement a specific task.
+Execute an implementation task with all validation hooks active. Delegates to the builder subagent for actual implementation. PostToolUse hooks (ruff for Python, schema validator for SQL) fire on all tool calls, providing automated quality gates.
+
+## Variables
+
+- `$ARGUMENTS` — **Required.** Task description or unit ID to execute.
 
 ## Workflow
 
-1. Ask the user for the implementation task description
-2. Dispatch the `builder` subagent with the task
-3. Review the builder's output for correctness
-4. Present the changes for user approval
+### Step 1 — Understand the Task
+
+Read the task description or spec unit carefully. If a scout output exists, load the relevant unit definition.
+
+### Step 2 — Load Context
+
+Read project conventions from CLAUDE.md. Read any referenced spec files.
+
+### Step 3 — Execute Implementation
+
+The builder agent handles execution with these constraints:
+- **Python files** are linted by ruff after every write. Fix lint errors immediately.
+- **SQL files** are checked for schema namespace, TIMESTAMPTZ, CHECK-not-ENUM conventions.
+- File naming: lowercase-with-hyphens (hook files use underscores)
+
+### Step 4 — Self-Validation
+
+After creating artifacts:
+1. Verify naming conventions
+2. Confirm all expected files exist
+3. If validation hooks blocked anything, confirm it was resolved
+
+### Step 5 — Report
+
+Report:
+- Artifacts created/modified (exact paths)
+- Validation results (pass/fail per check)
+- Any warnings or deviations from spec
+
+## Error Handling
+
+- If validation fails after 3 self-correction attempts, report the failure and stop
+- If the task is ambiguous, stop and ask. Do not make architectural decisions.

@@ -4,27 +4,27 @@ set shell := ["bash", "-euo", "pipefail", "-c"]
 default:
     @just --list
 
-# === Layer 1: Skill — these recipes invoke Layer 1 skills ===
+# === Layer 1: Skill — interactive session with slash commands ===
 
 # Load full project context
 prime:
-    claude --dangerously-skip-permissions "/prime"
+    claude "/prime"
 
-# Evaluate prompt quality (HOP/LOP)
+# Spec analysis and task decomposition
 scout:
-    claude --dangerously-skip-permissions "/scout"
+    claude "/scout"
 
-# === Layer 2: Subagent — these recipes invoke Layer 2 subagents ===
+# === Layer 2: Subagent — interactive session with agent-backed commands ===
 
-# Invoke builder subagent
+# Implementation via builder agent
 build:
-    claude --dangerously-skip-permissions "/build"
+    claude "/build"
 
 # Multi-model consensus review
 harness-review:
-    claude --dangerously-skip-permissions "/harness-review"
+    claude "/harness-review"
 
-# === Layer 3: Command — these recipes invoke Layer 3 slash commands ===
+# === Layer 3: Command — lifecycle slash commands ===
 
 # Claude init session
 cldi:
@@ -41,6 +41,41 @@ cldii:
 # Claude maintenance + run /maintain
 cldmm:
     claude --maintenance "/maintain"
+
+# === Headless: Programmatic invocation via run-claude.py ===
+
+# Headless project status report
+prime-headless:
+    python3 scripts/run-claude.py \
+        --prompt "Report repository and environment status. Summarize git status, service health, and any missing setup." \
+        --tools Read Grep Glob Bash \
+        --approved-tools Read Grep Glob \
+        --permission-mode dontAsk \
+        --max-turns 10 \
+        --workflow-id prime \
+        --invocation-type headless
+
+# Headless spec analysis
+scout-headless SPEC:
+    python3 scripts/run-claude.py \
+        --prompt "Analyze {{SPEC}} and return implementation units with dependencies, risks, and validation steps." \
+        --tools Read Grep Glob \
+        --approved-tools Read Grep Glob \
+        --permission-mode dontAsk \
+        --max-turns 10 \
+        --workflow-id scout \
+        --invocation-type headless
+
+# Headless code review against spec
+review-headless SPEC:
+    python3 scripts/run-claude.py \
+        --prompt "Review the current diff against {{SPEC}} and return structured findings with severity, evidence, and recommended fixes." \
+        --tools Read Grep Glob \
+        --approved-tools Read Grep Glob \
+        --permission-mode dontAsk \
+        --max-turns 10 \
+        --workflow-id harness-review \
+        --invocation-type headless
 
 # === Layer 4: Just — infrastructure app recipes ===
 

@@ -9,19 +9,21 @@ skills:
     layer: 1  # Skill
 
   scout:
-    description: Evaluate prompt quality (HOP/LOP pattern)
+    description: Read a spec, identify implementation units, produce structured task list
     command: scout.md
     layer: 1  # Skill
 
   build:
-    description: Invoke builder subagent for implementation
+    description: Execute implementation task with validation hooks active via builder agent
     command: build.md
     layer: 2  # Subagent
+    agent: builder
 
   harness-review:
-    description: Multi-model consensus code review
+    description: Multi-model consensus code review via validator and spec-checker agents
     command: harness-review.md
     layer: 2  # Subagent
+    agents: [validator, spec-checker]
 
   migrate:
     description: Database and schema migration
