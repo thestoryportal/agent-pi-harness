@@ -103,10 +103,6 @@ poll:
 jobs:
     uv run apps/direct/main.py jobs
 
-# Start Observe dashboard
-observe:
-    uv run apps/observe/main.py
-
 # Prune Observe events older than retention window
 db-prune:
     uv run apps/observe/prune.py

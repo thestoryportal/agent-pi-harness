@@ -18,19 +18,6 @@ def poll_session(session_name: str, token: str) -> int | None:
     """Poll a session for Sentinel completion.
 
     Returns exit code (int) if done, None if still running.
-    Emits session.completed to Observe when done.
-    Note: returns None indefinitely for dead sessions (tmux session
-    no longer exists). Callers should handle timeout externally.
     """
     output = capture_pane(session_name)
-    exit_code = parse_sentinel(output, token)
-    if exit_code is not None:
-        try:
-            from apps.observe.db import emit_observe_event
-            emit_observe_event(
-                "session.completed", "drive", exit_code,
-                {"tmux_session": session_name, "sentinel": f"__DONE_{token}:{exit_code}"},
-            )
-        except Exception:
-            pass
-    return exit_code
+    return parse_sentinel(output, token)

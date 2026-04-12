@@ -32,29 +32,12 @@ def parse_retention_days() -> int:
     return days
 
 
-def prune_sqlite(cutoff: datetime, db_path: Path) -> None:
-    """Prune SQLite events older than cutoff, then VACUUM."""
-    if not db_path.exists():
-        return
-    try:
-        from apps.observe.db import delete_before, vacuum
-        deleted = delete_before(cutoff.isoformat(), db_path=db_path)
-        vacuum(db_path=db_path)
-        print(f"SQLite: pruned {deleted} events, vacuumed")
-    except Exception as e:
-        print(f"SQLite prune error: {e}", file=sys.stderr)
-
-
 def main():
     project_dir = os.environ.get("CLAUDE_PROJECT_DIR", os.getcwd())
     events_file = Path(project_dir) / ".claude" / "logs" / "events.jsonl"
-    db_path = Path(project_dir) / "apps" / "observe" / "events.db"
 
     retention_days = parse_retention_days()
     cutoff = datetime.now(timezone.utc) - timedelta(days=retention_days)
-
-    # Prune SQLite first
-    prune_sqlite(cutoff, db_path)
 
     # Hold LOCK_EX for the full read-truncate-write cycle so concurrent
     # hook appenders (which also flock in _base.emit_event) cannot interleave.
@@ -88,9 +71,7 @@ def main():
                     ts = datetime.fromisoformat(event.get("timestamp", ""))
                 except (json.JSONDecodeError, ValueError, TypeError):
                     # Keep unparseable lines (don't lose data) but count them
-                    # so the retention leak is observable. Note: malformed lines
-                    # accumulate indefinitely since they have no parseable timestamp.
-                    # This is intentional — losing data is worse than a slow leak.
+                    # so the retention leak is observable.
                     malformed += 1
                     kept.append(line)
                     continue
