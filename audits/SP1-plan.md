@@ -506,16 +506,40 @@ Scout agent will re-audit using this plan's post-state. Expected new state after
 
 `.claude/hooks/patterns.yaml` has `".claude/hooks/*.py"` in `readOnlyPaths`. Python's `fnmatch.fnmatch()` does not treat `/` as a special character, so `*` matches directory separators. The pattern therefore matches both top-level hook files (intended) **and** any `.py` file in subdirectories (unintended over-reach). This is the same class of bug as the SP14 round-3 finding and is already documented in `project_sp2_architectural_gaps.md` as a P0 SP2 follow-up.
 
-### Blocked commits (6 of 14)
+### Blocked commits (8 of 14 — updated after builder run)
 
 | # | Action | Block reason |
 |---|---|---|
 | 1 | Restore `utils/tts/*.py` (4 files) | fnmatch over-reach (unintended) |
 | 2 | Restore `utils/llm/*.py` (4 files) | fnmatch over-reach (unintended) |
+| **4** | **Edit `.claude/settings.json` statusLine block** | **`.claude/settings.json` is in `readOnlyPaths` (discovered at builder runtime)** |
+| **5** | **Delete `.claude/statusline.sh`** | **Depends on Commit 4; also possibly `noDeletePaths`** |
 | 6 | Create `setup_init.py` + `setup_maintenance.py` | readOnlyPaths (intended — new files in hooks/) |
-| 7 | Edit settings.json Setup wiring | depends on 6 |
+| 7 | Edit settings.json Setup wiring | depends on 6 + settings.json readOnlyPaths |
 | 8 | Delete `setup.py` | depends on 7; possibly `noDeletePaths` |
 | 14 | Edit `session_start.py` `REQUIRED_HOOKS` | readOnlyPaths (intended — edit of existing hook) |
+
+### Second-round discovery — settings.json is also protected
+
+The initial plan assumed only `.claude/hooks/` was in readOnlyPaths. Builder discovered `.claude/settings.json` itself is also in readOnlyPaths, which blocks any statusLine / hook-wiring / permissions edits. This means **every settings.json edit in the plan is blocked** — Commits 4, 7, D1 (Bash allow-list), D2 (damage-control wiring), and any future SP audit that needs to touch settings.json.
+
+SP2 audit must address both:
+1. The `.claude/hooks/*.py` fnmatch over-reach
+2. The `.claude/settings.json` readOnlyPaths entry — whether it should stay (and we need a per-edit unlock procedure) or be removed (and rely on audit review to catch malicious edits)
+
+### Third-round discovery — ruff validator forces drift from upstream
+
+During Commit 3 (`status_lines/` tree restore), the PostToolUse `ruff_validator.py` hook blocked the initial write of `status_line_v2.py` because upstream has an unused `import os` statement. Builder removed the import to satisfy ruff and land the commit.
+
+**Net result:** `.claude/status_lines/status_line_v2.py` is **NOT byte-identical** to upstream. ArhuGula has one less line than upstream. This is validator-forced drift — the opposite of what the audit is trying to achieve.
+
+**General pattern:** whenever upstream has lint issues (unused imports, line length, etc.), ArhuGula's blocking validators force drift during reverts. This will hit again on other Python file restores.
+
+**Options for the ruff-forced drift (needs user decision — not resolved yet)**:
+- **A** — Accept as validator-forced drift; flag each instance in `audits/exceptions.md`; move on.
+- **B** — Temporarily set the ruff validator to log-only mode during audit commits (requires hook code change or env gate).
+- **C** — Per-file ignore comments (`# ruff: noqa` at top of each upstream file); defeats the purpose of ruff but matches upstream behavior.
+- **D** — Escalate to SP3 audit (Validation Pipeline) — the validator hooks are SP3 scope; the fnmatch bug and validator-forced drift may both warrant SP3 intervention before the audit can continue cleanly.
 
 ### Resolution path
 
