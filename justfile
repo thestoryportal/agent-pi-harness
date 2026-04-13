@@ -42,9 +42,9 @@ cldm:
 cldii:
     claude --init "/install"
 
-# Claude maintenance + run /maintain
+# Claude maintenance + run /maintenance
 cldmm:
-    claude --maintenance "/maintain"
+    claude --maintenance "/maintenance"
 
 # === Headless: Programmatic invocation via run-claude.py ===
 
