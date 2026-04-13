@@ -394,6 +394,78 @@ Both files are kept as ArhuGula inventions with explicit documented rationale: l
 
 ---
 
+## Exception 12 — `.claude/CLAUDE.md` comprehensive doc + nested path
+
+**Decision:** SP1 round 1 follow-up mini-gate (2026-04-13)
+
+**Path(s):**
+- `.claude/CLAUDE.md` — 145-line ArhuGula project document. Upstream `claude-code-hooks-mastery/CLAUDE.md` is a root-level 0-byte stub; `install-and-maintain/` ships no CLAUDE.md at all.
+
+**Two dimensions of drift documented here:**
+
+1. **Content delta** — ArhuGula version contains the Source-of-Truth pointer, Source Precedence rules, 6 mandatory Implementation Rules, Directory Navigation table, Four-Layer Architecture table, Sub-Project Status table, Hook Security Model summary, and Skill routing directives. Upstream is 0 bytes.
+2. **Path delta** — ArhuGula places it at `.claude/CLAUDE.md`; upstream places it at root `CLAUDE.md`. Both paths are valid Claude Code auto-loaded memory locations per Anthropic docs; functionally equivalent.
+
+**SP audit round:** SP1 round 1 follow-up mini-gate
+**Decision date:** 2026-04-13
+
+**Rationale:**
+
+**Content:** The CLAUDE.md content is load-bearing for the audit pipeline itself. Implementation Rule #1 ("Check the Source of Truth BEFORE building anything") is read from this file by every SP scout phase. Implementation Rule #3 ("No invented components") is what prevents scope drift across SP audits. The SP status table and Sub-Project Priority pointer drive `/prime` and every scout phase's "what's next" resolution. The skill-routing directives in the footer are how `/office-hours`, `/investigate`, `/ship`, `/review`, etc. get routed correctly during normal (non-audit) ArhuGula development. Reverting to a 0-byte stub would break audit continuity and all downstream skill routing in a single commit.
+
+This is analogous to Exception 1 (Tier 3 audit infrastructure) — the content is ArhuGula-native because Disler does not ship an audit-capable harness or a multi-SP implementation-rules document. Upstream's 0-byte stub represents "we have no project instructions to tell the agent"; that stance is incompatible with running a 16-sub-project identicality audit.
+
+**Path:** The `.claude/CLAUDE.md` placement works identically to root `CLAUDE.md` (both auto-load as project memory). Moving it to root would close the cosmetic path drift at the cost of touching every existing memory entry and commit that references the current path. No functional payoff. Status quo preserved.
+
+**Review cadence:** Quarterly, or whenever a new Disler repo adds implementation-rules content at the CLAUDE.md layer (at which point this exception's content should be re-examined for drift against the new upstream standard).
+
+**Related findings:**
+- `audits/SP1-scout.md` — DRIFT[T1] scaffolding: "ArhuGula has 6.9k comprehensive project documentation... upstream is a 0-byte stub"
+- `audits/SP1-plan.md` — flagged in Cross-reference table as "(deferred — see note)" / DECISION-REQUIRED, separate from D1–D7 gate
+
+**Follow-up actions:**
+1. Quarterly review: check if Disler has added CLAUDE.md content to any full-clone. If so, re-audit the content delta against the new reference.
+2. If the Source of Truth document at `~/Projects/indydevdan-harness-research/docs/superpowers/specs/arhugula-source-of-truth.md` moves or gets superseded, update the pointer in `.claude/CLAUDE.md` and note the change here.
+3. If ArhuGula ever needs a root `CLAUDE.md` (e.g., for a tool that only checks root), symlink rather than move — preserves the existing path while adding the new one.
+
+---
+
+## Exception 13 — `justfile` 307-line multi-SP form
+
+**Decision:** SP1 round 1 follow-up mini-gate (2026-04-13)
+
+**Path(s):**
+- `justfile` (root) — 307-line ArhuGula form wiring SP1 Layer 1–4 + SP7 + SP8 + SP11 + SP12 + SP13 + SP14 recipes. Upstream `install-and-maintain/justfile` is 45 lines; upstream `claude-code-hooks-mastery/` ships no justfile.
+
+**SP audit round:** SP1 round 1 follow-up mini-gate
+**Decision date:** 2026-04-13
+
+**Rationale:**
+
+Upstream `install-and-maintain/justfile` is the only Tier 1 byte source and it is the minimal scaffolding for a demo repo — it contains `fe`, `be`, `reset` recipes pointing at `apps/frontend/`, `apps/backend/`, and `app_docs/`. ArhuGula does not ship any of those directories, so reverting the upstream `fe/be/reset` recipes back in would create dead recipes pointing at non-existent paths.
+
+The upstream `cldi/cldm/cldii/cldit/cldmm` recipes use the `--model opus --dangerously-skip-permissions` prefix. ArhuGula's equivalents dropped the prefix because `--dangerously-skip-permissions` disables every hook wired in `settings.json`, which conflicts with Exception 7 (SP2 damage-control wiring kept). Reverting to the upstream prefix form would be a security regression — it would disable `bash_damage_control.py`, `edit_damage_control.py`, `write_damage_control.py`, `pre_tool_use.py`, and every other PreToolUse hook for every session launched via the justfile. This is not a neutral byte-match; it is a deliberate hardening decision.
+
+The 260+ lines of ArhuGula-added recipes are the Layer-4 invocation surface for every sub-project built on this harness: `just prime`, `just scout`, `just architect`, `just build`, `just harness-review` (SP1); `just sfa-*` (SP7); `just listen`, `just send`, `just fanout`, `just session`, `just poll`, `just jobs`, `just db-prune`, `just dropzone` (SP8); `just eval-*`, `just promptfoo-view` (SP11); `just pi`, `just pi-team`, `just pi-chain`, `just pi-safe`, `just pi-drive`, ... (SP12); `just steer-*` (SP13); `just test-playwright-skill`, `just test-chrome-skill`, `just hop`, `just ui-review`, ... (SP14). Reverting these to the 45-line upstream form would silently break every SP7–SP14 command documented in the Source of Truth as BUILT.
+
+**A partial revert was explicitly rejected** at the mini-gate: restoring `fe/be/reset` as dead stubs plus reverting `cldi/cldm/cldii/cldmm` to the opus-skip-permissions form would be worse than either full revert or full keep, because it would install broken recipe pointers AND reintroduce a security regression in one commit.
+
+Keep as exception. The upstream justfile is scaffolding for a *different* demo repo; ArhuGula's justfile is the actual framework harness invocation surface for a 16-sub-project identicality audit target.
+
+**Review cadence:** Each SP audit should re-check its own recipe block in the justfile against the SP's upstream source. If SP7's sfa-* recipes drift from `single-file-agents` upstream, that's tracked under SP7 audit, not here. This exception covers only the "keep the 307-line multi-SP form at all" decision.
+
+**Related findings:**
+- `audits/SP1-scout.md` — DRIFT[T1] scaffolding: "ArhuGula has 40+ recipes spanning SP1–SP14; upstream is a 1.0k minimal justfile"
+- `audits/SP1-plan.md` — flagged in Cross-reference table as "(deferred — see note)" / DECISION-REQUIRED, separate from D1–D7 gate
+- Exception 7 (SP2 damage-control wiring in settings.json) — the `--dangerously-skip-permissions` omission pairs with this exception's security rationale
+
+**Follow-up actions:**
+1. Each SP audit (SP7, SP8, SP11, SP12, SP13, SP14) should byte-audit its own recipe block against that SP's Tier 1 upstream source. Drift within a SP's recipe block is SP-level drift, not SP1-level.
+2. If ArhuGula ever drops support for a sub-project, remove that SP's recipe block and note the deletion here.
+3. Never add `--dangerously-skip-permissions` to the Claude CLI recipes without an explicit exception review that addresses the Exception 7 security dependency.
+
+---
+
 ## Active exceptions summary
 
 | # | Title | SP | Date | Status | Review when |
@@ -409,6 +481,8 @@ Both files are kept as ArhuGula inventions with explicit documented rationale: l
 | 9 | `.env.example` invention (E4) | SP1 r1 | 2026-04-13 | active | SP2 audit / SP8 audit |
 | 10 | `fork-terminal` skill (E6, T2-only) | SP1 r1 | 2026-04-13 | active | Quarterly Disler repo check |
 | 11 | `package.json` + `.tool-versions` (D7, load-bearing for SP11) | SP1 r1 | 2026-04-13 | active | SP11 audit / Quarterly |
+| 12 | `.claude/CLAUDE.md` comprehensive doc + nested path | SP1 r1 mini-gate | 2026-04-13 | active | Quarterly |
+| 13 | `justfile` 307-line multi-SP form (security-coupled via `--dangerously-skip-permissions` omission) | SP1 r1 mini-gate | 2026-04-13 | active | Per-SP recipe audits |
 
 ## How to close an exception
 

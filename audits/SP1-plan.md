@@ -25,7 +25,7 @@
 | Kept as exceptions (no commit) | — | Exceptions 6 (D1b), 7 (D2), 8 (D4 kept-hook set, absorbs D5/D6), 11 (D7); Exceptions 9 (E4) and 10 (E6) |
 | Routed out of SP1 scope | — | E5 → SP12; E7 → SP5; E8 → SP9/SP3 |
 
-**Post-gate total commits in SP1 scope:** 25 (6 landed + 19 resume pass). Remaining DECISION-REQUIRED items outside D1–D7 gate: CLAUDE.md and justfile (load-bearing infrastructure, see Cross-reference note).
+**Post-gate total commits in SP1 scope:** 25 (6 landed + 19 resume pass). Mini-gate (2026-04-13) resolved the remaining CLAUDE.md and justfile items → Exceptions 12 and 13. All SP1 DECISION-REQUIRED items are now closed.
 
 ---
 
@@ -468,8 +468,8 @@
 | fork-terminal skill | MISSING[T2-only] | E6 | RESOLVED — Exception 10 (T2-only deferred) |
 | pocket-pick local registration | MISSING[T2-only] | E7 | RESOLVED — deferred to SP5 audit (global registration per `feedback_library_global.md` remains correct) |
 | dashboard streamer + /scout-plan-build | DRIFT[T2] / MISSING[T2-only] | E8 | RESOLVED — deferred (dashboard → SP9 scope; composable wrapper → SP3 scope) |
-| CLAUDE.md comprehensive doc vs 0-byte stub | DRIFT[T1] | (deferred — see note) | DECISION-REQUIRED (still open, separate from D1–D7 gate) |
-| justfile 40+ recipes vs minimal upstream | DRIFT[T1] | (deferred — see note) | DECISION-REQUIRED (still open, separate from D1–D7 gate) |
+| `.claude/CLAUDE.md` comprehensive doc + nested path | DRIFT[T1] | mini-gate 2026-04-13 | RESOLVED — Exception 12 (keep content as Tier-3-adjacent; path stays at `.claude/CLAUDE.md`) |
+| justfile 307-line multi-SP form | DRIFT[T1] | mini-gate 2026-04-13 | RESOLVED — Exception 13 (keep; partial revert explicitly rejected; `--dangerously-skip-permissions` omission is deliberate hardening coupled to Exception 7) |
 
 **Note on CLAUDE.md and justfile:** These two items appear in the scout DRIFT[T1] list but are not assigned a commit above. Both are load-bearing infrastructure with massive blast radius. CLAUDE.md is the project's operational bible; reverting to a 0-byte stub would break all implementation rules. The justfile's 40+ recipes represent months of SP1–SP14 accumulated workflow. These should be treated as user-decision items added to D4's decision gate: "Revert CLAUDE.md to 0-byte stub and justfile to 1.0k minimal form?" They are almost certainly intended as documented exceptions per the identicality audit, but the user must confirm.
 
@@ -674,19 +674,24 @@ After the resume pass lands, `_base.py` has 3 consumers. If future audit rounds 
 
 **If the exceptions are counted as "intentional identicality deviations" rather than drift, effective parity is ~100%** — every remaining item is either documented, routed, or deferred with explicit rationale.
 
-### Still outstanding (not part of D1–D7 gate)
+### Follow-up mini-gate (2026-04-13) — CLAUDE.md + justfile
 
-Two items from the cross-reference table remain DECISION-REQUIRED outside the D1–D7 gate:
+Resolved after the main D1–D7 gate closed. Both items are DRIFT[T1] but were left out of the main gate because they are load-bearing infrastructure with massive blast radius. Mini-gate outcome:
 
-- **CLAUDE.md comprehensive doc vs 0-byte stub** — load-bearing implementation rules document; revert would break every subsequent SP audit
-- **justfile 40+ recipes vs 1.0k minimal upstream** — load-bearing Layer-4 invocation surface for SP1–SP14
+| Item | Resolution | Exception |
+|---|---|---|
+| `.claude/CLAUDE.md` content | Keep 145-line doc as exception (Tier-3 adjacent — content is load-bearing for the audit pipeline itself) | Exception 12 |
+| `.claude/CLAUDE.md` path | Stay at `.claude/CLAUDE.md` (status quo); upstream root-level path is cosmetic drift, functionally equivalent | Exception 12 |
+| `justfile` | Keep 307-line multi-SP form as exception; partial revert explicitly rejected | Exception 13 |
 
-These were flagged as separate in the original plan ("treated as user-decision items added to D4's decision gate"). They are almost certainly keep-as-exception candidates but need explicit user confirmation and their own exception entries. Defer to a follow-up decision gate pass or handle at SP1 resume pass time.
+**Key security finding surfaced at mini-gate:** the upstream `install-and-maintain/justfile` `cldi/cldm/cldii/cldit/cldmm` recipes use `--model opus --dangerously-skip-permissions`. ArhuGula dropped the `--dangerously-skip-permissions` flag. This is not drift-by-neglect — `--dangerously-skip-permissions` disables every PreToolUse hook wired in `settings.json`, including the SP2 damage-control chain kept under Exception 7. Reverting to the upstream prefix form would silently disable damage-control for every session launched via the justfile, which is a security regression that conflicts with Exception 7. The omission is a deliberate hardening decision and is documented as part of Exception 13.
 
-### SP1 round 1 closure state after this gate
+**Partial-revert rejection rationale:** a tempting middle path would restore the upstream `fe/be/reset` recipes as dead stubs + revert `cldi/cldm/cldii/cldmm` to the opus-skip-permissions form + keep all SP-specific recipes. This was explicitly rejected at mini-gate because it would (a) install broken recipe pointers at non-existent paths (`apps/frontend/`, `apps/backend/`, `app_docs/`), AND (b) reintroduce the security regression in the same commit. Net effect: all downsides of full revert with none of the upside of full keep.
 
-SP1 round 1 moves from **PARTIAL-VERIFIED** to **PARTIAL-VERIFIED + DECISIONS-RESOLVED**. All paperwork is final. The SP1 resume pass is fully specified and blocked only on SP2 audit closure. No further SP1 decisions are needed until either:
+### SP1 round 1 closure state after both gates
 
-1. SP2 audit closes and the 19 blocked items can execute (estimated 19 atomic commits in SP1 resume pass)
-2. The CLAUDE.md + justfile decisions are brought to a follow-up gate
-3. A new Disler repo surfaces that provides T1 sources for E6 (`fork-terminal`) or other currently-deferred T2-only items
+SP1 round 1 moves from **PARTIAL-VERIFIED** to **PARTIAL-VERIFIED + DECISIONS-RESOLVED + MINI-GATE-RESOLVED**. All paperwork is final. The SP1 resume pass is fully specified and blocked only on SP2 audit closure. No further SP1 decisions are needed until either:
+
+1. SP2 audit closes and the 19 blocked items can execute (19 atomic commits in SP1 resume pass)
+2. A new Disler repo surfaces that provides T1 sources for E6 (`fork-terminal`) or other currently-deferred T2-only items
+3. Quarterly review cadence flags an Exception (1, 10, 11, 12) for re-examination
