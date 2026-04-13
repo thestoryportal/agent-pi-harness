@@ -284,6 +284,12 @@ test-qa headed="true" prompt="Navigate to https://news.ycombinator.com/. Verify 
     claude "Use a @bowser-qa-agent: (headed: {{headed}}) {{prompt}}"
 
 # Run a saved browser automation workflow via hop-automate (requires --chrome for claude-bowser workflows)
+# Note (SP14 round-10 S-05): {{prompt}} and {{flags}} are shell-interpolated
+# directly into the claude command. An unquoted prompt containing shell
+# metacharacters (e.g. `$(...)`, backticks, `;`) will be interpreted by the
+# shell. This is user-level self-harm only, not an agent-escalation vector
+# (the user invoking the recipe is the one running the shell), but quote the
+# prompt if it contains special characters: just hop workflow 'my prompt'.
 hop workflow="amazon-add-to-cart" prompt="pack of 10 sketch notebooks" *flags="":
     export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 && claude --chrome "/bowser:hop-automate {{workflow}} {{prompt}} {{flags}}"
 

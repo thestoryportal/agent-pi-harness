@@ -192,10 +192,24 @@ def split_chained_commands(command: str) -> list[str]:
                         i += 1  # skip second &
                     i += 1
                     continue
-                elif c == '|' and i + 1 < len(command) and command[i + 1] == '|':
+                elif c == '|':
+                    # Double pipe (||) — logical OR, command boundary
+                    if i + 1 < len(command) and command[i + 1] == '|':
+                        parts.append(''.join(current).strip())
+                        current = []
+                        i += 2
+                        continue
+                    # Single pipe (|) — shell pipeline. Round-10 S-01 fix:
+                    # the RHS of a pipe is a separate command that must be
+                    # checked independently, otherwise an allowlisted LHS
+                    # (e.g., `cat .claude/hooks/session_start.py`) exempts
+                    # the RHS (e.g., `tee .claude/hooks/pre_tool_use.py`)
+                    # from all path-protection checks. The docstring
+                    # already said `|` was handled; now the implementation
+                    # actually does it.
                     parts.append(''.join(current).strip())
                     current = []
-                    i += 2
+                    i += 1
                     continue
             current.append(c)
             i += 1

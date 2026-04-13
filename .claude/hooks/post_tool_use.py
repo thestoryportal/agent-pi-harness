@@ -153,7 +153,11 @@ def main():
     tool_input = d.get("tool_input", {})
     tool_output = d.get("tool_output", {})
     tool_exit_code = tool_output.get("exit_code") if isinstance(tool_output, dict) else None
-    stdout_preview = str(tool_output.get("stdout", ""))[:500] if isinstance(tool_output, dict) else ""
+    # Round-10 S-04: previously captured `stdout_preview` (first 500 chars of
+    # tool stdout) into the event log. Removed because any command that echoes
+    # a secret (e.g., `echo $SOME_TOKEN`) would land the first 500 chars in
+    # events.jsonl with no redaction. Length is kept as a minimal audit signal.
+    stdout_length = len(str(tool_output.get("stdout", ""))) if isinstance(tool_output, dict) else 0
 
     file_path = extract_file_path(tool_name, tool_input)
 
@@ -170,7 +174,7 @@ def main():
         if not validation_result and file_path.endswith(".html"):
             validation_result = validate_external(file_path, "html_validator.py", d, logger)
 
-    payload = {"tool": tool_name, "exit_code": tool_exit_code, "output_preview": stdout_preview}
+    payload = {"tool": tool_name, "exit_code": tool_exit_code, "stdout_length": stdout_length}
     if file_path:
         payload["validated_file"] = file_path
     if validation_result:

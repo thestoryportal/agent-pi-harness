@@ -49,7 +49,7 @@ These rules prevent scope drift, invented features, and missed gaps:
 
 2. **Follow the sub-project priority order.** Section 8 of the source of truth defines
    priority order. Do not skip ahead. Do not reorder without explicit user approval.
-   Current: SP14 → SP15 → ...
+   Current: SP15 → SP16 → ...
 
 3. **No invented components.** If a feature does not exist in any IndyDevDan repo
    (code, architecture doc, or concept), do not add it. The goal is identical replication.
@@ -113,8 +113,8 @@ See Source of Truth Section 8 for priority order. Fix structural issues (Section
 | SP11 | Prompt Testing | BUILT | 4 | llm-prompt-testing |
 | SP12 | Pi Integration + Harness Spec | BUILT | 14 | pi-agent, pi-vs-claude-code, harness-spec |
 | SP13 | Steer (Swift GUI) | BUILT | 3 | mac-mini-agent |
-| SP14 | Browser Automation | **NEXT** | 8 | bowser |
-| SP15 | E2B Sandboxes | NOT STARTED | 4 | agent-sandboxes |
+| SP14 | Browser Automation | BUILT (2026-04-12) | 8 | bowser |
+| SP15 | E2B Sandboxes | **NEXT** | 4 | agent-sandboxes |
 
 ## Hook Security Model
 

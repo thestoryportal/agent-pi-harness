@@ -184,7 +184,34 @@ def check_mcp_tool(tool_name: str) -> tuple[str, str | None]:
     execution primitive as a contiguous subsequence. Passive MCP tools
     (navigate, click, screenshot, snapshot, etc.) pass through and are
     logged via the ALLOW emit at main()'s fallthrough.
+
+    Round-10 hardening (V-3 + S-06): defensive length cap and non-ASCII
+    rejection before atomization. A hostile MCP server could register a
+    tool name with unicode homoglyphs (e.g., Cyrillic `е` U+0435 in place
+    of Latin `e`) to slip past the token-sequence frozenset check, or
+    with a pathological-length name to drive the inner contiguous-
+    subsequence loop. Both vectors are closed here.
     """
+    # Round-10 V-3: defensive length cap for pathological tool names.
+    # Normal MCP tool names are short identifiers (tens of chars). A
+    # 512-char cap is generous for legitimate traffic and closes the
+    # pathological-input loop amplification.
+    if len(tool_name) > 512:
+        return (
+            "block",
+            f"MCP tool name exceeds 512-char cap ({len(tool_name)} chars): "
+            f"{tool_name[:64]}...",
+        )
+    # Round-10 S-06: non-ASCII MCP tool names are either homoglyph
+    # primitive-bypass attempts (e.g. `mcp__srv__еval` with Cyrillic `е`)
+    # or protocol violations. JSON-RPC MCP tool names are ASCII
+    # identifiers by convention. Fail closed.
+    if not tool_name.isascii():
+        return (
+            "block",
+            f"MCP tool name contains non-ASCII characters (possible "
+            f"homoglyph primitive bypass): {tool_name!r}",
+        )
     tokens = _atomize(tool_name)
     for seq in MCP_JS_EXEC_TOKEN_SEQS:
         n = len(seq)

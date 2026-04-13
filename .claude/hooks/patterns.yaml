@@ -256,10 +256,21 @@ bashToolPatterns:
 
   # Multipart form upload (field=@path) — short and long forms
   - pattern: '\bcurl\b.*\s-[A-Za-z]*F[=\s]*[''"]?[A-Za-z0-9_-]+=@'
-    reason: curl multipart file upload (short -F / bundled with @path)
+    reason: curl multipart file upload (short -F / bundled with field=@path)
 
   - pattern: '\bcurl\b.*--form[=\s]+[''"]?[A-Za-z0-9_-]+=@'
-    reason: curl multipart file upload (long --form with @path)
+    reason: curl multipart file upload (long --form with field=@path)
+
+  # Round-10 V-8: bare @path form (no `field=` prefix). `curl -F @file`
+  # and `curl --form @file` are valid curl invocations that upload the
+  # file as an unnamed form part. Equivalent to field=@path for
+  # exfiltration purposes. The rules above require a field name before
+  # `@`, so these unnamed-part variants were not covered until r10.
+  - pattern: '\bcurl\b.*\s-[A-Za-z]*F[=\s]*[''"]?@'
+    reason: curl multipart file upload (short -F / bundled with bare @path)
+
+  - pattern: '\bcurl\b.*--form[=\s]+[''"]?@'
+    reason: curl multipart file upload (long --form with bare @path)
 
   # POST body upload (@path at value position) — short -d (including
   # bundled forms -sd, -vd, -kd), long --data, --data-ascii, --data-binary,
@@ -269,7 +280,13 @@ bashToolPatterns:
   - pattern: '\bcurl\b.*\s-[A-Za-z]*d[=\s]*[''"]?@'
     reason: curl POST body file upload (short -d / bundled with @path)
 
-  - pattern: '\bcurl\b.*--data[=\s]+[''"]?@'
+  # Round-10 V-2: `--data` is anchored with a negative lookahead `(?!-)` so
+  # it does NOT shadow-match `--data-ascii`, `--data-binary`, or
+  # `--data-urlencode` (which have their own dedicated rules immediately
+  # below). Without the anchor, removing any of the hyphenated-variant
+  # rules would silently fall back to this generic rule with the wrong
+  # `reason` string, making future maintenance brittle.
+  - pattern: '\bcurl\b.*--data(?!-)[=\s]+[''"]?@'
     reason: curl POST body file upload (long --data @path)
 
   - pattern: '\bcurl\b.*--data-ascii[=\s]+[''"]?@'
@@ -321,10 +338,12 @@ bashToolPatterns:
   # ---------------------------------------------------------------------------
   # SQL DESTRUCTIVE OPERATIONS (catastrophic)
   # ---------------------------------------------------------------------------
-  - pattern: 'DELETE\s+FROM\s+\w+\s*;'
-    reason: DELETE without WHERE clause (will delete ALL rows)
-
-  - pattern: 'DELETE\s+FROM\s+\w+\s*$'
+  # Round-10 V-5: combined the previous semicolon-terminated and
+  # end-of-string variants into a single rule with a newline alternative.
+  # `$` in Python `re` default mode only matches end-of-string, so a
+  # multi-line command like "DELETE FROM users\nSELECT 1" previously
+  # slipped past. `(?:[;\n]|$)` matches all three termination forms.
+  - pattern: 'DELETE\s+FROM\s+\w+\s*(?:[;\n]|$)'
     reason: DELETE without WHERE clause (will delete ALL rows)
 
   - pattern: 'DELETE\s+\*\s+FROM'
