@@ -11,10 +11,21 @@
 | Classification | Commit count | File touches |
 |---|---:|---:|
 | AUTO-REVERT | 11 | 25 |
-| DECISION-REQUIRED | 7 | 21 |
-| ESCALATE | 8 | 11 |
+| DECISION-REQUIRED (original) | 7 | 21 |
+| ESCALATE (original) | 8 | 11 |
 
-**Estimated total commits:** 18 (AUTO-REVERT + DECISION-REQUIRED, pending user gate decisions)
+**Original estimated total commits:** 18 (AUTO-REVERT + DECISION-REQUIRED, pending user gate decisions)
+
+### Post-gate state (2026-04-13)
+
+| Bucket | Commits | Notes |
+|---|---:|---|
+| Landed + verified | 6 | Commits 3, 9, 10, 11, 12, 13 (SHA range `fe23e4c`..`9f74fc3`) |
+| Queued for SP1 resume pass (SP2-blocked) | 19 | Original 8 deferred AUTO-REVERTs + D1a (1) + D3 (1) + D4 Option C leaf-hook reverts (9) |
+| Kept as exceptions (no commit) | — | Exceptions 6 (D1b), 7 (D2), 8 (D4 kept-hook set, absorbs D5/D6), 11 (D7); Exceptions 9 (E4) and 10 (E6) |
+| Routed out of SP1 scope | — | E5 → SP12; E7 → SP5; E8 → SP9/SP3 |
+
+**Post-gate total commits in SP1 scope:** 25 (6 landed + 19 resume pass). Remaining DECISION-REQUIRED items outside D1–D7 gate: CLAUDE.md and justfile (load-bearing infrastructure, see Cross-reference note).
 
 ---
 
@@ -441,24 +452,24 @@
 | install.md forward-loads later SPs | DRIFT[T1] | Commit 12 | AUTO-REVERT |
 | build.md structural delta | DRIFT[T1] | Commit 13 | AUTO-REVERT |
 | REQUIRED_HOOKS future-SP validators | DRIFT[T2] | Commit 14 | AUTO-REVERT |
-| settings.json extended Bash allow-list | DRIFT[T1] | D1 | DECISION-REQUIRED |
-| SP2 damage-control wiring in settings.json | DRIFT[T1] | D2 | DECISION-REQUIRED |
-| maintenance.md content delta | DRIFT[T1] | D3 | DECISION-REQUIRED |
-| _base.py + 13 hook modifications | DRIFT[T1] | D4 | DECISION-REQUIRED (ARCHITECT RECOMMENDS ESCALATE) |
-| permission_request.py ALLOWED_TOOLS | DRIFT[T1] | D5 | DECISION-REQUIRED (subsumed by D4) |
-| pre_tool_use.py patterns.yaml loading | DRIFT[T1] | D6 | DECISION-REQUIRED (recommend keep-as-exception) |
-| package.json invention | DRIFT[T1] | D7 | DECISION-REQUIRED |
-| .tool-versions invention | DRIFT[T1] | D7 | DECISION-REQUIRED |
-| 6 core subagent definitions | ESCALATE-T1 | E1 | ESCALATE |
-| harness-review.md, architect.md, migrate.md | ESCALATE-T1 | E2 | ESCALATE |
-| prime/SKILL.md, scout/SKILL.md | ESCALATE-T1 | E3 | ESCALATE |
-| .env.example (scan blocked) | ESCALATE-T1 | E4 | ESCALATE |
-| scripts/run-claude.py scope | ESCALATE-T1 | E5 | ESCALATE |
-| fork-terminal skill | MISSING[T2-only] | E6 | ESCALATE |
-| pocket-pick local registration | MISSING[T2-only] | E7 | ESCALATE |
-| dashboard streamer + /scout-plan-build | DRIFT[T2] / MISSING[T2-only] | E8 | ESCALATE |
-| CLAUDE.md comprehensive doc vs 0-byte stub | DRIFT[T1] | (deferred — see note) | DECISION-REQUIRED |
-| justfile 40+ recipes vs minimal upstream | DRIFT[T1] | (deferred — see note) | DECISION-REQUIRED |
+| settings.json extended Bash allow-list | DRIFT[T1] | D1a / D1b | RESOLVED — D1a → Exception 3 resume pass (restore `Bash(mv:*)`); D1b → Exception 6 (keep 9 + Skill) |
+| SP2 damage-control wiring in settings.json | DRIFT[T1] | D2 | RESOLVED — Exception 7 (keep) |
+| maintenance.md content delta | DRIFT[T1] | D3 | RESOLVED — Exception 3 resume pass (revert when unblocked) |
+| _base.py + 13 hook modifications | DRIFT[T1] | D4 | RESOLVED — Option C split: Exception 8 (keep session_start, permission_request, pre_tool_use, `_base.py`); Exception 3 resume pass (revert 9 leaf hooks) |
+| permission_request.py ALLOWED_TOOLS | DRIFT[T1] | D5 | RESOLVED — absorbed into Exception 8 |
+| pre_tool_use.py patterns.yaml loading | DRIFT[T1] | D6 | RESOLVED — absorbed into Exception 8 |
+| package.json invention | DRIFT[T1] | D7 | RESOLVED — Exception 11 (keep, load-bearing for SP11) |
+| .tool-versions invention | DRIFT[T1] | D7 | RESOLVED — Exception 11 (keep alongside package.json) |
+| 6 core subagent definitions | ESCALATE-T1 | E1 | RESOLVED — architect/scout-agent → Exception 1 (Tier 3); builder/validator → Exception 4 (SP2 move+revert); spec-checker/schema-reviewer → Exception 5 (SP2 delete) |
+| harness-review.md, architect.md, migrate.md | ESCALATE-T1 | E2 | RESOLVED — Exception 1 (Tier 3 audit infra) |
+| prime/SKILL.md, scout/SKILL.md | ESCALATE-T1 | E3 | RESOLVED — Exception 1 (Tier 3 audit infra) |
+| .env.example (scan blocked) | ESCALATE-T1 | E4 | RESOLVED — Exception 9 (invention, load-bearing for apps/) |
+| scripts/run-claude.py scope | ESCALATE-T1 | E5 | RESOLVED — routed to SP12 audit scope (out of SP1) |
+| fork-terminal skill | MISSING[T2-only] | E6 | RESOLVED — Exception 10 (T2-only deferred) |
+| pocket-pick local registration | MISSING[T2-only] | E7 | RESOLVED — deferred to SP5 audit (global registration per `feedback_library_global.md` remains correct) |
+| dashboard streamer + /scout-plan-build | DRIFT[T2] / MISSING[T2-only] | E8 | RESOLVED — deferred (dashboard → SP9 scope; composable wrapper → SP3 scope) |
+| CLAUDE.md comprehensive doc vs 0-byte stub | DRIFT[T1] | (deferred — see note) | DECISION-REQUIRED (still open, separate from D1–D7 gate) |
+| justfile 40+ recipes vs minimal upstream | DRIFT[T1] | (deferred — see note) | DECISION-REQUIRED (still open, separate from D1–D7 gate) |
 
 **Note on CLAUDE.md and justfile:** These two items appear in the scout DRIFT[T1] list but are not assigned a commit above. Both are load-bearing infrastructure with massive blast radius. CLAUDE.md is the project's operational bible; reverting to a 0-byte stub would break all implementation rules. The justfile's 40+ recipes represent months of SP1–SP14 accumulated workflow. These should be treated as user-decision items added to D4's decision gate: "Revert CLAUDE.md to 0-byte stub and justfile to 1.0k minimal form?" They are almost certainly intended as documented exceptions per the identicality audit, but the user must confirm.
 
@@ -570,3 +581,112 @@ Commits **3, 4, 5, 9, 10, 11, 12, 13** execute as the "Option 2" subset.
 ### Execution order
 
 3, 4, 5, 9, 10, 11, 12, 13 — unchanged from the original plan ordering. No re-sequencing needed; the dropped commits were either independent additions (1, 2) or their own self-contained dependency chain (6 → 7 → 8) + a standalone edit (14).
+
+---
+
+## Appendix C — Decision gate outcomes (Phase 5, 2026-04-13)
+
+**Resolution date:** 2026-04-13
+**Resolver:** user approval of architect recommendations + leans at decision gate
+**Branch state at gate:** 6 of 14 AUTO-REVERT commits landed and verified (Commits 3, 9, 10, 11, 12, 13); 8 deferred to SP2 via Exception 3; D1–D7 + E1–E8 all pending gate resolution.
+
+### Outcome summary
+
+| Item | Gate outcome | Landing path |
+|---|---|---|
+| D1a | **Restore** `Bash(mv:*)` | SP1 resume pass (Exception 3 item 9, SP2-blocked) |
+| D1b | **Keep** 9 extra Bash perms + `Skill` as exception | Exception 6 (new) |
+| D2 | **Keep** SP2 damage-control wiring as exception | Exception 7 (new) |
+| D3 | **Revert** `maintenance.md` content to upstream | SP1 resume pass (Exception 3 item 10, SP2-blocked) |
+| D4 | **Option C split** — keep security-critical hooks, revert 9 leaf hooks | Exception 8 (new, absorbs D5+D6); Exception 3 item 11 (SP2-blocked resume pass) |
+| D5 | Absorbed into D4 Option C | Exception 8 |
+| D6 | Absorbed into D4 Option C | Exception 8 |
+| D7 | **Keep** `package.json` + `.tool-versions` as exception (reversed from architect recommendation after content review) | Exception 11 (new) |
+| E1 | Pre-resolved via Exceptions 1, 4, 5 | No action required |
+| E2 | Pre-resolved via Exception 1 | No action required |
+| E3 | Pre-resolved via Exception 1 | No action required |
+| E4 | Classified as invention without hook unlock (upstream-absence sufficient) | Exception 9 (new) |
+| E5 | Routed to SP12 audit scope | Out of SP1 scope |
+| E6 | Deferred as T2-only gap | Exception 10 (new) |
+| E7 | Deferred to SP5 audit | No action required |
+| E8 | Deferred (dashboard → SP9, composable wrapper → SP3) | No action required |
+
+### D7 grep result and reversal
+
+Architect originally recommended D7 as AUTO-REVERT-if-no-references, with the builder to run `grep -r "package.json\|.tool-versions" justfile .claude/` as a safety check. The literal grep ran at the decision gate and returned only:
+
+- `.claude/hooks/setup.py:50` — conditional `Path(PROJECT_DIR, "package.json").exists()` check (and `setup.py` itself is slated for deletion in Commit 8)
+- `.pi/agents/pi-pi/*.md` — SP12-scope documentation references
+
+On that signal alone, the resolution would have been "revert — no blocking references." However, the audit then read the file contents and discovered that `package.json` declares four npm scripts (`eval:builder`, `eval:validator`, `eval:scout`, `promptfoo:view`) consumed by SP11 justfile recipes `eval-builder`, `eval-validator`, `eval-scout`, and `promptfoo-view` via `npm run eval:*` / `npx promptfoo view`. These invocations resolve `package.json` implicitly without naming it textually, so the grep missed the entire SP11 dependency chain.
+
+Deleting `package.json` would break all four SP11 eval recipes and lose the Claude Code CLI version pin (`@anthropic-ai/claude-code ^2.1.104`). `.tool-versions` (`nodejs 22`, `python 3.12`) is paired with the Node toolchain that SP11 consumes.
+
+Resolution: **keep both as exception**, documented in Exception 11 with explicit rationale. Architect's "revert if no references" framing is respected — the condition just wasn't actually met once the implicit npm coupling was discovered.
+
+### E4 resolution without hook unlock
+
+The user authorized a one-shot Read of `.env.example` at the decision gate. `pre_tool_use.py` blocked the Read because `.env.example` matches the `.env` substring rule (the same hook over-reach tracked in `project_sp2_architectural_gaps.md`). Per `feedback_damage_control_self_unlock.md` the audit does not self-unlock; the user authorization was honored in spirit but the hook boundary blocked execution.
+
+Crucially, the content of `.env.example` is not needed for classification: a direct `ls` check against both upstream repos (`claude-code-hooks-mastery/.env.example` and `install-and-maintain/.env.example`) returned `No such file or directory`. Neither upstream ships a `.env.example`, so the file is a pure ArhuGula invention regardless of contents. Classification: DRIFT[T1] — invention. Disposition: keep as exception (load-bearing for apps/observe, apps/listen, apps/direct, apps/drive, apps/dropzone env-var documentation). Tracked in Exception 9.
+
+### D4 Option C — explicit hook split
+
+The 9 leaf hooks that revert to upstream form (pending SP2 unblock via Exception 3 item 11):
+
+1. `.claude/hooks/notification.py`
+2. `.claude/hooks/pre_compact.py`
+3. `.claude/hooks/stop.py`
+4. `.claude/hooks/subagent_start.py`
+5. `.claude/hooks/subagent_stop.py`
+6. `.claude/hooks/post_tool_use.py`
+7. `.claude/hooks/user_prompt_submit.py`
+8. `.claude/hooks/post_tool_use_failure.py`
+9. `.claude/hooks/session_end.py`
+
+Each revert is a standalone atomic commit. Upstream source is `claude-code-hooks-mastery/.claude/hooks/<name>.py`. Sequencing: execute after the SP2 `readOnlyPaths` / fnmatch fix lands, in any order (no inter-dependencies among the 9 leaves).
+
+The 3 hooks that stay in ArhuGula form under Exception 8 (plus `_base.py`):
+
+1. `.claude/hooks/session_start.py` — `.env` denylist, `ARHUGULA_SESSION_ID`, JSONL event logging, health check
+2. `.claude/hooks/permission_request.py` — `ALLOWED_TOOLS` / `ALLOWED_BASH_PREFIXES` stricter allowlist (D5 absorbed)
+3. `.claude/hooks/pre_tool_use.py` — `patterns.yaml` loading for `zeroAccessPaths` + `mcp__*` gates (D6 absorbed)
+4. `.claude/hooks/_base.py` — shared helper library, still consumed by the 3 kept hooks
+
+After the resume pass lands, `_base.py` has 3 consumers. If future audit rounds shrink that further, reconsider the `_base.py` carve-out.
+
+### Revised post-plan state
+
+**Decisions resolved at gate:** 7 (D1, D2, D3, D4+D5+D6, D7 as a pair, plus D1 split into D1a/D1b)
+**Escalations resolved at gate:** 8 (E1–E8 all routed or deferred)
+**New exceptions created:** 6 (Exceptions 6, 7, 8, 9, 10, 11)
+**Exceptions updated:** 1 (Exception 3 expanded with 3 new SP1 resume-pass items: D1a, D3, D4 Option C leaf reverts)
+
+**Post-gate Tier 1 parity:**
+
+- **Landed + verified this round:** 6 of 14 AUTO-REVERT commits
+- **Queued for SP1 resume pass (SP2-blocked):** 8 original AUTO-REVERTs + 11 decision-gate items (D1a + D3 + 9 D4 leaf reverts) = 19 additional commits expected
+- **Kept as exceptions (will never become MATCH under current decisions):** 6 exception entries covering 9 deliberate deviations from upstream
+- **Out-of-scope items routed away:** 2 (E5 → SP12; E7 → SP5)
+- **Deferred T2-only gaps with no T1 source:** 3 (E6 fork-terminal, E8 dashboard, E8 composable wrapper)
+
+**Effective Tier 1 parity after resume pass executes:** approximately 70% of T1 findings closed. Remaining 30% is the 9 deliberate exceptions (load-bearing for runtime + security + SP11 + Tier 3 audit infra).
+
+**If the exceptions are counted as "intentional identicality deviations" rather than drift, effective parity is ~100%** — every remaining item is either documented, routed, or deferred with explicit rationale.
+
+### Still outstanding (not part of D1–D7 gate)
+
+Two items from the cross-reference table remain DECISION-REQUIRED outside the D1–D7 gate:
+
+- **CLAUDE.md comprehensive doc vs 0-byte stub** — load-bearing implementation rules document; revert would break every subsequent SP audit
+- **justfile 40+ recipes vs 1.0k minimal upstream** — load-bearing Layer-4 invocation surface for SP1–SP14
+
+These were flagged as separate in the original plan ("treated as user-decision items added to D4's decision gate"). They are almost certainly keep-as-exception candidates but need explicit user confirmation and their own exception entries. Defer to a follow-up decision gate pass or handle at SP1 resume pass time.
+
+### SP1 round 1 closure state after this gate
+
+SP1 round 1 moves from **PARTIAL-VERIFIED** to **PARTIAL-VERIFIED + DECISIONS-RESOLVED**. All paperwork is final. The SP1 resume pass is fully specified and blocked only on SP2 audit closure. No further SP1 decisions are needed until either:
+
+1. SP2 audit closes and the 19 blocked items can execute (estimated 19 atomic commits in SP1 resume pass)
+2. The CLAUDE.md + justfile decisions are brought to a follow-up gate
+3. A new Disler repo surfaces that provides T1 sources for E6 (`fork-terminal`) or other currently-deferred T2-only items

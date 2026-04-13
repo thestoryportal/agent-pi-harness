@@ -92,9 +92,9 @@ ArhuGula's `ruff_validator.py` PostToolUse hook blocks file writes that fail ruf
 
 ## Exception 3 — SP2-blocked SP1 reverts
 
-**Decision:** Option 2 path, SP1 round 1
+**Decision:** Option 2 path, SP1 round 1; expanded at decision gate 2026-04-13 to include D1a, D3, and D4 Option C leaf-hook reverts.
 
-**Affected commits (8 of 14 in SP1-plan.md):**
+**Affected commits — original AUTO-REVERT set (8 of 14 in SP1-plan.md):**
 1. Commit 1 — `.claude/hooks/utils/tts/*.py` (4 files)
 2. Commit 2 — `.claude/hooks/utils/llm/*.py` (4 files)
 3. Commit 4 — `.claude/settings.json` statusLine block revert
@@ -103,6 +103,16 @@ ArhuGula's `ruff_validator.py` PostToolUse hook blocks file writes that fail ruf
 6. Commit 7 — `.claude/settings.json` Setup hook wiring revert
 7. Commit 8 — `.claude/hooks/setup.py` deletion
 8. Commit 14 — `.claude/hooks/session_start.py` `REQUIRED_HOOKS` purge
+
+**Affected commits — added at decision gate 2026-04-13 (from D1a, D3, D4 Option C):**
+
+9. **D1a — Restore `Bash(mv:*)` in `.claude/settings.json`.** Upstream hooks-mastery allow-list includes `Bash(mv:*)`; ArhuGula dropped it. No trade-off. Blocked by `.claude/settings.json` `readOnlyPaths` entry (same block as Commits 4 and 7).
+
+10. **D3 — Revert `.claude/commands/maintenance.md` content to upstream.** Filename rename already landed in Commit 10 (SHA `a3033b3`), but content revert is pending. Blocked because `.claude/commands/` is expected to be in `readOnlyPaths` (same block class as Exception 4).
+
+11. **D4 Option C — Leaf hook reverts (9 files).** Revert to upstream `claude-code-hooks-mastery/.claude/hooks/` form the 9 non-security hooks: `notification.py`, `pre_compact.py`, `stop.py`, `subagent_start.py`, `subagent_stop.py`, `post_tool_use.py`, `user_prompt_submit.py`, `post_tool_use_failure.py`, `session_end.py`. Blocked by `.claude/hooks/*.py` `readOnlyPaths` (fnmatch over-reach, same as Commits 1/2/6/8/14).
+
+    **NOT reverted** (kept under Exception 8): `session_start.py`, `permission_request.py`, `pre_tool_use.py`, `_base.py`.
 
 **SP audit round:** SP1 round 1 (2026-04-13)
 **Decision date:** 2026-04-13
@@ -196,15 +206,209 @@ Under the Disler-authoritative rule, confirmed inventions must be deleted. Howev
 
 ---
 
+## Exception 6 — Extended Bash permission allow-list in settings.json (D1b)
+
+**Decision:** D1b, SP1 round 1 decision gate
+
+**Path(s):**
+- `.claude/settings.json` — `permissions.allow` list contains 9 entries beyond upstream `claude-code-hooks-mastery/.claude/settings.json`: `Bash(brew:*)`, `Bash(tmux:*)`, `Bash(just:*)`, `Bash(yq:*)`, `Bash(node:*)`, `Bash(xcode-select:*)`, `Bash(which:*)`, `Bash(test:*)`, `Bash(cat:*)`, and a top-level `Skill` permission.
+
+**SP audit round:** SP1 round 1 (2026-04-13)
+**Decision date:** 2026-04-13
+
+**Rationale:**
+The nine extra Bash allow entries cover tools used in nearly every ArhuGula workflow, most critically `just` (the Layer-4 invocation surface — every `just <recipe>` call would require a permission click without this allow). `brew`, `tmux`, `yq`, `node`, `xcode-select`, `which`, `test`, `cat` are invoked routinely by hooks, setup scripts, and justfile recipes. The `Skill` top-level allow enables `/skill` invocations without per-call prompts. Reverting the allow-list to upstream's minimal set would not change security posture (damage-control still gates every Bash call via `bash_damage_control.py`) but would impose severe runtime friction.
+
+Upstream `Bash(mv:*)` is a separate item — it is *missing* from ArhuGula and must be restored. That action is tracked as D1a under Exception 3 (SP2-blocked resume pass) since the settings.json edit itself is blocked.
+
+**Review cadence:** SP2 audit (when `.claude/settings.json` becomes editable again). If SP2 audit identifies any of these nine permissions as a security concern, revisit then.
+
+**Related findings:**
+- `audits/SP1-scout.md` — DRIFT[T1] scaffolding: "extended Bash permission allow-list"
+- `audits/SP1-plan.md` — D1 decision gate item, architect recommendation to split into D1a (AUTO-REVERT) + D1b (DECISION)
+
+**Follow-up actions:**
+1. None required while this exception is active.
+2. SP2 audit revisits the allow-list in its own scope; if any entry is flagged, return here.
+
+---
+
+## Exception 7 — SP2 damage-control hook wiring in settings.json (D2)
+
+**Decision:** D2, SP1 round 1 decision gate
+
+**Path(s):**
+- `.claude/settings.json` — `hooks.PreToolUse` contains three SP2-specific matcher blocks wiring `bash_damage_control.py`, `edit_damage_control.py`, and `write_damage_control.py`. Upstream hooks-mastery has a single empty-matcher PreToolUse entry pointing at its own `pre_tool_use.py`.
+
+**SP audit round:** SP1 round 1 (2026-04-13)
+**Decision date:** 2026-04-13
+
+**Rationale:**
+Removing the SP2 damage-control hook wiring from settings.json unregisters the three damage-control hooks for the duration of the audit branch. This would disable `readOnlyPaths`, `zeroAccessPaths`, and `noDeletePaths` enforcement precisely while the audit is editing sensitive hook files — exactly the risk scenario `feedback_damage_control_self_unlock.md` warns against. The Disler-authoritative rule says "drift is drift regardless of rationale," but `project_sp2_architectural_gaps.md` notes that "the hooks are the security foundation everything else depends on." Keeping the wiring during the audit preserves security enforcement; the SP2 audit will re-examine the wiring in its own scope.
+
+**Review cadence:** SP2 audit.
+
+**Related findings:**
+- `audits/SP1-scout.md` — DRIFT[T1] scaffolding: `.claude/settings.json` diverges from upstream
+- `audits/SP1-plan.md` — D2 decision gate, architect recommendation: **keep as exception**
+- `project_sp2_architectural_gaps.md` — hooks are the security foundation
+
+**Follow-up actions:**
+1. SP2 scout: include the settings.json PreToolUse wiring in its findings (whether the three-matcher form is correct, whether it should be consolidated to a single dispatcher, etc.)
+2. SP2 decision: confirm or modify the wiring
+3. Update this exception to "resolved" only if SP2 adopts a different wiring form
+
+---
+
+## Exception 8 — Security-critical hooks + `_base.py` kept in ArhuGula form (D4 Option C)
+
+**Decision:** D4 Option C, SP1 round 1 decision gate. Absorbs D5 and D6 which were flagged as subsumed by / covered under D4.
+
+**Path(s):**
+- `.claude/hooks/_base.py` — ArhuGula-invented shared helper library (`Logger`, `emit_event`, `handle_health_check`, `read_stdin`, `run_hook`). Not present in either upstream repo.
+- `.claude/hooks/session_start.py` — keeps `_base.py` import, `ARHUGULA_SESSION_ID` env var injection, `.env` whitelist with INJECT marker and secret denylist, structured JSONL event logging. Upstream form is minimal.
+- `.claude/hooks/permission_request.py` — keeps `_base.py` import and the stricter `ALLOWED_TOOLS` / `ALLOWED_BASH_PREFIXES` allowlist. Upstream runs with `--log-only` flag and no allowlist (D5 kept-as-exception).
+- `.claude/hooks/pre_tool_use.py` — keeps `_base.py` import and `patterns.yaml` loading for `zeroAccessPaths` and `mcp__*` namespace gates. Upstream only detects `rm -rf` (D6 kept-as-exception).
+
+**SP audit round:** SP1 round 1 (2026-04-13)
+**Decision date:** 2026-04-13
+
+**Rationale:**
+The D4 decision is the highest-blast-radius item in the SP1 plan. Full revert (Option A) would eliminate the entire observability layer (JSONL event logging, session correlation, `ARHUGULA_SESSION_ID`), the `.env` denylist protection in `session_start.py`, the `ALLOWED_TOOLS`/`ALLOWED_BASH_PREFIXES` stricter allowlist in `permission_request.py`, and the `patterns.yaml`-based zero-access and MCP-namespace gates in `pre_tool_use.py`. Upstream `pre_tool_use.py` only detects `rm -rf` — even weaker than ArhuGula's version with the known ripgrep-walk gap. Reverting any of the three security-critical hooks would be a genuine security regression below the current gapped state.
+
+Option C (chosen) splits the revert: 9 non-security leaf hooks revert to upstream form (tracked under Exception 3 resume pass), while the 3 security-critical hooks + `_base.py` stay. The observability layer is preserved where it matters (security hooks + session boundaries) and removed where it's low-value (leaf event-emission hooks like notification, stop, pre_compact).
+
+**`_base.py` preservation:** After the 9 leaf hooks revert, `_base.py` still has 3 consumers (session_start, permission_request, pre_tool_use), which is enough to justify keeping the shared helper. If future audits shrink the consumer list further, reconsider.
+
+**Absorbs D5:** The `permission_request.py` `ALLOWED_TOOLS`/`ALLOWED_BASH_PREFIXES` allowlist is part of this exception. Architect recommendation on D5 was "defer to D4 decision"; Option C keeps permission_request in ArhuGula form, which keeps D5.
+
+**Absorbs D6:** The `pre_tool_use.py` `patterns.yaml` loading is part of this exception. Architect recommendation on D6 was "keep as exception regardless of D4 decision"; Option C is consistent with that.
+
+**Review cadence:** SP2 audit (which handles `patterns.yaml` fnmatch bug + `readOnlyPaths` scope); SP3 audit (which handles validator hooks and may revisit the observability layer decision); quarterly otherwise.
+
+**Related findings:**
+- `audits/SP1-scout.md` — DRIFT[T1] hook modifications (13 hooks); DRIFT[T1] invention (`_base.py`); Cross-tier reconciliation item 1
+- `audits/SP1-plan.md` — D4 (highest-blast-radius, architect ESCALATE), D5 (subsumed), D6 (recommend keep)
+- `project_sp2_architectural_gaps.md` — hooks are the security foundation
+- `feedback_disler_authoritative.md` — drift is drift, but exceptions are documented drift with rationale
+
+**Follow-up actions:**
+1. SP1 resume pass: execute 9 leaf-hook reverts (tracked under Exception 3 item 11)
+2. SP2 audit: may revisit `pre_tool_use.py` once the `patterns.yaml` fnmatch bug is fixed and the ripgrep-walk gap is addressed
+3. SP3 audit: may revisit observability infrastructure as part of validator pipeline scope
+4. If SP9 (orchestration / dashboard) needs a different event schema, update `_base.py` + consumers in that audit round
+5. Quarterly review: check if any Disler repo has added a shared hook helper pattern we should align with
+
+---
+
+## Exception 9 — `.env.example` invention (E4)
+
+**Decision:** E4, SP1 round 1 decision gate
+
+**Path(s):**
+- `.env.example` — ArhuGula root-level environment template. Neither `claude-code-hooks-mastery` nor `install-and-maintain` ships a `.env.example`.
+
+**SP audit round:** SP1 round 1 (2026-04-13)
+**Decision date:** 2026-04-13
+
+**Rationale:**
+E4 was escalated because scout could not byte-compare `.env.example` against upstream — the `pre_tool_use.py` hook blocks any Read against paths matching `.env` (the `.env.example` suffix also matches). At decision gate, a direct check of both upstream repos confirmed **neither ships `.env.example`**, so content comparison is moot: it is a pure invention regardless of what the file contains. The user-authorized one-shot Read could not be honored through the hook boundary, but the authorization is not needed once the upstream-absence check is done.
+
+`.env.example` is load-bearing for ArhuGula runtime: `apps/observe`, `apps/listen`, `apps/direct`, `apps/drive`, and `apps/dropzone` all depend on environment variables (`LISTEN_PORT`, `OBSERVE_PORT`, `OBSERVE_RETENTION_DAYS`, `DATABASE_URL`, etc.) and `.env.example` is the documented template for bootstrapping a fresh clone. Deleting it would force every new ArhuGula user to reverse-engineer the required env vars from source code. Keep as exception.
+
+**Review cadence:** SP2 audit (for the hook over-reach that blocked the scout Read) and SP8 audit (which owns the apps/ directory that consumes these env vars).
+
+**Related findings:**
+- `audits/SP1-scout.md` — ESCALATE-T1: `.env.example` byte comparison blocked
+- `audits/SP1-plan.md` — E4 escalation, architect recommended Option 3 (user-authorized one-shot Read)
+- `project_sp2_architectural_gaps.md` — `pre_tool_use.py` path-matching over-reach
+
+**Follow-up actions:**
+1. SP2 audit: narrow the `.env` path-match rule to not block `.env.example` Reads, or add an explicit exemption
+2. SP8 audit: confirm the env-var list in `.env.example` matches what apps/ actually consume
+3. If a future Disler repo adds a `.env.example`, upgrade this classification from invention to DRIFT[T1] and byte-compare
+
+---
+
+## Exception 10 — `fork-terminal` skill (E6) — T2-only, no T1 source
+
+**Decision:** E6, SP1 round 1 decision gate
+
+**Path(s):**
+- (none) — this exception records a **missing** file that Comprehensive docs describe but no Disler full-clone implements.
+
+**SP audit round:** SP1 round 1 (2026-04-13)
+**Decision date:** 2026-04-13
+
+**Rationale:**
+`indydevdan_method_comprehensive_reference.md` §Part 5 Category 1 references a `fork-terminal` skill for spawning parallel agents. Scout searched all 19 Disler full-clones and found no `fork-terminal` implementation, SKILL.md, or command. Since there is no Tier 1 byte source, architect cannot revert-against anything — the T2-only gap can only be closed by either building from the description or deferring. Architect recommended defer (Option 2). Accepted.
+
+If a future Disler repo ships `fork-terminal`, this exception upgrades to MISSING[T1] and the SP1 resume pass picks it up.
+
+**Review cadence:** Whenever a Disler repo adds a skill we don't yet have, check if this is the one. Otherwise quarterly.
+
+**Related findings:**
+- `audits/SP1-scout.md` — Tier 2 MISSING[T2-only]: `fork-terminal` skill
+- `audits/SP1-plan.md` — E6 escalation, architect recommendation: defer
+
+**Follow-up actions:**
+1. Quarterly Disler repo check: does any new full-clone ship `fork-terminal`?
+2. If found: upgrade to MISSING[T1], generate SP1 resume-pass commit
+3. If not: exception stays active indefinitely
+
+---
+
+## Exception 11 — `package.json` + `.tool-versions` (D7) — load-bearing inventions
+
+**Decision:** D7, SP1 round 1 decision gate. Reversed from architect recommendation after content review revealed implicit SP11 coupling.
+
+**Path(s):**
+- `package.json` — ArhuGula root-level Node.js manifest. Declares `@anthropic-ai/claude-code ^2.1.104`, `yaml ^2.8.3`, `promptfoo 0.121.4`, and four npm scripts (`eval:builder`, `eval:validator`, `eval:scout`, `promptfoo:view`).
+- `.tool-versions` — asdf/mise version pin file: `nodejs 22`, `python 3.12`.
+
+**SP audit round:** SP1 round 1 (2026-04-13)
+**Decision date:** 2026-04-13
+
+**Rationale:**
+Neither upstream repo ships `package.json` or `.tool-versions`, so these are pure inventions per the Disler-authoritative rule. Architect's original recommendation was to revert (delete) unless SP-owned code references them, pending a `grep -r "package.json\|.tool-versions"` check by the builder.
+
+The literal grep ran at decision gate and returned only a conditional `Path(PROJECT_DIR, "package.json").exists()` check in `.claude/hooks/setup.py:50` (and `.pi/agents/pi-pi/` docs, which are SP12-scope). On that signal alone, D7 would be "revert — no blocking references."
+
+However, a content review of `package.json` itself revealed that SP11 justfile recipes `eval-builder`, `eval-validator`, `eval-scout`, and `promptfoo-view` invoke `npm run eval:*` and `npx promptfoo view`, which implicitly consume `package.json` without naming it textually. The grep missed this entire dependency chain. Deleting `package.json` would break all four SP11 eval recipes and lose the Claude Code CLI version pin used by downstream tooling.
+
+`.tool-versions` has no code references but pairs with `package.json` — the `nodejs 22` pin is consumed by the same npm toolchain that SP11 depends on. Keeping both together is more honest than splitting.
+
+Both files are kept as ArhuGula inventions with explicit documented rationale: load-bearing for SP11 promptfoo evals + reproducible Node/Python pinning for a multi-SP harness.
+
+**Review cadence:** SP11 audit (when validator/builder/scout eval recipes are audited, confirm package.json dependencies are still current); quarterly otherwise.
+
+**Related findings:**
+- `audits/SP1-scout.md` — DRIFT[T1] inventions list
+- `audits/SP1-plan.md` — D7 decision gate, architect recommendation: revert if no references (reversed at gate)
+- `justfile:158-178` — SP11 `eval-builder`, `eval-validator`, `eval-scout`, `promptfoo-view` recipes
+
+**Follow-up actions:**
+1. SP11 audit: verify the four eval recipes still work and the pinned promptfoo version is current
+2. On any future Claude Code CLI major version bump, revisit the `^2.1.104` constraint
+3. If asdf/mise becomes unsupported or a different version manager takes over, migrate the pins
+
+---
+
 ## Active exceptions summary
 
 | # | Title | SP | Date | Status | Review when |
 |---|---|---|---|---|---|
 | 1 | Audit infrastructure tier (Tier 3) | SP1 r1 | 2026-04-13 | active | Quarterly |
 | 2 | Validator-forced drift (ruff) | SP1 r1 | 2026-04-13 | active | SP3 audit |
-| 3 | SP2-blocked SP1 reverts (8 commits) | SP1 r1 | 2026-04-13 | active | SP2 audit |
+| 3 | SP2-blocked SP1 reverts (11 commits) | SP1 r1 | 2026-04-13 | active | SP2 audit |
 | 4 | builder/validator location + content | SP1 r1 | 2026-04-13 | active | SP2 audit |
 | 5 | Confirmed invention deletions (spec-checker, schema-reviewer) | SP1 r1 | 2026-04-13 | active | SP2 audit |
+| 6 | Extended Bash permission allow-list (D1b) | SP1 r1 | 2026-04-13 | active | SP2 audit |
+| 7 | SP2 damage-control wiring in settings.json (D2) | SP1 r1 | 2026-04-13 | active | SP2 audit |
+| 8 | Security-critical hooks + `_base.py` kept (D4 Option C, absorbs D5 + D6) | SP1 r1 | 2026-04-13 | active | SP2 audit / SP3 audit / Quarterly |
+| 9 | `.env.example` invention (E4) | SP1 r1 | 2026-04-13 | active | SP2 audit / SP8 audit |
+| 10 | `fork-terminal` skill (E6, T2-only) | SP1 r1 | 2026-04-13 | active | Quarterly Disler repo check |
+| 11 | `package.json` + `.tool-versions` (D7, load-bearing for SP11) | SP1 r1 | 2026-04-13 | active | SP11 audit / Quarterly |
 
 ## How to close an exception
 
