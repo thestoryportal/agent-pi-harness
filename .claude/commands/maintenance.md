@@ -1,18 +1,31 @@
 ---
-description: Session maintenance — verify environment health
+description: Run setup_maintenance hook and report maintenance results
 ---
 
-# /maintain — Session Maintenance
+# Purpose
 
-## Purpose
-
-Verify environment health and clean up stale state.
+Execute the repository maintenance hook (setup_maintenance) which updates dependencies and runs database maintenance, then summarize and report the results to the user.
 
 ## Workflow
 
-1. Run `uv sync` to ensure dependencies are current
-2. Run hook health checks (same as session_start)
-3. Check `.claude/logs/` disk usage
-4. Prune event logs older than retention window if Observe DB exists
-5. Verify git status is clean
-6. Report environment health summary
+0. Run `Skill(/prime)` to understand the codebase
+1. Read the log file at `.claude/hooks/setup.maintenance.log` (the hook already ran via `--maintenance` flag)
+2. Analyze for successes and failures
+3. Write results to `app_docs/maintenance_results.md`
+4. Report to user
+
+## Report
+
+Write to `app_docs/maintenance_results.md` and respond to user:
+
+**Status**: SUCCESS or FAILED
+
+**What worked**:
+- [completed actions]
+- DB integrity: [ok/failed]
+
+**What failed** (if any):
+- [errors with context]
+
+**Next steps**:
+- [what to do now]
