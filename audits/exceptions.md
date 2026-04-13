@@ -108,7 +108,7 @@ ArhuGula's `ruff_validator.py` PostToolUse hook blocks file writes that fail ruf
 
 9. **D1a — Restore `Bash(mv:*)` in `.claude/settings.json`.** Upstream hooks-mastery allow-list includes `Bash(mv:*)`; ArhuGula dropped it. No trade-off. Blocked by `.claude/settings.json` `readOnlyPaths` entry (same block as Commits 4 and 7).
 
-10. **D3 — Revert `.claude/commands/maintenance.md` content to upstream.** Filename rename already landed in Commit 10 (SHA `a3033b3`), but content revert is pending. Blocked because `.claude/commands/` is expected to be in `readOnlyPaths` (same block class as Exception 4).
+10. **D3 — Revert `.claude/commands/maintenance.md` content to upstream.** ~~Blocked because `.claude/commands/` is expected to be in `readOnlyPaths`~~ **RESOLVED 2026-04-13** — landed at `c04bc09`. SP2 Phase A empirical verification (`audits/sp2_verify.py`) proved `.claude/commands/` is not in any restricted-path tier. The "expected block" was extrapolation from real blocks on `.claude/hooks/` + `.claude/settings.json`, never verified. See SP2-scout.md ESCALATE-SP2-3.
 
 11. **D4 Option C — Leaf hook reverts (9 files).** Revert to upstream `claude-code-hooks-mastery/.claude/hooks/` form the 9 non-security hooks: `notification.py`, `pre_compact.py`, `stop.py`, `subagent_start.py`, `subagent_stop.py`, `post_tool_use.py`, `user_prompt_submit.py`, `post_tool_use_failure.py`, `session_end.py`. Blocked by `.claude/hooks/*.py` `readOnlyPaths` (fnmatch over-reach, same as Commits 1/2/6/8/14).
 
@@ -140,6 +140,8 @@ Cleaner path: let SP2 audit fix the underlying bug (`patterns.yaml` narrowing or
 ---
 
 ## Exception 4 — `builder.md` + `validator.md` mis-location + content drift
+
+**STATUS:** RESOLVED 2026-04-13 — landed at `36bac66` (builder.md) and `7fd0f3c` (validator.md). SP2 Phase A empirical verification (`audits/sp2_verify.py`) proved `.claude/agents/` is not in any restricted-path tier; `git mv` + Edit to `.claude/agents/team/` + byte-identical content revert all allowed through damage-control. Archive migration deferred to later cleanup pass.
 
 **Decision:** Decision 3B, SP1 round 1
 
@@ -173,6 +175,8 @@ Both actions are likely blocked by the same SP2 fnmatch / `readOnlyPaths` issue 
 ---
 
 ## Exception 5 — Confirmed invention deletions (deferred to SP2)
+
+**STATUS:** RESOLVED 2026-04-13 — landed at `9ed2995`. Both `.claude/agents/spec-checker.md` and `.claude/agents/schema-reviewer.md` deleted via `git rm`. SP2 Phase A empirical verification (`audits/sp2_verify.py`) proved the operations were never blocked. Archive migration deferred to later cleanup pass.
 
 **Decision:** Attribution round 2 classification, SP1 round 1
 
@@ -472,9 +476,9 @@ Keep as exception. The upstream justfile is scaffolding for a *different* demo r
 |---|---|---|---|---|---|
 | 1 | Audit infrastructure tier (Tier 3) | SP1 r1 | 2026-04-13 | active | Quarterly |
 | 2 | Validator-forced drift (ruff) | SP1 r1 | 2026-04-13 | active | SP3 audit |
-| 3 | SP2-blocked SP1 reverts (11 commits) | SP1 r1 | 2026-04-13 | active | SP2 audit |
-| 4 | builder/validator location + content | SP1 r1 | 2026-04-13 | active | SP2 audit |
-| 5 | Confirmed invention deletions (spec-checker, schema-reviewer) | SP1 r1 | 2026-04-13 | active | SP2 audit |
+| 3 | SP2-blocked SP1 reverts (10 commits remaining; item 10/D3 resolved 2026-04-13) | SP1 r1 | 2026-04-13 | active (partial) | SP2 audit |
+| 4 | builder/validator location + content | SP1 r1 | 2026-04-13 | **RESOLVED 2026-04-13** | — |
+| 5 | Confirmed invention deletions (spec-checker, schema-reviewer) | SP1 r1 | 2026-04-13 | **RESOLVED 2026-04-13** | — |
 | 6 | Extended Bash permission allow-list (D1b) | SP1 r1 | 2026-04-13 | active | SP2 audit |
 | 7 | SP2 damage-control wiring in settings.json (D2) | SP1 r1 | 2026-04-13 | active | SP2 audit |
 | 8 | Security-critical hooks + `_base.py` kept (D4 Option C, absorbs D5 + D6) | SP1 r1 | 2026-04-13 | active | SP2 audit / SP3 audit / Quarterly |
