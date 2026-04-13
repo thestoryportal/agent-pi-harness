@@ -494,3 +494,55 @@ Scout agent will re-audit using this plan's post-state. Expected new state after
 - **MATCH:** ~8 new MATCH items (tts/, llm/, status_lines/, setup_init.py, setup_maintenance.py, install-hil.md, maintenance.md rename, install.md)
 - **Remaining DRIFT/MISSING:** ~21 items (7 from DECISION-REQUIRED pending, 8 ESCALATE, CLAUDE.md, justfile, .env.example)
 - **Gate items for user decision before builder runs:** D1, D2, D3, D4, D5, D6, D7 + CLAUDE.md/justfile exception decision + 8 ESCALATE routing decisions (E1–E8)
+
+---
+
+## Appendix A — Deferred commits (blocked by SP2 fnmatch gap)
+
+**Decision date:** 2026-04-13
+**Decision:** User chose Option 2 — execute unblocked commits only; defer the rest to SP2 audit.
+
+### Root cause
+
+`.claude/hooks/patterns.yaml` has `".claude/hooks/*.py"` in `readOnlyPaths`. Python's `fnmatch.fnmatch()` does not treat `/` as a special character, so `*` matches directory separators. The pattern therefore matches both top-level hook files (intended) **and** any `.py` file in subdirectories (unintended over-reach). This is the same class of bug as the SP14 round-3 finding and is already documented in `project_sp2_architectural_gaps.md` as a P0 SP2 follow-up.
+
+### Blocked commits (6 of 14)
+
+| # | Action | Block reason |
+|---|---|---|
+| 1 | Restore `utils/tts/*.py` (4 files) | fnmatch over-reach (unintended) |
+| 2 | Restore `utils/llm/*.py` (4 files) | fnmatch over-reach (unintended) |
+| 6 | Create `setup_init.py` + `setup_maintenance.py` | readOnlyPaths (intended — new files in hooks/) |
+| 7 | Edit settings.json Setup wiring | depends on 6 |
+| 8 | Delete `setup.py` | depends on 7; possibly `noDeletePaths` |
+| 14 | Edit `session_start.py` `REQUIRED_HOOKS` | readOnlyPaths (intended — edit of existing hook) |
+
+### Resolution path
+
+1. SP2 audit scout phase re-discovers this bug (already in memory `project_sp2_architectural_gaps.md`).
+2. SP2 architect phase proposes `patterns.yaml` narrowing or `write_damage_control.py` path-matching fix.
+3. SP2 build phase executes the fix.
+4. After SP2 patterns fix lands, a **SP1 resume pass** re-runs these 6 deferred commits against the fixed rules.
+5. SP1 audit remains **partially complete** (8/14 AUTO-REVERT + all DECISION-REQUIRED + all ESCALATE unresolved) until SP2 closes.
+
+### Implications for SP1 state tracking
+
+- SP1 verify phase (phase 5) after this AUTO-REVERT round will NOT see the blocked items close.
+- Post-plan Tier 1 parity estimate revised: after 8 commits, approximately 25% of T1 findings closed (down from 45% in the original plan).
+- The blocked items stay in `audits/SP1-scout.md` as open DRIFT/MISSING items until SP2 audit resolution.
+
+---
+
+## Appendix B — Unblocked commit subset (8 commits, executing now)
+
+Commits **3, 4, 5, 9, 10, 11, 12, 13** execute as the "Option 2" subset.
+
+### Dependencies within the subset
+
+- Chain C: 3 → 4 → 5 (status_lines restore → settings.json statusLine revert → delete statusline.sh)
+- Chain F: 10 → 11 (maintain→maintenance rename → justfile refs update)
+- Standalone: 9 (install-hil.md), 12 (install.md revert), 13 (build.md revert)
+
+### Execution order
+
+3, 4, 5, 9, 10, 11, 12, 13 — unchanged from the original plan ordering. No re-sequencing needed; the dropped commits were either independent additions (1, 2) or their own self-contained dependency chain (6 → 7 → 8) + a standalone edit (14).
