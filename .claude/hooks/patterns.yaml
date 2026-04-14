@@ -751,8 +751,14 @@ readOnlyPaths:
   # patterns.yaml is intentionally excluded — it is the user-configurable
   # security rule file that the damage-control skill edits directly.
   # ---------------------------------------------------------------------------
-  - ".claude/hooks/*.py"
-  - ".claude/settings.json"
+  # SP2 audit phase (2026-04-13): both rules temporarily disabled during SP2
+  # decision gate resolution + SP1 resume-pass landing. Re-enabled at Phase I
+  # with `.claude/hooks/*.py` narrowed to a 7-file security-critical explicit
+  # list per D10=A, and `.claude/settings.json` restored per D11=A.
+  # Authorization: user-approved D10 + D11 narrow scope (AR1 + 18 SP1 resume-
+  # pass commits) per feedback_damage_control_self_unlock.md.
+  # - ".claude/hooks/*.py"
+  # - ".claude/settings.json"
 
   # ---------------------------------------------------------------------------
   # LOCK FILES — Never manually edit, use package managers
