@@ -112,7 +112,7 @@ See Source of Truth Section 8 for priority order. Fix structural issues (Section
 | SP10 | Drop Zones | BUILT + AUDIT R1 (2026-04-14) | 4 | agentic-drop-zones |
 | SP11 | Prompt Testing | BUILT + AUDIT R1 (2026-04-14) | 4 | llm-prompt-testing |
 | SP12 | Pi Integration + Harness Spec | BUILT + AUDIT R1 (2026-04-14) | 14 | pi-vs-claude-code + harness-spec (Tier 2 concept) |
-| SP13 | Steer (Swift GUI) | BUILT | 3 | mac-mini-agent |
+| SP13 | Steer (Swift GUI) | BUILT + AUDIT R1 (2026-04-14) | 3 | mac-mini-agent |
 | SP14 | Browser Automation | BUILT (2026-04-12) | 8 | bowser |
 | SP15 | E2B Sandboxes | **NEXT** | 4 | agent-sandboxes |
 

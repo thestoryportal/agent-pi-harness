@@ -1275,3 +1275,62 @@ Claude Code's slash-command resolver searches the skills index first (per SP1 sk
 
 **Review cadence:** None — permanent decision. Any future change that wants to import an upstream prime.md would need to first supersede this exception with a user-authorized decision to demote the SP1 `/prime` skill.
 
+## Exception 24 — SP13 justfile carve-out recipes + SecureTmp security regression flag
+
+**Decision:** SP13 round 1 Phase C+D (2026-04-14)
+
+**Path(s):**
+- `justfile` lines 280–301 — 4 ArhuGula-specific SP13 recipes preserved: `steer-build`, `steer-see`, `steer-apps`, `steer-ocr`. Upstream `mac-mini-agent/justfile` has no equivalent direct-binary recipes — upstream has `steer1/2/3 := \`cat specs/research-macbooks.md\`` (etc.) variables that cat prompt files from `specs/` and invoke them via `just send` (SP8 Listen submission) or `claude --dangerously-skip-permissions "/listen-drive-and-steer-user-prompt {{prompt}}"` at the agent level, plus `steer-cc prompt:` / `steer-pi prompt:` parameterized recipes for arbitrary prompts. Upstream recipes target the AGENT-LEVEL workflow (send a prompt to an agent which then drives the GUI via Steer + Listen + Drive); ArhuGula's 4 recipes target the TOOL-LEVEL workflow (invoke the built steer binary directly for smoke-testing and dev ergonomics).
+- **Security regression flag (not a preservation, a documented loss):** SP13 r1 reverted `apps/steer/Sources/steer/Core/SecureTmp.swift` + the `Commands/`+`Core/` hierarchical rewrite that routed all output through per-UID `/tmp/steer-<uid>/` mode 0700 directories with atomic writes and ownership-verified reads. The ArhuGula hardening had been built across 3 review rounds / 10 commits and defended against symlink attacks, snapshot poisoning, path traversal, coordinate injection, and secret leakage. Upstream `ElementStore.swift` writes snapshots to a less-isolated location.
+
+**SP audit round:** SP13 round 1 Phase C+D (2026-04-14)
+**Decision date:** 2026-04-14
+**Status:** **Permanent** (carve-out recipes) + **Open follow-up** (security regression)
+
+**Rationale (carve-out recipes):**
+
+The 4 local recipes (`steer-build`, `steer-see`, `steer-apps`, `steer-ocr`) are thin wrappers over the built binary:
+
+```
+steer-build: cd apps/steer && swift build -c release 2>&1
+steer-see:   apps/steer/.build/release/steer see --screen 0 --json
+steer-apps:  apps/steer/.build/release/steer apps list --json
+steer-ocr:   apps/steer/.build/release/steer ocr --screen 0 --store --json
+```
+
+Deleting them to match upstream strict identicality would save ~15 lines of justfile but provides no value — they are dev-ergonomics conveniences, not runtime code that can drift. They don't bridge anything ArhuGula-specific the way SP12 Exception 22 `pi-drive`/`pi-listen`/`pi-full` bridges Pi to SP8 Drive/Listen. They simply save the developer from typing the full path. Importing the upstream `steer1/2/3` variables would require either importing 3 `specs/*.md` files cross-SP (scope expansion) OR accepting that `just --list` would fail to parse because the `\`cat specs/...\`` backticks would evaluate at parse time. Importing `steer-cc` and `steer-pi` parameterized recipes would work but depends on external binaries (`pi`, `ipi` are SP12-scope, `claude --dangerously-skip-permissions` is a CLI flag). The carve-out is a clean middle path: keep the 4 local recipes with an explanatory header comment, document this exception.
+
+The carve-out recipes have a header comment at `justfile:280`:
+
+```
+# === SP13: Steer GUI Automation ===
+# ArhuGula-specific carve-outs (Exception 24): thin wrappers over the built
+# steer binary for dev ergonomics. No upstream equivalent in mac-mini-agent
+# justfile (upstream has `steer1/2/3` variables that cat prompt files from
+# specs/ and invoke via `just send` or `claude --dangerously-skip-permissions`
+# for full agent-level control, not direct binary invocation).
+```
+
+**Rationale (security regression flag):**
+
+The SecureTmp + AXSecureTextField redaction enforcement was a legitimate security hardening effort that closed real attack classes on the ArhuGula adversarial-agent threat model. Reverting it to upstream byte-identical removes those defenses. This is acceptable because:
+
+1. **Disler-authoritative rule is binding.** Full-clones are Tier 1 byte-identical; architectural rewrites (not content deltas) are drift and must be reverted.
+2. **The hardening was architectural, not content-level.** SP14 precedent (B02/B03/B06) allows content-level security additions to remain as documented inline adaptations. SP13's SecureTmp routed all write paths through a hardened directory and renamed/consolidated upstream files (e.g. `Keyboard.swift` + `MouseControl.swift` merged into `Input.swift`, `OCR.swift` became `OCRCommand.swift`, `Accessibility.swift` replaced `AccessibilityTree.swift`). Preserving it would be preserving a fork of the Swift package, not a content delta.
+3. **A future round can re-introduce hardening as content-level deltas.** If the user wants to re-layer security hardening on upstream byte-identical Swift files, it can be done as documented adaptations on individual files (e.g. add a hardened path-write wrapper inside `ElementStore.swift` while keeping the file structurally byte-identical). That would qualify as an SP14-style content-level adaptation exception.
+
+The security regression is **flagged, not forgotten**: future SP13 rounds OR a dedicated SP2 follow-up round may choose to address it. For now, the ArhuGula threat model when running `steer` commands is the same as upstream mac-mini-agent's threat model (which assumes a trusted operator).
+
+**Why not drift (formal argument for the carve-out recipes):**
+
+The 4 recipes live in the project root `justfile`, which is already a composite file containing recipes from every SP. The SP13 block is one of many SP-specific blocks. The carve-out header comment makes the ArhuGula-specific scope explicit. Analogous to SP12 Exception 22 `pi-drive`/`pi-listen`/`pi-full` (which also live in a composite root justfile with carve-out header comments), SP13's steer-build/see/apps/ocr fit the same pattern: thin SP-specific wrappers that don't exist upstream because upstream doesn't have ArhuGula's composite-justfile context.
+
+**Related findings:**
+- `project_sp13_r1_resume.md` — full round-1 details
+- SoT §1 SP13 block — post-audit file structure and verification
+- SoT §4.11 — ArhuGula adaptations subsection (SKILL.md Sensitive Data Warning, separate from this exception)
+- Exception 22 (SP12) — pi-drive/pi-listen/pi-full carve-out precedent
+- SP14 B02 (SoT §4.12) — content-level security hardening precedent (analogous to what a future SP13 re-hardening would look like)
+
+**Review cadence:** Per-SP audit. Review Exception 24 in the next SP13 round (if any) OR as part of a security-focused SP2 follow-up round. The carve-out recipes portion is stable; the SecureTmp regression is the open follow-up item.
+
