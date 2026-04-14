@@ -33,10 +33,13 @@ Each exception entry has:
 - `.claude/commands/migrate.md`
 - `.claude/agents/architect.md`
 - `.claude/agents/scout-agent.md`
+- `.claude/agents/security.md` ← added SP9 r1 (2026-04-14)
 
 **Removed from Exception 1 after attribution round 2** (2026-04-13):
 - `.claude/agents/spec-checker.md` → routed to **Exception 5** (confirmed invention, NOT audit infrastructure)
 - `.claude/agents/schema-reviewer.md` → routed to **Exception 5** (confirmed invention, NOT audit infrastructure)
+
+**SP9 r1 addition (2026-04-14):** `.claude/agents/security.md` was not covered by any prior exception; attribution grep across all 19 full-clones returned zero matches. The file is referenced by `.claude/commands/harness-review.md`'s fan-out arm (audit pipeline) and the multi-agent playbook describes "Security Agent" as a conceptual role (Tier 2, docs/superpowers/specs/archived/...). Classified as audit infra (Tier 3) for the same reason architect + scout-agent were classified — harness-review deletion would break the audit mid-run.
 
 **SP audit round:** SP1 round 1 (2026-04-13)
 **Decision date:** 2026-04-13
