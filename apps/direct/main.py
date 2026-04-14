@@ -1,94 +1,64 @@
-"""Direct — CLI client for ArhuGula Listen server.
-
-Usage: uv run apps/direct/main.py <command> [options]
-"""
-
-import json
-import os
-
 import click
-import httpx
 
-
-def get_base_url() -> str:
-    port = os.environ.get("LISTEN_PORT", "8420")
-    return f"http://127.0.0.1:{port}"
-
-
-def get_headers() -> dict:
-    key = os.environ.get("LISTEN_API_KEY", "")
-    return {"X-API-Key": key} if key else {}
+import client
 
 
 @click.group()
 def cli():
-    """Direct — CLI client for Listen job server."""
-    pass
+    """CLI client for the steer listen server."""
 
 
 @cli.command()
-@click.argument("command")
-@click.option("--args", "cmd_args", default="", help="Comma-separated args")
-def start(command, cmd_args):
-    """Submit a new job to Listen."""
-    args_list = [a.strip() for a in cmd_args.split(",") if a.strip()] if cmd_args else []
-    with httpx.Client() as client:
-        response = client.post(
-            f"{get_base_url()}/job",
-            json={"command": command, "args": args_list},
-            headers=get_headers(),
-        )
-    data = response.json()
-    click.echo(json.dumps(data, indent=2))
+@click.argument("url")
+@click.argument("prompt")
+def start(url: str, prompt: str):
+    """Start a new agent job."""
+    result = client.start_job(url, prompt)
+    click.echo(result["job_id"])
 
 
 @cli.command()
+@click.argument("url")
 @click.argument("job_id")
-def get(job_id):
-    """Get job status by ID."""
-    with httpx.Client() as client:
-        response = client.get(f"{get_base_url()}/job/{job_id}", headers=get_headers())
-    click.echo(json.dumps(response.json(), indent=2))
+def get(url: str, job_id: str):
+    """Get the current state of a job."""
+    yaml_content = client.get_job(url, job_id)
+    click.echo(yaml_content)
 
 
 @cli.command("list")
-def list_jobs():
+@click.argument("url")
+@click.option("--archived", is_flag=True, help="Show archived jobs only.")
+def list_cmd(url: str, archived: bool):
     """List all jobs."""
-    with httpx.Client() as client:
-        response = client.get(f"{get_base_url()}/jobs", headers=get_headers())
-    jobs = response.json()
-    if not jobs:
-        click.echo("No jobs")
-    else:
-        for j in jobs:
-            click.echo(f"  {j['id']}  {j['status']:10s}  {j['command']}")
+    yaml_content = client.list_jobs(url, archived=archived)
+    click.echo(yaml_content)
 
 
 @cli.command()
-def latest():
-    """Get the most recent job."""
-    with httpx.Client() as client:
-        response = client.get(f"{get_base_url()}/jobs", headers=get_headers())
-    jobs = response.json()
-    if not jobs:
-        click.echo("No jobs")
-    else:
-        click.echo(json.dumps(jobs[-1], indent=2))
+@click.argument("url")
+def clear(url: str):
+    """Archive all jobs."""
+    result = client.clear_jobs(url)
+    click.echo(f"Archived {result['archived']} job(s)")
 
 
 @cli.command()
+@click.argument("url")
+@click.argument("n", default=1, type=int)
+def latest(url: str, n: int):
+    """Show full details of the latest N jobs."""
+    output = client.latest_jobs(url, n)
+    click.echo(output)
+
+
+@cli.command()
+@click.argument("url")
 @click.argument("job_id")
-def stop(job_id):
-    """Cancel a job by ID."""
-    with httpx.Client() as client:
-        response = client.delete(f"{get_base_url()}/job/{job_id}", headers=get_headers())
-    click.echo(json.dumps(response.json(), indent=2))
-
-
-@cli.command("jobs")
-def jobs_alias():
-    """Alias for 'list'."""
-    list_jobs.invoke(click.Context(list_jobs))
+def stop(url: str, job_id: str):
+    """Stop a running job."""
+    result = client.stop_job(url, job_id)
+    click.echo(f"Job {result['job_id']} {result['status']}")
 
 
 if __name__ == "__main__":

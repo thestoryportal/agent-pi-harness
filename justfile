@@ -112,30 +112,45 @@ sfa-context PROMPT DIR="." EXT="py":
     uv run agents/sfa/sfa_codebase_context_agent_v3.py --prompt "{{PROMPT}}" --directory "{{DIR}}" --extensions "{{EXT}}"
 
 # === Layer 4: Just — infrastructure app recipes ===
+# SP8 recipes match upstream mac-mini-agent justfile interface (byte-identical
+# command patterns). Uses per-app CWD + bare `python main.py` invocations.
 
-# Start Listen job server
+_sandbox_url := env("AGENT_SANDBOX_URL", "")
+default_url := if _sandbox_url == "" { "http://localhost:7600" } else { _sandbox_url }
+
+# Start the listen server
 listen:
-    uv run apps/listen/main.py
+    cd apps/listen && uv run python main.py
 
-# Send single command to Listen
-send CMD:
-    uv run apps/direct/main.py "{{CMD}}"
+# Send a job to the listen server
+send prompt url=default_url:
+    cd apps/direct && uv run python main.py start {{url}} "{{prompt}}"
 
-# Parallel dispatch from file (daily use)
-fanout FILE:
-    uv run apps/drive/main.py fanout --file "{{FILE}}"
+# Send a job from a local file
+sendf file url=default_url:
+    #!/usr/bin/env bash
+    prompt="$(cat '{{file}}')"
+    cd apps/direct && uv run python main.py start '{{url}}' "$prompt"
 
-# Drive session management
-session CMD:
-    uv run apps/drive/main.py session "{{CMD}}"
+# Get a job's status
+job id url=default_url:
+    cd apps/direct && uv run python main.py get {{url}} {{id}}
 
-# Poll running sessions for completion
-poll:
-    uv run apps/drive/main.py poll
+# List all jobs (pass --archived to see archived)
+jobs *flags:
+    cd apps/direct && uv run python main.py list {{default_url}} {{flags}}
 
-# List queued/running jobs
-jobs:
-    uv run apps/direct/main.py jobs
+# Show full details of the latest N jobs (default: 1)
+latest n="1" url=default_url:
+    cd apps/direct && uv run python main.py latest {{url}} {{n}}
+
+# Stop a running job
+stop id url=default_url:
+    cd apps/direct && uv run python main.py stop {{url}} {{id}}
+
+# Archive all jobs
+clear url=default_url:
+    cd apps/direct && uv run python main.py clear {{url}}
 
 # Prune Observe events older than retention window
 db-prune:
