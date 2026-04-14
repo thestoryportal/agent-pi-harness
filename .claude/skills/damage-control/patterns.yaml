@@ -903,6 +903,13 @@ pathExclusions:
   - ".env.example"
   - ".env*.example"
   - ".envrc.example"
+  # SP7 r1 (2026-04-14, user-authorized): audit-workflow carve-out
+  # for upstream repos that use .sample instead of .example for env
+  # templates. TEMPORARY — revert along with the .example entries
+  # post-audit-complete per feedback_audit_pathexclusions_temporary.
+  - ".env.sample"
+  - ".env.*.sample"
+  - ".envrc.sample"
 
 # ──────────────────────────────────────────────────────────────────
 # BASH TOOL EXCLUSIONS
