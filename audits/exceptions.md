@@ -1587,3 +1587,91 @@ Analogous in structure to what SP15 r1 /harness-review proposed (option 2, defer
 - (Documentation only) S-01, S-03, S-05, S-06, S-08, S-09 — no patch applied; runtime isolation + documentation is the mitigation
 - (Deferred to SP16 r2 or runtime adoption) local hardening deltas to the 6 upstream-byte-identical files — requires explicit user authorization to break Tier 1 mandate
 - (Cross-round) re-run `/harness-review` whenever upstream SP16 code changes
+
+---
+
+## Exception 29 — SP15 E2B sandbox apps upstream runtime security posture
+
+**Path(s):**
+- `apps/sandbox_workflows/src/modules/agents.py` (Tier 1 byte-identical — upstream `disler/agent-sandboxes`)
+- `apps/sandbox_workflows/src/modules/hooks.py` (Tier 1 byte-identical)
+- `apps/sandbox_workflows/src/modules/constants.py` (Tier 1 byte-identical)
+- `apps/sandbox_workflows/src/modules/logs.py` (Tier 1 byte-identical)
+- `apps/sandbox_workflows/src/prompts/sandbox_fork_agent_system_prompt.md` (Tier 1 byte-identical)
+- `apps/sandbox_workflows/src/prompts/sandbox_fork_agent_w_github_token_system_prompt.md` (Tier 1 byte-identical)
+- `apps/cc_in_sandbox/run_claude_in_sandbox.py` (Tier 1 byte-identical)
+- `apps/sandbox_fundamentals/09_claude_code_agent.py` (Tier 1 byte-identical)
+- `apps/sandbox_mcp/server.py` (Tier 1 byte-identical)
+
+**SP audit round:** SP15 round 1 post-review (2026-04-14) — `/harness-review` multi-agent consensus review surfaced 7 prior findings (all CONFIRMED on re-review) + 2 net-new findings, all inherited from upstream byte-identical code.
+
+**Decision date:** 2026-04-14
+
+**Status:** active (permanent — byte-identical mandate preserved; findings documented, not patched)
+
+**Rationale:**
+
+The /harness-review @security arm (2026-04-14) identified 9 findings inherited verbatim from `disler/agent-sandboxes` and `disler/agent-sandbox-skill` code (same posture pattern as SP16 r1 /harness-review produced for the voice loop — Exception 28). These findings are **inherent to the upstream trust model** (Disler's repos assume a trusted single-user operator with no credential scoping concerns), but are **noteworthy in an adversarial-review context** like ArhuGula's audit branch.
+
+All 9 findings are **currently dormant**: SP15 r1 did not provision `E2B_API_KEY`, `ANTHROPIC_API_KEY`, or `GITHUB_TOKEN`. The code paths do not execute until credentials land — see "Runtime activation checklist" below. Per the Tier 1 identicality mandate and the SP16 r1 Exception 28 precedent, these findings are **documented here, not patched** — patching would break byte-identical parity with upstream.
+
+This exception was originally proposed as "Exception 27 or later" in the SP15 r1 /harness-review memo (memory file `project_sp15_r1_resume.md` §11), but Exception 27 and 28 were subsequently consumed by SP16 r1 before the proposal was adopted. Exception 29 is the formal adoption of option 2 from that memo, plus the 2 net-new findings surfaced by the 2026-04-14 re-review.
+
+**Upstream-posture findings (9 — documented, not patched):**
+
+**S-01 P0 — GITHUB_TOKEN plaintext injection into agent system prompt, then logged.**
+`apps/sandbox_workflows/src/modules/agents.py:118-127` reads `GITHUB_TOKEN` from env and injects it verbatim into `self.system_prompt` via `template.format(github_token=...)`. Line 153 then calls `self.logger.log("INFO", self.system_prompt)` which writes the entire formatted system prompt — token included — to a flat log file under `apps/sandbox_agent_working_dir/logs/`. The `sandbox_fork_agent_w_github_token_system_prompt.md` template at line 18 and line 115 also embeds the token directly in visible prompt text (e.g., `git remote set-url origin https://{github_token}@github.com/...`). **Threat model:** any log reader (human or agent) with Read access to the log dir gets the live token. **Mitigation:** not patched — blast radius bounded by dormancy (no GITHUB_TOKEN in `.env`).
+
+**S-02 P1 — Agent can self-exfiltrate GITHUB_TOKEN by reading its own log file.**
+`apps/sandbox_workflows/src/modules/constants.py:38-43` puts `LOG_DIR` inside `ALLOWED_DIRECTORIES`. The path hook at `hooks.py:77-95` allows `Read` from any path under `ALLOWED_DIRECTORIES`. Combined with S-01, a hostile or confused fork agent can call `Read(file_path="logs/<fork>.log")` to retrieve its own GITHUB_TOKEN from the session log, then exfiltrate via any network-capable tool (`WebFetch`, `mcp__e2b-sandbox__execute_command`, etc.). **Threat model:** prompt injection in the cloned repo → agent instructed to "debug by reading logs" → token egress. **Mitigation:** not patched — blast radius bounded by S-01 dormancy and by the need for prompt-injection pre-condition.
+
+**S-03 P1 — Unrestricted Bash in the sandbox-fork subagent.**
+`apps/sandbox_workflows/src/modules/agents.py:93` sets `permission_mode="acceptEdits"`; `constants.py:87` includes `Bash` in `ALLOWED_TOOLS`. The SDK-level hooks dict built by `hooks.py:119-125` (`create_hook_dict`) only *logs* Bash calls — no pattern matching, no block decision. **The project-level `bash_damage_control.py` hook registered in `.claude/settings.json` does NOT propagate to this subagent** — `ClaudeAgentOptions` uses `setting_sources=["project"]` (agents.py:98) which passes slash-commands only, not hook bindings. Bash inside the fork agent runs without any pattern-based restriction. **Threat model:** prompt injection → arbitrary shell execution inside the caller's host. **Mitigation:** not patched — blast radius bounded by dormancy.
+
+**S-04 P1 — `--dangerously-skip-permissions` in E2B sandbox runner.**
+`apps/cc_in_sandbox/run_claude_in_sandbox.py:41` spawns `claude -p --dangerously-skip-permissions` inside an E2B sandbox with `ANTHROPIC_API_KEY` env-injected at line 28. A second callsite at `apps/sandbox_fundamentals/09_claude_code_agent.py:67` uses the same pattern. Prompt injection in the cloned repo inside the sandbox could issue arbitrary billed API calls under the user's Anthropic key. **Threat model:** cost exhaustion + data egress through Anthropic API. **Mitigation:** not patched — blast radius bounded by dormancy (no `ANTHROPIC_API_KEY` in `.env`).
+
+**S-05 P1 — Path gating hook covers Read/Write/Edit only, bypassable via Bash.**
+`apps/sandbox_workflows/src/modules/constants.py:106-110` defines `PATH_RESTRICTED_TOOLS = {"Read","Write","Edit"}`. The path hook at `hooks.py:60-95` gates only those three tools. `Bash` has no path restriction — `Bash(command="cat /etc/passwd")` reads arbitrary files, `Bash(command="cp /tmp/evil ~/.ssh/authorized_keys")` writes arbitrary files. This is **moot given S-03** (Bash is already unrestricted at the permission layer), but if S-03 were fixed by adding a Bash hook, this finding would remain as a separate gap. **Mitigation:** not patched.
+
+**S-06 P2 — NEW — MCP `env_vars` comma-split enables partial argument injection.**
+`apps/sandbox_mcp/server.py:107-109, 143-145, 465-467` splits agent-supplied `env_vars` strings on `,` and appends each piece as a `--env` flag to the `sbx` CLI subprocess. Values containing `--`, spaces, or `=` inside values could inject flags into `sbx` CLI argument parsing (e.g., `LEGIT=val,FOO=x --root`). Actual exploitability depends on `sbx` CLI argument parser behavior. The Python subprocess call itself uses list-form `subprocess.run(cmd, ...)` with no `shell=True`, so no shell injection at the Python layer. **Threat model:** agent-controlled env_vars → flag injection → potentially elevate sandbox privileges. **Mitigation:** not patched — validate `^[A-Za-z_][A-Za-z0-9_]*=` per entry before passing to CLI.
+
+**S-07 P2 — Log files contain full tool_input dumps including file contents.**
+`apps/sandbox_workflows/src/modules/hooks.py:53-57` logs every tool call with `tool_input=str(tool_input)`. `logs.py:64-83` writes all kwargs to disk in plaintext. For `Write`/`Edit` calls this includes full file bodies; for `Bash` it includes full command lines. Any secret written through the agent also appears in logs. Combined with S-02 (agent can self-read the log dir), the log file becomes a readable sink for anything the agent touches. **Mitigation:** not patched — truncate/redact `tool_input` before logging; exclude `LOG_DIR` from `ALLOWED_DIRECTORIES`.
+
+**S-08 P2 — `MAX_FORKS=100` with no rate limit or cost guard.**
+`apps/sandbox_workflows/src/modules/constants.py:50`: `MAX_FORKS: Final[int] = 100`. Combined with `DEFAULT_SANDBOX_TIMEOUT = 300` and `DEFAULT_MAX_TURNS = 100` (lines 53, 56), a single `sandbox_fork` invocation can spawn up to 100 parallel E2B sandboxes × 100 Claude agent turns each, with no confirmation prompt, no per-invocation cost cap, no cumulative spend check. **Threat model:** runaway spend via misconfigured `num_forks` argument. **Mitigation:** not patched — add interactive confirmation above a threshold (e.g., > 3 forks).
+
+**S-09 UPSTREAM-ISSUE — Prompt variant divergence undocumented.**
+Two system prompt files exist: `sandbox_fork_agent_system_prompt.md` (base) and `sandbox_fork_agent_w_github_token_system_prompt.md` (with token embedded). `constants.py:26` hard-codes `SYSTEM_PROMPT_PATH` to the base prompt only — the github-token variant is never loaded by current code but sits in-tree. The routing logic that would select between them is absent. The github-token variant contains the most explicit credential-exposure instruction (prompt line 115: `mcp__e2b-sandbox__init_sandbox(... env_vars='GITHUB_TOKEN={github_token}')`). SoT §4.13 does not document this bifurcation. **Mitigation:** not patched — capture as a documented content delta if the routing logic is ever added; confirm no future SP audit accidentally reverts one to match the other.
+
+**Runtime activation checklist (how dormant findings become active):**
+
+1. **`GITHUB_TOKEN` in `.env`** → activates S-01 (plaintext in prompt + logged), S-02 (self-exfiltration via log read), S-09 (routes to the leaky prompt variant if routing added)
+2. **`ANTHROPIC_API_KEY` in `.env`** → activates S-03 (Bash unrestricted), S-04 (`--dangerously-skip-permissions`), S-05 (Bash path bypass), S-07 (tool_input log dumps)
+3. **`E2B_API_KEY` in `.env` or `.mcp.json.sandbox`** → activates MCP `execute_command` with `root=True` + S-06 env_vars injection
+4. **Caller passing `num_forks` value close to `MAX_FORKS=100`** → activates S-08 cost vector
+
+All four pre-conditions are currently absent on this branch.
+
+**Sibling upstream-posture exceptions:**
+
+- Exception 28 — SP16 voice-loop upstream runtime security posture (closest sibling — same pattern, adopted 2026-04-14)
+- Exception 14 — `patterns.yaml` 289-line hardening delta for browser automation (SP14 r2–r10) — the closest prior precedent for ArhuGula hardening upstream content; rejected here for SP15 per Tier 1 mandate
+
+**Review cadence:** Every time SP15 upstream code changes in `disler/agent-sandboxes` or `disler/agent-sandbox-skill`. Re-run `/harness-review` on the SP15 diff to check if upstream has patched any of the 9 findings. Re-evaluate option (c) — local hardening deltas — when runtime use becomes imminent (per SP15 r1 Option 3 pattern).
+
+**Related findings:**
+- Memory file `project_sp15_r1_resume.md` §11 — original /harness-review memo (2026-04-14) proposing this exception
+- Memory file `project_runtime_blockers_ledger.md` — consolidated runtime-blocker ledger indexed by MEMORY.md for /prime surfacing
+- Exception 28 — SP16 voice-loop posture sibling
+- Exception 26 — SP15 justfile carve-out (different SP15 exception — structural not security)
+- SoT §1 SP15 r1 block — full round-1 details
+- SoT §4.13 E01–E04 — feature inventory
+
+**Follow-up actions:**
+- (Documentation only) S-01 through S-09 — no patch applied; byte-identical parity + dormancy is the mitigation
+- (Deferred to SP15 r2 or runtime adoption) local hardening deltas to the 9 upstream-byte-identical files — requires explicit user authorization to break Tier 1 mandate
+- (Cross-round) re-run `/harness-review` whenever upstream SP15 code changes
+- (Runtime gate) before provisioning any of the 4 runtime-activation env vars, review this exception + Exception 28 + the rest of the runtime-blocker ledger
