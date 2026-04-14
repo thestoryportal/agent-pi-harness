@@ -362,6 +362,22 @@ sbx *args:
 sbx-fork repo prompt forks="1":
     cd apps/sandbox_workflows && uv run obox sandbox-fork "{{repo}}" --prompt "{{prompt}}" --forks {{forks}}
 
+# Generate apps/sandbox_agent_working_dir/.mcp.json from .mcp.json.sandbox
+# Substitutes E2B_API_KEY (loaded from .env via set dotenv-load). Run once
+# before any obox sandbox-fork invocation. Output file is gitignored-by-convention
+# (contains a credential); do NOT commit it.
+setup-mcp-json:
+    #!/usr/bin/env python3
+    import os, pathlib
+    tmpl = pathlib.Path("apps/sandbox_agent_working_dir/.mcp.json.sandbox").read_text()
+    key = os.getenv("E2B_API_KEY", "")
+    if not key:
+        raise SystemExit("E2B_API_KEY not set — add it to .env before running setup-mcp-json")
+    out = tmpl.replace("<E2B_API_KEY>", key)
+    dest = pathlib.Path("apps/sandbox_agent_working_dir/.mcp.json")
+    dest.write_text(out)
+    print(f"wrote {dest}  (key len={len(key)})")
+
 # Start E2B MCP server (for use with .mcp.json.sandbox)
 sbx-mcp:
     cd apps/sandbox_mcp && uv run python server.py
