@@ -405,6 +405,13 @@ phase1-byte-diff *args:
         --output audits/phase1-byte-parity-$(date -u +%Y-%m-%d).md \
         {{args}}
 
+# Phase 2 per-SP sandbox fan-out (CA-U07). Wraps scripts/phase2_sp_fanout.sh
+# so the allow-listed `just` channel can drive it. The live path is gated
+# behind --ack-exceptions + --confirm-cost (memory §10 cost gate) and is
+# additionally blocked until CA-U10 lands. Use --dry-run for smoke tests.
+phase2-sp-fanout *args:
+    scripts/phase2_sp_fanout.sh {{args}}
+
 # Phase 0 runtime dependency verification (CA-U08 + CA-U09)
 # Checks provisioned credentials without printing them. No sandbox spin-up, no cost.
 phase0-verify-deps:
