@@ -308,7 +308,7 @@ for sp in "${TARGET_SPS[@]}"; do
     CAPTURE="$FANOUT_MARKER_DIR/${sp}.log"
     (
         cd "$REPO_ROOT/apps/sandbox_workflows"
-        uv run obox sandbox-fork "$REPO_URL" \
+        uv run obox "$REPO_URL" \
             --prompt  "$PROMPT" \
             --forks   1 \
             --branch  "$BRANCH" \
