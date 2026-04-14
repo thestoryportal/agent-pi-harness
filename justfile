@@ -83,37 +83,33 @@ review-headless SPEC:
 
 # === SP7: Single-File Agents ===
 
-# Bash/editor agent
+# Bash/editor agent (Anthropic tool use)
 sfa-bash PROMPT:
-    uv run agents/sfa/sfa_bash_editor_agent.py --prompt "{{PROMPT}}"
+    uv run agents/sfa/sfa_bash_editor_agent_anthropic_v3.py --prompt "{{PROMPT}}"
 
-# DuckDB query agent
+# DuckDB query agent (Anthropic)
 sfa-duckdb DB PROMPT:
-    uv run agents/sfa/sfa_duckdb_agent.py --db "{{DB}}" --prompt "{{PROMPT}}"
+    uv run agents/sfa/sfa_duckdb_anthropic_v2.py --db "{{DB}}" --prompt "{{PROMPT}}"
 
-# SQLite query agent
+# SQLite query agent (OpenAI)
 sfa-sqlite DB PROMPT:
-    uv run agents/sfa/sfa_sqlite_agent.py --db "{{DB}}" --prompt "{{PROMPT}}"
+    uv run agents/sfa/sfa_sqlite_openai_v2.py --db "{{DB}}" --prompt "{{PROMPT}}"
 
-# Polars CSV analysis agent
+# Polars CSV analysis agent (Anthropic)
 sfa-polars INPUT PROMPT:
-    uv run agents/sfa/sfa_polars_csv_agent.py --input "{{INPUT}}" --prompt "{{PROMPT}}"
+    uv run agents/sfa/sfa_polars_csv_agent_anthropic_v3.py --input "{{INPUT}}" --prompt "{{PROMPT}}"
 
-# JQ JSON processing agent
-sfa-jq EXE:
-    uv run agents/sfa/sfa_jq_agent.py --exe "{{EXE}}"
+# JQ JSON processing agent (Gemini)
+sfa-jq PROMPT:
+    uv run agents/sfa/sfa_jq_gemini_v1.py --exe "{{PROMPT}}"
 
-# Meta-prompt generator
+# Meta-prompt generator (OpenAI)
 sfa-metaprompt PURPOSE INSTRUCTIONS:
-    uv run agents/sfa/sfa_meta_prompt_agent.py --purpose "{{PURPOSE}}" --instructions "{{INSTRUCTIONS}}"
+    uv run agents/sfa/sfa_meta_prompt_openai_v1.py --purpose "{{PURPOSE}}" --instructions "{{INSTRUCTIONS}}"
 
 # Codebase context discovery agent
 sfa-context PROMPT DIR="." EXT="py":
-    uv run agents/sfa/sfa_codebase_context_agent.py --prompt "{{PROMPT}}" --directory "{{DIR}}" --extensions "{{EXT}}"
-
-# Self-correcting SQL agent
-sfa-sql-correcting DB PROMPT:
-    uv run agents/sfa/sfa_self_correcting_sql_agent.py --db "{{DB}}" --prompt "{{PROMPT}}"
+    uv run agents/sfa/sfa_codebase_context_agent_v3.py --prompt "{{PROMPT}}" --directory "{{DIR}}" --extensions "{{EXT}}"
 
 # === Layer 4: Just — infrastructure app recipes ===
 
