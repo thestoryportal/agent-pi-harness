@@ -129,6 +129,9 @@ done
 DATE="$(date -u +%Y-%m-%d)"
 SUMMARY_OUT="audits/phase2-summary-${DATE}.md"
 
+# Detect branch early so make_sp_prompt can reference it in both dry-run and live modes.
+BRANCH="$(git branch --show-current 2>/dev/null)" || BRANCH="main"
+
 echo "=== Phase 2 SP fan-out ==="
 echo "  mode:         $([ $DRY_RUN = true ] && echo 'DRY RUN' || echo 'LIVE')"
 echo "  sps:          ${TARGET_SPS[*]}"
@@ -144,24 +147,36 @@ echo
 make_sp_prompt() {
     local sp="$1"
     cat <<EOF
-You are running inside an isolated E2B sandbox with the ArhuGula working
-tree mounted read-only at /repo. Your job is to execute the sub-project
-${sp} coder↔validator loop via the CA-U06 single-file agent.
+You are running a Phase 2 Comprehensive Audit for sub-project ${sp} inside
+an E2B cloud sandbox. Complete these steps in order:
 
-Steps:
-  1. cd /repo
-  2. Load the ${sp} context bundle from audits/bundles/${sp,,}.yaml
-  3. Run:
-       uv run ${LOOP_SFA} \\
-           --sp ${sp} \\
-           --sp-manifest audits/bundles/${sp,,}.yaml \\
-           --mailbox /tmp/phase2-mailbox.jsonl \\
-           --max-iter 3
-  4. On completion, print the mailbox contents so the host session can
-     harvest it.
+=== SETUP (do this first) ===
+1. The repo is NOT pre-mounted at /repo. Clone it fresh:
+     git clone https://github.com/thestoryportal/agent-pi-harness.git \\
+         --branch ${BRANCH} /home/user/repo 2>&1 | tail -5
 
-Do not modify any file in /repo. The sandbox mount is read-only; the
-coder agent writes diffs under /tmp/coder_diffs/ only.
+2. Install uv (required to run the SFA — NOT pre-installed in sandbox):
+     curl -LsSf https://astral.sh/uv/install.sh | sh 2>&1 | tail -3
+     export PATH="/home/user/.local/bin:\$PATH"
+
+3. Verify setup:
+     which uv && cd /home/user/repo && echo "setup OK"
+
+=== EXECUTE ===
+4. Run the coder-validator loop.
+   IMPORTANT: Do NOT add --dry-run. This is a LIVE audit — use real API calls.
+     export PATH="/home/user/.local/bin:\$PATH"
+     cd /home/user/repo && uv run ${LOOP_SFA} \\
+         --sp ${sp} \\
+         --sp-manifest /home/user/repo/audits/bundles/${sp,,}.yaml \\
+         --mailbox /tmp/phase2-mailbox.jsonl \\
+         --max-iter 3
+
+=== REPORT ===
+5. After the SFA exits, output the result exactly on one line:
+     echo "PHASE2_RESULT: \$(tail -1 /tmp/phase2-mailbox.jsonl)"
+
+The coder writes diffs only to /tmp/coder_diffs/ — do not modify the repo.
 EOF
 }
 
@@ -339,9 +354,11 @@ echo
 
 # E-7: harvest mailbox lines
 # Sources checked (in order):
-#   a) per-SP stdout captures — agent may echo JSONL via cat or rich output
+#   a) per-SP stdout captures — look for sentinel line "PHASE2_RESULT: {...}"
+#      emitted by the agent after `echo "PHASE2_RESULT: $(tail -1 /tmp/phase2-mailbox.jsonl)"`
 #   b) obox ForkLogger log files in apps/sandbox_agent_working_dir/logs/
-#      pattern: "[TIMESTAMP] [INFO   ] [Agent] TextBlock | content={...}"
+#      same sentinel in TextBlock or ToolResultBlock STDOUT content.
+#      ToolResultBlock content has " escaped as \" in the Python repr — handle both forms.
 FORK_LOG_DIR="$REPO_ROOT/apps/sandbox_agent_working_dir/logs"
 HARVEST_TMP="$FANOUT_MARKER_DIR/harvested.jsonl"
 
@@ -350,15 +367,16 @@ echo "Harvesting mailbox lines..."
 for sp in "${TARGET_SPS[@]}"; do
     capture="$FANOUT_MARKER_DIR/${sp}.log"
     [[ -f "$capture" ]] || continue
-    # Extract full JSON objects containing "sp":"<sp>" with a "verdict" key
+    # Look for the PHASE2_RESULT: sentinel line the agent is instructed to emit.
+    # The sentinel is: PHASE2_RESULT: {"sp":"SPx",...}  (compact single-line JSON)
     python3 - <<PYEOF >> "$HARVEST_TMP" 2>/dev/null || true
 import re, json
 text = open("$capture", errors="replace").read()
-for m in re.finditer(r'(\{"sp"\s*:\s*"$sp"[^\n]{10,}\})', text):
+for m in re.finditer(r'PHASE2_RESULT:\s*(\{[^\n]+\})', text):
     line = m.group(1).strip()
     try:
         obj = json.loads(line)
-        if "verdict" in obj:
+        if "verdict" in obj and "sp" in obj:
             print(json.dumps(obj))
     except Exception:
         pass
@@ -367,9 +385,9 @@ done
 
 # Also scan fork log files created since we started (belt-and-suspenders).
 # Two sub-scans:
-#  (a) TextBlock direct: agent emits {"sp":... on a single line in a TextBlock
-#  (b) ToolResultBlock STDOUT: agent ran `cat /tmp/phase2-mailbox.jsonl` inside
-#      E2B; the JSONL appears as a string value after "STDOUT:\\n" in the log.
+#  (a) TextBlock or raw content: agent emits PHASE2_RESULT: {...} as a text line
+#  (b) ToolResultBlock STDOUT: agent ran `echo "PHASE2_RESULT: ..."` inside E2B;
+#      the E2B output is JSON-serialised, so " inside JSONL appears as \" in the log.
 if [[ -d "$FORK_LOG_DIR" ]]; then
     python3 - <<PYEOF >> "$HARVEST_TMP" 2>/dev/null || true
 import re, json, os, pathlib
@@ -380,21 +398,22 @@ for logfile in log_dir.glob("*.log"):
         continue
     text = logfile.read_text(errors="replace")
 
-    # (a) TextBlock direct — single-line JSON
-    for m in re.finditer(r'TextBlock.*?content=(\{"sp":[^\n]+\})', text):
-        line = m.group(1).split("\n")[0].strip()
+    # (a) Unescaped form — agent printed PHASE2_RESULT: {...} in a TextBlock or
+    #     in E2B stdout that arrived unescaped (e.g. rich console output)
+    for m in re.finditer(r'PHASE2_RESULT:\s*(\{[^\n]+\})', text):
+        raw = m.group(1).strip()
         try:
-            obj = json.loads(line)
+            obj = json.loads(raw)
             if "verdict" in obj and "sp" in obj:
                 print(json.dumps(obj))
         except Exception:
             pass
 
-    # (b) ToolResultBlock STDOUT scan — extract raw JSONL after "STDOUT:\\n"
-    # The log records the E2B execute_command output as a Python-repr string
-    # where embedded newlines appear as literal \n escape sequences.
-    for m in re.finditer(r'STDOUT:\\n(\{"sp":[^"]+?)(?:\\n|")', text):
-        raw = m.group(1).replace('\\n', '\n').replace('\\"', '"').replace("\\'", "'")
+    # (b) Escaped form — the E2B execute_command wraps its output as a Python-repr
+    #     string where " → \" and \n → \\n.  Re-unescape before parsing.
+    #     Pattern: PHASE2_RESULT: {\"sp\":\"SPx\", ...}
+    for m in re.finditer(r'PHASE2_RESULT:\\s*(\{[^\n]+\})', text):
+        raw = m.group(1).strip().replace('\\"', '"').replace("\\'", "'").replace('\\\\n', '\n')
         try:
             obj = json.loads(raw)
             if "verdict" in obj and "sp" in obj:
