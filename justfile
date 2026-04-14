@@ -388,3 +388,19 @@ sbx-mcp:
 # Start the voice-to-Claude-Code assistant (requires OPENAI_API_KEY + ANTHROPIC_API_KEY)
 voice:
     uv run apps/voice/voice_to_claude_code.py
+
+# === Comprehensive Audit Infrastructure ===
+# Tier 3 audit tooling (Exception 1). No upstream justfile counterpart — these
+# recipes wrap forward-looking audit SFAs + subagents built per
+# audits/comprehensive-audit-spec.md. See audits/comprehensive-audit-plan.md for
+# per-unit context. Recipes are added per-wave; phase2/phase3/phase4/phase5
+# recipes are stubbed until their underlying artifacts land (CA-U06..U16).
+
+# Phase 1 byte-parity sweep across upstream full-clones (pass `-- --clone NAME` to filter)
+phase1-byte-diff *args:
+    uv run agents/sfa/sfa_byte_diff_audit.py \
+        --clones ~/Projects/indydevdan-harness-research/research/full-clones \
+        --repo . \
+        --exceptions audits/exceptions.md \
+        --output audits/phase1-byte-parity-$(date -u +%Y-%m-%d).md \
+        {{args}}
