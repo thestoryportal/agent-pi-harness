@@ -26,10 +26,25 @@ os.environ["CLAUDE_PROJECT_DIR"] = PROJECT_DIR
 # Avoid literal string "bash_damage_control" anywhere that isn't inside a
 # runtime-only expression, and avoid ".claude/hooks/*.py" literal forms so
 # the type checker and any outer-command regex can't fire on this file.
+#
+# After SP2 Phase E (2026-04-13), the per-tool damage-control hooks moved
+# from .claude/hooks/ to .claude/skills/damage-control/hooks/damage-control-python/.
+# HOOKS_DIR still points to the project location because _base.py (which the
+# hook modules import at load time via their own sys.path manipulation)
+# remains in .claude/hooks/ per SP1 D6.
 HOOKS_DIR = Path(PROJECT_DIR).joinpath(".claude").joinpath("hooks")
 sys.path.insert(0, str(HOOKS_DIR))
 
-HOOK_FILE = HOOKS_DIR / "bash_damage_control.py"
+SKILL_HOOKS_DIR = (
+    Path(PROJECT_DIR)
+    .joinpath(".claude")
+    .joinpath("skills")
+    .joinpath("damage-control")
+    .joinpath("hooks")
+    .joinpath("damage-control-python")
+)
+
+HOOK_FILE = SKILL_HOOKS_DIR / "bash_damage_control.py"
 spec = importlib.util.spec_from_file_location("sp2_probe_hook", str(HOOK_FILE))
 assert spec is not None and spec.loader is not None
 mod = importlib.util.module_from_spec(spec)
@@ -38,7 +53,7 @@ spec.loader.exec_module(mod)
 rules = mod.load_patterns()
 
 # AR4: also load edit_damage_control for match_path() regression tests.
-EDIT_HOOK = HOOKS_DIR / "edit_damage_control.py"
+EDIT_HOOK = SKILL_HOOKS_DIR / "edit_damage_control.py"
 edit_spec = importlib.util.spec_from_file_location("sp2_probe_edit", str(EDIT_HOOK))
 assert edit_spec is not None and edit_spec.loader is not None
 edit_mod = importlib.util.module_from_spec(edit_spec)
