@@ -333,7 +333,7 @@ E4 was escalated because scout could not byte-compare `.env.example` against ups
 
 **Follow-up actions:**
 1. SP2 audit: narrow the `.env` path-match rule to not block `.env.example` Reads, or add an explicit exemption
-2. SP8 audit: confirm the env-var list in `.env.example` matches what apps/ actually consume
+2. SP8 audit: confirm the env-var list in `.env.example` matches what apps/ actually consume — **REVIEWED SP8 r1 Phase D (2026-04-14):** post-revert upstream `apps/listen/main.py`, `apps/direct/main.py`, and `apps/direct/client.py` do **not** read env vars directly (Listen hardcodes port 7600, Direct takes URL as positional CLI arg). Env-var consumption happens in the `justfile` `_sandbox_url := env("AGENT_SANDBOX_URL", "")` expression and in the imported `.env.sample` (4 API keys + AGENT_SANDBOX_URL). The local `.env.example` captures ArhuGula-runtime vars (LISTEN_PORT, OBSERVE_PORT, OBSERVE_RETENTION_DAYS, DATABASE_URL) that are consumed by `apps/observe/` and `apps/dropzone/` — separate concerns from SP8. No merge between `.env.example` and `.env.sample` needed — they document different scopes (ArhuGula runtime vs upstream Listen/Direct wrapper). Exception 9 remains active pending SP2 hook narrowing.
 3. If a future Disler repo adds a `.env.example`, upgrade this classification from invention to DRIFT[T1] and byte-compare
 
 ---
@@ -966,6 +966,61 @@ None. The populated catalog is expected steady-state per upstream design; no fur
 
 ---
 
+## Exception 20 — SP12 Pi extensions reference pre-SP8-r1 Drive/Listen interface
+
+**Decision:** SP8 round 1 Phase D (2026-04-14)
+
+**Path(s):**
+- `extensions/drive-dispatch.ts` — Pi extension that wraps the Drive CLI. Line 31 spawns `["uv", "run", "apps/drive/main.py", ...args]` from the repo root. The command format matches the **pre-revert local Drive interface** (flat imports, named `--session X` flag style). Post-SP8-r1-revert, `apps/drive/main.py` uses bare imports (`from commands.session import session`) that only resolve when CWD is `apps/drive/`. Running from repo root errors with `ModuleNotFoundError: No module named 'commands'`.
+- `extensions/listen-submit.ts` — Pi extension that wraps the Listen HTTP API. References `apps/listen/main.py` in its header comment and is wired to the **pre-revert local Listen payload format** (`{command, args}`). Upstream Listen (now local) accepts `{prompt: ...}` only — the submitted JSON body shape mismatches.
+
+**SP audit round:** SP8 round 1 Phase D (2026-04-14)
+**Decision date:** 2026-04-14
+
+**Rationale:**
+
+Prior to SP8 r1, arhugula's `apps/drive/`, `apps/listen/`, and `apps/direct/` were greenfield rewrites (not byte-identical clones) with a locally-designed interface — flat Drive layout, `--session X` named flags, Listen API-key middleware, `{command, args}` job payload, port 8420, bind 127.0.0.1. SP12 (Pi Integration) was built on top of that local interface: `drive-dispatch.ts` and `listen-submit.ts` wrap the drifted SP8 apps, not the upstream `mac-mini-agent` apps.
+
+SP8 r1 performed a wholesale revert of `apps/drive/`, `apps/listen/`, and `apps/direct/` to upstream byte-identical (per `feedback_disler_authoritative` — drift is drift; SP4/5/6/7 wholesale-revert precedent). This revert breaks both extensions because they were built against the drifted interface, not the authoritative upstream interface.
+
+Two options were weighed:
+
+1. **Fix both extensions in SP8 r1 scope** — update `drive-dispatch.ts` spawn args to use `cd apps/drive && uv run python main.py` and update `listen-submit.ts` JSON payload to `{prompt: ...}`. **Rejected:** This is scope creep into SP12's own audit round. SP12 r1 will do its own wholesale audit against upstream `mac-mini-agent` (same upstream as SP8 for Pi integration per SoT §4.10 P02/P03), which would re-touch or fully revert these same files. Fixing them now means doing the work twice.
+
+2. **Defer to SP12 r1** — leave both extensions in their current state with a documented known-breakage status; SP12 r1 resolves naturally when it audits the Pi extensions against the same upstream `mac-mini-agent` source. **Accepted.**
+
+This exception records the cross-SP breakage so the user and future audit rounds have a clear audit trail that the break is intentional and scheduled for resolution.
+
+**Why kept (not fixed in SP8 r1):** Per-SP audit discipline — SP8 r1 owns `apps/drive/`, `apps/listen/`, `apps/direct/`. SP12 r1 owns `extensions/drive-dispatch.ts` and `extensions/listen-submit.ts`. Doing both in one round would violate the sequential per-SP cadence and create a cross-SP commit that is harder to review and roll back.
+
+**Why not in upstream:** The Pi extensions are ArhuGula's own wrappers around Drive/Listen. `mac-mini-agent` does not ship Pi extensions — it ships the CLI tools that Pi extensions wrap. Upstream-absence is expected and not itself drift; the issue is the **interface version** the extensions target, not their existence.
+
+**Observed behavior (pre-resolution):**
+- `pi -e extensions/drive-dispatch.ts` — load attempts will call Drive via the old command format and fail at runtime (ModuleNotFoundError or wrong-command-output).
+- `pi -e extensions/listen-submit.ts` — HTTP POSTs to Listen will receive 422 UNPROCESSABLE_ENTITY (pydantic will reject the `{command, args}` shape on the upstream `JobRequest` model which expects `{prompt: str}`).
+
+**User impact:** Any user running `just pi-drive`, `just pi-listen`, or `just pi-full` recipes will hit the broken extensions. The `just pi` (bare TUI) and other `pi-*` recipes that don't load drive-dispatch/listen-submit are unaffected.
+
+**Review cadence:** SP12 round 1 audit — **mandatory resolution**. This exception must move to "resolved" when SP12 r1 completes. If SP12 r1 is deferred or skipped, the user must explicitly decide whether to:
+- Hand-fix the extensions to match upstream interface (SP8 r1 interface)
+- Revert SP8 r1 apps/ to accept the pre-revert interface (undo this SP8 r1 audit — contradicts audit goal)
+- Accept permanent breakage
+
+**Related findings:**
+- `feedback_disler_authoritative.md` — Tier 1 byte-identical precedence; drift-is-drift classification
+- `feedback_audit_autonomy.md` — Per-SP autonomy grant does not include cross-SP scope creep
+- `project_sp8_r1_resume.md` — Phase D scope decision + SP12 follow-up backlog
+- Source of Truth §4.10 — SP12 Pi Integration features P02 (Pi → Drive dispatch) and P03 (Pi → Listen job submission) both cite `mac-mini-agent` as upstream source
+
+**Follow-up actions:**
+1. **SP12 r1 Phase A** — inventory Pi extensions against upstream `mac-mini-agent` (the same upstream as SP8). Note that mac-mini-agent itself does not ship Pi extensions; the closest upstream reference is the `listen/justfile` `agent-pi` recipe pattern and the `prime.md` `piprime` recipe. Pi extensions are Tier-2-only (no Tier-1 byte source) and should be classified MISSING[T2-only] or re-sourced against a separate upstream if one exists.
+2. **SP12 r1 Phase B** — rewrite `extensions/drive-dispatch.ts` Drive invocation to `cd apps/drive && uv run python main.py <args>` pattern. Update all command builders in the file to use positional session args and `--json` flag (matching upstream SKILL.md).
+3. **SP12 r1 Phase B** — rewrite `extensions/listen-submit.ts` to use `{prompt: ...}` payload format and the upstream endpoints (POST /job, GET /job/{id}, GET /jobs, POST /jobs/clear, DELETE /job/{id}). Update port default from 8420 to 7600 where applicable.
+4. **SP12 r1 Phase C** — smoke test each affected `pi-*` recipe: `pi-drive`, `pi-listen`, `pi-full`.
+5. **SP12 r1 Phase D** — close Exception 20 in `audits/exceptions.md` (move to archive).
+
+---
+
 ## Active exceptions summary
 
 | # | Title | SP | Date | Status | Review when |
@@ -989,6 +1044,7 @@ None. The populated catalog is expected steady-state per upstream design; no fur
 | 17 | `ty_validator.py` sub-package skip block (load-bearing for nested pyproject.toml structure) | SP3 r1 B | 2026-04-13 | active | None (permanent) |
 | 18 | `.env.sample` damage-control hard stop (both arms restored via E1 pathExclusions expansion — audit-temporary, revert post-audit) | SP4 r1 F + SP7 r1 C+G | 2026-04-14 | **RESOLVED 2026-04-14** | — (but see Exception 14 Category J revert plan) |
 | 19 | `~/.claude/skills/library/library.yaml` ArhuGula catalog population (upstream-schema-compatible) | SP6 r1 D | 2026-04-14 | active | None (permanent — grows via `/library add`) |
+| 20 | SP12 Pi extensions (`drive-dispatch.ts`, `listen-submit.ts`) reference pre-SP8-r1 Drive/Listen interface — deferred cross-SP fix | SP8 r1 D | 2026-04-14 | active | **SP12 r1 mandatory** |
 
 ## How to close an exception
 
