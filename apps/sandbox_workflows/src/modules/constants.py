@@ -80,6 +80,13 @@ DEFAULT_TEMPLATE: Final[str] = "base"
 #                   bypass the intended MCP-first tool pattern
 ALLOWED_TOOLS: Final[list[str]] = [
     # MCP E2B Sandbox Tools — PRIMARY path for ALL repository operations.
+    # This list MUST stay in sync with the 20 @mcp.tool() functions in
+    # apps/sandbox_mcp/server.py. Re-audit when server.py changes.
+    # Note: init_sandbox is in the server but was observed to be unavailable
+    # to the agent SDK at runtime (CA-U28-StageG test: "No such tool
+    # available: mcp__e2b-sandbox__init_sandbox"). The prompt uses
+    # create_sandbox instead. init_sandbox is still listed here for when
+    # the SDK visibility issue is investigated and resolved.
     "mcp__e2b-sandbox__init_sandbox",
     "mcp__e2b-sandbox__create_sandbox",
     "mcp__e2b-sandbox__connect_sandbox",
@@ -87,17 +94,19 @@ ALLOWED_TOOLS: Final[list[str]] = [
     "mcp__e2b-sandbox__write_file",
     "mcp__e2b-sandbox__read_file",
     "mcp__e2b-sandbox__list_files",
+    "mcp__e2b-sandbox__list_sandboxes",
     "mcp__e2b-sandbox__upload_file",
     "mcp__e2b-sandbox__download_file",
     "mcp__e2b-sandbox__make_directory",
     "mcp__e2b-sandbox__remove_file",
     "mcp__e2b-sandbox__rename_file",
     "mcp__e2b-sandbox__check_file_exists",
+    "mcp__e2b-sandbox__check_sandbox_status",
     "mcp__e2b-sandbox__get_file_info",
+    "mcp__e2b-sandbox__get_sandbox_info",
     "mcp__e2b-sandbox__get_host",
     "mcp__e2b-sandbox__kill_sandbox",
     "mcp__e2b-sandbox__pause_sandbox",
-    "mcp__e2b-sandbox__resume_sandbox",
     # Local file operations — path-gated to ALLOWED_DIRECTORIES by hooks.py.
     # The agent MUST use these (not Bash) to write result files locally.
     "Read",

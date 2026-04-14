@@ -216,13 +216,20 @@ C5. NO CLI FLAG CHANGES — The SFA invocation in step 4 is frozen. You MUST
     NOT add --coder-model, --validator-model, --max-iter, or any other flag
     beyond those listed below.
 
-=== STEP 1 — Initialize the sandbox (MCP tool only) ===
+=== STEP 1 — Create the sandbox (MCP tool only) ===
 
-Call: mcp__e2b-sandbox__init_sandbox(timeout=1800)
-This returns a sandbox_id. Remember it.
+Call: mcp__e2b-sandbox__create_sandbox(timeout=1800)
+
+Pass timeout as an INTEGER (1800), not a string ('1800'). The result
+contains a sandbox_id (look for it in the output text). Remember it for
+all subsequent steps.
+
 You MUST NOT call the 'agent-sandboxes' Skill or run 'sbx init' via Bash.
-The MCP init path auto-injects ANTHROPIC_API_KEY/OPENAI_API_KEY from the
-host MCP server environment. Any other path does not.
+You MUST NOT use init_sandbox (it is not currently exposed to the agent
+tool registry — this is a known issue being tracked separately). Use
+create_sandbox; the MCP server layer auto-injects ANTHROPIC_API_KEY and
+OPENAI_API_KEY from its own process environment regardless of which
+sandbox-creation tool is called (verified at server.py:160).
 
 === STEP 2 — Clone the repo and install uv (MCP execute_command) ===
 

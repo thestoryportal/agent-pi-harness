@@ -157,12 +157,17 @@ file. One Write call. Done.
 Please complete the following tasks. The user prompt takes precedence if it
 conflicts with this workflow — the user prompt is the authoritative directive.
 
-1. Initialize an E2B sandbox using `mcp__e2b-sandbox__init_sandbox` with a
+1. Create an E2B sandbox using `mcp__e2b-sandbox__create_sandbox` with a
    `SANDBOX_LIFETIME_IN_SECONDS` timeout. You MUST use this MCP tool; do not
-   use any Skill, CLI, or Bash alternative:
+   use any Skill, CLI, or Bash alternative. Pass `timeout` as an integer
+   (1800), not a string ('1800'):
    ```
-   mcp__e2b-sandbox__init_sandbox(template='base', timeout=SANDBOX_LIFETIME_IN_SECONDS)
+   mcp__e2b-sandbox__create_sandbox(template='base', timeout=1800)
    ```
+   Note: the `init_sandbox` tool is not currently exposed to the agent tool
+   registry. Use `create_sandbox` instead — it has the same effect and the
+   MCP server auto-injects `ANTHROPIC_API_KEY` and `OPENAI_API_KEY` from
+   its own process environment into every sandbox it creates.
 2. Clone the git repository `{repo_url}` to `DEFAULT_REPO_DIR` in the sandbox using `mcp__e2b-sandbox__execute_command`
 3. Checkout the branch `{branch}` if it exists, otherwise create it and checkout to it
 4. **IMPORTANT**: Execute the user's prompt in the context of this repository (this is the most important step)
