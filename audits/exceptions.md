@@ -1156,6 +1156,10 @@ The `feedback_disler_authoritative.md` rule says "Tier 1 full-clones are byte-le
 | 19 | `~/.claude/skills/library/library.yaml` ArhuGula catalog population (upstream-schema-compatible) | SP6 r1 D | 2026-04-14 | active | None (permanent — grows via `/library add`) |
 | 20 | SP12 Pi extensions (`drive-dispatch.ts`, `listen-submit.ts`) reference pre-SP8-r1 Drive/Listen interface — deferred cross-SP fix | SP8 r1 D | 2026-04-14 | active | **SP12 r1 mandatory** |
 | 21 | SP11 pattern-SP posture (upstream reference + local pattern-instantiation coexist) | SP11 r1 A | 2026-04-14 | active | None (permanent foundational rule) |
+| 22 | SP12 Pi extensions carve-out (`drive-dispatch.ts`, `listen-submit.ts`, `pi-drive`/`pi-listen`/`pi-full` recipes) | SP12 r1 A | 2026-04-14 | active | None (permanent carve-out under Exception 1 umbrella) |
+| 23 | `.claude/commands/prime.md` cross-SP namespace collision (SP8 ↔ SP12 `prime.md` vs SP1 `/prime` skill) | SP12 r1 A | 2026-04-14 | active | Quarterly |
+| 24 | SP13 justfile carve-out recipes (`steer-build`/`see`/`apps`/`ocr`) + SecureTmp security regression flag | SP13 r1 C+D | 2026-04-14 | active | SP13 r2 / SP2 security follow-up |
+| 25 | SP14 root `justfile` block content-level adaptations (6 items: damage-control flag removal, multi-SP variable inlining, bug-fix headed default, agent-teams env prefix, shell-metachar warning, prompt trim) | SP14 r1 D | 2026-04-14 | active | SP14 r2 / revert items 3+6 when convenient |
 
 ## How to close an exception
 
@@ -1333,4 +1337,86 @@ The 4 recipes live in the project root `justfile`, which is already a composite 
 - SP14 B02 (SoT §4.12) — content-level security hardening precedent (analogous to what a future SP13 re-hardening would look like)
 
 **Review cadence:** Per-SP audit. Review Exception 24 in the next SP13 round (if any) OR as part of a security-focused SP2 follow-up round. The carve-out recipes portion is stable; the SecureTmp regression is the open follow-up item.
+
+---
+
+## Exception 25 — SP14 root `justfile` block content-level adaptations
+
+**Decision:** SP14 round 1 Phase D (2026-04-14)
+
+**Path(s):**
+- `justfile` lines 303–347 — 9 SP14 recipes (`test-playwright-skill`, `test-chrome-skill`, `test-playwright-agent`, `test-chrome-agent`, `test-qa`, `hop`, `ui-review`, `automate-amazon`, `summarize-blog`) carry 6 intentional drift items vs upstream `disler/bowser/justfile`.
+
+**SP audit round:** SP14 round 1 Phase D (2026-04-14)
+**Decision date:** 2026-04-14
+**Status:** **Permanent** (items 1, 2, 4, 5 immovable; items 3, 6 revertible but left in place — see Review cadence)
+
+**The 6 drift items:**
+
+1. **`--dangerously-skip-permissions --model opus` removed** from all 9 recipes. Upstream `bowser/justfile` prefixes every `claude` invocation with these two flags; local strips them entirely. **Reason:** `--dangerously-skip-permissions` bypasses the PreToolUse hook chain, which disables SP2's damage-control security model (the `bash_damage_control.py` / `edit_damage_control.py` / `write_damage_control.py` hooks + `patterns.yaml` rule engine). Since SP14 r2–r10 hardening work (Exception 14) layered 289 lines of defensive rules specifically for the browser-automation tools, keeping `--dangerously-skip-permissions` in the SP14 justfile block would silently disable all of that. Exception 13 documents the general "local justfile omits `--dangerously-skip-permissions`" rule at the root-justfile level; this exception inherits that rule for SP14's 9 recipes. The `--model opus` flag is a defensible addition that could technically be re-added without affecting security, but it was paired with `--dangerously-skip-permissions` in upstream and removed together; leaving both out is cleaner than splitting the pair.
+
+2. **Default-prompt variables inlined** rather than hoisted to top-of-file. Upstream `bowser/justfile` declares three top-of-file variables (`default_prompt`, `default_qa_prompt`, `default_hop_demo_prompt`) and each relevant recipe references them via `prompt=default_prompt` etc. Local inlines the full default prompt strings inside each recipe's argument list. **Reason:** the root `justfile` is a multi-SP composite (Exception 13, 307+ lines spanning SP1–SP14). Hoisting `default_prompt` (a generic name) to the top of a multi-SP justfile would either (a) collide with other SPs' desire to use `default_*` names, or (b) require namespacing (`bowser_default_prompt`) which is itself drift. Inlining is the only clean option for a composite file. The cost is ~90 extra characters per affected recipe — negligible.
+
+3. **`ui-review` default `headed="false"`** vs upstream `headed="headed"`. Local adds an inline comment at `justfile:337`: _"headed defaults to 'false' (matches /ui-review command's own default). Pass headed='true' or 'headed' to see the browser."_ **Reason:** the `.claude/commands/ui-review.md` file itself (B04, verified byte-identical to upstream in Phase A) documents headless as its internal default. Upstream `bowser/justfile`'s `headed="headed"` default is therefore inconsistent with its own command-file's default. Local resolves the inconsistency on the justfile side. This is a **bug-fix divergence** rather than a preference drift — arguably upstream should match local here, not the other way around.
+
+4. **`CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1` prefix** on `ui-review` and `hop` recipes (`justfile:333` and `justfile:338`). Upstream doesn't set this env var at the recipe level. **Reason:** local uses the experimental agent-teams feature flag for `/ui-review` (which fans out to `@bowser-qa-agent` for parallel user story validation per B04) and `/bowser:hop-automate` (which dispatches to child browser sessions per B06). Without the flag set, the recipes fail at runtime because Claude Code rejects parallel subagent spawning. Upstream presumably expects the user to set the flag at the profile level (via shell rc) rather than per-invocation; local makes the dependency explicit at the recipe level for discoverability. This is a **pragmatic hardening** — if a user runs SP14 recipes fresh without the profile-level flag, upstream fails silently while local succeeds.
+
+5. **`hop` recipe inline shell-metacharacter warning comment** (`justfile:326–331`, 6 lines):
+   ```
+   # Note (SP14 round-10 S-05): {{prompt}} and {{flags}} are shell-interpolated
+   # directly into the claude command. An unquoted prompt containing shell
+   # metacharacters (e.g. `$(...)`, backticks, `;`) will be interpreted by the
+   # shell. This is user-level self-harm only, not an agent-escalation vector
+   # (the user invoking the recipe is the one running the shell), but quote the
+   # prompt if it contains special characters: just hop workflow 'my prompt'.
+   ```
+   **Reason:** SP14 round 10 security review (S-05 V-5) identified this as a latent risk on the `hop` recipe specifically; the warning was added as a content-level hardening annotation in the same round that added the B06 allowlist/path-traversal guard to `hop-automate.md` itself. Analogous to SoT §4.12 B06 (content-level security adaptation in the feature file) — this is the justfile-level parallel. **This is the one item on this list that is a content-level ArhuGula security addition** rather than a multi-SP or convenience adaptation.
+
+6. **`automate-amazon` default prompt trimmed** from upstream's 8-item list ("m4 mac mini with top specs, flowers for valentines day, pack of 10 sketch notebooks, mechanical keyboard with brown switches, USB-C docking station, blue light blocking glasses, standing desk anti-fatigue mat, Anker wireless charging pad") to local's 3-item list ("m4 mac mini with top specs, flowers for valentines day, pack of 10 sketch notebooks"). **Reason:** the original SP14 build applied the trim; no security or structural justification. This is **pure preference drift** that could be reverted to the full 8-item upstream default without any functional cost. Left in place because the local 3-item default is already in use and the savings from alignment are trivial. Flagged for revert in a future round if the user wants identicality on preference items.
+
+**Category breakdown (for review-cadence decisions):**
+
+- **Security-mandated drift** — items **1** and **5**. Cannot be reverted without breaking damage-control (item 1) or losing a shell-metacharacter cautionary note that was added by an explicit security round (item 5). **Immovable.**
+- **Multi-SP composite-mandated drift** — items **2** and **4**. Cannot be reverted as long as the root `justfile` is a multi-SP composite (Exception 13). Item 2 would namespace-collide with other SPs; item 4 would make fresh-install recipe runs fail silently. **Immovable under Exception 13.**
+- **Preference / bug-fix drift** — items **3** and **6**. Neither has a security or structural justification for preservation. Item 3 is a bug-fix divergence (arguably upstream should match local). Item 6 is a pure preference trim with no upside to either direction. **Revertible** in a follow-up round with zero functional impact; left in place for now because the cost of churn exceeds the benefit of alignment.
+
+**Rationale for keeping all 6 (rather than reverting items 3 and 6):**
+
+SP14 r1's optimal outcome is minimum drift with minimum churn. Reverting items 3 and 6 would:
+
+- produce a commit that changes behavior (`ui-review` default goes from headless to headed — potentially surprising to a user who has the existing default memorized) and default prompt text (trivial), for the sake of numerical identicality alone;
+- not eliminate Exception 25 — items 1, 2, 4, 5 all remain, so the exception still exists;
+- require an additional explanatory commit message about why the revert is happening;
+- set a precedent that SP audit rounds should sweep cosmetic drift, which expands scope creep.
+
+The decision is to leave all 6 items in place, document them clearly, and allow a future round to revert items 3 and 6 **if and when the user explicitly wants them reverted**. The review-cadence note captures this affordance.
+
+**Why not drift (formal argument for the preservation):**
+
+The 9 recipes live in the project root `justfile`, which is already a composite file covered by Exception 13. SP14's recipe block is one of many SP-specific blocks; the upstream `bowser/justfile` has no composite analog because upstream `disler/bowser` is a single-purpose repo. Byte-aligning items 1–6 to upstream is not possible for items 1, 2, 4 without breaking security (1), multi-SP namespace (2), or agent-teams runtime (4). Items 3 and 5 provide active value (bug-fix-against-upstream + security-hardening). Item 6 is trivial and revertible. The cleanest outcome is to preserve all 6 and document them here.
+
+This matches the precedent set by:
+- **Exception 24** (SP13 justfile carve-out recipes `steer-build`/`see`/`apps`/`ocr` — thin wrappers over the built `steer` binary, no upstream equivalent at all),
+- **Exception 22** (SP12 `pi-drive`/`pi-listen`/`pi-full` carve-outs — bridge Pi to SP8 Drive/Listen, no upstream equivalent at all),
+- **Exception 13** (root `justfile` multi-SP form itself — parent exception covering the general "`--dangerously-skip-permissions` omission" rule and the general "multi-SP composite justfile" posture).
+
+**Difference from Exception 24 and Exception 22:**
+
+Exceptions 22 and 24 cover recipes that have **no upstream equivalent at all** (upstream `mac-mini-agent/justfile` has no `steer-build`/`steer-see`/`steer-apps`/`steer-ocr`; upstream `pi-vs-claude-code/justfile` has no `pi-drive`/`pi-listen`/`pi-full`). Exception 25 covers recipes that **do exist upstream** but with 6 local drift items. So:
+
+- Exceptions 22 & 24 = "carve-out recipes that are ArhuGula-invented"
+- Exception 25 = "recipe-level content-level adaptations applied to upstream recipes"
+
+This mirrors the distinction between SP13 Steer's justfile carve-outs (Exception 24) and SP14 feature files B02/B03/B06 content-level adaptations (SoT §4.12). SP14 r1's Exception 25 is the **justfile-level analog** of the SP14 B02/B03/B06 file-level adaptations.
+
+**Related findings:**
+- `project_sp14_r1_resume.md` — full round-1 details
+- SoT §1 SP14 r1 block — post-audit file state
+- SoT §4.12 — ArhuGula adaptations vs upstream bowser (B02 Sensitive Data Warning, B03 session nonce, B06 allowlist/path-traversal — feature-file content-level adaptations)
+- Exception 13 — root `justfile` multi-SP form (parent exception covering the general rule)
+- Exception 14 — `patterns.yaml` 289-line hardening delta (SP14 r2–r10 defensive rules for browser automation)
+- Exception 22 — SP12 Pi extensions carve-out (sibling pattern)
+- Exception 24 — SP13 Steer justfile carve-out recipes (sibling pattern)
+
+**Review cadence:** Per-SP audit. Review Exception 25 in the next SP14 round (if any) OR when the user explicitly asks to revert items 3 and 6 (the revertible preference/bug-fix items). Items 1, 2, 4, 5 are **permanent** for as long as (a) the damage-control security model is in place (items 1, 5), and (b) the root `justfile` remains a multi-SP composite (items 2, 4). The `patterns.yaml` hardening rules that item 1 protects (Exception 14) share the same lifecycle — if Exception 14 is ever fully resolved (browser-automation hardening folded into upstream), Exception 25 item 1 can be re-evaluated at the same time.
 
