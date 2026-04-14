@@ -36,3 +36,6 @@ tests/prompts/**/output.json
 screenshots/
 ai_review/runs/
 ai_review/screenshots/
+
+# Audit session temp files (commit message drafts, etc.)
+audits/.commit-msg*
