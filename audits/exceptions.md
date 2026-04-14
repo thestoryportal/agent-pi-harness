@@ -799,6 +799,48 @@ The SP2 r1 Phase F pathExclusions list was scoped to files matching the `*.examp
 
 ---
 
+## Exception 19 — `~/.claude/skills/library/library.yaml` ArhuGula catalog population
+
+**Decision:** SP6 round 1 Phase D (2026-04-14)
+
+**Path(s):**
+- `~/.claude/skills/library/library.yaml` — single DRIFT file in the SP6 r1 post-revert tree. Upstream is a 288-byte empty-catalog template (`default_dirs` + `library: { skills:[], agents:[], prompts:[] }`); local is 3518 bytes with upstream-byte-identical `default_dirs` + populated `library:` section containing 4 skills, 7 agents, and 6 prompts that point to ArhuGula repo files.
+
+**SP audit round:** SP6 round 1 Phase D (2026-04-14)
+**Decision date:** 2026-04-14
+
+**Rationale:**
+
+The `library.yaml` file has mixed semantics: the schema itself (`default_dirs`, `library: { skills, agents, prompts }`) is upstream-defined scaffolding, but the catalog content is **user-populated data** per upstream's own design. Upstream `cookbook/add.md` explicitly documents the `/library add` workflow that appends new entries to `library.[type][]` lists — the empty upstream template ships with zero entries because the repo is a distribution template, not a populated instance. When a user installs the-library via `install.md`, the expectation is that their `library.yaml` will diverge from the template as they add their own catalog entries.
+
+SP6 r1 Phase D therefore chose to preserve the populated ArhuGula catalog while stripping three categories of drift from the local file:
+
+1. **Comment header (lines 1-4 of the pre-revert file + lines 17-18 "NOTE:" comment)** — pure styling drift, removed.
+2. **Invented `mcp:` section (lines 96-106 of the pre-revert file)** — the section described `mcp/just-prompt/` and `mcp/pocket-pick/` under a schema key `mcp:` that does NOT exist in upstream. Neither the upstream `SKILL.md` nor any upstream cookbook file references an `mcp:` top-level key in `library.yaml`. This was pure ArhuGula scope invention (conflating the library catalog with MCP server wiring, which correctly belongs in `.mcp.json`). Removed.
+3. **`layer: 1` field on skill entries** — the upstream schema for catalog entries is `{name, description, source, requires?}`; the `layer:` field is not defined upstream. Removed from all 4 skill entries.
+4. **`maintain` → `maintenance` bugfix** — the previous catalog entry for the `/maintain` prompt pointed to `.claude/commands/maintain.md`, but the actual file is `.claude/commands/maintenance.md`. The entry was renamed and re-sourced correctly. This is a bug fix routed through the same Phase D rewrite.
+5. **Alphabetical sort within each section** — upstream `cookbook/add.md` step 5 explicitly states "Keep entries alphabetically sorted by name within each section." The pre-revert file was in insertion order; Phase D re-sorted skills, agents, and prompts alphabetically per the upstream convention.
+
+The post-Phase-D local `library.yaml` has a byte-identical `default_dirs` block (lines 1-11) and a schema-compatible `library:` section populated with ArhuGula's actual catalog. It differs from upstream byte-identically on the single axis of catalog content population.
+
+**Why kept (not reverted to 288-byte empty template):** Fully reverting to the 288-byte empty template would delete legitimate user data (the 17 catalog entries) that future invocations of `/library list`, `/library use`, and `/library sync` depend on. The upstream template is a scaffold, not an end state; the populated file is the expected steady state for any installed library instance. Reverting to the empty template would reduce the audit tree to 20/20/0/0/0 on paper but would be semantically wrong — it would erase the catalog the library skill is designed to manage.
+
+**Why not in upstream:** Upstream ships the empty template because it is a distribution artifact meant to be cloned and populated per-device. No single populated version can exist in the upstream repo because the catalog is per-user.
+
+**Review cadence:** None — permanent until ArhuGula retires or restructures its library catalog. Future `/library add` invocations will mutate this file further; that is its design purpose.
+
+**Related findings:**
+- SP6 r1 Phase A — tree diff vs `~/Projects/indydevdan-harness-research/research/full-clones/the-library/` (upstream HEAD `47f455c`). 10 upstream files shared with local (all DRIFT) + 10 upstream-only files MISSING from local (README.md, LICENSE, justfile, .gitignore, 6 SVG diagrams).
+- SP6 r1 Phase C — 9 shared files reverted byte-identical via `shutil.copyfile` (SKILL.md + 8 cookbook/*.md).
+- SP6 r1 Phase E — 10 missing Tier 1 assets restored byte-identical.
+- SP6 r1 Phase F reconciliation: 20 upstream / 20 local / 0 missing / 0 extra / **1 drift** (this file).
+- `feedback_library_global.md` — the library catalog lives at the global `~/.claude/skills/library/` path, not in arhugula repo; SP6 r1 edits are not git-tracked in arhugula but are documented here and in `project_sp6_r1_resume.md`.
+
+**Follow-up actions:**
+None. The populated catalog is expected steady-state per upstream design; no further action needed. Future `/library add` operations will continue to mutate this file as the catalog grows.
+
+---
+
 ## Active exceptions summary
 
 | # | Title | SP | Date | Status | Review when |
@@ -821,6 +863,7 @@ The SP2 r1 Phase F pathExclusions list was scoped to files matching the `*.examp
 | 16 | Stylistic drift on reverted upstream files (Write-tool trailing-whitespace strip; expanded SP3 r1 to 13 files) | SP2 r1 → SP3 r1 | 2026-04-13 | active | None (permanent) |
 | 17 | `ty_validator.py` sub-package skip block (load-bearing for nested pyproject.toml structure) | SP3 r1 B | 2026-04-13 | active | None (permanent) |
 | 18 | `mcp/just-prompt/.env.sample` damage-control hard stop (SP4 r1 F) | SP4 r1 F | 2026-04-14 | **UNRESOLVED** | SP4 r2 or SP2 r2 |
+| 19 | `~/.claude/skills/library/library.yaml` ArhuGula catalog population (upstream-schema-compatible) | SP6 r1 D | 2026-04-14 | active | None (permanent — grows via `/library add`) |
 
 ## How to close an exception
 
