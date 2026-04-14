@@ -365,3 +365,14 @@ sbx-fork repo prompt forks="1":
 # Start E2B MCP server (for use with .mcp.json.sandbox)
 sbx-mcp:
     cd apps/sandbox_mcp && uv run python server.py
+
+# === SP16: Voice & Real-Time ===
+# ArhuGula-specific recipe (Exception 27): voice_to_claude_code.py lives under
+# apps/voice/ per ArhuGula apps/ convention (upstream claude-code-is-programmable
+# places it at repo root, which is reserved for harness infrastructure). PEP 723
+# inline deps handle Python packages via uv run. System prerequisite:
+# `brew install portaudio` (required by sounddevice + RealtimeSTT).
+
+# Start the voice-to-Claude-Code assistant (requires OPENAI_API_KEY + ANTHROPIC_API_KEY)
+voice:
+    uv run apps/voice/voice_to_claude_code.py
