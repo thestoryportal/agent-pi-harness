@@ -13,6 +13,7 @@ node_modules/
 # Claude Code
 .claude/logs/
 .claude/hooks/validators/*.log
+.claude/hooks/setup.*.log
 
 # hooks-mastery upstream form post_tool_use.py writes here (Path.cwd() / 'logs')
 logs/
