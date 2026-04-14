@@ -1,32 +1,37 @@
-"""Shared data types for just-prompt."""
+"""
+Data types and models for just-prompt MCP server.
+"""
 
 from enum import Enum
-from typing import Optional
 
 
 class ModelProviders(Enum):
-    """LLM provider enum with short/long name aliases."""
-
-    OPENAI = ("openai", ["o", "openai"])
-    ANTHROPIC = ("anthropic", ["a", "anthropic"])
-    GEMINI = ("gemini", ["g", "gemini"])
-    GROQ = ("groq", ["q", "groq"])
-    DEEPSEEK = ("deepseek", ["d", "deepseek"])
-    OLLAMA = ("ollama", ["l", "ollama"])
-
-    def __init__(self, full_name: str, aliases: list[str]):
+    """
+    Enum of supported model providers with their full and short names.
+    """
+    OPENAI = ("openai", "o")
+    ANTHROPIC = ("anthropic", "a")
+    GEMINI = ("gemini", "g") 
+    GROQ = ("groq", "q")
+    DEEPSEEK = ("deepseek", "d")
+    OLLAMA = ("ollama", "l")
+    
+    def __init__(self, full_name, short_name):
         self.full_name = full_name
-        self.aliases = aliases
-
+        self.short_name = short_name
+        
     @classmethod
-    def from_name(cls, name: str) -> Optional["ModelProviders"]:
-        """Resolve a short or full provider name to a ModelProviders enum member."""
+    def from_name(cls, name):
+        """
+        Get provider enum from full or short name.
+        
+        Args:
+            name: The provider name (full or short)
+            
+        Returns:
+            ModelProviders: The corresponding provider enum, or None if not found
+        """
         for provider in cls:
-            if name in provider.aliases:
+            if provider.full_name == name or provider.short_name == name:
                 return provider
         return None
-
-    @classmethod
-    def all_names(cls) -> list[str]:
-        """Return all full provider names."""
-        return [p.full_name for p in cls]

@@ -1,28 +1,63 @@
-"""Ollama provider module for just-prompt."""
+"""
+Ollama provider implementation.
+"""
 
 import os
+from typing import List
+import logging
+import ollama
+from dotenv import load_dotenv
 
-import ollama as ollama_sdk
+# Load environment variables
+load_dotenv()
 
-
-def _get_client():
-    """Create Ollama client with configured host."""
-    host = os.environ.get("OLLAMA_HOST", "http://localhost:11434")
-    return ollama_sdk.Client(host=host)
+# Configure logging
+logger = logging.getLogger(__name__)
 
 
 def prompt(text: str, model: str) -> str:
-    """Send a prompt to an Ollama model."""
-    client = _get_client()
-    response = client.chat(
-        model=model,
-        messages=[{"role": "user", "content": text}],
-    )
-    return response.message.content or ""
+    """
+    Send a prompt to Ollama and get a response.
+
+    Args:
+        text: The prompt text
+        model: The model name
+
+    Returns:
+        Response string from the model
+    """
+    try:
+        logger.info(f"Sending prompt to Ollama model: {model}")
+
+        # Create chat completion
+        response = ollama.chat(
+            model=model,
+            messages=[
+                {
+                    "role": "user",
+                    "content": text,
+                },
+            ],
+        )
+
+        # Extract response content
+        return response.message.content
+    except Exception as e:
+        logger.error(f"Error sending prompt to Ollama: {e}")
+        raise ValueError(f"Failed to get response from Ollama: {str(e)}")
 
 
-def list_models() -> list[str]:
-    """List available Ollama models."""
-    client = _get_client()
-    models = client.list()
-    return [m.model for m in models.models]
+def list_models() -> List[str]:
+    """
+    List available Ollama models.
+
+    Returns:
+        List of model names
+    """
+    logger.info("Listing Ollama models")
+    response = ollama.list()
+
+    # Extract model names from the models attribute
+    models = [model.model for model in response.models]
+
+    return models
