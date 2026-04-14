@@ -216,20 +216,31 @@ C5. NO CLI FLAG CHANGES — The SFA invocation in step 4 is frozen. You MUST
     NOT add --coder-model, --validator-model, --max-iter, or any other flag
     beyond those listed below.
 
-=== STEP 1 — Create the sandbox (MCP tool only) ===
+=== STEP 1 — Create the sandbox (MCP tool, with warmup retry) ===
 
-Call: mcp__e2b-sandbox__create_sandbox(timeout=1800)
+Call: mcp__e2b-sandbox__create_sandbox(template='base', timeout=1800)
 
 Pass timeout as an INTEGER (1800), not a string ('1800'). The result
 contains a sandbox_id (look for it in the output text). Remember it for
 all subsequent steps.
 
+MCP WARMUP RETRY — KNOWN STARTUP RACE:
+  If you get "Error: No such tool available: mcp__e2b-sandbox__create_sandbox"
+  on the FIRST call, that is a known MCP server startup race (the MCP
+  subprocess is still registering its tools when you made the call). You
+  are EXPLICITLY PERMITTED to retry the create_sandbox call up to TWO more
+  times. This is the only exception to C2 (no improvisation) — the retry
+  target MUST be the same create_sandbox tool with the same arguments.
+  Do NOT use init_sandbox (it is not exposed to the agent tool registry).
+  Do NOT fall back to Bash, Skill, or any other path.
+
+  If create_sandbox still returns "No such tool available" after 3 total
+  attempts, go directly to STEP 6 and write an error exfil.
+
 You MUST NOT call the 'agent-sandboxes' Skill or run 'sbx init' via Bash.
-You MUST NOT use init_sandbox (it is not currently exposed to the agent
-tool registry — this is a known issue being tracked separately). Use
-create_sandbox; the MCP server layer auto-injects ANTHROPIC_API_KEY and
-OPENAI_API_KEY from its own process environment regardless of which
-sandbox-creation tool is called (verified at server.py:160).
+The MCP server layer auto-injects ANTHROPIC_API_KEY and OPENAI_API_KEY
+from its own process environment regardless of which sandbox-creation
+tool is called (verified at server.py:160).
 
 === STEP 2 — Clone the repo and install uv (MCP execute_command) ===
 
@@ -272,7 +283,7 @@ You MUST use the Write tool. You MUST NOT use Bash. You MUST NOT use any
 mcp__e2b-sandbox__ tool for this step (that target path is OUTSIDE the
 sandbox, on the host filesystem).
 
-Call: Write(file_path='apps/sandbox_agent_working_dir/temp/phase2-result-${sp}.json',
+Call: Write(file_path='temp/phase2-result-${sp}.json',
             content='<VERDICT from step 4, verbatim, no wrapping>')
 
 If the Write call fails (path validation error, etc.), DO NOT improvise
@@ -284,7 +295,7 @@ If ANY earlier step failed irrecoverably (sandbox init fail, clone fail,
 SFA non-zero exit, rate limit exhaustion), write an error result to the
 same exfil path:
 
-Call: Write(file_path='apps/sandbox_agent_working_dir/temp/phase2-result-${sp}.json',
+Call: Write(file_path='temp/phase2-result-${sp}.json',
             content='{"sp":"${sp}","verdict":"escalate","iterations":0,"coder_model":"unknown","validator_model":"unknown","findings":[],"escalate_reason":"<short reason>","timestamp":"<iso8601>","dry_run":false}')
 
 Then stop. Do not retry. Do not improvise.
@@ -296,7 +307,7 @@ free the resource but this is optional (the sandbox auto-terminates at
 1800s timeout). Report completion in a final text response.
 
 The host fanout script harvests from exactly one place:
-  apps/sandbox_agent_working_dir/temp/phase2-result-${sp}.json
+  temp/phase2-result-${sp}.json
 If that file does not exist or contains wrong JSON, the host counts this
 SP as "no verdict" and reports it as a harvest miss.
 EOF
@@ -361,6 +372,16 @@ fi
 # Write tool (path is inside ALLOWED_DIRECTORIES of the sandbox_workflows
 # agent). Harvest reads from here as the primary source.
 mkdir -p "$TEMP_DIR"
+
+# CA-U28-StageG-pass3: clean stale phase2-result-SP*.json files from prior
+# runs. The mtime-sentinel harvest filter handles staleness at read time,
+# but an agent that fails to Write a new file can accidentally "update"
+# (via Read+Edit) a stale file and confuse the harvest. Truncate to keep
+# the same inode if possible, otherwise remove.
+for _stale in "$TEMP_DIR"/phase2-result-SP*.json; do
+    [[ -f "$_stale" ]] || continue
+    : > "$_stale"
+done
 
 # E-3: create per-SP context bundles at audits/bundles/<sp>.yaml
 mkdir -p audits/bundles
