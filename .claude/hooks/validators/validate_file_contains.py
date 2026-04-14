@@ -1,6 +1,6 @@
 #!/usr/bin/env -S uv run --script
 # /// script
-# requires-python = ">=3.12"
+# requires-python = ">=3.11"
 # dependencies = []
 # ///
 
@@ -37,6 +37,7 @@ import sys
 import time
 from pathlib import Path
 
+# Logging setup - log file next to this script (SAME NAME)
 SCRIPT_DIR = Path(__file__).parent
 LOG_FILE = SCRIPT_DIR / "validate_file_contains.log"
 
@@ -48,6 +49,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# Constants
 DEFAULT_DIRECTORY = "specs"
 DEFAULT_EXTENSION = ".md"
 DEFAULT_MAX_AGE_MINUTES = 5
@@ -124,15 +126,25 @@ def get_recent_files(directory: str, extension: str, max_age_minutes: int) -> li
 
 
 def find_newest_file(directory: str, extension: str, max_age_minutes: int) -> str | None:
-    """Find the most recently created/modified file in directory."""
+    """
+    Find the most recently created/modified file in directory.
+
+    Returns:
+        Path to the newest file, or None if no recent files found.
+    """
+    # Check git for untracked/new files
     git_new = get_git_untracked_files(directory, extension)
+
+    # Check for recently modified files
     recent_files = get_recent_files(directory, extension, max_age_minutes)
 
+    # Combine and deduplicate
     all_files = list(set(git_new + recent_files))
 
     if not all_files:
         return None
 
+    # Find the newest file by modification time
     newest = None
     newest_mtime = 0
 
@@ -151,7 +163,16 @@ def find_newest_file(directory: str, extension: str, max_age_minutes: int) -> st
 
 
 def check_file_contains(filepath: str, required_strings: list[str]) -> tuple[bool, list[str], list[str]]:
-    """Check if file contains all required strings (case-sensitive)."""
+    """
+    Check if file contains all required strings (case-sensitive).
+
+    Args:
+        filepath: Path to the file to check
+        required_strings: List of strings that must be present
+
+    Returns:
+        tuple: (all_found: bool, found: list[str], missing: list[str])
+    """
     try:
         content = Path(filepath).read_text(encoding='utf-8')
     except (OSError, UnicodeDecodeError) as e:
@@ -176,11 +197,23 @@ def validate_file_contains(
     max_age_minutes: int,
     required_strings: list[str]
 ) -> tuple[bool, str]:
-    """Validate that a new file was created AND contains required content."""
+    """
+    Validate that a new file was created AND contains required content.
+
+    Args:
+        directory: Directory to check for new files
+        extension: File extension to match
+        max_age_minutes: Maximum age in minutes for "recent" files
+        required_strings: List of strings that must be in the file
+
+    Returns:
+        tuple: (success: bool, message: str)
+    """
     pattern = f"{directory}/*{extension}"
     logger.info(f"Validating: directory={directory}, extension={extension}, max_age={max_age_minutes}min")
     logger.info(f"Required strings: {required_strings}")
 
+    # Step 1: Find the newest file
     newest_file = find_newest_file(directory, extension, max_age_minutes)
 
     if not newest_file:
@@ -190,6 +223,7 @@ def validate_file_contains(
 
     logger.info(f"Found newest file: {newest_file}")
 
+    # Step 2: Check if file contains all required strings
     if not required_strings:
         msg = f"File found: {newest_file} (no content checks specified)"
         logger.info(f"PASS: {msg}")
@@ -258,10 +292,12 @@ def main():
     logger.info("Validator started: validate_file_contains")
 
     try:
+        # Parse CLI arguments
         args = parse_args()
         logger.info(f"Args: directory={args.directory}, extension={args.extension}, max_age={args.max_age}")
         logger.info(f"Required strings count: {len(args.required_strings)}")
 
+        # Read hook input from stdin (if provided)
         try:
             input_data = json.load(sys.stdin)
             logger.info(f"Stdin input received: {len(json.dumps(input_data))} bytes")
@@ -269,6 +305,7 @@ def main():
             input_data = {}
             logger.info("No stdin input or invalid JSON")
 
+        # Run validation
         success, message = validate_file_contains(
             directory=args.directory,
             extension=args.extension,
@@ -288,6 +325,7 @@ def main():
             sys.exit(1)
 
     except Exception as e:
+        # On error, allow through but log
         logger.exception(f"Validation error: {e}")
         print(json.dumps({
             "result": "continue",
