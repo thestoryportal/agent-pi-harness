@@ -312,7 +312,7 @@ for sp in "${TARGET_SPS[@]}"; do
             --prompt  "$PROMPT" \
             --forks   1 \
             --branch  "$BRANCH" \
-            --model   sonnet \
+            --model   haiku \
         >"$CAPTURE" 2>&1
     ) &
     pid=$!

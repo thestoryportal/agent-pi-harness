@@ -31,7 +31,7 @@ Usage:
         --sp SP15 \\
         --sp-manifest /tmp/sp15-bundle.yaml \\
         --mailbox audits/phase2-mailbox.jsonl \\
-        --coder-model anthropic:claude-sonnet-4-6 \\
+        --coder-model anthropic:claude-haiku-4-5 \\
         --validator-model openai:o4-mini \\
         --max-iter 3
 
@@ -192,7 +192,7 @@ def run_coder_pass_live(
 ) -> Dict[str, Any]:
     """Live coder pass — Anthropic tool-use loop (CA-U10).
 
-    Drives claude-sonnet-4-6 (or the --coder-model override) through up to
+    Drives claude-haiku-4-5 (or the --coder-model override) through up to
     MAX_TURNS tool-use cycles.  Tools available to the coder:
         read_file          — read any path in the sandbox read-only mount
         run_static_checks  — ruff + py_compile on a path
@@ -212,9 +212,10 @@ def run_coder_pass_live(
     import anthropic  # lazy import — only loaded on live path
     import subprocess
 
-    MAX_TURNS = 20
+    MAX_TURNS = 12
+    DEADLINE_TURN = MAX_TURNS - 2  # inject hard deadline warning at this turn index
 
-    # Strip provider prefix: "anthropic:claude-sonnet-4-6" → "claude-sonnet-4-6"
+    # Strip provider prefix: "anthropic:claude-haiku-4-5" → "claude-haiku-4-5"
     model_id = coder_model.split(":", 1)[-1] if ":" in coder_model else coder_model
 
     sp_scope: List[str] = manifest.get("sp_scope", [])
@@ -224,10 +225,20 @@ def run_coder_pass_live(
     system_prompt = (
         f"<purpose>\n"
         f"You are an adversarial code reviewer performing Phase 2 of the ArhuGula "
-        f"Comprehensive Audit.  Your job is to thoroughly review sub-project {sp_id} "
+        f"Comprehensive Audit.  Your job is to review sub-project {sp_id} "
         f"and submit structured findings.  You are operating inside a read-only E2B "
         f"sandbox.  You may only write to /tmp/coder_diffs/.\n"
         f"</purpose>\n\n"
+        f"<turn_budget>\n"
+        f"You have exactly {MAX_TURNS} tool-use turns.  Budget them strictly:\n"
+        f"  Turns 1-{DEADLINE_TURN - 1}: read_file + run_static_checks exploration.\n"
+        f"  Turn {DEADLINE_TURN}: a deadline warning will be injected — you MUST call\n"
+        f"    submit_findings on your very next turn (turn {DEADLINE_TURN + 1}) or sooner.\n"
+        f"  Turn {MAX_TURNS}: hard cap — the loop exits regardless.\n"
+        f"CRITICAL: Exhausting all {MAX_TURNS} turns without calling submit_findings\n"
+        f"produces a P0 meta-finding and wastes the entire iteration budget.\n"
+        f"Submit partial findings early — the validator loop can request a second pass.\n"
+        f"</turn_budget>\n\n"
         f"<instructions>\n"
         f"1. Use read_file to inspect files in the SP scope: {json.dumps(sp_scope)}\n"
         f"2. Focus on these axes:\n"
@@ -238,7 +249,7 @@ def run_coder_pass_live(
         f"   - SoT exception violations (audits/exceptions.md)\n"
         f"3. For each finding, collect file:line evidence before submitting\n"
         f"4. Use propose_diff for recommended fixes (writes to /tmp/coder_diffs/ only)\n"
-        f"5. Call submit_findings when your review is complete\n"
+        f"5. Call submit_findings to conclude — partial findings are acceptable\n"
         f"6. Severity: P0=security/critical, P1=correctness, P2=drift, P3=style\n"
         f"</instructions>\n\n"
         f"<spec_refs>\n"
@@ -418,6 +429,16 @@ def run_coder_pass_live(
     submitted_findings: Optional[Dict[str, Any]] = None
 
     for _turn in range(MAX_TURNS):
+        # Inject deadline warning at DEADLINE_TURN to force submit_findings on next turn
+        if _turn == DEADLINE_TURN and submitted_findings is None:
+            deadline_msg = (
+                f"\u26a0 DEADLINE: {MAX_TURNS - _turn} turn(s) remaining. "
+                f"You MUST call submit_findings on your next turn with whatever "
+                f"findings you have found so far. Partial findings are acceptable — "
+                f"the validator will review and the loop can iterate if needed."
+            )
+            messages.append({"role": "user", "content": deadline_msg})
+
         response = client.messages.create(
             model=model_id,
             max_tokens=4096,
@@ -775,7 +796,7 @@ def parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
     )
     parser.add_argument(
         "--coder-model",
-        default="anthropic:claude-sonnet-4-6",
+        default="anthropic:claude-haiku-4-5",
         help="Provider:model for the coder agent",
     )
     parser.add_argument(
