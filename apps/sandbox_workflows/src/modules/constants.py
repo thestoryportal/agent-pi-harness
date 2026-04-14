@@ -59,9 +59,27 @@ DEFAULT_MAX_TURNS: Final[int] = 100
 DEFAULT_TEMPLATE: Final[str] = "base"
 
 # === Tools Configuration ===
-# Allowed tools (MCP + local with hook-based restrictions)
+# Allowed tools (MCP sandbox + minimal local surface).
+#
+# Design principle: minimize improvisation surface. The obox agent's job is to
+# run a user-supplied prompt inside an E2B sandbox. All repository work belongs
+# in the sandbox via mcp__e2b-sandbox__* tools. Local tools are intentionally
+# limited to Read/Write/Edit (path-gated) + Glob/Grep (read-only) + TodoWrite.
+#
+# Removed (previously allowed — each caused incidents in CA-U28-SP13/SP1/SP3/SP4):
+#   Bash      -> agents used cat >> mailbox (Bug A), sbx exec via shell (Bug B),
+#                and inlined ANTHROPIC_API_KEY from host .env (security leak)
+#   Skill     -> SP3/SP4 invoked agent-sandboxes Skill which runs `sbx init`
+#                directly, bypassing _auto_env_args() in sandbox_mcp/server.py
+#                (Bug C — ANTHROPIC_API_KEY never reached the sandbox)
+#   Task      -> enables subagent spawning that complicates reasoning and has no
+#                legitimate use in the single-SP obox flow
+#   WebFetch  -> no legitimate use; opens improvisation channel
+#   WebSearch -> no legitimate use; opens improvisation channel
+#   SlashCommand -> same as Skill; allows invoking project-level commands that
+#                   bypass the intended MCP-first tool pattern
 ALLOWED_TOOLS: Final[list[str]] = [
-    # MCP E2B Sandbox Tools (operate in isolated sandbox)
+    # MCP E2B Sandbox Tools — PRIMARY path for ALL repository operations.
     "mcp__e2b-sandbox__init_sandbox",
     "mcp__e2b-sandbox__create_sandbox",
     "mcp__e2b-sandbox__connect_sandbox",
@@ -80,29 +98,33 @@ ALLOWED_TOOLS: Final[list[str]] = [
     "mcp__e2b-sandbox__kill_sandbox",
     "mcp__e2b-sandbox__pause_sandbox",
     "mcp__e2b-sandbox__resume_sandbox",
-    # Local Tools (restricted by hooks to ALLOWED_DIRECTORIES)
-    "Read",  # Hook validates path is within allowed directories
-    "Write",  # Hook validates path is within allowed directories
-    "Edit",  # Hook validates path is within allowed directories
-    "Bash",  # Hook logs all commands for observability
-    # Utility Tools
-    "WebFetch",
-    "WebSearch",
-    "Task",
-    "Skill",
-    "SlashCommand",
-    "TodoWrite",
+    # Local file operations — path-gated to ALLOWED_DIRECTORIES by hooks.py.
+    # The agent MUST use these (not Bash) to write result files locally.
+    "Read",
+    "Write",
+    "Edit",
+    # Read-only helpers.
     "Glob",
     "Grep",
+    "TodoWrite",
 ]
 
-# Disallowed tools (not needed for this workflow)
+# Disallowed tools — explicit blocklist for tools never needed by this workflow.
+# SDK enforces this even if a tool accidentally gets re-added to ALLOWED_TOOLS.
 DISALLOWED_TOOLS: Final[list[str]] = [
-    "NotebookEdit",  # Not needed for git workflows
+    "Bash",          # security: no shell improvisation surface
+    "Task",          # no subagent spawning
+    "Skill",         # no Skill-invocation bypass (see Bug C)
+    "SlashCommand",  # no project command bypass
+    "WebFetch",      # no web access
+    "WebSearch",     # no web access
+    "NotebookEdit",  # not used
 ]
 
 # === Path Restriction Configuration ===
-# Tools that require path validation (must operate within ALLOWED_DIRECTORIES)
+# Tools that require path validation (must operate within ALLOWED_DIRECTORIES).
+# Bash is kept here as defense-in-depth — if someone re-adds Bash to ALLOWED_TOOLS
+# in the future, the hook will still parse its commands and block host writes.
 PATH_RESTRICTED_TOOLS: Final[set[str]] = {
     "Read",
     "Write",

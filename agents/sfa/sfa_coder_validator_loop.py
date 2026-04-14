@@ -210,10 +210,71 @@ def run_coder_pass_live(
     "tool-loop-exhausted" finding is injected so the validator can escalate.
     """
     import anthropic  # lazy import — only loaded on live path
+    import random
     import subprocess
+    import time
 
     MAX_TURNS = 12
     DEADLINE_TURN = MAX_TURNS - 2  # inject hard deadline warning at this turn index
+
+    # ── Rate-limit retry helper (Bug D fix) ────────────────────────────────
+    # CA-U28 Step G (16-SP fanout) had SP1/SP8/SP16 hit Anthropic 429 rate
+    # limits. SP1's obox agent improvised a model switch (security incident,
+    # leaked API key to fork log). SP8/SP16 wrote error JSONs and were
+    # dropped. The root cause is the SFA has no retry logic — any 429 kills
+    # the run immediately. Wrap messages.create in a bounded exponential
+    # backoff loop that honors the server's Retry-After header when present.
+    _MAX_RETRIES = 4
+    _BACKOFF_BASE = 2.0  # seconds
+    _BACKOFF_CAP = 60.0  # seconds
+
+    def _create_with_retry(client_: "anthropic.Anthropic", **kwargs):
+        """Call client_.messages.create with bounded 429 backoff."""
+        attempt = 0
+        while True:
+            try:
+                return client_.messages.create(**kwargs)
+            except anthropic.RateLimitError as exc:
+                attempt += 1
+                if attempt > _MAX_RETRIES:
+                    raise
+                # Honor Retry-After header when present.
+                retry_after = None
+                try:
+                    resp_headers = getattr(exc, "response", None)
+                    if resp_headers is not None:
+                        headers = getattr(resp_headers, "headers", {}) or {}
+                        ra = headers.get("retry-after") or headers.get("Retry-After")
+                        if ra:
+                            retry_after = float(ra)
+                except (AttributeError, ValueError, TypeError):
+                    retry_after = None
+                if retry_after is None:
+                    # Exponential backoff with jitter
+                    delay = min(_BACKOFF_CAP, _BACKOFF_BASE * (2 ** (attempt - 1)))
+                    delay += random.uniform(0.0, delay * 0.25)
+                else:
+                    delay = min(_BACKOFF_CAP, retry_after + random.uniform(0.0, 1.5))
+                console.print(
+                    f"[yellow]Rate limited by Anthropic (attempt {attempt}/{_MAX_RETRIES}). "
+                    f"Sleeping {delay:.1f}s before retry...[/yellow]"
+                )
+                time.sleep(delay)
+            except anthropic.APIStatusError as exc:
+                # 5xx retry with shorter backoff
+                status = getattr(exc, "status_code", None)
+                if status is not None and 500 <= status < 600:
+                    attempt += 1
+                    if attempt > _MAX_RETRIES:
+                        raise
+                    delay = min(_BACKOFF_CAP / 2, _BACKOFF_BASE * (2 ** (attempt - 1)))
+                    console.print(
+                        f"[yellow]Anthropic {status} (attempt {attempt}/{_MAX_RETRIES}). "
+                        f"Sleeping {delay:.1f}s...[/yellow]"
+                    )
+                    time.sleep(delay)
+                    continue
+                raise
 
     # Strip provider prefix: "anthropic:claude-haiku-4-5" → "claude-haiku-4-5"
     model_id = coder_model.split(":", 1)[-1] if ":" in coder_model else coder_model
@@ -439,7 +500,8 @@ def run_coder_pass_live(
             )
             messages.append({"role": "user", "content": deadline_msg})
 
-        response = client.messages.create(
+        response = _create_with_retry(
+            client,
             model=model_id,
             max_tokens=4096,
             temperature=TEMPERATURE,

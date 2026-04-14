@@ -2,11 +2,17 @@
 Sandbox management commands.
 """
 
+import os
 import click
 from rich.console import Console
 from rich.table import Table
 from rich import print as rprint
 from ..modules import sandbox as sbx_module
+
+# Must stay in sync with src/main.py:_AUTO_PASSTHROUGH_KEYS and
+# sandbox_mcp/server.py:_AUTO_PASSTHROUGH_KEYS. See Bug C in
+# audits/phase2-fanout-bugfix-spec.md.
+_AUTO_PASSTHROUGH_KEYS = ("ANTHROPIC_API_KEY", "OPENAI_API_KEY", "GEMINI_API_KEY")
 
 console = Console()
 
@@ -26,8 +32,13 @@ def sandbox():
 def create(template, timeout, env, metadata, auto_pause):
     """Create a new sandbox."""
     try:
-        # Parse env vars
-        envs = {}
+        # Auto-inject LLM API keys from the CLI's process environment (Bug C
+        # fix). Explicit --env flags override the auto-injected values.
+        envs: dict = {}
+        for key in _AUTO_PASSTHROUGH_KEYS:
+            value = os.environ.get(key)
+            if value:
+                envs[key] = value
         for e in env:
             if "=" in e:
                 key, value = e.split("=", 1)

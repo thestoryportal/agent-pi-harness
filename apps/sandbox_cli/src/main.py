@@ -4,6 +4,7 @@ E2B Sandbox CLI - Main entry point.
 A comprehensive CLI for managing E2B sandboxes and performing operations.
 """
 
+import os
 import click
 from pathlib import Path
 from dotenv import load_dotenv
@@ -12,6 +13,34 @@ from rich.console import Console
 # Load environment variables
 root_dir = Path(__file__).parent.parent.parent.parent
 load_dotenv(root_dir / ".env")
+
+
+# LLM API keys this CLI auto-injects into every new sandbox it creates.
+# Mirrors sandbox_mcp/server.py:_AUTO_PASSTHROUGH_KEYS — the two paths must
+# stay in feature parity. Historical note: CA-U28-SP3/SP4 failed because the
+# MCP server auto-injected these keys but the CLI path did not. Agents that
+# created sandboxes via the agent-sandboxes Skill (which calls this CLI)
+# ended up with sandboxes missing ANTHROPIC_API_KEY. See Bug C root cause
+# analysis in audits/phase2-fanout-bugfix-spec.md.
+_AUTO_PASSTHROUGH_KEYS = ("ANTHROPIC_API_KEY", "OPENAI_API_KEY", "GEMINI_API_KEY")
+
+
+def _auto_inject_env(explicit_envs: dict | None) -> dict:
+    """
+    Merge auto-passthrough LLM keys (from process env) with any explicit
+    --env flags the caller supplied. Explicit flags win on conflict.
+
+    Returns:
+        Dict of env vars to pass to the sandbox.
+    """
+    merged: dict = {}
+    for key in _AUTO_PASSTHROUGH_KEYS:
+        value = os.environ.get(key)
+        if value:
+            merged[key] = value
+    if explicit_envs:
+        merged.update(explicit_envs)
+    return merged
 
 # Import command groups
 from .commands.sandbox import sandbox
@@ -87,12 +116,19 @@ def init(template, timeout, env):
         if template:
             console.print(f"[dim]Template: {template}[/dim]")
 
-        # Parse env vars
-        envs = {}
+        # Parse explicit --env flags
+        explicit = {}
         for e in env:
             if "=" in e:
                 key, value = e.split("=", 1)
-                envs[key] = value
+                explicit[key] = value
+
+        # Auto-inject LLM API keys from the CLI's own process environment.
+        # Explicit --env flags win on conflict. This is the Bug C defense-in-
+        # depth fix — both the CLI path (this file) and the MCP path
+        # (sandbox_mcp/server.py) now auto-inject, so agents that invoke
+        # the CLI directly via Skill still get working sandboxes.
+        envs = _auto_inject_env(explicit)
 
         sbx = sbx_module.create_sandbox(
             template=template, timeout=timeout, envs=envs if envs else None

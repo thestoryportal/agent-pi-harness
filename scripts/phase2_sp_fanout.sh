@@ -44,6 +44,16 @@ TEMP_DIR="apps/sandbox_agent_working_dir/temp"
 SP_IDS=(SP1 SP2 SP3 SP4 SP5 SP6 SP7 SP8 SP9 SP10 SP11 SP12 SP13 SP14 SP15 SP16)
 REQUIRED_ACK="29,14,24,28"
 
+# Bug D fix — concurrency batching for Anthropic org quota.
+# Tier 1 Anthropic quota is 450K input tokens/min. Each SFA run bursts
+# ~30-50K input tokens per message across 3-5 turns. 16 concurrent runs
+# exceed the quota and trigger 429s (observed in CA-U28 Step G: SP1/SP8/SP16
+# all hit rate limits). Default batch size 6 keeps the 1-min burst under
+# ~300K input tokens which has headroom under 450K.
+# Override with --batch-size N. Pass 0 or 16 to disable batching.
+DEFAULT_BATCH_SIZE=6
+BATCH_SIZE="$DEFAULT_BATCH_SIZE"
+
 DRY_RUN=false
 CONFIRM_COST=false
 ACK_EXCEPTIONS=""
@@ -74,6 +84,10 @@ while [[ $# -gt 0 ]]; do
             ;;
         --mailbox)
             MAILBOX="$2"
+            shift 2
+            ;;
+        --batch-size)
+            BATCH_SIZE="$2"
             shift 2
             ;;
         --help|-h)
@@ -165,51 +179,119 @@ echo
 make_sp_prompt() {
     local sp="$1"
     cat <<EOF
-You are running a Phase 2 Comprehensive Audit for sub-project ${sp} inside
-an E2B cloud sandbox. Complete these steps in order:
+=== OBOX AGENT DIRECTIVE — Phase 2 Comprehensive Audit for ${sp} ===
 
-=== SETUP (do this first) ===
-1. The repo is NOT pre-mounted at /repo. Clone it fresh:
-     git clone https://github.com/thestoryportal/agent-pi-harness.git \\
-         --branch ${BRANCH} /home/user/repo 2>&1 | tail -5
+You are running ONE sub-project audit inside an E2B cloud sandbox.
+This is a CONSTRAINT-FIRST directive. Deviation is not permitted.
 
-2. Install uv (required to run the SFA — NOT pre-installed in sandbox):
-     curl -LsSf https://astral.sh/uv/install.sh | sh 2>&1 | tail -3
-     export PATH="/home/user/.local/bin:\$PATH"
+=== HARD CONSTRAINTS (read these twice before acting) ===
 
-3. Verify setup:
-     which uv && cd /home/user/repo && echo "setup OK"
+C1. TOOL USE — You MUST ONLY use these tool families:
+    - mcp__e2b-sandbox__* for ALL operations inside the sandbox.
+    - Write / Read / Edit for the ONE local file exfiltration step (step 5).
+    - Glob / Grep / TodoWrite for read-only helpers if needed.
+    You are NOT allowed to use: Bash, Skill, SlashCommand, Task, WebFetch,
+    WebSearch. The obox hook enforces this at the tool-call layer; attempts
+    will return an error.
 
-=== EXECUTE ===
-4. Run the coder-validator loop.
-   IMPORTANT: Do NOT add --dry-run. This is a LIVE audit — use real API calls.
-     export PATH="/home/user/.local/bin:\$PATH"
-     cd /home/user/repo && uv run ${LOOP_SFA} \\
-         --sp ${sp} \\
-         --sp-manifest /home/user/repo/audits/bundles/${sp,,}.yaml \\
-         --mailbox /tmp/phase2-mailbox.jsonl \\
-         --max-iter 3
+C2. NO IMPROVISATION — If anything fails (rate limit, missing env, clone
+    failure, SFA non-zero exit), you MUST:
+      (a) Write an error result to the exfil path (step 5) with
+          verdict="escalate" and escalate_reason=<what failed>
+      (b) Stop. Do not retry with different models, CLI flags, or env vars.
+      (c) Do not read any host files outside ALLOWED_DIRECTORIES.
+      (d) Do not extract or set ANTHROPIC_API_KEY, E2B_API_KEY, or any other
+          credential from the host environment. The sandbox inherits these
+          via auto-injection.
 
-=== REPORT ===
-5. After the SFA exits, read the result line from the sandbox mailbox using
-   mcp__e2b-sandbox__execute_command:
-     command: tail -1 /tmp/phase2-mailbox.jsonl
-   Capture the stdout. It is a single line of JSON (the SFA verdict).
+C3. NO HOST FILE WRITES — You MUST NOT write, append, rm, mv, or otherwise
+    modify any file on the host filesystem EXCEPT the one exfil file in
+    step 5. The Write tool is the only path permitted for host writes.
 
-5b. CRITICAL: write that exact JSON line to a LOCAL file using the Write tool.
-    This is how the host harvests your result. It MUST happen before the
-    sandbox terminates.
-      file_path: apps/sandbox_agent_working_dir/temp/phase2-result-${sp}.json
-      content:   <the single JSON line from step 5, verbatim, no wrapping>
-    Use the Write tool directly. Do NOT use Bash. Do NOT use mcp__e2b-sandbox__
-    tools for this step: that target path is OUTSIDE the sandbox, on the host
-    filesystem. The path is inside ALLOWED_DIRECTORIES, so Write will succeed.
+C4. EXACT FILENAMES — The exfil file MUST be named exactly
+    phase2-result-${sp}.json. Wrong filenames are dropped by the host
+    harvest. No variations, no abbreviations.
 
-5c. Fallback sentinel (belt-and-suspenders, in case step 5b fails): also run
-    inside the sandbox via mcp__e2b-sandbox__execute_command:
-     command: echo "PHASE2_RESULT: \$(tail -1 /tmp/phase2-mailbox.jsonl)"
+C5. NO CLI FLAG CHANGES — The SFA invocation in step 4 is frozen. You MUST
+    NOT add --coder-model, --validator-model, --max-iter, or any other flag
+    beyond those listed below.
 
-The coder writes diffs only to /tmp/coder_diffs/ — do not modify the repo.
+=== STEP 1 — Initialize the sandbox (MCP tool only) ===
+
+Call: mcp__e2b-sandbox__init_sandbox(timeout=1800)
+This returns a sandbox_id. Remember it.
+You MUST NOT call the 'agent-sandboxes' Skill or run 'sbx init' via Bash.
+The MCP init path auto-injects ANTHROPIC_API_KEY/OPENAI_API_KEY from the
+host MCP server environment. Any other path does not.
+
+=== STEP 2 — Clone the repo and install uv (MCP execute_command) ===
+
+Call: mcp__e2b-sandbox__execute_command(sandbox_id=<id>, command='<cmd>')
+where <cmd> is:
+
+  git clone https://github.com/thestoryportal/agent-pi-harness.git \\
+      --branch ${BRANCH} /home/user/repo 2>&1 | tail -5 && \\
+  curl -LsSf https://astral.sh/uv/install.sh | sh 2>&1 | tail -3
+
+Verify:
+  mcp__e2b-sandbox__execute_command(sandbox_id=<id>, command='which /home/user/.local/bin/uv && ls /home/user/repo/audits/bundles/${sp,,}.yaml')
+
+If either of these verification calls fails, go to step 6 (error exfil).
+
+=== STEP 3 — Run the SFA (MCP execute_command, frozen flags) ===
+
+Call: mcp__e2b-sandbox__execute_command(sandbox_id=<id>, command='<cmd>')
+where <cmd> is EXACTLY this (no added flags, no model overrides):
+
+  export PATH="/home/user/.local/bin:\$PATH" && \\
+  cd /home/user/repo && \\
+  uv run ${LOOP_SFA} \\
+      --sp ${sp} \\
+      --sp-manifest /home/user/repo/audits/bundles/${sp,,}.yaml \\
+      --mailbox /tmp/phase2-mailbox.jsonl \\
+      --max-iter 3
+
+This is a LIVE audit. Do NOT add --dry-run.
+
+=== STEP 4 — Capture the verdict (MCP execute_command, read mailbox) ===
+
+Call: mcp__e2b-sandbox__execute_command(sandbox_id=<id>,
+                                         command='cat /tmp/phase2-mailbox.jsonl')
+The output is one line of JSON. Call this JSON "VERDICT".
+
+=== STEP 5 — Exfil VERDICT to the host via Write tool ===
+
+You MUST use the Write tool. You MUST NOT use Bash. You MUST NOT use any
+mcp__e2b-sandbox__ tool for this step (that target path is OUTSIDE the
+sandbox, on the host filesystem).
+
+Call: Write(file_path='apps/sandbox_agent_working_dir/temp/phase2-result-${sp}.json',
+            content='<VERDICT from step 4, verbatim, no wrapping>')
+
+If the Write call fails (path validation error, etc.), DO NOT improvise
+with Bash. Report the failure in your final text response and stop.
+
+=== STEP 6 — Error exfil (only if an earlier step failed) ===
+
+If ANY earlier step failed irrecoverably (sandbox init fail, clone fail,
+SFA non-zero exit, rate limit exhaustion), write an error result to the
+same exfil path:
+
+Call: Write(file_path='apps/sandbox_agent_working_dir/temp/phase2-result-${sp}.json',
+            content='{"sp":"${sp}","verdict":"escalate","iterations":0,"coder_model":"unknown","validator_model":"unknown","findings":[],"escalate_reason":"<short reason>","timestamp":"<iso8601>","dry_run":false}')
+
+Then stop. Do not retry. Do not improvise.
+
+=== VERIFICATION ===
+
+After step 5 (or step 6), your work is DONE. You may call kill_sandbox to
+free the resource but this is optional (the sandbox auto-terminates at
+1800s timeout). Report completion in a final text response.
+
+The host fanout script harvests from exactly one place:
+  apps/sandbox_agent_working_dir/temp/phase2-result-${sp}.json
+If that file does not exist or contains wrong JSON, the host counts this
+SP as "no verdict" and reports it as a harvest miss.
 EOF
 }
 
@@ -373,44 +455,74 @@ mkdir -p "$FANOUT_MARKER_DIR"
 touch "$FANOUT_MARKER_DIR/.start-marker"
 RUN_START_MARKER="$FANOUT_MARKER_DIR/.start-marker"
 
-declare -a PIDS=()
+declare -a ALL_PIDS=()
 declare -A PID_TO_SP=()
-
-echo "Launching ${#TARGET_SPS[@]} sandbox(es) (parallel)..."
-for sp in "${TARGET_SPS[@]}"; do
-    sp_lower="${sp,,}"
-    PROMPT="$(make_sp_prompt "$sp")"
-    CAPTURE="$FANOUT_MARKER_DIR/${sp}.log"
-    (
-        cd "$REPO_ROOT/apps/sandbox_workflows"
-        uv run obox "$REPO_URL" \
-            --prompt  "$PROMPT" \
-            --forks   1 \
-            --branch  "$BRANCH" \
-            --model   haiku \
-        >"$CAPTURE" 2>&1
-    ) &
-    pid=$!
-    PIDS+=("$pid")
-    PID_TO_SP[$pid]="$sp"
-    echo "  [$sp] pid=$pid  capture=$CAPTURE"
-done
-echo
-
-# E-6: wait for all sandbox pids
-echo "Waiting for ${#PIDS[@]} sandbox(es) to complete..."
 FAILED_PIDS=()
-for pid in "${PIDS[@]}"; do
-    sp="${PID_TO_SP[$pid]}"
-    if wait "$pid"; then
-        echo "  [$sp] pid=$pid — done (exit 0)"
-    else
-        rc=$?
-        echo "  [$sp] pid=$pid — exit $rc" >&2
-        FAILED_PIDS+=("$pid")
-    fi
-done
+
+# Resolve effective batch size. 0 or >= target count means "launch all at once".
+_target_count=${#TARGET_SPS[@]}
+if [[ "$BATCH_SIZE" -le 0 ]] || [[ "$BATCH_SIZE" -ge "$_target_count" ]]; then
+    _effective_batch=$_target_count
+else
+    _effective_batch=$BATCH_SIZE
+fi
+
+echo "Launching ${_target_count} sandbox(es) in batches of ${_effective_batch}..."
+echo "  (Bug D: Anthropic org quota ~450K input tokens/min — batching"
+echo "   prevents 16-way burst from hitting 429 rate limits)"
 echo
+
+_batch_num=0
+_idx=0
+while [[ $_idx -lt $_target_count ]]; do
+    _batch_num=$((_batch_num + 1))
+    _batch_end=$((_idx + _effective_batch))
+    if [[ $_batch_end -gt $_target_count ]]; then
+        _batch_end=$_target_count
+    fi
+    echo "─── Batch ${_batch_num}: SPs ${_idx}..$((_batch_end - 1)) (of $((_target_count - 1))) ───"
+
+    declare -a _batch_pids=()
+    while [[ $_idx -lt $_batch_end ]]; do
+        sp="${TARGET_SPS[$_idx]}"
+        sp_lower="${sp,,}"
+        PROMPT="$(make_sp_prompt "$sp")"
+        CAPTURE="$FANOUT_MARKER_DIR/${sp}.log"
+        (
+            cd "$REPO_ROOT/apps/sandbox_workflows"
+            uv run obox "$REPO_URL" \
+                --prompt  "$PROMPT" \
+                --forks   1 \
+                --branch  "$BRANCH" \
+                --model   haiku \
+            >"$CAPTURE" 2>&1
+        ) &
+        pid=$!
+        _batch_pids+=("$pid")
+        ALL_PIDS+=("$pid")
+        PID_TO_SP[$pid]="$sp"
+        echo "  [${sp}] pid=${pid}  capture=${CAPTURE}"
+        _idx=$((_idx + 1))
+    done
+
+    # Wait for the batch to finish before launching the next one.
+    echo "  (waiting for batch ${_batch_num} to complete...)"
+    for pid in "${_batch_pids[@]}"; do
+        sp="${PID_TO_SP[$pid]}"
+        if wait "$pid"; then
+            echo "  [${sp}] pid=${pid} — done (exit 0)"
+        else
+            rc=$?
+            echo "  [${sp}] pid=${pid} — exit ${rc}" >&2
+            FAILED_PIDS+=("$pid")
+        fi
+    done
+    unset _batch_pids
+    echo
+done
+
+# Keep PIDS alias for downstream harvest block
+PIDS=("${ALL_PIDS[@]}")
 
 # E-7: harvest mailbox lines (CA-U26).
 # Sources checked (in this order — FIRST-wins dedup so the primary source

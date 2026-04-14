@@ -5,13 +5,157 @@ Hooks provide:
 1. Full observability - Log ALL tool usage to fork logs
 2. Path gating - Restrict Read/Write/Edit to allowed directories only
    (temp/, specs/, ai_docs/, app_docs/)
-3. Security - Prevent accidental local filesystem access outside allowed directories
+3. Bash command gating - Even though Bash is currently in DISALLOWED_TOOLS,
+   the PreToolUse hook also inspects Bash command strings for host-filesystem
+   writes as defense-in-depth. If Bash is ever re-added to ALLOWED_TOOLS, the
+   hook blocks any command that writes to paths outside ALLOWED_DIRECTORIES
+   (this is the Bug A guardrail from CA-U28-SP13).
+4. Security - Prevent accidental local filesystem access outside allowed directories
 """
 
+import re
+import shlex
 from pathlib import Path
-from typing import Any, Dict, Optional
+from typing import Any, Dict, List, Optional
 from .constants import PATH_RESTRICTED_TOOLS, TEMP_DIR, TEMP_DIR_NAME, ALLOWED_DIRECTORIES
 from .logs import ForkLogger
+
+
+# ─────────────────────────────────────────────────────────────────────────────
+# Bash command path validation (Bug A defense-in-depth)
+# ─────────────────────────────────────────────────────────────────────────────
+
+# Commands that write/modify files on the local filesystem.
+# If the Bash command starts with one of these AND a target path is outside
+# ALLOWED_DIRECTORIES, the command is blocked. This catches patterns like
+# `cat source > dest`, `mv src dest`, `rm path`, etc.
+_BASH_WRITE_COMMANDS = frozenset({
+    "rm", "mv", "cp", "touch", "mkdir", "rmdir", "ln", "install",
+    "chmod", "chown", "dd", "truncate", "sed",
+})
+
+# Regex for output redirects in bash: `> path`, `>> path`, `| tee path`,
+# `| tee -a path`. Captures the target path (greedy to end of token).
+_BASH_REDIRECT_RE = re.compile(
+    r"(?:>{1,2}|(?:\|\s*tee(?:\s+-a)?))\s+([^\s;&|<>]+)"
+)
+
+
+def _is_path_inside_allowed(path_str: str) -> bool:
+    """
+    Return True if ``path_str`` resolves inside any ALLOWED_DIRECTORIES entry.
+
+    Special cases treated as SAFE (not host filesystem writes):
+      - Paths starting with /home/user/ or /tmp/  (remote sandbox paths,
+        accessed via sbx exec or mcp__e2b-sandbox tools)
+      - Paths starting with /dev/  (/dev/null, /dev/stdout, etc.)
+      - Relative paths that don't escape the sandbox_workflows CWD
+
+    For any other path, resolve it and check if it is within ALLOWED_DIRECTORIES.
+    """
+    if not path_str or path_str.startswith(("$", "`")):
+        # Shell variable or subshell — we can't resolve statically; be permissive
+        # (the SDK will still reject writes blocked by the OS if the path is bad)
+        return True
+
+    # Sandbox-remote paths — these refer to files inside the E2B sandbox, not
+    # the host. When written via `sbx exec ... "cat > /home/user/..."` or
+    # similar, they do NOT touch the host filesystem.
+    if path_str.startswith(("/home/user/", "/tmp/", "/dev/")):
+        return True
+
+    try:
+        resolved = Path(path_str).resolve()
+    except (OSError, ValueError):
+        return False
+
+    for allowed_dir in ALLOWED_DIRECTORIES:
+        try:
+            resolved.relative_to(allowed_dir.resolve())
+            return True
+        except ValueError:
+            continue
+    return False
+
+
+def _extract_bash_write_targets(command: str) -> List[str]:
+    """
+    Parse a bash command string and extract any paths that would be written to
+    on the local filesystem. Returns a list of suspect target paths. Empty list
+    means no write targets detected.
+
+    Detection strategy (conservative — false positives are preferable to false
+    negatives for a security guardrail):
+
+    1. Output redirects:   `> path`, `>> path`, `| tee path`, `| tee -a path`
+    2. File-modifying commands: rm/mv/cp/touch/mkdir/... — any remaining
+       positional arguments are treated as potential targets.
+    """
+    targets: List[str] = []
+
+    # (1) Output redirects — scan the whole command string for > or | tee patterns.
+    for m in _BASH_REDIRECT_RE.finditer(command):
+        targets.append(m.group(1))
+
+    # (2) File-modifying commands — split into pipeline segments and inspect
+    # each segment's leading command. Uses shlex for robust tokenization.
+    # Split on `;`, `&&`, `||`, and `|` to handle chained commands.
+    segments = re.split(r"(?:;|&&|\|\||\|)", command)
+    for seg in segments:
+        seg = seg.strip()
+        if not seg:
+            continue
+        try:
+            tokens = shlex.split(seg, posix=True)
+        except ValueError:
+            # Malformed quoting — be strict, flag the whole segment
+            targets.append(seg)
+            continue
+        if not tokens:
+            continue
+        # Strip leading `sudo` and env-var assignments (FOO=bar cmd)
+        i = 0
+        while i < len(tokens) and (tokens[i] == "sudo" or "=" in tokens[i].split(" ", 1)[0]):
+            i += 1
+        if i >= len(tokens):
+            continue
+        cmd = Path(tokens[i]).name  # strip any leading path on the command itself
+        if cmd not in _BASH_WRITE_COMMANDS:
+            continue
+        # Remaining tokens are args. Skip flags (start with `-`), collect the rest.
+        args = [t for t in tokens[i + 1:] if not t.startswith("-")]
+        if cmd == "cp" or cmd == "mv" or cmd == "ln":
+            # The LAST positional arg is the destination (target)
+            if args:
+                targets.append(args[-1])
+        elif cmd == "rm":
+            # Every positional arg is a target being deleted
+            targets.extend(args)
+        else:
+            # touch/mkdir/chmod/etc — all positional args are targets
+            targets.extend(args)
+
+    return targets
+
+
+def _validate_bash_command(command: str, logger: ForkLogger) -> Optional[str]:
+    """
+    Inspect ``command`` for writes to paths outside ALLOWED_DIRECTORIES.
+
+    Returns None if the command is safe to run. Otherwise returns a human-
+    readable reason string describing the first violating path.
+    """
+    if not command:
+        return None
+    targets = _extract_bash_write_targets(command)
+    for target in targets:
+        if not _is_path_inside_allowed(target):
+            return (
+                f"Bash command writes to path '{target}' which is outside "
+                f"ALLOWED_DIRECTORIES. Local file writes must use the Write "
+                f"tool with a path inside {[d.name for d in ALLOWED_DIRECTORIES]}."
+            )
+    return None
 
 
 def create_pre_tool_hook(logger: ForkLogger):
@@ -115,14 +259,41 @@ def create_pre_tool_hook(logger: ForkLogger):
                     }
                 }
 
-        # === BASH COMMAND LOGGING ===
+        # === BASH COMMAND VALIDATION (Bug A defense-in-depth) ===
+        # Bash is currently in DISALLOWED_TOOLS, so this branch should never
+        # fire in practice. If Bash is ever re-added to ALLOWED_TOOLS, this
+        # block inspects the command string for writes to host paths outside
+        # ALLOWED_DIRECTORIES and blocks them. This is the CA-U28-SP13 fix
+        # (SP13 agent used `cat ... >> audits/phase2-mailbox.jsonl` to bypass
+        # the Write tool path gate).
         elif tool_name == "Bash":
             command = tool_input.get("command", "")
             logger.log(
                 "INFO",
-                f"[Bash] Executing local command",
+                f"[Bash] Command received",
                 command=command
             )
+            violation = _validate_bash_command(command, logger)
+            if violation:
+                allowed_names = ", ".join([d.name for d in ALLOWED_DIRECTORIES])
+                logger.log(
+                    "ERROR",
+                    f"[BashValidation] BLOCKED Bash command",
+                    command=command,
+                    reason=violation,
+                )
+                return {
+                    "hookSpecificOutput": {
+                        "hookEventName": "PreToolUse",
+                        "permissionDecision": "deny",
+                        "permissionDecisionReason": (
+                            f"{violation} "
+                            f"All local file writes MUST use the Write tool, "
+                            f"not Bash redirects. Sandbox operations MUST use "
+                            f"mcp__e2b-sandbox__execute_command, not Bash."
+                        ),
+                    }
+                }
 
         # === MCP TOOL LOGGING ===
         elif tool_name.startswith("mcp__e2b-sandbox__"):
