@@ -156,13 +156,9 @@ clear url=default_url:
 db-prune:
     uv run apps/observe/prune.py
 
-# Start Drop Zone watcher (uses drops.yaml in cwd)
+# Start Drop Zone watcher (reads drops.yaml from apps/dropzone/)
 dropzone:
-    uv run apps/dropzone/main.py watch
-
-# Start Drop Zone watcher with custom config
-dropzone-config CONFIG:
-    uv run apps/dropzone/main.py watch --config "{{CONFIG}}"
+    cd apps/dropzone && uv run sfs_agentic_drop_zone.py
 
 # === SP11: Prompt Testing ===
 
