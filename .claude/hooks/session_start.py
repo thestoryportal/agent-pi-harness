@@ -79,7 +79,8 @@ def resolve_session_id(logger) -> str:
 
 
 REQUIRED_HOOKS = [
-    "session_start.py", "setup.py", "pre_tool_use.py", "post_tool_use.py",
+    "session_start.py", "setup_init.py", "setup_maintenance.py",
+    "pre_tool_use.py", "post_tool_use.py",
     "notification.py", "stop.py", "user_prompt_submit.py", "pre_compact.py",
     "subagent_start.py", "subagent_stop.py", "session_end.py",
     "permission_request.py", "post_tool_use_failure.py",
