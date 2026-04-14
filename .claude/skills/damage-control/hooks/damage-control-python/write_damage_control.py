@@ -115,7 +115,7 @@ def check_path(file_path: str, rules: dict[str, Any]) -> tuple[str, str | None]:
 
 
 def load_patterns() -> dict:
-    patterns_path = Path(PROJECT_DIR) / ".claude" / "hooks" / "patterns.yaml"
+    patterns_path = Path(PROJECT_DIR) / ".claude" / "skills" / "damage-control" / "patterns.yaml"
     with open(patterns_path) as f:
         return yaml.safe_load(f)
 
