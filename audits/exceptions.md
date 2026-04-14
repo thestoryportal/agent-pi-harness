@@ -627,10 +627,83 @@ These are flagged for a future review pass but kept in place for SP2 round 1 to 
 - `feedback_disler_authoritative.md` — every kept rule is still DRIFT, not MATCH
 
 **Follow-up actions:**
-1. (Phase H) Restore `.claude/hooks/*.py` (as 7-file list) and `.claude/settings.json` rules in `readOnlyPaths`. Remove the commented-out block from this exception's section N.
-2. (Phase I) Re-run `audits/sp2_verify.py` after E1 patch lands; confirm AR4 fnmatch cases still pass.
+1. (Phase H — landed `ee49a01`) Restore the security boundary in `readOnlyPaths` as a 7-file explicit list per D10=A and the settings file rule per D11=A. Section N's commented-out block is now active code; this exception covers the structural delta but the active enforcement state is documented in patterns.yaml itself.
+2. (Phase I) Re-run `audits/sp2_verify.py` and `audits/sp2_e1_test.py` after E1 patch lands; both confirm regression cases pass.
 3. (Future round) Re-evaluate the 3 SQL convention rules in category I and either move to a project-specific linter or formally accept as a permanent harness-shipped style rule.
 4. (Future SP14 round, if any) Cite new rounds against this exception to maintain rolling round attribution.
+
+---
+
+## Exception 15 — Damage-control hook files keep underscore form (D1=B)
+
+**Decision:** D1=B, SP2 round 1 decision gate (2026-04-13)
+
+**Path(s):**
+- `.claude/skills/damage-control/hooks/damage-control-python/bash_damage_control.py` (upstream: `bash-tool-damage-control.py`)
+- `.claude/skills/damage-control/hooks/damage-control-python/edit_damage_control.py` (upstream: `edit-tool-damage-control.py`)
+- `.claude/skills/damage-control/hooks/damage-control-python/write_damage_control.py` (upstream: `write-tool-damage-control.py`)
+
+**SP audit round:** SP2 round 1 (2026-04-13)
+**Decision date:** 2026-04-13
+
+**Rationale:**
+
+The upstream `disler/claude-code-damage-control` repo names these hook files with the hyphenated form `bash-tool-damage-control.py`, following the project-wide CLAUDE.md naming convention `lowercase-with-hyphens` for authored files. ArhuGula's CLAUDE.md §Naming explicitly carves out an exception for hook files: **"Hook files: underscores (e.g., `session_start.py`)"**. Per that convention, every other hook file in `.claude/hooks/` uses underscores: `session_start.py`, `pre_tool_use.py`, `post_tool_use.py`, `permission_request.py`, `_base.py`, etc.
+
+The 3 damage-control hooks ARE hook files — they are loaded by `settings.json` PreToolUse matchers and execute as the security gate for Bash, Edit, and Write tools. Keeping them in underscore form aligns with ArhuGula's existing hook-file convention. Upstream uses hyphenated form because their convention is consistent across all files; ArhuGula's split convention (hyphens for authored, underscores for hooks) is a deliberate carve-out.
+
+The underscore form also drops the upstream `tool-` infix. Upstream uses `bash-tool-damage-control.py` because the longer name emphasizes which Claude Code tool the hook is gating. ArhuGula uses `bash_damage_control.py` because the `damage_control` substring is already unambiguous and the `tool` infix adds noise. This is a stylistic micro-decision but consistent with ArhuGula's existing terse naming.
+
+**Phase E architectural note:** these 3 files moved during SP2 Phase E from `.claude/hooks/` to `.claude/skills/damage-control/hooks/damage-control-python/` as part of the D6/D7 architectural switchover. The exception applies at their new (post-Phase-E) location. The 7-file readOnlyPaths list in patterns.yaml (D10=A, restored in Phase H) references the post-Phase-E paths.
+
+**Review cadence:** None. This is a permanent stylistic exception — the rationale (CLAUDE.md §Naming hook-file carve-out) is structural to ArhuGula's conventions. If CLAUDE.md ever drops the hook-file underscore exception, this exception becomes invalid and the files should be renamed to upstream form.
+
+**Related findings:**
+- `audits/SP2-checkpoint.md` — D1 decision (Option B kept underscore form)
+- `audits/SP2-plan.md` — D1 decision rationale
+- `CLAUDE.md` § Naming Conventions — hook files: underscores carve-out
+- Exception 8 — Security-critical hooks + `_base.py` kept in ArhuGula form (D4 Option C) — sister exception that preserves the larger ArhuGula-specific hook layout
+
+**Follow-up actions:**
+1. None required at the current SP2 audit round.
+2. If a future SP audit round renames these files for any other reason (e.g. upstream consolidation), this exception must be updated or closed.
+
+---
+
+## Exception 16 — Stylistic drift on reverted upstream hooks (whitespace)
+
+**Decision:** SP2 round 1 incidental drift (2026-04-13)
+
+**Path(s):**
+- `.claude/hooks/notification.py`
+- `.claude/hooks/pre_compact.py`
+- `.claude/hooks/stop.py`
+- `.claude/hooks/subagent_start.py`
+- `.claude/hooks/subagent_stop.py`
+- `.claude/hooks/user_prompt_submit.py`
+- `.claude/hooks/post_tool_use_failure.py`
+- `.claude/hooks/session_end.py`
+- `.claude/hooks/post_tool_use.py`
+
+**SP audit round:** SP2 round 1, SP1 resume-pass leg (2026-04-13)
+**Decision date:** 2026-04-13
+
+**Rationale:**
+
+These 9 hook files were reverted to their upstream `claude-code-hooks-mastery` form during the SP1 resume-pass that landed under SP2's authorization envelope. The reverts were executed via the `Write` tool, which strips trailing whitespace on blank lines as a side effect of its file-writing path. The upstream files have intentional trailing-whitespace lines (likely artifacts of their original editor); ArhuGula's reverted copies are byte-equivalent in code and comment content but differ in trailing-whitespace bytes on blank lines.
+
+The drift is functionally invisible: Python parses identically, ruff/ty validators pass, the hook chain executes identically. The only observable difference is a `git diff` against upstream showing whitespace-only deltas on blank lines.
+
+**Decision:** accept as a known stylistic exception. The Write tool's whitespace handling is harness-internal behavior; trying to reproduce upstream's exact whitespace would require a different file-writing mechanism (e.g. raw byte writes via Bash heredoc) that adds complexity for zero functional benefit.
+
+**Review cadence:** None — permanent. If the Write tool's whitespace handling ever changes, the drift may resolve itself; otherwise it stays as accepted incidental drift.
+
+**Related findings:**
+- `audits/SP2-checkpoint.md` — "Whitespace drift on reverted hooks" anti-footgun note
+- SP2 Phase C commits `c693420` and `d4aaf27` — the two-stage SP1 resume-pass leaf hook reverts that produced the drift
+
+**Follow-up actions:**
+None.
 
 ---
 
@@ -652,6 +725,8 @@ These are flagged for a future review pass but kept in place for SP2 round 1 to 
 | 12 | `.claude/CLAUDE.md` comprehensive doc + nested path | SP1 r1 mini-gate | 2026-04-13 | active | Quarterly |
 | 13 | `justfile` 307-line multi-SP form (security-coupled via `--dangerously-skip-permissions` omission) | SP1 r1 mini-gate | 2026-04-13 | active | Per-SP recipe audits |
 | 14 | `patterns.yaml` 289-line hardening delta (SP14 r2–r10 + SP2-original additions) | SP2 r1 D8 | 2026-04-13 | active | SP14 follow-up rounds / SP3 audit |
+| 15 | Damage-control hook files keep underscore form (D1=B carve-out per CLAUDE.md §Naming) | SP2 r1 D1 | 2026-04-13 | active | None (permanent) |
+| 16 | Stylistic drift on 9 reverted upstream hooks (Write-tool trailing-whitespace strip) | SP2 r1 SP1-resume-pass | 2026-04-13 | active | None (permanent) |
 
 ## How to close an exception
 
