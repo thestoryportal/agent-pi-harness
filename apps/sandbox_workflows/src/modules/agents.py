@@ -50,6 +50,7 @@ class SandboxForkAgent:
         logger: ForkLogger,
         max_turns: int | None = None,
         model: str | None = None,
+        extra_env: dict[str, str] | None = None,
     ):
         """
         Initialize sandbox fork agent.
@@ -77,11 +78,23 @@ class SandboxForkAgent:
         # Build hooks for observability and path gating
         hooks_dict = create_hook_dict(logger)
 
-        # Prepare environment variables for sandbox
-        agent_env = {}
-        github_token = os.getenv("GITHUB_TOKEN")
-        if github_token:
-            agent_env["GITHUB_TOKEN"] = github_token
+        # Prepare environment variables for the local agent process.
+        # These flow through to the E2B MCP server (which auto-injects
+        # ANTHROPIC_API_KEY / OPENAI_API_KEY into every sandbox it creates).
+        _PASSTHROUGH_KEYS = (
+            "GITHUB_TOKEN",
+            "ANTHROPIC_API_KEY",
+            "OPENAI_API_KEY",
+            "GEMINI_API_KEY",
+        )
+        agent_env: dict[str, str] = {}
+        for key in _PASSTHROUGH_KEYS:
+            value = os.getenv(key)
+            if value:
+                agent_env[key] = value
+        # Caller-supplied overrides (e.g. from obox --env flag)
+        if extra_env:
+            agent_env.update(extra_env)
 
         # Build ClaudeAgentOptions
         self.options = ClaudeAgentOptions(
@@ -93,7 +106,7 @@ class SandboxForkAgent:
             permission_mode="acceptEdits",
             max_turns=self.max_turns,
             model=self.model,
-            env=agent_env,  # Pass GITHUB_TOKEN to agent
+            env=agent_env,  # Passthrough LLM API keys + optional caller overrides
             cwd=str(WORKING_DIR),
             setting_sources=["project"],  # Enable project-level slash commands
         )

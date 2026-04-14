@@ -19,6 +19,21 @@ from typing import Optional
 
 from mcp.server.fastmcp import FastMCP
 
+# LLM API keys the MCP server auto-injects into every sandbox it creates.
+# Values are read from the MCP server's own process environment at call time,
+# so they never appear in any prompt, log, or tool argument visible to the LLM.
+_AUTO_PASSTHROUGH_KEYS = ("ANTHROPIC_API_KEY", "OPENAI_API_KEY", "GEMINI_API_KEY")
+
+
+def _auto_env_args() -> list[str]:
+    """Return --env KEY=VALUE args for each passthrough key present in the server env."""
+    args: list[str] = []
+    for key in _AUTO_PASSTHROUGH_KEYS:
+        value = os.environ.get(key)
+        if value:
+            args += ["--env", f"{key}={value}"]
+    return args
+
 # Initialize FastMCP server
 mcp = FastMCP(
     "E2B Sandbox Manager",
@@ -103,6 +118,9 @@ def init_sandbox(
     if template:
         args.extend(["--template", template])
 
+    # Auto-inject LLM API keys from the MCP server's process environment.
+    args.extend(_auto_env_args())
+
     if env_vars:
         for env_pair in env_vars.split(","):
             args.extend(["--env", env_pair.strip()])
@@ -138,6 +156,9 @@ def create_sandbox(
 
     if template:
         args.extend(["--template", template])
+
+    # Auto-inject LLM API keys from the MCP server's process environment.
+    args.extend(_auto_env_args())
 
     if env_vars:
         for env_pair in env_vars.split(","):

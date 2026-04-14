@@ -8,7 +8,7 @@ from rich.console import Console
 from rich.table import Table
 from rich.panel import Panel
 from rich.progress import Progress, SpinnerColumn, TextColumn
-from typing import Optional
+from typing import List, Optional
 import subprocess
 import sys
 
@@ -50,6 +50,14 @@ def sandbox_fork_command(
     num_forks: int = typer.Option(constants.DEFAULT_FORKS, "--forks", "-f", help="Number of forks to create"),
     max_turns: Optional[int] = typer.Option(None, "--max-turns", "-t", help="Maximum number of conversation turns (default: from constants)"),
     model: str = typer.Option("sonnet", "--model", "-m", help="Claude model to use: opus, sonnet, or haiku (default: sonnet)"),
+    env_overrides: Optional[List[str]] = typer.Option(
+        None,
+        "--env",
+        "-e",
+        help="Extra environment variable to pass to the sandbox agent (KEY=VALUE, repeatable). "
+             "LLM API keys (ANTHROPIC_API_KEY, OPENAI_API_KEY, GEMINI_API_KEY) are auto-injected "
+             "from the host environment; use this flag only for additional overrides.",
+    ),
 ):
     """
     Fork a git repository into multiple sandboxes and run agents in parallel.
@@ -144,6 +152,16 @@ def sandbox_fork_command(
     console.print(config_table)
     log_manager.log_primary("")
 
+    # Parse --env KEY=VALUE overrides into a dict
+    extra_env: dict[str, str] = {}
+    for pair in (env_overrides or []):
+        if "=" not in pair:
+            log_and_print(log_manager, f"[red]Error: --env value must be KEY=VALUE, got: {pair!r}[/red]", f"[red]Error: --env value must be KEY=VALUE, got: {pair!r}[/red]")
+            log_manager.close_all()
+            raise typer.Exit(1)
+        key, _, val = pair.partition("=")
+        extra_env[key.strip()] = val
+
     # === EXECUTION ===
     log_and_print(log_manager, "[bold yellow]Starting parallel fork execution...[/bold yellow]\n", "[bold yellow]Starting parallel fork execution...[/bold yellow]\n")
 
@@ -164,6 +182,7 @@ def sandbox_fork_command(
                 log_manager=log_manager,
                 max_turns=max_turns,
                 model=model,
+                extra_env=extra_env or None,
             )
 
             progress.update(task, completed=True)

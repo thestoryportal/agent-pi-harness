@@ -18,6 +18,7 @@ def run_fork_in_thread(
     logger: ForkLogger,
     max_turns: int | None = None,
     model: str | None = None,
+    extra_env: dict[str, str] | None = None,
 ) -> dict:
     """
     Run a single fork agent in a thread.
@@ -43,6 +44,7 @@ def run_fork_in_thread(
         logger=logger,
         max_turns=max_turns,
         model=model,
+        extra_env=extra_env,
     )
 
     # Create new event loop for this thread
@@ -69,6 +71,7 @@ def run_forks_parallel(
     log_manager,
     max_turns: int | None = None,
     model: str | None = None,
+    extra_env: dict[str, str] | None = None,
 ) -> list[dict]:
     """
     Run multiple forks in parallel threads.
@@ -108,6 +111,7 @@ def run_forks_parallel(
                 logger=logger,
                 max_turns=max_turns,
                 model=model,
+                extra_env=extra_env,
             )
             results[result_index] = result
 
