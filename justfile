@@ -278,6 +278,11 @@ pi-full:
     pi -e extensions/drive-dispatch.ts -e extensions/listen-submit.ts -e extensions/damage-control.ts -e extensions/theme-cycler.ts
 
 # === SP13: Steer GUI Automation ===
+# ArhuGula-specific carve-outs (Exception 26): thin wrappers over the built
+# steer binary for dev ergonomics. No upstream equivalent in mac-mini-agent
+# justfile (upstream has `steer1/2/3` variables that cat prompt files from
+# specs/ and invoke via `just send` or `claude --dangerously-skip-permissions`
+# for full agent-level control, not direct binary invocation).
 
 # Build steer Swift CLI (release mode)
 steer-build:
