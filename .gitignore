@@ -18,6 +18,11 @@ node_modules/
 # hooks-mastery upstream form post_tool_use.py writes here (Path.cwd() / 'logs')
 logs/
 
+# SP16 Voice — voice_to_claude_code.py writes conversation history to output/<id>.yml.
+# Transcripts may contain sensitive spoken commands, file contents echoed by Claude,
+# project structure, or secrets. Never commit them. (/harness-review 2026-04-14 S-04)
+output/
+
 # macOS
 .DS_Store
 

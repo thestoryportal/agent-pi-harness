@@ -372,6 +372,18 @@ sbx-mcp:
 # places it at repo root, which is reserved for harness infrastructure). PEP 723
 # inline deps handle Python packages via uv run. System prerequisite:
 # `brew install portaudio` (required by sounddevice + RealtimeSTT).
+#
+# INVOCATION: only `just voice` is supported. Do NOT invoke the script directly
+# via `uv run apps/voice/voice_to_claude_code.py` from outside the project tree —
+# the child `claude -p` subprocess the script spawns resolves settings.json +
+# damage-control hooks by walking up from the parent cwd, and direct invocation
+# from an arbitrary cwd may fail to locate the hooks. /harness-review 2026-04-14 S-02.
+#
+# SECURITY NOTE: This recipe runs an always-on microphone feeding speech
+# transcripts verbatim to `claude -p`. Do not run in shared spaces or near
+# untrusted audio sources — ambient speech containing a trigger word can drive
+# arbitrary Bash/Edit/Write in the spawned session. /harness-review 2026-04-14
+# S-01, S-03. Full upstream-posture findings tracked in Exception 28.
 
 # Start the voice-to-Claude-Code assistant (requires OPENAI_API_KEY + ANTHROPIC_API_KEY)
 voice:

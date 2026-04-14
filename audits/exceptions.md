@@ -1175,6 +1175,7 @@ The `feedback_disler_authoritative.md` rule says "Tier 1 full-clones are byte-le
 | 25 | SP14 root `justfile` block content-level adaptations (6 items: damage-control flag removal, multi-SP variable inlining, bug-fix headed default, agent-teams env prefix, shell-metachar warning, prompt trim) | SP14 r1 D | 2026-04-14 | active | SP14 r2 / revert items 3+6 when convenient |
 | 26 | SP15 E2B Sandboxes justfile carve-out recipes (`sbx-run`, `sbx`, `sbx-fork`, `sbx-mcp`) — no upstream justfile in agent-sandboxes or agent-sandbox-skill | SP15 r1 D | 2026-04-14 | active | Per-SP audit |
 | 27 | SP16 R02 `voice_to_claude_code.py` landed at `apps/voice/` (upstream places it at repo root) + SP16 `just voice` carve-out recipe — no upstream justfile in claude-code-is-programmable | SP16 r1 B+D | 2026-04-14 | active | Per-SP audit |
+| 28 | SP16 voice-loop upstream runtime security posture — 6 Tier 1 byte-identical findings (S-01/S-03/S-05/S-06/S-08/S-09 from /harness-review). Documented, not patched. | SP16 r1 post-review | 2026-04-14 | active | Every upstream change; re-run /harness-review |
 
 ## How to close an exception
 
@@ -1503,6 +1504,8 @@ Upstream `claude-code-is-programmable` ships no justfile at all. The root `justf
 
 **Combined rationale:** Analogous to Exception 26 (SP15 E2B sandboxes) and Exception 24 (SP13 Steer) — all three cover no-upstream-equivalent justfile blocks paired with the associated ArhuGula apps/ landing. SP16 is the second round where the upstream was a single-purpose script repo (first was SP15 agent-sandboxes), so the apps/ landing mandate is stronger than in SP3–SP14 where upstreams were multi-file projects with their own directory structure.
 
+**Status:** active (permanent)
+
 **Review cadence:** Per-SP audit. Review if `claude-code-is-programmable` ever adds a justfile or restructures into per-script directories.
 
 **Related findings:**
@@ -1515,3 +1518,72 @@ Upstream `claude-code-is-programmable` ships no justfile at all. The root `justf
 **Follow-up actions:**
 - None. Both the landing path and the `voice` recipe are permanent for as long as SP16 runtime usage is supported.
 - R02 runtime prerequisite: `brew install portaudio` — documented in `.env.example` SP16 comment block and in `justfile` SP16 header comment. Not an exception, but a runtime caveat.
+
+---
+
+## Exception 28 — SP16 voice-loop upstream runtime security posture
+
+**Path(s):**
+- `apps/voice/voice_to_claude_code.py` (Tier 1 byte-identical — upstream `disler/claude-code-is-programmable/voice_to_claude_code.py`)
+- `.claude/agents/work-completion-summary.md` (Tier 1 byte-identical — upstream `claude-code-hooks-mastery/.claude/agents/work-completion-summary.md`)
+- `.claude/output-styles/tts-summary.md` (Tier 1 byte-identical — upstream `claude-code-hooks-mastery/.claude/output-styles/tts-summary.md`)
+
+**SP audit round:** SP16 round 1 post-review (2026-04-14) — `/harness-review` multi-agent consensus review surfaced 6 upstream-inherited security findings + 2 ArhuGula-authored gaps.
+
+**Decision date:** 2026-04-14
+
+**Status:** active (permanent — byte-identical mandate preserved; findings documented, not patched)
+
+**Rationale:**
+
+The /harness-review @security arm identified 6 findings inherited verbatim from upstream Disler code (same posture pattern as SP15 r1 /harness-review produced for sandbox apps). These findings are **inherent to the upstream trust model** (Disler's repos assume a trusted single-user operator), but are **noteworthy in an adversarial-review context** like ArhuGula's audit branch. Per the Tier 1 identicality mandate and the SP15 r1 Option-2 precedent, these findings are **documented here, not patched** — patching would break byte-identical parity with upstream.
+
+The 2 ArhuGula-authored gaps surfaced by the review (S-02 direct-invocation hook coverage gap, S-04 missing `output/` gitignore) were resolved in the /harness-review follow-up commit and are NOT part of this exception; they are listed in the "Follow-up actions" section below as fixed.
+
+**Upstream-posture findings (6 — documented, not patched):**
+
+**S-01 CRITICAL — Unsanitized STT → `claude -p` prompt injection.**
+`voice_to_claude_code.py:426-450` feeds the raw microphone transcript verbatim as the `-p` argument to the spawned `claude` subprocess after only a substring trigger-word check. Ambient audio in a trigger-word-matching phrase can drive Bash/Edit/Write in the child session. `subprocess.run` uses list-form `cmd` (no shell injection via argv), but the *prompt content* is fully attacker-controlled and Claude interprets it as instructions. **Threat model:** shared workspace / open-office / any environment where untrusted audio could reach the microphone. **Mitigation:** runtime isolation — the `justfile` SP16 header comment warns against running in shared spaces. Not patched.
+
+**S-03 HIGH — TRIGGER_WORDS substring bypass.**
+`voice_to_claude_code.py:84, 426`: `TRIGGER_WORDS = ["claude", "cloud", "sonnet", "sonny"]` with `any(trigger.lower() in message.lower())` — any speech containing "cloud" (AWS, Google Cloud, overcast, "cloudy day") triggers execution. False-positive prone in normal conversation. **Threat model:** unintended execution from background audio. **Mitigation:** runtime isolation (same as S-01); documentation. Not patched.
+
+**S-05 MEDIUM — `work-completion-summary.md` ElevenLabs MCP save-path argument.**
+`.claude/agents/work-completion-summary.md:25-28` constructs the save path from `pwd` output via string concatenation. If the MCP server honors arbitrary output paths and the agent context is poisoned (parent context describes a crafted `pwd` result), files could be written outside `output/`. **Threat model:** prompt injection into the agent driver's context. **Mitigation:** only invoke `work-completion-summary` from the project root; rely on the MCP server to reject absolute path traversal. Not patched.
+
+**S-06 MEDIUM — `tts-summary.md` output-style cost amplification.**
+`.claude/output-styles/tts-summary.md:30-34` instructs Claude to execute an ElevenLabs TTS call at the end of every response. Every message → one API call → ongoing API credit burn. Data sent to ElevenLabs includes summaries of all Claude actions. **Threat model:** cost exhaustion + data-egress to ElevenLabs in long sessions. **Mitigation:** do not activate the `tts-summary` output style in automated or unattended sessions. Not patched.
+
+**S-08 LOW — Subprocess inherits full parent environment.**
+`voice_to_claude_code.py:450`: `subprocess.run(cmd, ...)` passes no `env=` argument, so the child Claude session inherits `ANTHROPIC_API_KEY`, `OPENAI_API_KEY`, `ELEVENLABS_API_KEY`, `GROQ_API_KEY`, `DEEPSEEK_API_KEY`, and all other env vars. Any prompt-injected Bash command can read/exfiltrate any API key from `os.environ`. **Threat model:** chained escalation after S-01 — once an attacker has Bash access via prompt injection, key exfiltration is trivial. **Mitigation:** blast radius already bounded by S-01 runtime isolation. Not patched.
+
+**S-09 LOW — `stderr[:500]` logging potential leak.**
+`voice_to_claude_code.py:470`: error handler logs the first 500 bytes of subprocess stderr to the Rich console. If the `claude` subprocess emits errors echoing env var content or prompt fragments containing secrets, those bytes hit the terminal output. **Threat model:** incidental secret leakage in error logs. **Mitigation:** terminal output is not persisted by default; does not persist to filesystem unless the user redirects. Not patched.
+
+**Sibling upstream-posture exceptions:**
+
+Analogous in structure to what SP15 r1 /harness-review proposed (option 2, deferred) for sandbox app security findings. SP15's deferred security posture exception, if ever adopted, would become Exception 29 or later. SP16's exception is adopted now because the audit sweep is closed (SP1-SP16 all BUILT + AUDIT R1 COMPLETE) and leaving runtime security posture undocumented at sweep close creates a documentation gap.
+
+**Not covered by this exception:**
+
+3 findings from the /harness-review @security arm were NOT upstream-posture. They are resolved in the same follow-up commit as this exception:
+
+- **S-02 (P1, ArhuGula-authored)** — spawned `claude -p` subprocess hook coverage gap if the script is invoked directly from outside the project tree. Resolved by adding a justfile header comment warning: "only `just voice` is supported; do NOT invoke the script directly via `uv run apps/voice/voice_to_claude_code.py` from outside the project tree".
+- **S-04 (P1, ArhuGula-authored)** — `output/` directory not in `.gitignore`. Resolved by adding `output/` to `.gitignore` with a comment citing the /harness-review finding.
+- **S-07 (LOW)** — `prime_tts.md` references `ai_docs/` paths that don't exist locally. Upstream byte-identical file, silent skip via Claude Code `@file` graceful-degradation semantics, no action required.
+
+**Review cadence:** Every time SP16 upstream code changes in `claude-code-is-programmable` or `hooks-mastery`. Re-run `/harness-review` on SP16 diff to check if upstream has patched any of the 6 findings. Re-evaluate Option (c) — local hardening deltas — when runtime use becomes imminent (per SP15 r1 Option 3 pattern).
+
+**Related findings:**
+- SP15 r1 /harness-review — 6 upstream-posture findings for sandbox apps (still deferred, not yet adopted as Exception 29+)
+- Exception 14 — `patterns.yaml` 289-line hardening delta for browser automation (SP14 r2–r10) — the closest prior precedent for ArhuGula hardening upstream code content; rejected here for SP16 per Tier 1 mandate
+- Exception 27 — SP16 R02 landing path + justfile carve-out (sibling SP16 exception for the same round)
+- SoT §1 SP16 r1 block — full round-1 details
+- SoT §4.14 R01/R02 — feature inventory
+
+**Follow-up actions:**
+- (Done, same follow-up commit) S-02 — justfile header comment warns against direct-invocation bypass
+- (Done, same follow-up commit) S-04 — `output/` added to `.gitignore`
+- (Documentation only) S-01, S-03, S-05, S-06, S-08, S-09 — no patch applied; runtime isolation + documentation is the mitigation
+- (Deferred to SP16 r2 or runtime adoption) local hardening deltas to the 6 upstream-byte-identical files — requires explicit user authorization to break Tier 1 mandate
+- (Cross-round) re-run `/harness-review` whenever upstream SP16 code changes
