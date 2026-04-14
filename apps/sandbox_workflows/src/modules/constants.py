@@ -116,8 +116,9 @@ TEMP_DIR_NAME: Final[str] = "temp"
 # Log file name template
 LOG_FILE_TEMPLATE: Final[str] = "{branch}-fork-{fork_num}-{timestamp}.log"
 
-# Log timestamp format
-LOG_TIMESTAMP_FORMAT: Final[str] = "%Y%m%d-%H%M%S"
+# Log timestamp format (CA-U24: microsecond precision prevents fork log filename
+# collision when 16+ obox processes launch within the same second)
+LOG_TIMESTAMP_FORMAT: Final[str] = "%Y%m%d-%H%M%S-%f"
 
 # === Git Configuration ===
 # Default branch name template if not provided

@@ -1,0 +1,11 @@
+sp_id: SP3
+sp_scope:
+- .claude/hooks/validators/**
+spec_refs:
+  sot_section: "\xA74.3"
+  sot_path: N/A (local-only path, not available in sandbox)
+  memory_file: N/A (local-only path, not available in sandbox)
+  exceptions_md: audits/exceptions.md
+memory_file_excerpt: (memory file is local-only; load memory via host)
+exceptions_subset:
+- 17

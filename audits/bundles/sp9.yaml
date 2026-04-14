@@ -1,0 +1,14 @@
+sp_id: SP9
+sp_scope:
+- .claude/commands/infinite.md
+- .claude/commands/harness-review.md
+- .claude/agents/meta-agent.md
+spec_refs:
+  sot_section: "\xA74.9"
+  sot_path: N/A (local-only path, not available in sandbox)
+  memory_file: N/A (local-only path, not available in sandbox)
+  exceptions_md: audits/exceptions.md
+memory_file_excerpt: (memory file is local-only; load memory via host)
+exceptions_subset:
+- 1
+- 9

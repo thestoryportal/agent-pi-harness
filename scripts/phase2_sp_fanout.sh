@@ -38,6 +38,9 @@ cd "$REPO_ROOT"
 
 LOOP_SFA="agents/sfa/sfa_coder_validator_loop.py"
 MAILBOX_DEFAULT="audits/phase2-mailbox.jsonl"
+# CA-U25: local temp dir for per-SP result exfiltration (obox agent Write tool
+# target; inside ALLOWED_DIRECTORIES of sandbox_workflows agent)
+TEMP_DIR="apps/sandbox_agent_working_dir/temp"
 SP_IDS=(SP1 SP2 SP3 SP4 SP5 SP6 SP7 SP8 SP9 SP10 SP11 SP12 SP13 SP14 SP15 SP16)
 REQUIRED_ACK="29,14,24,28"
 
@@ -126,6 +129,21 @@ for sp in "${TARGET_SPS[@]}"; do
     fi
 done
 
+# CA-U23 / E-0: pre-flight — verify 16 SP manifest bundles are committed to git.
+# The sandbox clones the repo fresh, so the bundles must exist in the tree for
+# the SFA to find them at --sp-manifest. If this check fails, the fanout would
+# spend money only for each SFA to exit 2 with "setup error: SP manifest not
+# found". Bootstrap: regenerate bundles and commit them before re-running.
+_committed_bundles=$(git ls-files audits/bundles/ 2>/dev/null | wc -l | tr -d ' ')
+if [[ "$_committed_bundles" != "16" ]]; then
+    echo "setup error: expected 16 committed SP bundles in audits/bundles/, found $_committed_bundles" >&2
+    echo "  First-time bootstrap:" >&2
+    echo "    1. Regenerate bundles (run this script live once, or invoke the" >&2
+    echo "       bundle-building Python block manually)" >&2
+    echo "    2. git add audits/bundles/ && git commit" >&2
+    exit 2
+fi
+
 DATE="$(date -u +%Y-%m-%d)"
 SUMMARY_OUT="audits/phase2-summary-${DATE}.md"
 
@@ -173,8 +191,23 @@ an E2B cloud sandbox. Complete these steps in order:
          --max-iter 3
 
 === REPORT ===
-5. After the SFA exits, output the result exactly on one line:
-     echo "PHASE2_RESULT: \$(tail -1 /tmp/phase2-mailbox.jsonl)"
+5. After the SFA exits, read the result line from the sandbox mailbox using
+   mcp__e2b-sandbox__execute_command:
+     command: tail -1 /tmp/phase2-mailbox.jsonl
+   Capture the stdout. It is a single line of JSON (the SFA verdict).
+
+5b. CRITICAL: write that exact JSON line to a LOCAL file using the Write tool.
+    This is how the host harvests your result. It MUST happen before the
+    sandbox terminates.
+      file_path: apps/sandbox_agent_working_dir/temp/phase2-result-${sp}.json
+      content:   <the single JSON line from step 5, verbatim, no wrapping>
+    Use the Write tool directly. Do NOT use Bash. Do NOT use mcp__e2b-sandbox__
+    tools for this step: that target path is OUTSIDE the sandbox, on the host
+    filesystem. The path is inside ALLOWED_DIRECTORIES, so Write will succeed.
+
+5c. Fallback sentinel (belt-and-suspenders, in case step 5b fails): also run
+    inside the sandbox via mcp__e2b-sandbox__execute_command:
+     command: echo "PHASE2_RESULT: \$(tail -1 /tmp/phase2-mailbox.jsonl)"
 
 The coder writes diffs only to /tmp/coder_diffs/ — do not modify the repo.
 EOF
@@ -222,6 +255,23 @@ if ! git merge-base --is-ancestor HEAD "origin/$BRANCH" 2>/dev/null; then
 fi
 echo "  origin/$BRANCH is up-to-date — OK"
 echo
+
+# CA-U27 / E-2.5: archive any stale mailbox entries from prior runs so the
+# final exit-code check only sees verdicts from this run. Truncate (not
+# delete) to keep git tracking stable.
+if [[ -s "$MAILBOX" ]]; then
+    ARCHIVE="audits/phase2-mailbox-archived-$(date -u +%Y-%m-%d-%H%M%S).jsonl"
+    cp "$MAILBOX" "$ARCHIVE"
+    : > "$MAILBOX"
+    echo "Archived prior mailbox → $ARCHIVE"
+    echo
+fi
+
+# CA-U25 / E-2.6: ensure the local temp dir exists for per-SP result
+# exfiltration. The obox agent writes phase2-result-<sp>.json here via the
+# Write tool (path is inside ALLOWED_DIRECTORIES of the sandbox_workflows
+# agent). Harvest reads from here as the primary source.
+mkdir -p "$TEMP_DIR"
 
 # E-3: create per-SP context bundles at audits/bundles/<sp>.yaml
 mkdir -p audits/bundles
@@ -281,10 +331,12 @@ for sp in "${TARGET_SPS[@]}"; do
     bundle="audits/bundles/${sp_lower}.yaml"
     scope="$(_sp_scope "$sp")"
     sot="$(_sp_sot_section "$sp")"
-    mem_file="$HOME/.claude/projects/-Users-$(id -un)-Projects-arhugula/memory/project_${sp_lower}_r1_resume.md"
     exc_ids="$(_sp_exceptions "$sp")"
 
-    # Build YAML scope list and exceptions list via Python for correct quoting
+    # CA-U23: spec_refs.sot_path / memory_file stripped to an explicit sentinel.
+    # These used to be local machine paths ($HOME/...) which the sandboxed SFA
+    # would attempt to open (and fail). The SFA only consumes sp_scope and
+    # exceptions_subset as structured data; spec_refs is informational.
     python3 - <<PYEOF
 import yaml, pathlib
 
@@ -296,11 +348,11 @@ bundle = {
     "sp_scope": scope_globs,
     "spec_refs": {
         "sot_section":  "$sot",
-        "sot_path":     "$HOME/Projects/indydevdan-harness-research/docs/superpowers/specs/arhugula-source-of-truth.md",
-        "memory_file":  "$mem_file",
+        "sot_path":     "N/A (local-only path, not available in sandbox)",
+        "memory_file":  "N/A (local-only path, not available in sandbox)",
         "exceptions_md":"audits/exceptions.md",
     },
-    "memory_file_excerpt": "(load memory_file for full context)",
+    "memory_file_excerpt": "(memory file is local-only; load memory via host)",
     "exceptions_subset":   exc_list,
 }
 pathlib.Path("$bundle").write_text(yaml.safe_dump(bundle, default_flow_style=False, sort_keys=False))
@@ -352,42 +404,39 @@ for pid in "${PIDS[@]}"; do
 done
 echo
 
-# E-7: harvest mailbox lines
-# Sources checked (in order):
-#   a) per-SP stdout captures — look for sentinel line "PHASE2_RESULT: {...}"
-#      emitted by the agent after `echo "PHASE2_RESULT: $(tail -1 /tmp/phase2-mailbox.jsonl)"`
-#   b) obox ForkLogger log files in apps/sandbox_agent_working_dir/logs/
-#      same sentinel in TextBlock or ToolResultBlock STDOUT content.
-#      ToolResultBlock content has " escaped as \" in the Python repr — handle both forms.
+# E-7: harvest mailbox lines (CA-U26).
+# Sources checked (in this order — FIRST-wins dedup so the primary source
+# takes precedence over the fallbacks):
+#   1) LOCAL temp result files written by the obox agent via Write tool:
+#      $TEMP_DIR/phase2-result-SP*.json (CA-U25 exfiltration path, primary).
+#      Filtered by mtime > $FANOUT_MARKER_DIR to ignore stale files.
+#   2) Fork log files in apps/sandbox_agent_working_dir/logs/ — sentinel line
+#      "PHASE2_RESULT: {...}" in TextBlock content. Matches both bare and
+#      markdown backtick forms (agent TextBlock may use **PHASE2_RESULT**: `...`).
+#   3) Per-SP stdout captures in $FANOUT_MARKER_DIR — same sentinel patterns.
 FORK_LOG_DIR="$REPO_ROOT/apps/sandbox_agent_working_dir/logs"
 HARVEST_TMP="$FANOUT_MARKER_DIR/harvested.jsonl"
 
 echo "Harvesting mailbox lines..."
 
-for sp in "${TARGET_SPS[@]}"; do
-    capture="$FANOUT_MARKER_DIR/${sp}.log"
-    [[ -f "$capture" ]] || continue
-    # Look for the PHASE2_RESULT: sentinel line the agent is instructed to emit.
-    # The sentinel is: PHASE2_RESULT: {"sp":"SPx",...}  (compact single-line JSON)
-    python3 - <<PYEOF >> "$HARVEST_TMP" 2>/dev/null || true
-import re, json
-text = open("$capture", errors="replace").read()
-for m in re.finditer(r'PHASE2_RESULT:\s*(\{[^\n]+\})', text):
-    line = m.group(1).strip()
-    try:
-        obj = json.loads(line)
-        if "verdict" in obj and "sp" in obj:
-            print(json.dumps(obj))
-    except Exception:
-        pass
+# Source 1: LOCAL temp files (primary — CA-U25 exfiltration).
+python3 - <<PYEOF >> "$HARVEST_TMP" 2>/dev/null || true
+import json, os, pathlib
+temp_dir = pathlib.Path("$TEMP_DIR")
+marker_mtime = os.path.getmtime("$FANOUT_MARKER_DIR")
+if temp_dir.exists():
+    for result_file in sorted(temp_dir.glob("phase2-result-SP*.json")):
+        if result_file.stat().st_mtime < marker_mtime:
+            continue
+        try:
+            obj = json.loads(result_file.read_text(errors="replace").strip())
+            if "verdict" in obj and "sp" in obj:
+                print(json.dumps(obj))
+        except Exception:
+            pass
 PYEOF
-done
 
-# Also scan fork log files created since we started (belt-and-suspenders).
-# Two sub-scans:
-#  (a) TextBlock or raw content: agent emits PHASE2_RESULT: {...} as a text line
-#  (b) ToolResultBlock STDOUT: agent ran `echo "PHASE2_RESULT: ..."` inside E2B;
-#      the E2B output is JSON-serialised, so " inside JSONL appears as \" in the log.
+# Source 2: fork log files created since we started (secondary).
 if [[ -d "$FORK_LOG_DIR" ]]; then
     python3 - <<PYEOF >> "$HARVEST_TMP" 2>/dev/null || true
 import re, json, os, pathlib
@@ -398,8 +447,7 @@ for logfile in log_dir.glob("*.log"):
         continue
     text = logfile.read_text(errors="replace")
 
-    # (a) Unescaped form — agent printed PHASE2_RESULT: {...} in a TextBlock or
-    #     in E2B stdout that arrived unescaped (e.g. rich console output)
+    # Bare form: PHASE2_RESULT: {"sp":"SPx", ...}
     for m in re.finditer(r'PHASE2_RESULT:\s*(\{[^\n]+\})', text):
         raw = m.group(1).strip()
         try:
@@ -409,11 +457,9 @@ for logfile in log_dir.glob("*.log"):
         except Exception:
             pass
 
-    # (b) Escaped form — the E2B execute_command wraps its output as a Python-repr
-    #     string where " → \" and \n → \\n.  Re-unescape before parsing.
-    #     Pattern: PHASE2_RESULT: {\"sp\":\"SPx\", ...}
-    for m in re.finditer(r'PHASE2_RESULT:\\s*(\{[^\n]+\})', text):
-        raw = m.group(1).strip().replace('\\"', '"').replace("\\'", "'").replace('\\\\n', '\n')
+    # Markdown backtick form: **PHASE2_RESULT**: \`{"sp":"SPx", ...}\`
+    for m in re.finditer(r'\*\*PHASE2_RESULT\*\*[:\s]+\`(\{[^\`]+\})\`', text):
+        raw = m.group(1).strip()
         try:
             obj = json.loads(raw)
             if "verdict" in obj and "sp" in obj:
@@ -423,13 +469,45 @@ for logfile in log_dir.glob("*.log"):
 PYEOF
 fi
 
-# Deduplicate (last entry per SP) and append to shared mailbox
+# Source 3: per-SP stdout captures (tertiary).
+for sp in "${TARGET_SPS[@]}"; do
+    capture="$FANOUT_MARKER_DIR/${sp}.log"
+    [[ -f "$capture" ]] || continue
+    python3 - <<PYEOF >> "$HARVEST_TMP" 2>/dev/null || true
+import re, json
+text = open("$capture", errors="replace").read()
+
+# Bare form
+for m in re.finditer(r'PHASE2_RESULT:\s*(\{[^\n]+\})', text):
+    line = m.group(1).strip()
+    try:
+        obj = json.loads(line)
+        if "verdict" in obj and "sp" in obj:
+            print(json.dumps(obj))
+    except Exception:
+        pass
+
+# Markdown backtick form
+for m in re.finditer(r'\*\*PHASE2_RESULT\*\*[:\s]+\`(\{[^\`]+\})\`', text):
+    line = m.group(1).strip()
+    try:
+        obj = json.loads(line)
+        if "verdict" in obj and "sp" in obj:
+            print(json.dumps(obj))
+    except Exception:
+        pass
+PYEOF
+done
+
+# Deduplicate (FIRST entry per SP wins — primary source from temp files is
+# written to HARVEST_TMP first, so it takes precedence over fork log and
+# capture fallbacks).
 python3 - <<PYEOF
 import json, pathlib, sys
 
 harvest = pathlib.Path("$HARVEST_TMP")
 if not harvest.exists():
-    print("  no mailbox lines found in any capture or fork log")
+    print("  no mailbox lines found in temp files, fork logs, or captures")
     sys.exit(0)
 
 seen: dict = {}
@@ -440,8 +518,8 @@ for line in harvest.open(errors="replace"):
     try:
         obj = json.loads(line)
         sp = obj.get("sp", "")
-        if sp:
-            seen[sp] = obj   # last entry per SP wins
+        if sp and sp not in seen:
+            seen[sp] = obj   # first entry per SP wins (primary = temp files)
     except Exception:
         pass
 
