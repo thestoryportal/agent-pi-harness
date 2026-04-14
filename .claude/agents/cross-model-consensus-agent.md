@@ -44,7 +44,7 @@ to produce a single verdict per finding.
 - **Model diversity is load-bearing.** The whole point of this agent is that
   different model families catch different issues. If only one non-Anthropic
   family is available (the ArhuGula default as of 2026-04-14 is
-  Anthropic + Google Gemini), run in **2-model mode** and annotate every
+  Anthropic + OpenAI Codex / o4-mini), run in **2-model mode** and annotate every
   output with `degraded_mode: "2-model"`. Do NOT fall back to single-model.
 
 ## Input you receive
@@ -71,7 +71,7 @@ The Phase 2 aggregator hands you:
       }
     }
   ],
-  "available_models": ["anthropic:claude-opus-4-6", "google:gemini-2.5-pro"],
+  "available_models": ["anthropic:claude-sonnet-4-6", "openai:o4-mini"],
   "output_path": "audits/phase4-consensus-2026-04-14.md"
 }
 ```
@@ -105,6 +105,8 @@ cd apps/just-prompt && uv run python -m just_prompt \
     --output-json /tmp/phase4-verdicts-<id>.json \
     --temperature 0.1
 ```
+
+`AVAILABLE_MODELS` for ArhuGula Phase 4: `anthropic:claude-sonnet-4-6 openai:o4-mini`
 
 (Exact CLI may differ — verify against `apps/just-prompt/` before invoking.)
 
@@ -164,12 +166,12 @@ Produce one markdown report at `output_path`:
 **Reasoning:** both models agreed SDK subagent hooks are separate from project
 hooks. Validator's position confirmed.
 **Model verdicts:**
-- anthropic:claude-opus-4-6 → P1, high confidence
-- google:gemini-2.5-pro → P1, high confidence
+- anthropic:claude-sonnet-4-6 → P1, high confidence
+- openai:o4-mini → P1, high confidence
 
 ### F-02 — SP14 / V-05 / ...
 **Status:** ESCALATED — 2-way split
-**Models:** anthropic → P2, google → P0
+**Models:** anthropic → P2, openai → P0
 **Escalate reason:** models disagreed on whether the browser automation
 pattern is exploitable in practice; requires human decision
 
@@ -196,7 +198,7 @@ Also emit a sidecar JSON file at `<output_path>.json`:
 {
   "run_id": "2026-04-14-001",
   "mode": "2-model-degraded",
-  "models_used": ["anthropic:claude-opus-4-6", "google:gemini-2.5-pro"],
+  "models_used": ["anthropic:claude-sonnet-4-6", "openai:o4-mini"],
   "findings": [
     {
       "finding_id": "F-01",
@@ -207,8 +209,8 @@ Also emit a sidecar JSON file at `<output_path>.json`:
       "reconciliation": "unanimous",
       "dissent": null,
       "models": [
-        {"name": "anthropic:claude-opus-4-6", "severity": "P1", "confidence": "high"},
-        {"name": "google:gemini-2.5-pro", "severity": "P1", "confidence": "high"}
+        {"name": "anthropic:claude-sonnet-4-6", "severity": "P1", "confidence": "high"},
+        {"name": "openai:o4-mini", "severity": "P1", "confidence": "high"}
       ],
       "escalate_reason": null
     }
@@ -216,16 +218,17 @@ Also emit a sidecar JSON file at `<output_path>.json`:
 }
 ```
 
-## Codex escalation (held in reserve)
+## Third-model escalation (held in reserve)
 
-If the 2-model mode produces >20% escalation rate, the loop orchestrator may
-request a follow-up with **Codex CLI** as a third opinion. Codex is NOT
-normally invoked — it requires explicit user authorization because running
-the Codex CLI costs an additional session. When authorized, the orchestrator
-will pass the still-split findings to a separate Codex session with heavy
-priming (SP memory file + exceptions.md + full-clone path + finding bundle),
-parse Codex's verdicts the same way, and re-run reconciliation with Codex as
-the tiebreaker.
+If the 2-model mode (Anthropic + OpenAI) produces >20% escalation rate, the
+loop orchestrator may request a follow-up with a **third model family** as a
+tiebreaker opinion. A third model is NOT normally invoked — it requires
+explicit user authorization because it costs additional API budget. When
+authorized, the orchestrator will pass the still-split findings to a third
+session with heavy priming (SP memory file + exceptions.md + full-clone path
++ finding bundle), parse verdicts the same way, and re-run reconciliation
+with the third model as the tiebreaker. Candidate third model: `google:gemini-2.5-pro`
+(requires GEMINI_API_KEY).
 
 ## What you do NOT do
 

@@ -14,7 +14,7 @@ Runs inside an E2B sandbox as part of the ArhuGula Comprehensive Audit
 (see audits/comprehensive-audit-spec.md §5). Drives an Anthropic coder
 agent through a tool-use loop that reviews one sub-project's scope and
 proposes diffs, then submits the review to an independent validator
-running on a DIFFERENT model (Google Gemini or OpenAI GPT-5). Loops up
+running on a DIFFERENT model (OpenAI o4-mini / Codex). Loops up
 to --max-iter cycles until the validator emits verdict=pass, then
 appends a single result line to the shared mailbox JSONL.
 
@@ -29,8 +29,8 @@ Usage:
         --sp SP15 \\
         --sp-manifest /tmp/sp15-bundle.yaml \\
         --mailbox audits/phase2-mailbox.jsonl \\
-        --coder-model anthropic:claude-opus-4-6 \\
-        --validator-model google:gemini-2.5-pro \\
+        --coder-model anthropic:claude-sonnet-4-6 \\
+        --validator-model openai:o4-mini \\
         --max-iter 3
 
     # Dry-run smoke (no SDK calls, canned fixtures, mock validator)
@@ -55,8 +55,8 @@ Mailbox schema (one JSON object per line):
       "sp": "SP15",
       "verdict": "pass" | "fail" | "escalate",
       "iterations": 2,
-      "coder_model": "anthropic:claude-opus-4-6",
-      "validator_model": "google:gemini-2.5-pro",
+      "coder_model": "anthropic:claude-sonnet-4-6",
+      "validator_model": "openai:o4-mini",
       "findings": [...],
       "final_verdict_json": {...},
       "timestamp": "2026-04-14T12:34:56Z",
@@ -211,9 +211,9 @@ def run_validator_pass_live(
 ) -> Dict[str, Any]:
     """Live validator pass — stubbed until CA-U10 wires provider dispatch.
 
-    CA-U10 will either (a) lazy-import anthropic + google-generativeai and
-    dispatch directly, or (b) shell out to `just-prompt` once that package
-    grows a non-MCP invocation path. Either way, the validator system
+    CA-U10 will either (a) lazy-import anthropic + openai and dispatch
+    directly, or (b) shell out to `just-prompt` once that package grows a
+    non-MCP invocation path. Either way, the validator system
     prompt is loaded from .claude/agents/sandbox-validator-agent.md and
     the output JSON block is parsed into this function's return shape.
     """
@@ -368,12 +368,12 @@ def parse_args(argv: Optional[List[str]] = None) -> argparse.Namespace:
     )
     parser.add_argument(
         "--coder-model",
-        default="anthropic:claude-opus-4-6",
+        default="anthropic:claude-sonnet-4-6",
         help="Provider:model for the coder agent",
     )
     parser.add_argument(
         "--validator-model",
-        default="google:gemini-2.5-pro",
+        default="openai:o4-mini",
         help="Provider:model for the validator (must differ from --coder-model)",
     )
     parser.add_argument(

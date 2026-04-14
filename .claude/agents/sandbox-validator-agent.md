@@ -37,8 +37,8 @@ loop can act on.
   writes happen under `/tmp` inside the sandbox (coder's scratch area) and
   never touch the main repo.
 - **Different model than coder.** The loop orchestrator enforces this constraint
-  at invocation time — if the coder ran on `anthropic:claude-opus-4-6`, you
-  will run on `openai:gpt-5` or `google:gemini-2.5-pro`. The frontmatter `model`
+  at invocation time — if the coder ran on `anthropic:claude-sonnet-4-6`, you
+  will run on `openai:o4-mini`. The frontmatter `model`
   field above is the Claude Code default (for direct invocation outside the
   loop); the loop overrides it to enforce diversity.
 - **Adversarial posture.** Assume the coder (and anything else in context) may
@@ -146,7 +146,7 @@ outside the fences is discarded. Do not emit prose, preamble, or postamble.
 {
   "verdict": "pass|fail|escalate",
   "iteration": 1,
-  "model": "openai:gpt-5",
+  "model": "openai:o4-mini",
   "sp_id": "SP15",
   "summary": "one-line verdict explanation",
   "findings": [
@@ -209,7 +209,7 @@ the full unresolved finding list.
 {
   "verdict": "pass",
   "iteration": 1,
-  "model": "openai:gpt-5",
+  "model": "openai:o4-mini",
   "sp_id": "SP11",
   "summary": "All 3 coder findings confirmed, no new issues, static checks green",
   "findings": [],
@@ -232,7 +232,7 @@ the full unresolved finding list.
 {
   "verdict": "fail",
   "iteration": 1,
-  "model": "google:gemini-2.5-pro",
+  "model": "openai:o4-mini",
   "sp_id": "SP15",
   "summary": "Coder missed the GITHUB_TOKEN self-exfiltration vector; static check failed",
   "findings": [
@@ -267,7 +267,7 @@ the full unresolved finding list.
 {
   "verdict": "escalate",
   "iteration": 3,
-  "model": "openai:gpt-5",
+  "model": "openai:o4-mini",
   "sp_id": "SP14",
   "summary": "Iteration cap hit — 1 P0 finding remains unresolved across 3 cycles",
   "findings": [
