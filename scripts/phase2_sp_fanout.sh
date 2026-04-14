@@ -364,6 +364,14 @@ echo
 # E-4 / E-5: background-launch one obox sandbox per SP, capture per-SP stdout
 FANOUT_MARKER_DIR="/tmp/phase2-fanout-$$"
 mkdir -p "$FANOUT_MARKER_DIR"
+# CA-U26 fix: capture a stable "run start" timestamp via a sentinel file whose
+# mtime never changes after creation. Using the FANOUT_MARKER_DIR's own mtime
+# is racy — the dir's mtime updates each time a file is added to it (e.g.,
+# harvested.jsonl during harvest), so any filter comparing file mtimes against
+# the dir mtime at harvest time would incorrectly drop files that were written
+# earlier inside the same run.
+touch "$FANOUT_MARKER_DIR/.start-marker"
+RUN_START_MARKER="$FANOUT_MARKER_DIR/.start-marker"
 
 declare -a PIDS=()
 declare -A PID_TO_SP=()
@@ -423,7 +431,9 @@ echo "Harvesting mailbox lines..."
 python3 - <<PYEOF >> "$HARVEST_TMP" 2>/dev/null || true
 import json, os, pathlib
 temp_dir = pathlib.Path("$TEMP_DIR")
-marker_mtime = os.path.getmtime("$FANOUT_MARKER_DIR")
+# Use the stable sentinel mtime, not the marker dir mtime (dir mtime updates
+# whenever files are added, e.g. harvested.jsonl during harvest).
+marker_mtime = os.path.getmtime("$RUN_START_MARKER")
 if temp_dir.exists():
     for result_file in sorted(temp_dir.glob("phase2-result-SP*.json")):
         if result_file.stat().st_mtime < marker_mtime:
@@ -441,7 +451,8 @@ if [[ -d "$FORK_LOG_DIR" ]]; then
     python3 - <<PYEOF >> "$HARVEST_TMP" 2>/dev/null || true
 import re, json, os, pathlib
 log_dir = pathlib.Path("$FORK_LOG_DIR")
-marker_mtime = os.path.getmtime("$FANOUT_MARKER_DIR")
+# Stable sentinel mtime (see Source 1 comment above).
+marker_mtime = os.path.getmtime("$RUN_START_MARKER")
 for logfile in log_dir.glob("*.log"):
     if logfile.stat().st_mtime < marker_mtime:
         continue
@@ -624,17 +635,32 @@ if [[ ${#FAILED_PIDS[@]} -gt 0 ]]; then
 fi
 
 ESCALATED=0
+TOTAL_MAILBOX=0
 if [[ -f "$MAILBOX" ]]; then
-    ESCALATED="$(python3 -c "
+    read TOTAL_MAILBOX ESCALATED < <(python3 -c "
 import json
 rows=[json.loads(l) for l in open('$MAILBOX') if l.strip()]
-print(sum(1 for r in rows if r.get('verdict') in ('fail','escalate')))
-" 2>/dev/null || echo 0)"
+print(len(rows), sum(1 for r in rows if r.get('verdict') in ('fail','escalate')))
+" 2>/dev/null || echo "0 0")
+fi
+
+# CA-U28 fix: an empty harvest is a setup/harvest error, not "all pass".
+# If we targeted N SPs and harvested 0 entries, something broke between the
+# sandbox and the mailbox — do not lie about success.
+if [[ "$TOTAL_MAILBOX" -eq 0 ]]; then
+    echo "exit 2: harvested 0 mailbox entries from ${#TARGET_SPS[@]} targeted SP(s) — harvest failure" >&2
+    echo "  Check: apps/sandbox_agent_working_dir/temp/phase2-result-SP*.json and fork logs" >&2
+    exit 2
+fi
+
+if [[ "$TOTAL_MAILBOX" -lt "${#TARGET_SPS[@]}" ]]; then
+    MISSING=$(( ${#TARGET_SPS[@]} - TOTAL_MAILBOX ))
+    echo "⚠  harvested $TOTAL_MAILBOX mailbox entries from ${#TARGET_SPS[@]} targeted SP(s) — $MISSING missing"
 fi
 
 if [[ "$ESCALATED" -gt 0 ]]; then
     echo "exit 1: $ESCALATED SP(s) emitted verdict=fail or verdict=escalate"
     exit 1
 fi
-echo "Phase 2 fanout complete — all harvested verdicts = pass."
+echo "Phase 2 fanout complete — all $TOTAL_MAILBOX harvested verdict(s) = pass."
 exit 0
