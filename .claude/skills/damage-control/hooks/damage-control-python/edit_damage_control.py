@@ -96,6 +96,14 @@ def match_path(file_path: str, pattern: str) -> bool:
 
 def check_path(file_path: str, rules: dict[str, Any]) -> tuple[str, str | None]:
     """Check if file_path is blocked. Returns (decision, reason)."""
+    # E1 (SP2 Phase F, 2026-04-13): pathExclusions short-circuit. Files
+    # matching an exclusion bypass all zero-access / read-only checks.
+    # Used for safe template files (.env.example, .envrc.example) that
+    # downstream projects need to read for new-project setup.
+    for excl in rules.get("pathExclusions", []):
+        if match_path(file_path, excl):
+            return "allow", None
+
     # Check zero-access paths first (no access at all)
     for zero_path in rules.get("zeroAccessPaths", []):
         if match_path(file_path, zero_path):

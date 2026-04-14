@@ -89,6 +89,14 @@ def check_read(tool_input: dict, rules: dict) -> tuple[str, str | None]:
     if not check_str:
         return "allow", None
 
+    # E1 (SP2 Phase F, 2026-04-13): pathExclusions short-circuit. Read,
+    # Glob, and Grep on excluded paths (.env.example, .envrc.example, etc.)
+    # bypass the zero-access check. Required for downstream projects to
+    # read template files during new-project setup.
+    for excl in rules.get("pathExclusions", []):
+        if match_path(check_str, excl):
+            return "allow", None
+
     for zero_path in rules.get("zeroAccessPaths", []):
         if match_path(check_str, zero_path):
             return "block", f"Read/search of protected path: {zero_path}"

@@ -270,6 +270,28 @@ def _check_single_command(command: str, rules: dict[str, Any]) -> tuple[str, str
         cmd_tokens = shlex.split(command)
     except ValueError:
         cmd_tokens = command.split()
+
+    # E1 (SP2 Phase F, 2026-04-13): filter pathExclusions from the
+    # zero-access candidates. Tokens whose basename matches a pathExclusion
+    # entry (e.g. .env.example) are NOT considered zero-access candidates.
+    # Token-level filtering (not command-level) ensures `cat .env .env.example`
+    # still blocks on .env because the exclusion only removes the .env.example
+    # token from the candidate set, not the whole command.
+    exclusion_patterns = rules.get("pathExclusions", [])
+    if exclusion_patterns:
+        def _matches_exclusion(token: str) -> bool:
+            bn_lower = os.path.basename(token).lower()
+            try:
+                expanded_bn = os.path.basename(os.path.expanduser(token)).lower()
+            except (OSError, ValueError):
+                expanded_bn = bn_lower
+            for excl in exclusion_patterns:
+                excl_lower = excl.lower()
+                if fnmatch.fnmatch(bn_lower, excl_lower) or fnmatch.fnmatch(expanded_bn, excl_lower):
+                    return True
+            return False
+        cmd_tokens = [t for t in cmd_tokens if not _matches_exclusion(t)]
+
     token_basenames = [os.path.basename(t) for t in cmd_tokens if t and not t.startswith("-")]
 
     for zero_path in rules.get("zeroAccessPaths", []):
@@ -287,8 +309,21 @@ def _check_single_command(command: str, rules: dict[str, Any]) -> tuple[str, str
             expanded_zap = os.path.expanduser(zero_path)
             escaped_expanded = re.escape(expanded_zap)
             escaped_original = re.escape(zero_path)
-            if re.search(escaped_expanded, command) or re.search(escaped_original, command):
-                return "block", f"Blocked: zero-access path {zero_path} (no operations allowed)"
+            # E1 (SP2 Phase F, 2026-04-13): non-glob zero-access substring
+            # check iterates FILTERED cmd_tokens instead of the raw command
+            # string. The previous re.search(command) form had a false-
+            # positive on `head .env.example` because the literal `.env`
+            # appears as a substring of `.env.example` in the raw command,
+            # which fired the zero-access block even though `.env.example`
+            # had been removed from the cmd_tokens candidate set by the
+            # pathExclusions filter above. Token-level checking is
+            # equivalent for all practical cases (a substring match in
+            # the raw command string always corresponds to a substring
+            # match in some token, since shlex preserves token boundaries
+            # exactly) and respects pathExclusions correctly.
+            for token in cmd_tokens:
+                if re.search(escaped_expanded, token) or re.search(escaped_original, token):
+                    return "block", f"Blocked: zero-access path {zero_path} (no operations allowed)"
 
     # 3. Check for modifications to read-only paths (reads allowed)
     for readonly in rules.get("readOnlyPaths", []):

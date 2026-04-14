@@ -871,6 +871,31 @@ noDeletePaths:
   - .dockerignore
 
 # ──────────────────────────────────────────────────────────────────
+# PATH EXCLUSIONS (SP2 E1, 2026-04-13)
+# Files matching these glob patterns are NEVER blocked by zero-access
+# or read-only rules, even if they would otherwise match. Used for
+# safe template / example files that must be readable for new-project
+# setup (e.g. .env.example).
+#
+# Checked BEFORE zeroAccessPaths/readOnlyPaths in all 4 hooks:
+#   - bash_damage_control._check_single_command (token-level filter
+#     applied to cmd_tokens before the zero-access loop)
+#   - edit_damage_control.check_path (early-exit on file_path)
+#   - write_damage_control.check_path (early-exit on file_path)
+#   - pre_tool_use.check_read (early-exit on Read/Glob/Grep file_path)
+#
+# Token-level semantics (not command-level) for the bash hook ensures
+# that `cat .env .env.example` still blocks on .env even though
+# .env.example is excluded — the exclusion only filters the matching
+# token, not the whole command.
+# ──────────────────────────────────────────────────────────────────
+
+pathExclusions:
+  - ".env.example"
+  - ".env*.example"
+  - ".envrc.example"
+
+# ──────────────────────────────────────────────────────────────────
 # BASH TOOL EXCLUSIONS
 # Allowlist for operations that would otherwise be caught by
 # zeroAccessPaths or bash patterns. Checked BEFORE blocking rules.
