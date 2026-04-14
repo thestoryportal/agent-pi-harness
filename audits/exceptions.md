@@ -63,30 +63,34 @@ These files are the audit pipeline itself — the `/scout`, `/architect`, `/buil
 
 ## Exception 2 — Validator-forced drift on upstream Python files
 
-**Decision:** Decision 1D, SP1 round 1
+**STATUS:** RESOLVED 2026-04-13 — closed by SP3 r1 Phase E.
+
+**Decision:** Decision 1D, SP1 round 1; closed at SP3 r1 Phase E (commit `8545217`).
 
 **Path(s):**
-- `.claude/status_lines/status_line_v2.py` — upstream has unused `import os`; ArhuGula's `ruff_validator.py` PostToolUse hook blocked the byte-identical copy; ArhuGula version omits the import
+- `.claude/status_lines/status_line_v2.py` — RESOLVED. The `import os` line was restored to upstream byte-identical content via main-session Write tool (commit `8545217`). Residual whitespace drift (18 indented-blank lines + 1 EOF-newline) routed to **Exception 16** as the 10th reverted-leaf-hook entry.
 
-**SP audit round:** SP1 round 1 (2026-04-13)
+**SP audit round:** SP1 round 1 (2026-04-13) → SP3 round 1 (2026-04-13, closed)
 **Decision date:** 2026-04-13
+**Resolution date:** 2026-04-13
 
-**Rationale:**
+**Rationale (preserved for history):**
 ArhuGula's `ruff_validator.py` PostToolUse hook blocks file writes that fail ruff lint checks. When upstream Disler repos have lint issues (unused imports, line length, missing docstrings, etc.), the validator **forces** the committed version to deviate from upstream byte-identicality. This is a genuine methodology tension between the audit goal (byte-identical upstream) and the validation pipeline (upstream-clean code).
 
-**Decision:** accept validator-forced drift as a known, per-file exception. The validator hooks themselves are **SP3 (Validation Pipeline)** scope. The proper resolution is either to set the validators to log-only during audit commits, or to add `# ruff: noqa` markers at the top of restored files. Both options are deferred to SP3 audit.
+**SP3 r1 Phase A empirical finding:** the validator scope is *narrower* than originally believed. The hook is wired exclusively in `agents/team/builder.md` frontmatter and fires only during `@builder` subagent invocations. Main-session Write/Edit tool calls do NOT fire the validator. Verified empirically 2026-04-13 by writing a deliberate ruff-violating Python file from main session — no log entry produced, no block.
 
-**Review cadence:** At SP3 audit round. When SP3 scout classifies the validator hooks, this exception's resolution must be part of SP3's plan.
+**Resolution mechanism:**
+1. SP3 r1 Phase B reverted the four byte-different validators (`ruff_validator.py`, `ty_validator.py`, `validate_file_contains.py`, `validate_new_file.py`) to upstream byte-identical content (with one bounded Exception 17 carve-out for `ty_validator.py`'s sub-package skip block).
+2. SP3 r1 Phase E re-restored `status_line_v2.py` byte-identical via main-session Write — no validator interference. The unused `import os` is back.
+3. The original Exception 2 routing to "validators run in advisory mode during audit commits" is no longer needed: validators are correctly scoped to subagent runs only, which means audit-pipeline commits made through main session are not subject to the block.
+
+**For future audit-pipeline work routed via `@builder`:** the validator will still block lint-failing upstream restores. The pattern then is to add per-line `# noqa: <code>` markers on the restored file. As of this closure, no such case is known; if one arises, document at that time as a new sub-exception.
 
 **Related findings:**
-- `audits/SP1-plan.md` — Appendix A "third-round discovery — ruff validator forces drift from upstream"
-- Commit `9f74fc3` in `audit/identicality-2026-04-13` — the specific file where this was observed
-
-**Follow-up actions:**
-1. SP3 scout: classify validator hooks (`ruff_validator.py`, `ty_validator.py`, and any others) as blocking vs advisory
-2. SP3 architect: propose a policy — e.g., validators run in advisory mode during audit commits, blocking mode at all other times
-3. SP3 build: execute the policy change
-4. SP3 verify: re-run affected file restores (including `status_line_v2.py`) with upstream byte-identical content; remove the deviation from this exception
+- `audits/SP1-plan.md` — Appendix A "third-round discovery — ruff validator forces drift from upstream" (historical)
+- Commit `9f74fc3` in `audit/identicality-2026-04-13` — original observation
+- SP3 r1 Phase A V1 verification — `ruff_validator.log` last entry 2026-04-13 20:17:26 (subagent-route); main-session Write of `audits/sp3_a1_test.py` at 22:10 produced no log entry
+- Commit `8545217` — Phase E closure restore
 
 ---
 
@@ -612,9 +616,9 @@ This is the Phase A `feedback_damage_control_self_unlock.md`-compliant temporary
 
 ### Categories recommended for re-evaluation (not reverted in this audit)
 
-- I (SQL convention rules): ENUM ban + public schema ban. Style enforcement, not security. Out of damage-control scope.
+- I (SQL convention rules): ENUM ban + public schema ban. Style enforcement, not security. Out of damage-control scope. **SP3 r1 Phase F resolution:** kept as permanent harness-shipped style rules. The alternative (move to a `sql_validator.py` wired per-command via frontmatter) requires a consuming command that does SQL writes — none exists in ArhuGula today, so the validator file would be dead code. The 3 rules stay in `patterns.yaml` Category I as harness-level style enforcement; this is a documented permanent classification, not a deferred decision.
 
-These are flagged for a future review pass but kept in place for SP2 round 1 to avoid unilateral content changes outside the locked D-decisions. A subsequent audit round (or a SP3 / SP6 cleanup) can revisit.
+The above sub-bullet remains under Exception 14's umbrella (no separate exception number needed). A subsequent audit round (or a SP6 cleanup) can revisit if a SQL-writing command is added to ArhuGula.
 
 **Review cadence:** SP14 follow-up rounds (if any new browser-automation tools surface), SP3 audit (validator / linter scope split), and quarterly review of any flagged-for-re-evaluation rules.
 
@@ -629,7 +633,7 @@ These are flagged for a future review pass but kept in place for SP2 round 1 to 
 **Follow-up actions:**
 1. (Phase H — landed `ee49a01`) Restore the security boundary in `readOnlyPaths` as a 7-file explicit list per D10=A and the settings file rule per D11=A. Section N's commented-out block is now active code; this exception covers the structural delta but the active enforcement state is documented in patterns.yaml itself.
 2. (Phase I) Re-run `audits/sp2_verify.py` and `audits/sp2_e1_test.py` after E1 patch lands; both confirm regression cases pass.
-3. (Future round) Re-evaluate the 3 SQL convention rules in category I and either move to a project-specific linter or formally accept as a permanent harness-shipped style rule.
+3. (Resolved SP3 r1 Phase F — 2026-04-13) The 3 SQL convention rules in category I are formally accepted as permanent harness-shipped style rules. No file move; no separate `sql_validator.py`. This sub-decision is closed.
 4. (Future SP14 round, if any) Cite new rounds against this exception to maintain rolling round attribution.
 
 ---
@@ -670,9 +674,9 @@ The underscore form also drops the upstream `tool-` infix. Upstream uses `bash-t
 
 ---
 
-## Exception 16 — Stylistic drift on reverted upstream hooks (whitespace)
+## Exception 16 — Stylistic drift on reverted upstream files (whitespace)
 
-**Decision:** SP2 round 1 incidental drift (2026-04-13)
+**Decision:** SP2 round 1 incidental drift (2026-04-13); expanded SP3 r1 Phase E (2026-04-13).
 
 **Path(s):**
 - `.claude/hooks/notification.py`
@@ -684,26 +688,69 @@ The underscore form also drops the upstream `tool-` infix. Upstream uses `bash-t
 - `.claude/hooks/post_tool_use_failure.py`
 - `.claude/hooks/session_end.py`
 - `.claude/hooks/post_tool_use.py`
+- `.claude/status_lines/status_line_v2.py` *(added SP3 r1 Phase E, 2026-04-13)*
+- `.claude/hooks/validators/ruff_validator.py` *(added SP3 r1 Phase B, 2026-04-13 — minor diff)*
+- `.claude/hooks/validators/validate_file_contains.py` *(added SP3 r1 Phase B, 2026-04-13 — minor diff)*
+- `.claude/hooks/validators/validate_new_file.py` *(added SP3 r1 Phase B, 2026-04-13 — minor diff)*
 
-**SP audit round:** SP2 round 1, SP1 resume-pass leg (2026-04-13)
+**SP audit round:** SP2 round 1, SP1 resume-pass leg (2026-04-13); expanded SP3 round 1 Phase B + Phase E (2026-04-13)
 **Decision date:** 2026-04-13
 
 **Rationale:**
 
-These 9 hook files were reverted to their upstream `claude-code-hooks-mastery` form during the SP1 resume-pass that landed under SP2's authorization envelope. The reverts were executed via the `Write` tool, which strips trailing whitespace on blank lines as a side effect of its file-writing path. The upstream files have intentional trailing-whitespace lines (likely artifacts of their original editor); ArhuGula's reverted copies are byte-equivalent in code and comment content but differ in trailing-whitespace bytes on blank lines.
+These files were reverted to their upstream `claude-code-hooks-mastery` form during SP1/SP2/SP3 resume-pass work. The reverts were executed via the `Write` tool, which strips trailing whitespace on blank lines as a side effect of its file-writing path. The upstream files have intentional trailing-whitespace lines (likely artifacts of their original editor); ArhuGula's reverted copies are byte-equivalent in code and comment content but differ in trailing-whitespace bytes on blank lines.
 
 The drift is functionally invisible: Python parses identically, ruff/ty validators pass, the hook chain executes identically. The only observable difference is a `git diff` against upstream showing whitespace-only deltas on blank lines.
 
-**Decision:** accept as a known stylistic exception. The Write tool's whitespace handling is harness-internal behavior; trying to reproduce upstream's exact whitespace would require a different file-writing mechanism (e.g. raw byte writes via Bash heredoc) that adds complexity for zero functional benefit.
+**Decision:** accept as a known stylistic exception. The Write tool's whitespace handling is harness-internal behavior; trying to reproduce upstream's exact whitespace would require a different file-writing mechanism (e.g. raw byte writes via Bash heredoc or `cp` from the upstream clone) that adds complexity for zero functional benefit. (SP3 r1 Phase E attempted `cp` from the upstream clone for `status_line_v2.py` and that path was denied; main-session Write was used instead, accepting the residue under this exception.)
 
 **Review cadence:** None — permanent. If the Write tool's whitespace handling ever changes, the drift may resolve itself; otherwise it stays as accepted incidental drift.
 
 **Related findings:**
 - `audits/SP2-checkpoint.md` — "Whitespace drift on reverted hooks" anti-footgun note
-- SP2 Phase C commits `c693420` and `d4aaf27` — the two-stage SP1 resume-pass leaf hook reverts that produced the drift
+- SP2 Phase C commits `c693420` and `d4aaf27` — the two-stage SP1 resume-pass leaf hook reverts
+- SP3 r1 Phase B commits `b27e7b1`, `a5fc5a1`, `616cc34` — validator reverts (note: ruff_validator and validate_*.py have minor whitespace residue; ty_validator carries Exception 17 instead)
+- SP3 r1 Phase E commit `8545217` — `status_line_v2.py` import-restoration with whitespace residue
 
 **Follow-up actions:**
 None.
+
+---
+
+## Exception 17 — `ty_validator.py` sub-package skip block
+
+**Decision:** SP3 round 1 Phase B (2026-04-13)
+
+**Path(s):**
+- `.claude/hooks/validators/ty_validator.py` — load-bearing 14-line block (lines 50–66 in the post-SP3-B form) that bypasses ty when the file under check lives inside a nested `pyproject.toml` directory
+
+**SP audit round:** SP3 round 1 Phase B (2026-04-13)
+**Decision date:** 2026-04-13
+
+**Rationale:**
+
+Upstream `claude-code-hooks-mastery/.claude/hooks/validators/ty_validator.py` (103 LOC) runs `uvx ty check <file>` on every Python file passed to it. This works for a flat single-package project (which is what hooks-mastery is). It **fails** for ArhuGula because ArhuGula has nested packages with their own `pyproject.toml` files:
+
+- `mcp/just-prompt/pyproject.toml`
+- `mcp/pocket-pick/pyproject.toml`
+- `agents/sfa/pyproject.toml`
+
+When `ty` is invoked on a file inside one of these sub-packages from the project root, it cannot resolve the sub-package's dependencies and exits non-zero. The validator then outputs `{"decision": "block", "reason": ...}` and blocks legitimate edits to those sub-package files via the `@builder` subagent route.
+
+The skip block walks the file's parent chain looking for `pyproject.toml`. If it finds one in any parent (other than the project root itself), it skips the ty check entirely for that file.
+
+**Why kept (not reverted):** Removing the skip block would create a real footgun — `@builder` subagent edits to any file in `mcp/just-prompt/`, `mcp/pocket-pick/`, or `agents/sfa/` would be unconditionally blocked by ty. Restructuring ArhuGula as a single flat package to match upstream's assumption is a much larger refactor that would break SP4 (just-prompt MCP), SP5 (pocket-pick MCP), and SP7 (single-file agents) directly.
+
+**Why not in upstream:** hooks-mastery is a flat repo with no nested packages. Upstream never encountered this case, so the skip block doesn't exist there. This is an ArhuGula-specific structural mismatch, not a hardening choice.
+
+**Review cadence:** None — permanent until ArhuGula consolidates its sub-packages or upstream adopts a sub-package-aware ty pattern.
+
+**Related findings:**
+- SP3 r1 Phase B commit `a5fc5a1` — the byte-revert that preserved this single block
+- ArhuGula `pyproject.toml` requires-python = ">=3.12,<3.14"; nested sub-packages have their own pyproject.toml files
+
+**Follow-up actions:**
+None. The block is structurally bounded (one explicit skip path) and self-documents its purpose in the inline comment.
 
 ---
 
@@ -712,7 +759,7 @@ None.
 | # | Title | SP | Date | Status | Review when |
 |---|---|---|---|---|---|
 | 1 | Audit infrastructure tier (Tier 3) | SP1 r1 | 2026-04-13 | active | Quarterly |
-| 2 | Validator-forced drift (ruff) | SP1 r1 | 2026-04-13 | active | SP3 audit |
+| 2 | Validator-forced drift (ruff) | SP1 r1 → SP3 r1 | 2026-04-13 | **RESOLVED 2026-04-13** | — |
 | 3 | SP2-blocked SP1 reverts (10 commits remaining; item 10/D3 resolved 2026-04-13) | SP1 r1 | 2026-04-13 | active (partial) | SP2 audit |
 | 4 | builder/validator location + content | SP1 r1 | 2026-04-13 | **RESOLVED 2026-04-13** | — |
 | 5 | Confirmed invention deletions (spec-checker, schema-reviewer) | SP1 r1 | 2026-04-13 | **RESOLVED 2026-04-13** | — |
@@ -724,9 +771,10 @@ None.
 | 11 | `package.json` + `.tool-versions` (D7, load-bearing for SP11) | SP1 r1 | 2026-04-13 | active | SP11 audit / Quarterly |
 | 12 | `.claude/CLAUDE.md` comprehensive doc + nested path | SP1 r1 mini-gate | 2026-04-13 | active | Quarterly |
 | 13 | `justfile` 307-line multi-SP form (security-coupled via `--dangerously-skip-permissions` omission) | SP1 r1 mini-gate | 2026-04-13 | active | Per-SP recipe audits |
-| 14 | `patterns.yaml` 289-line hardening delta (SP14 r2–r10 + SP2-original additions) | SP2 r1 D8 | 2026-04-13 | active | SP14 follow-up rounds / SP3 audit |
+| 14 | `patterns.yaml` 289-line hardening delta (SP14 r2–r10 + SP2-original additions; SQL Cat I reclassified SP3 r1 Phase F as permanent style enforcement) | SP2 r1 D8 → SP3 r1 F | 2026-04-13 | active | SP14 follow-up rounds |
 | 15 | Damage-control hook files keep underscore form (D1=B carve-out per CLAUDE.md §Naming) | SP2 r1 D1 | 2026-04-13 | active | None (permanent) |
-| 16 | Stylistic drift on 9 reverted upstream hooks (Write-tool trailing-whitespace strip) | SP2 r1 SP1-resume-pass | 2026-04-13 | active | None (permanent) |
+| 16 | Stylistic drift on reverted upstream files (Write-tool trailing-whitespace strip; expanded SP3 r1 to 13 files) | SP2 r1 → SP3 r1 | 2026-04-13 | active | None (permanent) |
+| 17 | `ty_validator.py` sub-package skip block (load-bearing for nested pyproject.toml structure) | SP3 r1 B | 2026-04-13 | active | None (permanent) |
 
 ## How to close an exception
 
