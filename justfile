@@ -460,3 +460,84 @@ phase0-verify-deps:
     fi
     echo
     echo "phase0 verification complete"
+
+# Save current Comprehensive Audit gate to memory so /clear + /prime loads the right context.
+# Claude runs this automatically at each step handoff — users never need to call it directly.
+# With no args it re-saves whatever label is already in audits/ca-current-gate.txt.
+# Usage: just ca-gate               ← re-save current gate (no label change)
+#        just ca-gate "G next"      ← advance to new gate label
+ca-gate label="" note="":
+    #!/usr/bin/env python3
+    import pathlib, re, datetime
+
+    gate_file = pathlib.Path("audits/ca-current-gate.txt")
+    gate_file.parent.mkdir(parents=True, exist_ok=True)
+
+    # If no label given, read the existing one so re-saves are idempotent
+    label = """{{label}}""".strip()
+    if not label:
+        if gate_file.exists():
+            first_line = gate_file.read_text().splitlines()[0] if gate_file.exists() else ""
+            # format is "TIMESTAMP  label text"
+            parts = first_line.split("  ", 1)
+            label = parts[1].strip() if len(parts) == 2 else "checkpoint"
+        else:
+            label = "checkpoint"
+
+    note  = """{{note}}"""
+    ts    = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
+
+    # 1 — write machine-readable gate file (survives /clear)
+    gate_file = pathlib.Path("audits/ca-current-gate.txt")
+    gate_file.parent.mkdir(parents=True, exist_ok=True)
+    gate_file.write_text(f"{ts}  {label}\n{note}\n")
+    print(f"  wrote {gate_file}")
+
+    # 2 — update the MEMORY.md index line
+    home = pathlib.Path.home()
+    mem_dir = home / ".claude/projects/-Users-robertrhu-Projects-arhugula/memory"
+    mem_index = mem_dir / "MEMORY.md"
+    if mem_index.exists():
+        text = mem_index.read_text()
+        new_line = (
+            f"- [Comprehensive Audit — **NEXT: {label}** (2026-04-14)](project_comprehensive_audit_in_progress.md)"
+            f" — **RESUME MARKER.** Steps C/D/E done in working tree."
+            f" Gate: {label}. $0 spent, $20 approved."
+        )
+        text = re.sub(
+            r"- \[Comprehensive Audit[^\n]+project_comprehensive_audit_in_progress\.md\)[^\n]*",
+            new_line,
+            text,
+        )
+        mem_index.write_text(text)
+        print(f"  updated MEMORY.md index line")
+
+    # 3 — update §0 NEXT ACTION in the memory file
+    mem_file = mem_dir / "project_comprehensive_audit_in_progress.md"
+    if mem_file.exists():
+        text = mem_file.read_text()
+        # Replace the "NEXT ACTION → ..." line
+        text = re.sub(
+            r"\*\*NEXT ACTION →[^\n]+\*\*",
+            f"**NEXT ACTION → {label}**",
+            text,
+        )
+        # Replace the name: frontmatter line
+        text = re.sub(
+            r"^name:.*$",
+            f"name: Comprehensive Audit IN PROGRESS — {label}",
+            text,
+            flags=re.MULTILINE,
+        )
+        # Replace the description: frontmatter line
+        text = re.sub(
+            r"^description:.*$",
+            f"description: Resume marker. Gate: {label}. {note}",
+            text,
+            flags=re.MULTILINE,
+        )
+        mem_file.write_text(text)
+        print(f"  updated §0 NEXT ACTION in memory file")
+
+    print(f"\n  Gate saved: {label}")
+    print(f"  /clear + /prime will now resume at: {label}")

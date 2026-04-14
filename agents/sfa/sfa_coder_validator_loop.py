@@ -2,6 +2,8 @@
 
 # /// script
 # dependencies = [
+#   "anthropic>=0.47.1",
+#   "openai>=1.30.0",
 #   "rich>=13.7.0",
 #   "pyyaml>=6.0",
 # ]
@@ -188,18 +190,349 @@ def run_coder_pass_live(
     coder_model: str,
     previous_verdict: Optional[Dict[str, Any]],
 ) -> Dict[str, Any]:
-    """Live coder pass — stubbed until CA-U10 wires the Anthropic tool-use loop.
+    """Live coder pass — Anthropic tool-use loop (CA-U10).
 
-    The tool-use loop (read_file / run_static_checks / run_smoke_tests /
-    propose_diff / submit_findings) lives behind this seam so the dry-run
-    smoke can land independently. CA-U10 (Phase 2 execution) is the first
-    caller that exercises the live path; until then, invocation raises
-    NotImplementedError so accidental live runs surface loudly.
+    Drives claude-sonnet-4-6 (or the --coder-model override) through up to
+    MAX_TURNS tool-use cycles.  Tools available to the coder:
+        read_file          — read any path in the sandbox read-only mount
+        run_static_checks  — ruff + py_compile on a path
+        run_smoke_tests    — pytest -x (no-credential tests)
+        propose_diff       — write a unified diff to /tmp/coder_diffs/
+        submit_findings    — terminate the loop and return structured findings
+
+    The repo mount is read-only; propose_diff is the only path that writes, and
+    it writes exclusively to /tmp/coder_diffs/<name>.patch.
+
+    Returns a dict with shape identical to DRY_RUN_CODER_FIXTURE:
+        {"findings": [...], "proposed_diffs": "<unified diff text>"}
+
+    If the tool loop exhausts MAX_TURNS without submit_findings, a P0
+    "tool-loop-exhausted" finding is injected so the validator can escalate.
     """
-    raise NotImplementedError(
-        "live coder pass stubbed until CA-U10 — rerun with --dry-run "
-        f"(would have invoked {coder_model} on {sp_id})"
+    import anthropic  # lazy import — only loaded on live path
+    import subprocess
+
+    MAX_TURNS = 20
+
+    # Strip provider prefix: "anthropic:claude-sonnet-4-6" → "claude-sonnet-4-6"
+    model_id = coder_model.split(":", 1)[-1] if ":" in coder_model else coder_model
+
+    sp_scope: List[str] = manifest.get("sp_scope", [])
+    spec_refs: Dict[str, Any] = manifest.get("spec_refs", {})
+    exceptions_subset: List[Any] = manifest.get("exceptions_subset", [])
+
+    system_prompt = (
+        f"<purpose>\n"
+        f"You are an adversarial code reviewer performing Phase 2 of the ArhuGula "
+        f"Comprehensive Audit.  Your job is to thoroughly review sub-project {sp_id} "
+        f"and submit structured findings.  You are operating inside a read-only E2B "
+        f"sandbox.  You may only write to /tmp/coder_diffs/.\n"
+        f"</purpose>\n\n"
+        f"<instructions>\n"
+        f"1. Use read_file to inspect files in the SP scope: {json.dumps(sp_scope)}\n"
+        f"2. Focus on these axes:\n"
+        f"   - Byte-parity drift vs upstream IndyDevDan source\n"
+        f"   - Security vulnerabilities (command injection, path traversal, data exposure)\n"
+        f"   - Hook bypass vectors and credential exposure patterns\n"
+        f"   - Static analysis failures (ruff/mypy/py_compile issues)\n"
+        f"   - SoT exception violations (audits/exceptions.md)\n"
+        f"3. For each finding, collect file:line evidence before submitting\n"
+        f"4. Use propose_diff for recommended fixes (writes to /tmp/coder_diffs/ only)\n"
+        f"5. Call submit_findings when your review is complete\n"
+        f"6. Severity: P0=security/critical, P1=correctness, P2=drift, P3=style\n"
+        f"</instructions>\n\n"
+        f"<spec_refs>\n"
+        f"SoT section: {spec_refs.get('sot_section', 'N/A')}\n"
+        f"Memory file: {spec_refs.get('memory_file', 'N/A')}\n"
+        f"Active exceptions subset: {json.dumps(exceptions_subset)}\n"
+        f"</spec_refs>"
     )
+    if previous_verdict:
+        unresolved = [
+            f for f in previous_verdict.get("findings", [])
+            if f.get("coder_status") not in ("confirmed", "fixed")
+        ]
+        system_prompt += (
+            f"\n\n<previous_validator_verdict>\n"
+            f"The validator returned findings in the prior iteration.  "
+            f"Address each unresolved item below:\n"
+            f"{json.dumps(unresolved, indent=2)}\n"
+            f"Escalate reason: {previous_verdict.get('escalate_reason')}\n"
+            f"</previous_validator_verdict>"
+        )
+
+    tools: List[Dict[str, Any]] = [
+        {
+            "name": "read_file",
+            "description": "Read a file from the repository (sandbox read-only mount). Returns up to 8 000 characters.",
+            "input_schema": {
+                "type": "object",
+                "properties": {
+                    "path": {"type": "string", "description": "File path to read"}
+                },
+                "required": ["path"],
+            },
+        },
+        {
+            "name": "run_static_checks",
+            "description": "Run ruff check and python3 -m py_compile on a path. Returns combined stdout/stderr.",
+            "input_schema": {
+                "type": "object",
+                "properties": {
+                    "sp_path": {"type": "string", "description": "Directory or .py file path to check"}
+                },
+                "required": ["sp_path"],
+            },
+        },
+        {
+            "name": "run_smoke_tests",
+            "description": "Run pytest -x on no-credential tests for the SP scope. Returns up to 4 000 characters of output.",
+            "input_schema": {
+                "type": "object",
+                "properties": {
+                    "sp_path": {"type": "string", "description": "Directory to discover tests in"}
+                },
+                "required": ["sp_path"],
+            },
+        },
+        {
+            "name": "propose_diff",
+            "description": "Record a proposed fix as a unified diff. Writes to /tmp/coder_diffs/<name>.patch (sandbox scratch only).",
+            "input_schema": {
+                "type": "object",
+                "properties": {
+                    "file": {"type": "string", "description": "File path being patched"},
+                    "old": {"type": "string", "description": "Original content snippet"},
+                    "new": {"type": "string", "description": "Replacement content snippet"},
+                },
+                "required": ["file", "old", "new"],
+            },
+        },
+        {
+            "name": "submit_findings",
+            "description": "Submit final structured findings to end the review loop.",
+            "input_schema": {
+                "type": "object",
+                "properties": {
+                    "findings": {
+                        "type": "array",
+                        "description": "List of finding objects",
+                        "items": {
+                            "type": "object",
+                            "properties": {
+                                "severity": {"type": "string", "enum": ["P0", "P1", "P2", "P3"]},
+                                "axis": {"type": "string"},
+                                "file": {"type": "string"},
+                                "line": {"type": "integer"},
+                                "evidence": {"type": "string"},
+                                "why": {"type": "string"},
+                                "fix_suggestion": {"type": "string"},
+                            },
+                            "required": ["severity", "axis", "file", "line", "evidence", "why"],
+                        },
+                    },
+                    "summary": {"type": "string", "description": "One-line summary of the review"},
+                },
+                "required": ["findings", "summary"],
+            },
+        },
+    ]
+
+    # /tmp scratch dir for diffs (sandbox-safe — never touches repo mount)
+    diffs_dir = Path("/tmp/coder_diffs")
+    diffs_dir.mkdir(parents=True, exist_ok=True)
+    accumulated_diffs: List[str] = []
+
+    def _dispatch(tool_name: str, tool_input: Dict[str, Any]) -> str:
+        if tool_name == "read_file":
+            path = Path(tool_input["path"])
+            try:
+                return path.read_text(errors="replace")[:8000]
+            except Exception as exc:
+                return f"error reading {path}: {exc}"
+
+        if tool_name == "run_static_checks":
+            sp_path = tool_input["sp_path"]
+            parts: List[str] = []
+            for cmd in (
+                ["ruff", "check", sp_path],
+                ["python3", "-m", "py_compile", sp_path],
+            ):
+                try:
+                    r = subprocess.run(cmd, capture_output=True, text=True, timeout=60)
+                    label = cmd[0] if cmd[0] != "python3" else "py_compile"
+                    out = (r.stdout + r.stderr).strip() or "(clean)"
+                    parts.append(f"{label}: {out}")
+                except Exception as exc:
+                    parts.append(f"{cmd[0]}: unavailable ({exc})")
+            return "\n".join(parts)
+
+        if tool_name == "run_smoke_tests":
+            sp_path = tool_input["sp_path"]
+            try:
+                r = subprocess.run(
+                    [
+                        "python3", "-m", "pytest", sp_path,
+                        "-x", "--no-header", "-q",
+                        "-k", "not credential and not api_key and not live",
+                    ],
+                    capture_output=True, text=True, timeout=120,
+                )
+                return (r.stdout + r.stderr)[:4000]
+            except Exception as exc:
+                return f"pytest unavailable: {exc}"
+
+        if tool_name == "propose_diff":
+            file_path = tool_input["file"]
+            old_text = tool_input["old"]
+            new_text = tool_input["new"]
+            safe_name = file_path.replace("/", "_").replace(".", "_")
+            diff_path = diffs_dir / f"{safe_name}.patch"
+            diff_lines = [f"--- a/{file_path}\n", f"+++ b/{file_path}\n"]
+            diff_lines += [f"-{line}\n" for line in old_text.splitlines()]
+            diff_lines += [f"+{line}\n" for line in new_text.splitlines()]
+            diff_text = "".join(diff_lines)
+            diff_path.write_text(diff_text)
+            accumulated_diffs.append(diff_text)
+            return f"diff written to {diff_path}"
+
+        if tool_name == "submit_findings":
+            return "__SUBMIT_FINDINGS__"
+
+        return f"unknown tool: {tool_name}"
+
+    # ── tool-use loop ──────────────────────────────────────────────────────────
+    client = anthropic.Anthropic()
+    messages: List[Dict[str, Any]] = [
+        {
+            "role": "user",
+            "content": (
+                f"Review sub-project {sp_id}.  "
+                f"SP scope globs: {json.dumps(sp_scope)}.  "
+                f"Read the relevant files, run static checks, identify all findings, "
+                f"then call submit_findings with your complete results."
+            ),
+        }
+    ]
+
+    submitted_findings: Optional[Dict[str, Any]] = None
+
+    for _turn in range(MAX_TURNS):
+        response = client.messages.create(
+            model=model_id,
+            max_tokens=4096,
+            temperature=TEMPERATURE,
+            system=system_prompt,
+            tools=tools,  # type: ignore[arg-type]
+            messages=messages,  # type: ignore[arg-type]
+        )
+
+        # Record assistant turn
+        messages.append({"role": "assistant", "content": response.content})
+
+        tool_results: List[Dict[str, Any]] = []
+        has_tool_use = False
+
+        for block in response.content:
+            if block.type != "tool_use":
+                continue
+            has_tool_use = True
+            tool_output = _dispatch(block.name, block.input)
+
+            if tool_output == "__SUBMIT_FINDINGS__":
+                submitted_findings = {
+                    "findings": block.input.get("findings", []),
+                    "proposed_diffs": "\n\n".join(accumulated_diffs),
+                }
+                tool_results.append(
+                    {"type": "tool_result", "tool_use_id": block.id, "content": "findings submitted"}
+                )
+            else:
+                tool_results.append(
+                    {"type": "tool_result", "tool_use_id": block.id, "content": tool_output}
+                )
+
+        if submitted_findings is not None:
+            return submitted_findings
+
+        if not has_tool_use or response.stop_reason == "end_turn":
+            break
+
+        if tool_results:
+            messages.append({"role": "user", "content": tool_results})
+
+    # Loop exhausted without submit_findings — inject P0 meta-finding
+    return {
+        "findings": [
+            {
+                "severity": "P0",
+                "axis": "0-meta",
+                "file": sp_id,
+                "line": 0,
+                "evidence": (
+                    f"coder tool-use loop exhausted {MAX_TURNS} turns "
+                    f"without calling submit_findings"
+                ),
+                "why": "loop budget exceeded — coder may be stuck in exploration",
+                "fix_suggestion": (
+                    "investigate coder system prompt; consider reducing sp_scope "
+                    "or increasing --max-iter"
+                ),
+                "sp_id": sp_id,
+            }
+        ],
+        "proposed_diffs": "\n\n".join(accumulated_diffs),
+    }
+
+
+def _load_validator_system_prompt() -> str:
+    """Load sandbox-validator-agent.md body (everything after the closing ---)."""
+    agent_path = Path(__file__).parents[2] / ".claude" / "agents" / "sandbox-validator-agent.md"
+    if not agent_path.exists():
+        # Fallback: walk up from cwd (handles invocation from repo root)
+        agent_path = Path(".claude/agents/sandbox-validator-agent.md")
+    text = agent_path.read_text()
+    # Strip YAML frontmatter: content after the second "---\n" delimiter
+    parts = text.split("---\n", 2)
+    return parts[2].strip() if len(parts) >= 3 else text.strip()
+
+
+def _parse_verdict_json(text: str) -> Optional[Dict[str, Any]]:
+    """Extract and parse the first ```json ... ``` block from a response string."""
+    import re
+    match = re.search(r"```json\s*(\{.*?\})\s*```", text, re.DOTALL)
+    if not match:
+        return None
+    try:
+        return json.loads(match.group(1))
+    except json.JSONDecodeError:
+        return None
+
+
+def _hard_fail_verdict(
+    sp_id: str,
+    validator_model: str,
+    iteration: int,
+    reason: str,
+) -> Dict[str, Any]:
+    return {
+        "verdict": "escalate",
+        "iteration": iteration,
+        "model": validator_model,
+        "sp_id": sp_id,
+        "summary": reason,
+        "findings": [],
+        "coder_assessment": {
+            "findings_confirmed": 0,
+            "findings_refuted": 0,
+            "findings_fabricated": 0,
+            "findings_missed_by_coder": 0,
+            "static_checks_pass": False,
+            "exception_violations": 0,
+        },
+        "continue_loop": False,
+        "escalate_reason": reason,
+    }
 
 
 def run_validator_pass_live(
@@ -209,18 +542,87 @@ def run_validator_pass_live(
     iteration: int,
     previous_verdict: Optional[Dict[str, Any]],
 ) -> Dict[str, Any]:
-    """Live validator pass — stubbed until CA-U10 wires provider dispatch.
+    """Live validator pass — OpenAI o4-mini adversarial review (CA-U10).
 
-    CA-U10 will either (a) lazy-import anthropic + openai and dispatch
-    directly, or (b) shell out to `just-prompt` once that package grows a
-    non-MCP invocation path. Either way, the validator system
-    prompt is loaded from .claude/agents/sandbox-validator-agent.md and
-    the output JSON block is parsed into this function's return shape.
+    Loads the validator system prompt from
+    .claude/agents/sandbox-validator-agent.md (body after frontmatter),
+    builds the structured user payload, and calls o4-mini at temperature 0.1.
+    Parses the fenced ```json block from the response.  On parse failure,
+    retries once; on second failure returns a hard-fail escalate verdict so
+    the loop can surface it cleanly.
+
+    The validator_model arg should be "openai:o4-mini" — the "openai:" prefix
+    is stripped before passing to the OpenAI client.
     """
-    raise NotImplementedError(
-        "live validator pass stubbed until CA-U10 — rerun with --dry-run "
-        f"(would have invoked {validator_model} on {sp_id} @iter {iteration})"
+    import openai  # lazy import — only loaded on live path
+
+    # Strip provider prefix: "openai:o4-mini" → "o4-mini"
+    model_id = validator_model.split(":", 1)[-1] if ":" in validator_model else validator_model
+
+    system_prompt = _load_validator_system_prompt()
+
+    # Build structured user payload matching the input schema in sandbox-validator-agent.md
+    sp_scope: List[str] = []  # not passed to validator; it reads from coder findings
+    spec_refs: Dict[str, Any] = {}
+    user_payload: Dict[str, Any] = {
+        "sp_id": sp_id,
+        "sp_scope": sp_scope,
+        "spec_refs": spec_refs,
+        "coder_findings": coder_output.get("findings", []),
+        "coder_proposed_diffs": coder_output.get("proposed_diffs", ""),
+        "iteration": iteration,
+        "max_iterations": DEFAULT_MAX_ITER,
+        "previous_verdict": previous_verdict,
+    }
+    user_message = (
+        "Validate the following coder review output and return your verdict as a "
+        "```json ... ``` block matching the output schema.\n\n"
+        f"```json\n{json.dumps(user_payload, indent=2)}\n```"
     )
+
+    client = openai.OpenAI()
+
+    def _call_once() -> Optional[Dict[str, Any]]:
+        response = client.chat.completions.create(
+            model=model_id,
+            temperature=TEMPERATURE,
+            messages=[
+                {"role": "system", "content": system_prompt},
+                {"role": "user", "content": user_message},
+            ],
+        )
+        content = response.choices[0].message.content or ""
+        return _parse_verdict_json(content)
+
+    # First attempt
+    verdict = _call_once()
+    if verdict is None:
+        # Retry once
+        verdict = _call_once()
+
+    if verdict is None:
+        return _hard_fail_verdict(
+            sp_id, validator_model, iteration,
+            "validator output unparseable after 2 attempts",
+        )
+
+    # Ensure required fields are present; fill safe defaults where missing
+    verdict.setdefault("sp_id", sp_id)
+    verdict.setdefault("iteration", iteration)
+    verdict.setdefault("model", validator_model)
+    verdict.setdefault("continue_loop", verdict.get("verdict") == "fail")
+    verdict.setdefault("escalate_reason", None)
+    verdict.setdefault("findings", [])
+    verdict.setdefault("coder_assessment", {
+        "findings_confirmed": 0,
+        "findings_refuted": 0,
+        "findings_fabricated": 0,
+        "findings_missed_by_coder": 0,
+        "static_checks_pass": True,
+        "exception_violations": 0,
+    })
+
+    return verdict
 
 
 def append_to_mailbox(mailbox: Path, result: LoopResult) -> None:
