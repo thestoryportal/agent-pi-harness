@@ -84,7 +84,13 @@ REQUIRED_HOOKS = [
     "notification.py", "stop.py", "user_prompt_submit.py", "pre_compact.py",
     "subagent_start.py", "subagent_stop.py", "session_end.py",
     "permission_request.py", "post_tool_use_failure.py",
-    "bash_damage_control.py", "edit_damage_control.py", "write_damage_control.py",
+    # Note: bash/edit/write_damage_control.py moved to
+    # .claude/skills/damage-control/hooks/damage-control-python/ during
+    # SP2 Phase E (2026-04-13). They are no longer at the project hooks/
+    # location and so are not validated by this health check, which only
+    # walks the project hooks directory. The skill-located copies are
+    # still loaded by settings.json PreToolUse matchers and are
+    # transitively exercised on every tool call.
 ]
 
 
