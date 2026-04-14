@@ -13,12 +13,11 @@ Exit codes: 0=allow, 2=block.
 This is a security-critical hook — never exit 1.
 """
 
-import fnmatch
 import json
 import os
 import sys
 import time
-from pathlib import Path
+from pathlib import Path, PurePath
 from typing import Any
 
 PROJECT_DIR = os.environ.get("CLAUDE_PROJECT_DIR", os.getcwd())
@@ -40,7 +39,14 @@ def is_glob_pattern(pattern: str) -> bool:
 
 
 def match_path(file_path: str, pattern: str) -> bool:
-    """Match file path against pattern, supporting prefix, glob, and relative patterns.
+    """Match file path against pattern using path-segment-aware matching.
+
+    SP2 AR1 (2026-04-13): uses pathlib.PurePath.match() instead of
+    fnmatch.fnmatch() for glob patterns. PurePath.match() treats `/` as
+    a path separator, so `.claude/hooks/*.py` does NOT match
+    `.claude/hooks/utils/tts/foo.py`. The prior fnmatch-based form
+    over-matched subdirectory files because `*` greedily consumed across
+    path boundaries.
 
     Resolves symlinks to prevent traversal bypass via pre-existing symlinks.
     """
@@ -60,25 +66,20 @@ def match_path(file_path: str, pattern: str) -> bool:
         abs_pattern = os.path.normpath(expanded_pattern)
 
     if is_glob_pattern(pattern):
-        basename = os.path.basename(expanded_normalized)
-        basename_lower = basename.lower()
-        pattern_lower = pattern.lower()
-        expanded_pattern_lower = expanded_pattern.lower()
-        if fnmatch.fnmatch(basename_lower, expanded_pattern_lower):
-            return True
-        if fnmatch.fnmatch(basename_lower, pattern_lower):
-            return True
-        if fnmatch.fnmatch(expanded_normalized.lower(), expanded_pattern_lower):
-            return True
-        abs_pattern_lower = abs_pattern.lower()
-        if fnmatch.fnmatch(expanded_normalized.lower(), abs_pattern_lower):
-            return True
-        # Also check resolved path (follows symlinks)
-        resolved_basename = os.path.basename(resolved).lower()
-        if fnmatch.fnmatch(resolved_basename, expanded_pattern_lower):
-            return True
-        if fnmatch.fnmatch(resolved.lower(), expanded_pattern_lower):
-            return True
+        # Path-segment-aware glob matching via PurePath.match().
+        try:
+            if PurePath(expanded_normalized).match(expanded_pattern, case_sensitive=False):
+                return True
+            if PurePath(expanded_normalized).match(abs_pattern, case_sensitive=False):
+                return True
+            if PurePath(resolved).match(expanded_pattern, case_sensitive=False):
+                return True
+            if PurePath(resolved).match(abs_pattern, case_sensitive=False):
+                return True
+        except ValueError:
+            # Invalid pattern — fail closed (return False means no match;
+            # the caller's next rule may still block)
+            pass
         return False
     else:
         if expanded_normalized.startswith(expanded_pattern) or expanded_normalized == expanded_pattern.rstrip("/"):
