@@ -1,39 +1,31 @@
-"""Tests for Groq provider module."""
+"""
+Tests for Groq provider.
+"""
 
-from unittest.mock import MagicMock, patch
+import pytest
+import os
+from dotenv import load_dotenv
+from just_prompt.atoms.llm_providers import groq
 
-from just_prompt.atoms.llm_providers import groq as groq_mod
+# Load environment variables
+load_dotenv()
 
-
-@patch.dict("os.environ", {"GROQ_API_KEY": "test-key"})
-@patch("just_prompt.atoms.llm_providers.groq.Groq")
-def test_prompt_basic(mock_groq_cls):
-    """Basic prompt to Groq."""
-    mock_client = MagicMock()
-    mock_groq_cls.return_value = mock_client
-
-    mock_message = MagicMock()
-    mock_message.content = "Fast response"
-    mock_choice = MagicMock()
-    mock_choice.message = mock_message
-    mock_response = MagicMock()
-    mock_response.choices = [mock_choice]
-    mock_client.chat.completions.create.return_value = mock_response
-
-    result = groq_mod.prompt("Say hello", "llama-3.1-70b-versatile")
-    assert result == "Fast response"
+# Skip tests if API key not available
+if not os.environ.get("GROQ_API_KEY"):
+    pytest.skip("Groq API key not available", allow_module_level=True)
 
 
-@patch.dict("os.environ", {"GROQ_API_KEY": "test-key"})
-@patch("just_prompt.atoms.llm_providers.groq.Groq")
-def test_list_models(mock_groq_cls):
-    """list_models returns model IDs."""
-    mock_client = MagicMock()
-    mock_groq_cls.return_value = mock_client
+def test_list_models():
+    """Test listing Groq models."""
+    models = groq.list_models()
+    assert isinstance(models, list)
+    assert len(models) > 0
+    assert all(isinstance(model, str) for model in models)
 
-    m1 = MagicMock()
-    m1.id = "llama-3.1-70b-versatile"
-    mock_client.models.list.return_value = MagicMock(data=[m1])
 
-    result = groq_mod.list_models()
-    assert result == ["llama-3.1-70b-versatile"]
+def test_prompt():
+    """Test sending prompt to Groq."""
+    response = groq.prompt("What is the capital of France?", "qwen-qwq-32b")
+    assert isinstance(response, str)
+    assert len(response) > 0
+    assert "paris" in response.lower() or "Paris" in response

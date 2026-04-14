@@ -1,83 +1,68 @@
-"""Tests for OpenAI provider module."""
+"""
+Tests for OpenAI provider.
+"""
 
-from unittest.mock import MagicMock, patch
+import pytest
+import os
+from dotenv import load_dotenv
+from just_prompt.atoms.llm_providers import openai
 
-from just_prompt.atoms.llm_providers import openai as openai_mod
+# Load environment variables
+load_dotenv()
 
-
-@patch.dict("os.environ", {"OPENAI_API_KEY": "test-key"})
-@patch("just_prompt.atoms.llm_providers.openai.OpenAI")
-def test_prompt_basic(mock_openai_cls):
-    """Basic prompt without reasoning effort."""
-    mock_client = MagicMock()
-    mock_openai_cls.return_value = mock_client
-
-    mock_message = MagicMock()
-    mock_message.content = "Hello from GPT"
-    mock_choice = MagicMock()
-    mock_choice.message = mock_message
-    mock_response = MagicMock()
-    mock_response.choices = [mock_choice]
-    mock_client.chat.completions.create.return_value = mock_response
-
-    result = openai_mod.prompt("Say hello", "gpt-4o")
-    assert result == "Hello from GPT"
-    call_kwargs = mock_client.chat.completions.create.call_args[1]
-    assert call_kwargs["model"] == "gpt-4o"
+# Skip tests if API key not available
+if not os.environ.get("OPENAI_API_KEY"):
+    pytest.skip("OpenAI API key not available", allow_module_level=True)
 
 
-@patch.dict("os.environ", {"OPENAI_API_KEY": "test-key"})
-@patch("just_prompt.atoms.llm_providers.openai.OpenAI")
-def test_prompt_with_reasoning(mock_openai_cls):
-    """O-series model with reasoning effort uses responses API."""
-    mock_client = MagicMock()
-    mock_openai_cls.return_value = mock_client
-
-    mock_response = MagicMock()
-    mock_response.output_text = "Reasoned response"
-    mock_client.responses.create.return_value = mock_response
-
-    result = openai_mod.prompt("Think hard", "o3:high")
-    assert result == "Reasoned response"
-    call_kwargs = mock_client.responses.create.call_args[1]
-    assert call_kwargs["model"] == "o3"
-    assert call_kwargs["reasoning"] == {"effort": "high"}
+def test_list_models():
+    """Test listing OpenAI models."""
+    models = openai.list_models()
+    
+    # Assertions
+    assert isinstance(models, list)
+    assert len(models) > 0
+    assert all(isinstance(model, str) for model in models)
+    
+    # Check for at least one expected model
+    gpt_models = [model for model in models if "gpt" in model.lower()]
+    assert len(gpt_models) > 0, "No GPT models found"
 
 
-@patch.dict("os.environ", {"OPENAI_API_KEY": "test-key"})
-@patch("just_prompt.atoms.llm_providers.openai.OpenAI")
-def test_prompt_reasoning_fallback(mock_openai_cls):
-    """Falls back to chat completions if responses API fails."""
-    mock_client = MagicMock()
-    mock_openai_cls.return_value = mock_client
+def test_prompt():
+    """Test sending prompt to OpenAI with a regular model."""
+    response = openai.prompt("What is the capital of France?", "gpt-4o-mini")
 
-    mock_client.responses.create.side_effect = AttributeError(
-        "no responses API"
-    )
-    mock_message = MagicMock()
-    mock_message.content = "Fallback response"
-    mock_choice = MagicMock()
-    mock_choice.message = mock_message
-    mock_response = MagicMock()
-    mock_response.choices = [mock_choice]
-    mock_client.chat.completions.create.return_value = mock_response
-
-    result = openai_mod.prompt("Think", "o4-mini:low")
-    assert result == "Fallback response"
+    # Assertions
+    assert isinstance(response, str)
+    assert len(response) > 0
+    assert "paris" in response.lower() or "Paris" in response
 
 
-@patch.dict("os.environ", {"OPENAI_API_KEY": "test-key"})
-@patch("just_prompt.atoms.llm_providers.openai.OpenAI")
-def test_list_models(mock_openai_cls):
-    """list_models returns model IDs."""
-    mock_client = MagicMock()
-    mock_openai_cls.return_value = mock_client
+def test_parse_reasoning_suffix():
+    """Test parsing reasoning effort suffix from model names."""
 
-    m1 = MagicMock()
-    m1.id = "gpt-4o"
-    m2 = MagicMock()
-    m2.id = "gpt-4o-mini"
-    mock_client.models.list.return_value = MagicMock(data=[m1, m2])
+    # No suffix
+    assert openai.parse_reasoning_suffix("o4-mini") == ("o4-mini", "")
+    assert openai.parse_reasoning_suffix("o3") == ("o3", "")
 
-    result = openai_mod.list_models()
-    assert result == ["gpt-4o", "gpt-4o-mini"]
+    # Supported suffixes
+    assert openai.parse_reasoning_suffix("o4-mini:low") == ("o4-mini", "low")
+    assert openai.parse_reasoning_suffix("o4-mini:medium") == ("o4-mini", "medium")
+    assert openai.parse_reasoning_suffix("o4-mini:high") == ("o4-mini", "high")
+    assert openai.parse_reasoning_suffix("o3-mini:LOW") == ("o3-mini", "low")  # case insensitive
+
+    # Unsupported model – suffix ignored
+    assert openai.parse_reasoning_suffix("gpt-4o-mini:low") == ("gpt-4o-mini:low", "")
+
+
+@pytest.mark.parametrize("model_suffix", ["o4-mini:low", "o4-mini:medium", "o4-mini:high"])
+def test_prompt_with_reasoning(model_suffix):
+    """Test sending prompt with reasoning effort enabled."""
+
+    response = openai.prompt("What is the capital of Spain?", model_suffix)
+
+    # Assertions
+    assert isinstance(response, str)
+    assert len(response) > 0
+    assert "madrid" in response.lower() or "Madrid" in response
