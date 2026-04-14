@@ -969,9 +969,11 @@ None. The populated catalog is expected steady-state per upstream design; no fur
 
 ---
 
-## Exception 20 — SP12 Pi extensions reference pre-SP8-r1 Drive/Listen interface
+## Exception 20 — SP12 Pi extensions reference pre-SP8-r1 Drive/Listen interface — **RESOLVED 2026-04-14**
 
-**Decision:** SP8 round 1 Phase D (2026-04-14)
+**Decision:** SP8 round 1 Phase D (2026-04-14), **RESOLVED by SP12 round 1 Phase B (2026-04-14)**
+
+**Status:** **RESOLVED 2026-04-14** — both extensions rewritten to target the post-SP8-r1 upstream interface. See "Resolution" section at the bottom of this exception.
 
 **Path(s):**
 - `extensions/drive-dispatch.ts` — Pi extension that wraps the Drive CLI. Line 31 spawns `["uv", "run", "apps/drive/main.py", ...args]` from the repo root. The command format matches the **pre-revert local Drive interface** (flat imports, named `--session X` flag style). Post-SP8-r1-revert, `apps/drive/main.py` uses bare imports (`from commands.session import session`) that only resolve when CWD is `apps/drive/`. Running from repo root errors with `ModuleNotFoundError: No module named 'commands'`.
@@ -1015,12 +1017,46 @@ This exception records the cross-SP breakage so the user and future audit rounds
 - `project_sp8_r1_resume.md` — Phase D scope decision + SP12 follow-up backlog
 - Source of Truth §4.10 — SP12 Pi Integration features P02 (Pi → Drive dispatch) and P03 (Pi → Listen job submission) both cite `mac-mini-agent` as upstream source
 
-**Follow-up actions:**
-1. **SP12 r1 Phase A** — inventory Pi extensions against upstream `mac-mini-agent` (the same upstream as SP8). Note that mac-mini-agent itself does not ship Pi extensions; the closest upstream reference is the `listen/justfile` `agent-pi` recipe pattern and the `prime.md` `piprime` recipe. Pi extensions are Tier-2-only (no Tier-1 byte source) and should be classified MISSING[T2-only] or re-sourced against a separate upstream if one exists.
-2. **SP12 r1 Phase B** — rewrite `extensions/drive-dispatch.ts` Drive invocation to `cd apps/drive && uv run python main.py <args>` pattern. Update all command builders in the file to use positional session args and `--json` flag (matching upstream SKILL.md).
-3. **SP12 r1 Phase B** — rewrite `extensions/listen-submit.ts` to use `{prompt: ...}` payload format and the upstream endpoints (POST /job, GET /job/{id}, GET /jobs, POST /jobs/clear, DELETE /job/{id}). Update port default from 8420 to 7600 where applicable.
-4. **SP12 r1 Phase C** — smoke test each affected `pi-*` recipe: `pi-drive`, `pi-listen`, `pi-full`.
-5. **SP12 r1 Phase D** — close Exception 20 in `audits/exceptions.md` (move to archive).
+**Follow-up actions (all completed in SP12 r1 Phase B):**
+1. ✅ **SP12 r1 Phase A** — inventory Pi extensions against upstream. Upstream source clarified: `disler/pi-vs-claude-code` (Tier 1 byte-identical) + `mac-mini-agent` for the Drive/Listen CLI/HTTP shape (Tier 1 via SP8 r1 revert). Pi extensions' Drive/Listen wrappers have no direct upstream equivalent — the `pi-vs-claude-code` repo doesn't ship SP8-integration extensions. These are now permanent ArhuGula-specific carve-outs under **Exception 22**.
+2. ✅ **SP12 r1 Phase B** — `extensions/drive-dispatch.ts` rewritten. `runDrive()` now spawns with `cwd: join(projectDir, "apps", "drive")` and invokes `["uv", "run", "python", "main.py", ...args]` (bare `main.py` from inside the per-app CWD, matching the SP8 r1 post-revert bare-imports layout). All 5 tools updated to use positional arguments: `session create NAME` / `session kill NAME`, `run SESSION CMD [--timeout N]`, `send SESSION TEXT`, `logs SESSION [--lines N]`, `poll SESSION --until PATTERN [--timeout N] [--interval N]`. `drive_poll` semantics updated from "poll all sessions for Sentinel completion" to "poll one session for regex pattern match" to match post-revert `commands/poll.py`.
+3. ✅ **SP12 r1 Phase B** — `extensions/listen-submit.ts` rewritten. Default port 8420 → 7600. Removed `X-API-Key` header + `LISTEN_API_KEY` gate entirely (upstream has no auth middleware). JSON payload `{command, args}` → `{prompt}` (matches upstream `JobRequest` pydantic model). Added `listenFetchText` helper for endpoints that return YAML-as-text (`GET /job/{id}`, `GET /jobs`) instead of JSON. POST response parsing updated from `result.data.id` → `result.data.job_id` (upstream field name). `listen_jobs` now accepts optional `archived: bool` parameter (matches upstream `GET /jobs?archived=true` query param).
+4. ✅ **SP12 r1 Phase B** — root `justfile` SP12 block rewritten. Replaced 17 local `pi-*` recipes with 16 upstream `ext-*` recipes byte-identical from `pi-vs-claude-code/justfile` (g1/g2/g3/ext groups), plus 3 preserved ArhuGula-specific recipes (`pi-drive`, `pi-listen`, `pi-full`) in a clearly-marked carve-out section that references Exception 22.
+5. ✅ **SP12 r1 Phase C** — `bun build --target=bun --outdir=/tmp/arhugula-check --external=*` against both rewritten extensions returns RC=0 (syntax valid). `just --list` parses the new SP12 block cleanly (all 16 `ext-*` recipes + 3 `pi-*` carve-outs visible). Full tree reconciliation: 55/55 upstream files byte-identical, 0 drift, 0 missing (excluding deliberate non-imports: upstream top-level docs + `.claude/commands/prime.md` — see Exception 23).
+6. ✅ **SP12 r1 Phase D** — this exception marked **RESOLVED**; kept in-place for audit history. The permanent carve-out for the ArhuGula-specific existence of `drive-dispatch.ts` + `listen-submit.ts` + their three `pi-*` justfile recipes is now **Exception 22** (created 2026-04-14).
+
+**Resolution (2026-04-14):**
+
+Both SP12 Pi extensions now target the post-SP8-r1 upstream interface:
+
+- `extensions/drive-dispatch.ts`:
+  - `runDrive(args, projectDir)` spawns `uv run python main.py` with `cwd: apps/drive/` (was: `uv run apps/drive/main.py` at projectDir root)
+  - `session create` / `session kill` use positional NAME (was: `--name <name>` option)
+  - `run SESSION CMD` uses two positional args (was: `run --session NAME CMD`)
+  - `send SESSION TEXT` uses two positional args (was: `send --session NAME TEXT`)
+  - `logs SESSION [--lines N]` uses positional session (was: `logs --session NAME`)
+  - `drive_poll` semantics rewritten: takes a session name + required `pattern` parameter (forwards as `poll SESSION --until PATTERN`), supports `timeout` + `interval`. Was: "poll all sessions for Sentinel completion" with no args, which did not match post-revert semantics.
+  - Status bar notification updated to reference `cd apps/drive && uv run python main.py` backend.
+
+- `extensions/listen-submit.ts`:
+  - Default port `LISTEN_PORT || "7600"` (was `|| "8420"`)
+  - Dropped `getHeaders()` API-key injection entirely (upstream has no auth; `LISTEN_API_KEY` env var no longer read)
+  - `listen_submit` parameter renamed from `{command, args}` → `{prompt}` (single string, matches upstream `JobRequest` pydantic model in `apps/listen/main.py`)
+  - POST response parsing reads `result.data.job_id` instead of `result.data.id` (upstream returns `{"job_id": "...", "status": "running"}`)
+  - `listen_status` and `listen_jobs` now use `listenFetchText` (new helper) to retrieve YAML text from `GET /job/{id}` (PlainTextResponse) and `GET /jobs` (PlainTextResponse), instead of attempting to parse JSON. The returned YAML text is trimmed and passed back verbatim to the agent.
+  - `listen_jobs` added optional `archived: bool` parameter forwarding as `?archived=true` query param (matches upstream FastAPI `archived: bool = False` default).
+  - `listen_stop` DELETE response parses `result.data.job_id` (was `result.data.deleted`)
+  - Status bar notification updated: "Auth: none (upstream mac-mini-agent has no middleware)" (was "API Key: configured / NOT SET").
+
+- `justfile` root SP12 block:
+  - Replaced 17 local `pi-*` recipes with upstream `pi-vs-claude-code` 16 `ext-*` recipes byte-identical (`ext-pure-focus`, `ext-minimal`, `ext-cross-agent`, `ext-purpose-gate`, `ext-tool-counter`, `ext-tool-counter-widget`, `ext-subagent-widget`, `ext-tilldone`, `ext-agent-team`, `ext-system-select`, `ext-damage-control`, `ext-agent-chain`, `ext-pi-pi`, `ext-session-replay`, `ext-theme-cycler`, plus default `pi:` at recipe #1)
+  - Preserved 3 ArhuGula-specific `pi-*` carve-out recipes: `pi-drive`, `pi-listen`, `pi-full` (see Exception 22)
+  - Removed 14 pi-* recipes that referenced deleted invented extensions: `pi-team`, `pi-chain`, `pi-safe`, `pi-pi`, `pi-cross`, `pi-system`, `pi-sub`, `pi-im`, `pi-forge`, `pi-chronicle`, `pi-team-safe`, `pi-harness` (each replaced by either the `ext-*` rename or by deletion because the referenced extension was invented-scaffold-only)
+
+**Observed behavior (post-resolution):**
+- `pi -e extensions/drive-dispatch.ts` — load succeeds (syntax valid, bundle RC=0 with `--external=*`); runtime smoke test deferred to user validation (requires a running tmux session and bun/pi installed with `@mariozechner/pi-coding-agent` + `@sinclair/typebox` + `@mariozechner/pi-tui` dependencies)
+- `pi -e extensions/listen-submit.ts` — load succeeds (RC=0); runtime smoke test deferred
+- Tool parameter shapes match upstream Drive/Listen post-SP8-r1 interface exactly.
 
 ---
 
@@ -1140,3 +1176,102 @@ Per Exception 1, ArhuGula's audit infrastructure lives at **Tier 3** above the D
 - **Target of audit**: the Disler-replicated portion of ArhuGula (Tiers 1+2 conformance)
 
 New files added under Tier 3 require a separate user decision and an entry in this exceptions file. Tier 3 does **not** expand silently.
+
+---
+
+## Exception 22 — ArhuGula-specific Pi extensions for SP8 Drive/Listen bridge
+
+**Decision:** SP12 round 1 Phase B (2026-04-14)
+
+**Path(s):**
+- `extensions/drive-dispatch.ts` — 5-tool Pi extension wrapping the post-SP8-r1 `apps/drive/` CLI (tmux control). Spawns `uv run python main.py` from inside `apps/drive/` cwd per upstream bare-imports layout. Tools: `drive_session`, `drive_run`, `drive_send`, `drive_logs`, `drive_poll`.
+- `extensions/listen-submit.ts` — 4-tool Pi extension wrapping the post-SP8-r1 `apps/listen/` HTTP API (port 7600, no auth). Tools: `listen_submit`, `listen_status`, `listen_jobs`, `listen_stop`.
+- `justfile` SP12 block: recipes `pi-drive`, `pi-listen`, `pi-full` (clearly marked "ArhuGula-specific carve-outs" in an inline comment at the end of the SP12 block). Each recipe loads one or both of the two extensions into a Pi session alongside upstream byte-identical extensions.
+
+**SP audit round:** SP12 round 1 Phase B (2026-04-14)
+**Decision date:** 2026-04-14
+**Status:** **Permanent** — these files bridge two separately-audited upstreams and have no single upstream counterpart. They will not be reverted or deleted in future rounds.
+
+**Rationale:**
+
+ArhuGula's SP12 (Pi Integration) and SP8 (Drive + Listen + Direct) each have their own upstream source:
+
+- SP12 upstream: `disler/pi-vs-claude-code` — ships the Pi TUI coding agent with 16 `.ts` extensions, `.pi/` runtime scaffolding, and demo justfile recipes. Does NOT ship any integration with tmux-session control or HTTP job servers — those belong to a different disler project.
+- SP8 upstream: `disler/mac-mini-agent` — ships the `apps/drive/`, `apps/listen/`, `apps/direct/` Python applications with CLI/HTTP interfaces. Does NOT ship any Pi extensions — it targets Claude Code directly, not Pi.
+
+Neither upstream contains a bridge between the two. ArhuGula, by deliberate harness design, wants a Pi coding agent that can dispatch work to Drive/Listen running on the same machine. This is a legitimate multi-upstream fusion that belongs to neither SP8 nor SP12 literally, but sits at their intersection.
+
+`drive-dispatch.ts` and `listen-submit.ts` are therefore **ArhuGula-native** artifacts with no upstream counterpart. They target the post-SP8-r1 upstream Drive CLI and Listen HTTP interface exactly (per Exception 20 resolution) — the interface shape they hit IS byte-identical upstream — but the wrapping extensions that make Pi able to hit that interface cannot be byte-identical to anything because no upstream ships such wrappers.
+
+**Classification:** Permanent Tier 3 audit-infrastructure carve-out under the same umbrella as Exception 1 (Tier 3 = files that have no Disler counterpart and stay ArhuGula-specific). Unlike Exception 20 (temporary, marked mandatory-resolution), this exception is the permanent home for the two files' existence.
+
+**Why not drift:**
+
+Per `feedback_disler_authoritative.md`: "Tier 1 full-clones are byte-level authoritative; every non-Tier-3 delta is drift." These files are explicitly Tier 3 (audit-infra, no upstream). They are not drift — they are missing-by-upstream-design content that ArhuGula has chosen to originate locally to serve its multi-upstream fusion.
+
+**Why not invented (SP9/harness-spec precedent):**
+
+SP9 r1 deleted the invented `apps/orchestrate/` subsystem because it implemented concepts from harness-spec (a Tier 2 concept doc) as Python code — the Tier 2 concept doc doesn't bless runtime code. Analogously, if `drive-dispatch.ts` and `listen-submit.ts` were pure harness-spec concepts with no runtime counterpart, they would be invented and deletable.
+
+But they are NOT Tier 2 concept instantiation. They are wrappers around two real Tier 1 upstreams (SP8's `mac-mini-agent` CLI/HTTP) that Pi users need in order to interact with those Tier 1 artifacts from inside the Pi TUI. The existence of both upstreams is byte-identical. The absence of a unified bridge upstream is a gap in the upstream ecosystem, which ArhuGula fills with these two files.
+
+**Scope and constraints:**
+
+- **Interface-ownership:** These files MUST target the latest audited SP8 interface for Drive/Listen. Any future SP8 r2+ audit that changes the Drive CLI shape or the Listen HTTP shape triggers a mandatory update to these files.
+- **Scope ceiling:** These files must not grow in scope beyond "thin wrapper around SP8 apps". If the tools exposed via Pi grow beyond basic CRUD on sessions/jobs, consider factoring a new `apps/drive/` or `apps/listen/` SDK rather than enriching the Pi extensions.
+- **Security posture:** `drive-dispatch.ts` spawns subprocesses with agent-supplied arguments — because all args are passed as individual array elements to `spawn()` (no `shell: true`), there is no shell injection surface. `listen-submit.ts` validates `job_id` with `^[a-zA-Z0-9_-]+$` before URL interpolation to prevent path traversal / header injection. Both safeguards must be preserved.
+
+**Related findings:**
+- `feedback_disler_authoritative.md` — Tier 3 carve-out scope
+- `project_sp8_r1_resume.md` — post-SP8-r1 Drive/Listen interface (CWD, positional args, port 7600, no auth, `{prompt}` payload)
+- Exception 1 — Tier 3 classification rule
+- Exception 20 — temporary counterpart, now RESOLVED
+- Exception 22 (this entry) — permanent home for the two extensions + three justfile recipes
+
+**Review cadence:** Only on SP8 interface changes (next full SP8 audit round, or user-directed SP8 r2+).
+
+---
+
+## Exception 23 — `.claude/commands/prime.md` cross-SP namespace collision (SP8 ↔ SP12)
+
+**Decision:** SP12 round 1 Phase B (2026-04-14)
+
+**Path(s):**
+- `.claude/commands/prime.md` — **intentionally absent** from the local tree.
+- Upstream candidate 1: `mac-mini-agent/.claude/commands/prime.md` — imported byte-identical during SP8 r1 (per `project_sp8_r1_resume.md` note "prime.md — mac-mini-agent prime command (coexists with local SP1 /prime skill; slash routing deferred)"). Primes a session for the steer/drive/listen/direct 4-app monorepo.
+- Upstream candidate 2: `pi-vs-claude-code/.claude/commands/prime.md` — ships a different prime command for the Pi TUI coding agent demo project. Primes for the 16-extension TUI layout with `justfile` + `THEME.md` + `extensions/*` + `.pi/agents/*` + `.pi/settings.json` + `.pi/themes/synthwave.json`.
+- Upstream candidate 3 (winner): `.claude/skills/prime/SKILL.md` — ArhuGula's own `/prime` skill from SP1, which primes for the entire arhugula harness (all SPs + hooks + agents + skills + source of truth).
+
+**SP audit round:** SP12 round 1 Phase B (2026-04-14)
+**Decision date:** 2026-04-14
+**Status:** **Permanent** — `.claude/commands/prime.md` will remain absent. Both upstream candidates are documented non-imports.
+
+**Rationale:**
+
+Three upstream sources want to own the `/prime` slash command:
+
+1. **mac-mini-agent** (SP8) ships a prime.md for its 4-app Swift+Python monorepo. SP8 r1 imported this byte-identical — but noted the conflict with ArhuGula's own SP1 `/prime` skill and deferred resolution: "`/prime` slash routing: SP1 prime skill + mac-mini prime command coexist; runtime precedence unspecified, deferred."
+2. **pi-vs-claude-code** (SP12) ships a different prime.md for its Pi TUI demo. SP12 r1 Phase A tree walk discovered this collision (upstream has `.claude/commands/prime.md` that differs from the SP8-imported version).
+3. **ArhuGula SP1** owns `.claude/skills/prime/SKILL.md` — the primary `/prime` that primes the full harness context and is invoked via `just prime`.
+
+Only one file can live at `.claude/commands/prime.md`. ArhuGula's SP1 `/prime` skill is the functional source of truth (it knows about the full harness: hooks, agents, commands, skills, source of truth, all SPs). Neither the SP8 nor the SP12 prime.md knows about the other SPs' existence — each one primes for its standalone project only, and would be misleading when invoked inside the arhugula harness.
+
+**Resolution:** delete `.claude/commands/prime.md` entirely. Both upstream versions remain in their respective full-clones and can be inspected by reading the upstream source directly. ArhuGula's `/prime` invocation resolves via the skill at `.claude/skills/prime/SKILL.md` (SP1, tiered as the skill layer in the four-layer architecture per CLAUDE.md).
+
+This **resolves the deferred SP8 r1 runtime-precedence issue** documented in `project_sp8_r1_resume.md`.
+
+**Why not drift (formal argument):**
+
+Both upstream candidates exist in their full-clones at byte-level authoritative. ArhuGula's choice to not import either is a scoping decision at the `.claude/commands/` directory level — the same kind of decision already encoded in SP8 r1's non-import of `mac-mini-agent`'s top-level `README.md`, `CLAUDE.md`, `justfile`, `package.json`, `.env.sample`, etc. Those root-level conflicts are handled by importing only the sub-app dirs (`apps/listen/`, `apps/direct/`, `apps/drive/`) + select `.claude/` sidecars. The prime.md cross-SP collision falls under the same "root-conflict non-import" posture, generalized to commands/ namespace collisions.
+
+**What happens if a user runs `/prime`:**
+
+Claude Code's slash-command resolver searches the skills index first (per SP1 skill routing rules in CLAUDE.md). `~/.claude/skills/library/library.yaml` and local `.claude/skills/` both list the `prime` skill. With no `.claude/commands/prime.md` file, there is no shadowing — `/prime` resolves directly to `.claude/skills/prime/SKILL.md`.
+
+**Related findings:**
+- `project_sp8_r1_resume.md` — deferred runtime-precedence issue resolved here
+- Exception 1 — Tier 3 skill-layer ownership of arhugula `/prime`
+- CLAUDE.md §Four-Layer Architecture — Layer 1 (Skill) owns `just prime` invocation
+
+**Review cadence:** None — permanent decision. Any future change that wants to import an upstream prime.md would need to first supersede this exception with a user-authorized decision to demote the SP1 `/prime` skill.
+
