@@ -567,7 +567,7 @@ Ask specific questions about what you need to BUILD. Each expert will return doc
 			const raw = readFileSync(orchestratorPath, "utf-8");
 			const match = raw.match(/^---\n([\s\S]*?)\n---\n([\s\S]*)$/);
 			const template = match ? match[2].trim() : raw;
-
+			
 			systemPrompt = template
 				.replace("{{EXPERT_COUNT}}", experts.size.toString())
 				.replace("{{EXPERT_NAMES}}", expertNames)

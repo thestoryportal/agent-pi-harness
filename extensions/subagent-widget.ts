@@ -313,7 +313,7 @@ export default function (pi: ExtensionAPI) {
 				return { content: [{ type: "text", text: "No active subagents." }] };
 			}
 
-			const list = Array.from(agents.values()).map(s =>
+			const list = Array.from(agents.values()).map(s => 
 				`#${s.id} [${s.status.toUpperCase()}] (Turn ${s.turnCount}) - ${s.task}`
 			).join("\n");
 

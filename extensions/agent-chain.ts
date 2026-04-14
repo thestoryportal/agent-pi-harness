@@ -25,7 +25,7 @@ import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
 import { Type } from "@sinclair/typebox";
 import { Text, truncateToWidth, visibleWidth } from "@mariozechner/pi-tui";
 import { spawn } from "child_process";
-import { readFileSync, existsSync, readdirSync, mkdirSync, unlinkSync, statSync } from "fs";
+import { readFileSync, existsSync, readdirSync, mkdirSync, unlinkSync } from "fs";
 import { join, resolve } from "path";
 import { applyExtensionDefaults } from "./themeMap.ts";
 
@@ -171,28 +171,12 @@ function scanAgentDirs(cwd: string): Map<string, AgentDef> {
 	for (const dir of dirs) {
 		if (!existsSync(dir)) continue;
 		try {
-			for (const entry of readdirSync(dir)) {
-				const fullPath = resolve(dir, entry);
-				if (entry.endsWith(".md")) {
-					const def = parseAgentFile(fullPath);
-					if (def && !agents.has(def.name.toLowerCase())) {
-						agents.set(def.name.toLowerCase(), def);
-					}
-				} else {
-					// One-level subdirectory scan (e.g., .pi/agents/pi-pi/)
-					try {
-						const stat = statSync(fullPath);
-						if (stat.isDirectory()) {
-							for (const subFile of readdirSync(fullPath)) {
-								if (!subFile.endsWith(".md")) continue;
-								const subPath = resolve(fullPath, subFile);
-								const def = parseAgentFile(subPath);
-								if (def && !agents.has(def.name.toLowerCase())) {
-									agents.set(def.name.toLowerCase(), def);
-								}
-							}
-						}
-					} catch {}
+			for (const file of readdirSync(dir)) {
+				if (!file.endsWith(".md")) continue;
+				const fullPath = resolve(dir, file);
+				const def = parseAgentFile(fullPath);
+				if (def && !agents.has(def.name.toLowerCase())) {
+					agents.set(def.name.toLowerCase(), def);
 				}
 			}
 		} catch {}
@@ -358,8 +342,6 @@ export default function (pi: ExtensionAPI) {
 		const agentSessionFile = join(sessionDir, `chain-${agentKey}.json`);
 		const hasSession = agentSessions.get(agentKey);
 
-		// SECURITY NOTE: --no-extensions means chain agents run WITHOUT damage-control.ts.
-		// See agent-team.ts for mitigation options. Current: option 3 (trusted agent defs).
 		const args = [
 			"--mode", "json",
 			"-p",
