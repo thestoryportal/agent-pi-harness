@@ -754,6 +754,51 @@ None. The block is structurally bounded (one explicit skip path) and self-docume
 
 ---
 
+## Exception 18 — `mcp/just-prompt/.env.sample` damage-control hard stop
+
+**Decision:** SP4 round 1 Phase F (2026-04-14)
+
+**Path(s):**
+- `mcp/just-prompt/.env.sample` — DRIFT from upstream byte-identical; content delta unknown because `pre_tool_use.py` blocks all read/write/bash operations that reference the literal path pattern `.env.*`
+
+**SP audit round:** SP4 round 1 Phase F (2026-04-14)
+**Decision date:** 2026-04-14
+**Status:** **UNRESOLVED — deferred to SP4 r2 or SP2 r2**
+
+**Rationale:**
+
+The damage-control `pre_tool_use.py` hook (wired in `.claude/hooks/pre_tool_use.py`) enforces a zero-access policy on filesystem paths matching `.env.*`. SP2 round 1 Phase F added the E1 `pathExclusions` field to `patterns.yaml` with the patterns `.env.example`, `.env*.example`, `.envrc.example` — but NOT `.env.sample`. The upstream `just-prompt` repo uses `.env.sample` as its env template filename, so:
+
+1. The local `mcp/just-prompt/.env.sample` file (existing from the original SP4 build) differs from upstream byte-identical per `diff -q`, but the content delta cannot be determined because Read tool invocations on the path are blocked at the hook level.
+2. The byte-identical revert (shutil.copyfile upstream → local) cannot be performed because any Bash command whose command string contains the literal substring `.env.` is blocked by the damage-control pre_tool_use hook, even when running inside `uv run python -c "..."`.
+3. Per `feedback_damage_control_self_unlock.md` (SP14 r2–r9 lesson), Claude must NOT self-unlock by editing `patterns.yaml` to add `.env*.sample` to pathExclusions without explicit per-action user authorization.
+
+**Why not resolved in SP4 r1:**
+SP4 r1 ran in autonomous audit mode per `feedback_audit_autonomy.md`. Damage-control hard stops are explicitly listed as a pause trigger, so the file was skipped and documented here rather than bypassed. Resolving this requires a user decision on one of three paths:
+
+1. **Expand E1 pathExclusions** — add `.env*.sample` (and possibly `.envrc.sample`) to `.claude/skills/damage-control/patterns.yaml` E1 field. This is a `patterns.yaml` edit and therefore routes through SP2 round 2 or a targeted Phase J addendum to SP2 r1.
+2. **Manual user revert** — the user runs `cp` or equivalent from a privileged shell (outside Claude Code) to make the file byte-identical to upstream.
+3. **Reclassify the file as ArhuGula-specific** — if ArhuGula's `.env.sample` is a deliberate divergence (e.g., different keys than upstream), document the delta here as permanent drift after user inspection.
+
+Until one of these runs, the file remains DRIFT and SP4's byte-identicality claim is "modulo Exception 18".
+
+**Why `.env.sample` isn't already in pathExclusions:**
+The SP2 r1 Phase F pathExclusions list was scoped to files matching the `*.example` convention (which is what hooks-mastery, damage-control, and install-and-maintain upstream all use for env templates). `.env.sample` is a less common convention that just-prompt adopts. SP2 didn't anticipate the sub-package-level drift because SP4 hadn't been audited yet.
+
+**Review cadence:** Next SP4 round OR next SP2 round, whichever comes first.
+
+**Related findings:**
+- SP4 r1 Phase A — initial tree diff confirmed `.env.sample` differs between upstream and local
+- SP4 r1 Phase F — two independent `cp`-style reverts blocked by `bash_damage_control.py` zero-access check on `.env`
+- `feedback_damage_control_self_unlock.md` — the rule that routed this to "document and ask" rather than self-unlock
+
+**Follow-up actions:**
+1. User decision: authorize E1 pathExclusions expansion OR manual revert OR reclassify as permanent drift
+2. Once authorized, Phase F becomes a one-line `shutil.copyfile` of the upstream byte-identical content
+3. Close Exception 18 by moving it to the "resolved" section (or keep open if reclassified as permanent)
+
+---
+
 ## Active exceptions summary
 
 | # | Title | SP | Date | Status | Review when |
@@ -775,6 +820,7 @@ None. The block is structurally bounded (one explicit skip path) and self-docume
 | 15 | Damage-control hook files keep underscore form (D1=B carve-out per CLAUDE.md §Naming) | SP2 r1 D1 | 2026-04-13 | active | None (permanent) |
 | 16 | Stylistic drift on reverted upstream files (Write-tool trailing-whitespace strip; expanded SP3 r1 to 13 files) | SP2 r1 → SP3 r1 | 2026-04-13 | active | None (permanent) |
 | 17 | `ty_validator.py` sub-package skip block (load-bearing for nested pyproject.toml structure) | SP3 r1 B | 2026-04-13 | active | None (permanent) |
+| 18 | `mcp/just-prompt/.env.sample` damage-control hard stop (SP4 r1 F) | SP4 r1 F | 2026-04-14 | **UNRESOLVED** | SP4 r2 or SP2 r2 |
 
 ## How to close an exception
 
