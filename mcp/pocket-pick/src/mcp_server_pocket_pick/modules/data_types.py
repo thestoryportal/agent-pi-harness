@@ -1,19 +1,19 @@
-from datetime import datetime
 from pathlib import Path
-from typing import List
-
 from pydantic import BaseModel
-
+from typing import List, Optional
+from datetime import datetime
 from .constants import DEFAULT_SQLITE_DATABASE_PATH
 
 
 class AddCommand(BaseModel):
+    id: str
     text: str
     tags: List[str] = []
     db_path: Path = DEFAULT_SQLITE_DATABASE_PATH
 
 
 class AddFileCommand(BaseModel):
+    id: str
     file_path: str
     tags: List[str] = []
     db_path: Path = DEFAULT_SQLITE_DATABASE_PATH
@@ -65,3 +65,9 @@ class PocketItem(BaseModel):
     created: datetime
     text: str
     tags: List[str]
+
+
+class ListIdsCommand(BaseModel):
+    tags: List[str] = []
+    limit: int = 100
+    db_path: Path = DEFAULT_SQLITE_DATABASE_PATH
