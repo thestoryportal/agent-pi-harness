@@ -35,3 +35,22 @@ Write to `app_docs/install_results.md` and respond to user:
 
 **Next steps**:
 - [what to do now]
+
+## Damage Control Installation (extension)
+
+The damage-control security hooks system is installed as part of the
+standard initialization flow above. The hook chain is wired in
+`.claude/settings.json` (PreToolUse Bash/Edit/Write matchers) and points
+at the canonical hook copies under
+`.claude/skills/damage-control/hooks/damage-control-python/`. The shared
+rule file lives at `.claude/skills/damage-control/patterns.yaml`.
+
+Source: merged from `disler/claude-code-damage-control` upstream
+`install.md` per SP2 D12=A. The upstream file's substantive content was
+the one-line directive "Install the damage control system."; this section
+absorbs that directive without losing the surrounding install-and-maintain
+workflow that ArhuGula uses for the rest of the project initialization.
+
+To install or update the damage control system specifically (e.g. after
+upgrading the skill from a fresh upstream pull), invoke `Skill(damage-control)`
+which the global skill catalog routes to `.claude/skills/damage-control/SKILL.md`.
