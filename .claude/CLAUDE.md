@@ -110,7 +110,7 @@ See Source of Truth Section 8 for priority order. Fix structural issues (Section
 | SP8 | Drive + Listen + Direct | BUILT | 15 | mac-mini-agent |
 | SP9 | Orchestration | BUILT | 11 | bowser, comprehensive-ref, infinite-agentic-loop |
 | SP10 | Drop Zones | BUILT + AUDIT R1 (2026-04-14) | 4 | agentic-drop-zones |
-| SP11 | Prompt Testing | BUILT | 4 | llm-prompt-testing |
+| SP11 | Prompt Testing | BUILT + AUDIT R1 (2026-04-14) | 4 | llm-prompt-testing |
 | SP12 | Pi Integration + Harness Spec | BUILT | 14 | pi-agent, pi-vs-claude-code, harness-spec |
 | SP13 | Steer (Swift GUI) | BUILT | 3 | mac-mini-agent |
 | SP14 | Browser Automation | BUILT (2026-04-12) | 8 | bowser |

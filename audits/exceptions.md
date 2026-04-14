@@ -1024,6 +1024,77 @@ This exception records the cross-SP breakage so the user and future audit rounds
 
 ---
 
+## Exception 21 — SP11 pattern-SP posture (upstream reference + local pattern-instantiation coexist)
+
+**Decision:** SP11 round 1 Phase A (2026-04-14)
+
+**Path(s):**
+- `apps/prompt-testing/` — upstream `disler/llm-prompt-testing-quick-start` byte-identical full clone (41 files)
+- `tests/prompts/builder/{prompt.txt, test.yaml, promptfooconfig.yaml}` (3 files)
+- `tests/prompts/validator/{prompt.txt, test.yaml, promptfooconfig.yaml}` (3 files)
+- `tests/prompts/scout/{prompt.txt, test.yaml, promptfooconfig.yaml}` (3 files)
+- Root `package.json` `devDependencies.promptfoo` + `eval:builder`/`eval:validator`/`eval:scout`/`promptfoo:view` scripts
+- `justfile` SP11 recipes (`eval-builder`, `eval-validator`, `eval-scout`, `eval-all`, `promptfoo-view`)
+
+**SP audit round:** SP11 round 1 (2026-04-14)
+**Decision date:** 2026-04-14
+
+**Rationale:**
+
+SP11 is the first **pattern-SP** in the identicality audit. Unlike SP4 (`just-prompt`), SP5 (`pocket-pick`), SP7 (`single-file-agents`), SP8 (`mac-mini-agent`), SP9 (`orchestration`), and SP10 (`agentic-drop-zones`) — all of which are code-SPs where upstream ships executable code that local rewrote as drift — SP11's upstream (`llm-prompt-testing-quick-start`) is a **tutorial/template repo**.
+
+Upstream README section "Organizational Pattern" explicitly documents the deliverable:
+
+> `/<name of agent/test 1>` → `/prompt.txt` (prompts) + `/test.yaml` (variables and assertions) + `/promptfooconfig.yaml` (llm config)
+
+The upstream example agent dirs (`_is_nlq_minimal_agent_prompt`, `is_nlq_agent_prompt`, `nlq_to_sql`, `nlq_to_sql__experiment`, `try_this_nlq_agent_prompt`) are **pedagogical material** — they demonstrate the pattern with NLQ-to-SQL prompts. The README text reinforces this interpretation: "I recommend using separate prompt.txt, test.txt, promptfooconfig.yaml with a dedicated directory and package.json script for each prompt you want to test. This way you can create multiple test + prompt combinations."
+
+The arhugula local implementation (`tests/prompts/{builder,validator,scout}/`) correctly instantiates the upstream pattern for arhugula-specific harness agents (builder, validator, scout). This is NOT drift — it is the DELIVERABLE of SP11 as the upstream README frames it.
+
+**Two interpretations weighed:**
+
+1. **Literal wholesale-revert** (SP4/5/7/8/9/10 precedent): delete `tests/prompts/{builder,validator,scout}/`, import only upstream NLQ example dirs at `tests/prompts/` or similar. Closes audit at "byte-identical with upstream content". **Rejected:** the upstream content is NLQ-to-SQL examples that test nothing arhugula cares about; deleting working builder/validator/scout prompt tests to replace them with SQL examples defeats the purpose of SP11 (having test coverage for the harness's own agent prompts).
+
+2. **Pattern-SP posture** (this exception): import upstream scaffolding + example dirs byte-identical into a scoped container (`apps/prompt-testing/`), preserve local pattern-instantiation (`tests/prompts/{builder,validator,scout}/`) as-is. Both coexist without conflict (different directories, different npm working directories). Closes audit at "byte-identical with upstream scaffolding AND correct pattern-instantiation for arhugula agents". **Accepted.**
+
+**The pattern-SP rule for future rounds:**
+
+When the upstream repo's own README identifies it as a pattern/template (look for phrases like "quick start", "template", "reference implementation", "example", or an explicit §Organizational Pattern / §How to use this pattern section), the audit should:
+
+1. Import upstream scaffolding + example material byte-identical into a scoped container (`apps/<repo-slug>/` sibling to other code-SP imports).
+2. Preserve the local pattern-instantiation at its existing location; do not delete it as drift.
+3. Document both locations in the feature-map status (T01–T04 rows cite both upstream artifacts and local manifestations).
+4. Add an Exception entry on the first pattern-SP that establishes the rule (this Exception 21).
+
+Subsequent pattern-SPs reference this exception rather than adding a new per-SP exception.
+
+**Why not drift (formal argument):**
+
+The `feedback_disler_authoritative.md` rule says "Tier 1 full-clones are byte-level authoritative; every non-Tier-3 delta is drift; MATCH/DRIFT/MISSING only." This rule classifies SCOPE: it says "the byte-level content of upstream files is authoritative for matching local files." It does NOT say "the local repo must contain only upstream content." Arhugula's tree has always contained local files that have no upstream counterpart (`.claude/commands/`, `.claude/hooks/` etc — Tier 3 audit infra per Exception 1). The pattern-SP posture extends this understanding: **local files that are CORRECT APPLICATIONS OF AN UPSTREAM PATTERN are not drift because they have no upstream counterpart to compare against**. The upstream example dirs (`nlq_to_sql`, etc.) are SEPARATE instances of the pattern, not "the one true version" that local must mirror.
+
+**Comparable past decisions:**
+
+- Exception 1 (Tier 3 audit infra) — recognized that local audit-orchestration files have no upstream source.
+- Exception 5 (confirmed invention deletions) — distinguished "invention" from "pattern-application" by checking whether the concept appears in any upstream artifact; spec-checker + schema-reviewer were truly invented (concept-absent), vs. builder + validator which were pattern-applications from the hooks-mastery `team/` convention.
+- Exception 11 (`package.json` + `.tool-versions` as load-bearing for SP11) — preemptively flagged that root package.json needed SP11-scoped audit. Exception 21 resolves that flag: root `package.json` eval scripts target local pattern-instantiation dirs, consistent with upstream's per-prompt-dir npm script convention.
+
+**Review cadence:** None (permanent). The pattern-SP rule is foundational and applies to any future pattern/template upstream repos.
+
+**Related findings:**
+
+- SP11 r1 Phase A scout — mapped T01–T04 to upstream artifacts vs local manifestations
+- Upstream `README.md` §Organizational Pattern (line 124–131) — explicit pattern documentation
+- Upstream `package.json` (line 7–11) — per-prompt-dir npm script convention (`nlq_to_sql_one`, `nlq_to_sql_five`, etc.)
+- Local root `package.json` (line 13–18) — mirrors the convention with `eval:builder`/`eval:validator`/`eval:scout`
+- `feedback_disler_authoritative.md` — scoped to byte-level content authority, not "only upstream content allowed"
+
+**Follow-up actions:**
+
+1. When SP11 r2 runs (if ever — triggered by upstream pattern changes), verify both `apps/prompt-testing/` byte-identicality AND local `tests/prompts/*` pattern-instantiation correctness.
+2. Future pattern-SPs (if any) should cite this exception rather than adding a new per-SP exception.
+
+---
+
 ## Active exceptions summary
 
 | # | Title | SP | Date | Status | Review when |
@@ -1048,6 +1119,7 @@ This exception records the cross-SP breakage so the user and future audit rounds
 | 18 | `.env.sample` damage-control hard stop (both arms restored via E1 pathExclusions expansion — audit-temporary, revert post-audit) | SP4 r1 F + SP7 r1 C+G | 2026-04-14 | **RESOLVED 2026-04-14** | — (but see Exception 14 Category J revert plan) |
 | 19 | `~/.claude/skills/library/library.yaml` ArhuGula catalog population (upstream-schema-compatible) | SP6 r1 D | 2026-04-14 | active | None (permanent — grows via `/library add`) |
 | 20 | SP12 Pi extensions (`drive-dispatch.ts`, `listen-submit.ts`) reference pre-SP8-r1 Drive/Listen interface — deferred cross-SP fix | SP8 r1 D | 2026-04-14 | active | **SP12 r1 mandatory** |
+| 21 | SP11 pattern-SP posture (upstream reference + local pattern-instantiation coexist) | SP11 r1 A | 2026-04-14 | active | None (permanent foundational rule) |
 
 ## How to close an exception
 
