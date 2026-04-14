@@ -1,6 +1,6 @@
 #!/usr/bin/env -S uv run --script
 # /// script
-# requires-python = ">=3.12"
+# requires-python = ">=3.11"
 # dependencies = []
 # ///
 """
@@ -14,17 +14,14 @@ Outputs JSON decision for Claude Code PostToolUse hook:
 """
 import json
 import logging
-import os
 import subprocess
 import sys
 from pathlib import Path
 
+# Logging setup - log file next to this script
 SCRIPT_DIR = Path(__file__).parent
 LOG_FILE = SCRIPT_DIR / "ty_validator.log"
-PROJECT_DIR = os.environ.get("CLAUDE_PROJECT_DIR", os.getcwd())
 
-_fd = os.open(LOG_FILE, os.O_WRONLY | os.O_CREAT | os.O_APPEND, 0o600)
-os.close(_fd)
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s | %(levelname)s | %(message)s",
@@ -38,6 +35,7 @@ def main():
     logger.info("=" * 50)
     logger.info("TY VALIDATOR POSTTOOLUSE HOOK TRIGGERED")
 
+    # Read hook input from stdin (Claude Code passes JSON)
     try:
         stdin_data = sys.stdin.read()
         if stdin_data.strip():
@@ -48,44 +46,49 @@ def main():
     except json.JSONDecodeError:
         hook_input = {}
 
+    # Extract file_path from PostToolUse stdin
     file_path = hook_input.get("tool_input", {}).get("file_path", "")
     logger.info(f"file_path: {file_path}")
 
+    # Only run for Python files
     if not file_path.endswith(".py"):
         logger.info("Skipping non-Python file")
         print(json.dumps({}))
         return
 
-    resolved = Path(file_path).resolve()
-    if not str(resolved).startswith(str(Path(PROJECT_DIR).resolve()) + "/"):
-        logger.info(f"Skipping file outside project: {resolved}")
-        print(json.dumps({}))
-        return
+    # ArhuGula Exception 17: skip files in sub-packages with their own pyproject.toml
+    # (e.g. mcp/just-prompt/, mcp/pocket-pick/, agents/sfa/). ty can't resolve their
+    # dependencies from the project root and would fail-block legitimate edits.
+    # See audits/exceptions.md Exception 17.
+    try:
+        resolved = Path(file_path).resolve()
+        project_root = Path.cwd().resolve()
+        if str(resolved).startswith(str(project_root) + "/"):
+            rel = resolved.relative_to(project_root)
+            for parent in rel.parents:
+                candidate = project_root / parent / "pyproject.toml"
+                if parent != Path(".") and candidate.exists():
+                    logger.info(f"Skipping sub-package file: {resolved} (has own pyproject.toml at {candidate})")
+                    print(json.dumps({}))
+                    return
+    except (ValueError, OSError):
+        pass  # If resolution fails, fall through to ty check
 
-    # Skip sub-packages with their own pyproject.toml (e.g. mcp/just-prompt/)
-    # ty can't resolve their dependencies from the project root
-    rel = resolved.relative_to(Path(PROJECT_DIR).resolve())
-    for parent in rel.parents:
-        candidate = Path(PROJECT_DIR).resolve() / parent / "pyproject.toml"
-        if parent != Path(".") and candidate.exists():
-            logger.info(f"Skipping sub-package file: {resolved} (has own pyproject.toml at {candidate})")
-            print(json.dumps({}))
-            return
-
+    # Run uvx ty check on the single file
     logger.info(f"Running: uvx ty check {file_path}")
     try:
         result = subprocess.run(
             ["uvx", "ty", "check", file_path],
             capture_output=True,
             text=True,
-            timeout=20
+            timeout=120
         )
 
         stdout = result.stdout.strip()
         stderr = result.stderr.strip()
 
         if stdout:
-            for line in stdout.split('\n')[:20]:
+            for line in stdout.split('\n')[:20]:  # Limit log lines
                 logger.info(f"  {line}")
 
         if result.returncode == 0:
@@ -96,15 +99,18 @@ def main():
             if stderr:
                 for line in stderr.split('\n')[:10]:
                     logger.info(f"  ERROR: {line}")
-            error_output = stdout or stderr or "Type check failed"
+            error_output = stderr or stdout or "Type check failed"
             print(json.dumps({
                 "decision": "block",
                 "reason": f"Type check failed:\n{error_output[:500]}"
             }))
 
     except subprocess.TimeoutExpired:
-        logger.info("RESULT: PASS (timeout, fail-open)")
-        print(json.dumps({}))
+        logger.info("RESULT: BLOCK (timeout)")
+        print(json.dumps({
+            "decision": "block",
+            "reason": "Type check timed out after 120 seconds"
+        }))
     except FileNotFoundError:
         logger.info("RESULT: PASS (uvx ty not found, skipping)")
         print(json.dumps({}))
