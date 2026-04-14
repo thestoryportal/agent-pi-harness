@@ -344,3 +344,24 @@ automate-amazon prompt="m4 mac mini with top specs, flowers for valentines day, 
 # Summarize a blog's latest post (headless, no auth needed)
 summarize-blog url="https://simonwillison.net/":
     claude "/bowser:hop-automate blog-summarizer \"{{url}}\" playwright headless"
+
+# === SP15: E2B Sandboxes ===
+# ArhuGula-specific recipes (Exception 26): no upstream justfile in agent-sandboxes
+# or agent-sandbox-skill. Thin wrappers for dev ergonomics, CWD=app dir pattern
+# matches SP8 mac-mini-agent (Exception 24 Steer precedent for no-upstream blocks).
+
+# Run a sandbox fundamental example (e.g.: just sbx-run 01_basic_sandbox.py)
+sbx-run script:
+    cd apps/sandbox_fundamentals && uv run "{{script}}"
+
+# Run the sandbox CLI (sbx subcommand, e.g.: just sbx sandbox list)
+sbx *args:
+    cd .claude/skills/agent-sandboxes/sandbox_cli && uv run sbx {{args}}
+
+# Run obox sandbox-fork workflow
+sbx-fork repo prompt forks="1":
+    cd apps/sandbox_workflows && uv run obox sandbox-fork "{{repo}}" --prompt "{{prompt}}" --forks {{forks}}
+
+# Start E2B MCP server (for use with .mcp.json.sandbox)
+sbx-mcp:
+    cd apps/sandbox_mcp && uv run python server.py
