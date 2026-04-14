@@ -583,14 +583,19 @@ def run_validator_pass_live(
     client = openai.OpenAI()
 
     def _call_once() -> Optional[Dict[str, Any]]:
-        response = client.chat.completions.create(
+        # o4-mini (and some other reasoning models) reject the temperature
+        # parameter entirely — omit it for those models.
+        _o_series = model_id.startswith("o") and model_id[1:2].isdigit()
+        create_kwargs: Dict[str, Any] = dict(
             model=model_id,
-            temperature=TEMPERATURE,
             messages=[
                 {"role": "system", "content": system_prompt},
                 {"role": "user", "content": user_message},
             ],
         )
+        if not _o_series:
+            create_kwargs["temperature"] = TEMPERATURE
+        response = client.chat.completions.create(**create_kwargs)
         content = response.choices[0].message.content or ""
         return _parse_verdict_json(content)
 

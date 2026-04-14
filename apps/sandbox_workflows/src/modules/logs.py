@@ -33,8 +33,12 @@ class ForkLogger:
         # Generate timestamp for log file name
         timestamp = datetime.now().strftime(LOG_TIMESTAMP_FORMAT)
 
-        # Create log file path using template
-        log_filename = LOG_FILE_TEMPLATE.format(branch=branch, fork_num=fork_num, timestamp=timestamp)
+        # Create log file path using template.
+        # Sanitize branch name: replace '/' with '-' to keep LOG_DIR flat
+        # (branch names like "audit/foo" would otherwise create subdirectories
+        # under LOG_DIR that may not exist, causing FileNotFoundError on open).
+        safe_branch = branch.replace("/", "-")
+        log_filename = LOG_FILE_TEMPLATE.format(branch=safe_branch, fork_num=fork_num, timestamp=timestamp)
         self._log_path = LOG_DIR / log_filename
 
         # Initialize thread lock for safe writing

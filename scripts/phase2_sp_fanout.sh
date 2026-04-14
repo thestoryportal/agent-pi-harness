@@ -365,7 +365,11 @@ for m in re.finditer(r'(\{"sp"\s*:\s*"$sp"[^\n]{10,}\})', text):
 PYEOF
 done
 
-# Also scan fork log files created since we started (belt-and-suspenders)
+# Also scan fork log files created since we started (belt-and-suspenders).
+# Two sub-scans:
+#  (a) TextBlock direct: agent emits {"sp":... on a single line in a TextBlock
+#  (b) ToolResultBlock STDOUT: agent ran `cat /tmp/phase2-mailbox.jsonl` inside
+#      E2B; the JSONL appears as a string value after "STDOUT:\\n" in the log.
 if [[ -d "$FORK_LOG_DIR" ]]; then
     python3 - <<PYEOF >> "$HARVEST_TMP" 2>/dev/null || true
 import re, json, os, pathlib
@@ -375,10 +379,24 @@ for logfile in log_dir.glob("*.log"):
     if logfile.stat().st_mtime < marker_mtime:
         continue
     text = logfile.read_text(errors="replace")
-    for m in re.finditer(r'TextBlock.*?content=(\{"sp":[^\n]+\})', text, re.DOTALL):
+
+    # (a) TextBlock direct — single-line JSON
+    for m in re.finditer(r'TextBlock.*?content=(\{"sp":[^\n]+\})', text):
         line = m.group(1).split("\n")[0].strip()
         try:
             obj = json.loads(line)
+            if "verdict" in obj and "sp" in obj:
+                print(json.dumps(obj))
+        except Exception:
+            pass
+
+    # (b) ToolResultBlock STDOUT scan — extract raw JSONL after "STDOUT:\\n"
+    # The log records the E2B execute_command output as a Python-repr string
+    # where embedded newlines appear as literal \n escape sequences.
+    for m in re.finditer(r'STDOUT:\\n(\{"sp":[^"]+?)(?:\\n|")', text):
+        raw = m.group(1).replace('\\n', '\n').replace('\\"', '"').replace("\\'", "'")
+        try:
+            obj = json.loads(raw)
             if "verdict" in obj and "sp" in obj:
                 print(json.dumps(obj))
         except Exception:
