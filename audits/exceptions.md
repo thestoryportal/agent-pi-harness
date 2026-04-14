@@ -925,6 +925,19 @@ future rounds, check whether the user has authorized the SP7 r1
 precedent — if yes, proceed; if no, document the block and route
 to an appropriate Exception (18 or equivalent) instead.
 
+### SP15 r1 extension (2026-04-14)
+
+Four additional `.env.sample` files discovered during SP15 (E2B Sandboxes) Phase B1. All four are
+deferred pending user authorization of pathExclusions unlock (same framing as the SP4 + SP7 arms above):
+
+- `apps/sandbox_workflows/.env.sample` — B1 deferral artifact; untracked in working tree (not staged)
+- `apps/sandbox_agent_working_dir/.env.sample` — B1 deferral artifact; untracked in working tree (not staged)
+- `agent-sandboxes/.env.sample` (upstream root) — not imported; out-of-scope (upstream repo root)
+- `agent-sandbox-skill/.env.sample` (upstream root) — not imported; out-of-scope (upstream repo root)
+
+The two untracked `.env.sample` files in the working tree are expected artifacts of `cp -r` during B1.
+They will be cleaned up in a future user-authorized round per SP7 Exception 18 precedent.
+
 ---
 
 ## Exception 19 — `~/.claude/skills/library/library.yaml` ArhuGula catalog population
@@ -1152,7 +1165,7 @@ The `feedback_disler_authoritative.md` rule says "Tier 1 full-clones are byte-le
 | 15 | Damage-control hook files keep underscore form (D1=B carve-out per CLAUDE.md §Naming) | SP2 r1 D1 | 2026-04-13 | active | None (permanent) |
 | 16 | Stylistic drift on reverted upstream files (Write-tool trailing-whitespace strip; expanded SP3 r1 to 13 files) | SP2 r1 → SP3 r1 | 2026-04-13 | active | None (permanent) |
 | 17 | `ty_validator.py` sub-package skip block (load-bearing for nested pyproject.toml structure) | SP3 r1 B | 2026-04-13 | active | None (permanent) |
-| 18 | `.env.sample` damage-control hard stop (both arms restored via E1 pathExclusions expansion — audit-temporary, revert post-audit) | SP4 r1 F + SP7 r1 C+G | 2026-04-14 | **RESOLVED 2026-04-14** | — (but see Exception 14 Category J revert plan) |
+| 18 | `.env.sample` damage-control hard stop (SP4/SP7 arms RESOLVED; SP15 adds 4 new deferred .env.sample files — audit-temporary, revert post-audit) | SP4 r1 F + SP7 r1 C+G + SP15 r1 B1 | 2026-04-14 | active (SP15 arm open) | SP15 r2 / post-audit cleanup |
 | 19 | `~/.claude/skills/library/library.yaml` ArhuGula catalog population (upstream-schema-compatible) | SP6 r1 D | 2026-04-14 | active | None (permanent — grows via `/library add`) |
 | 20 | SP12 Pi extensions (`drive-dispatch.ts`, `listen-submit.ts`) reference pre-SP8-r1 Drive/Listen interface — deferred cross-SP fix | SP8 r1 D | 2026-04-14 | active | **SP12 r1 mandatory** |
 | 21 | SP11 pattern-SP posture (upstream reference + local pattern-instantiation coexist) | SP11 r1 A | 2026-04-14 | active | None (permanent foundational rule) |
@@ -1160,6 +1173,7 @@ The `feedback_disler_authoritative.md` rule says "Tier 1 full-clones are byte-le
 | 23 | `.claude/commands/prime.md` cross-SP namespace collision (SP8 ↔ SP12 `prime.md` vs SP1 `/prime` skill) | SP12 r1 A | 2026-04-14 | active | Quarterly |
 | 24 | SP13 justfile carve-out recipes (`steer-build`/`see`/`apps`/`ocr`) + SecureTmp security regression flag | SP13 r1 C+D | 2026-04-14 | active | SP13 r2 / SP2 security follow-up |
 | 25 | SP14 root `justfile` block content-level adaptations (6 items: damage-control flag removal, multi-SP variable inlining, bug-fix headed default, agent-teams env prefix, shell-metachar warning, prompt trim) | SP14 r1 D | 2026-04-14 | active | SP14 r2 / revert items 3+6 when convenient |
+| 26 | SP15 E2B Sandboxes justfile carve-out recipes (`sbx-run`, `sbx`, `sbx-fork`, `sbx-mcp`) — no upstream justfile in agent-sandboxes or agent-sandbox-skill | SP15 r1 D | 2026-04-14 | active | Per-SP audit |
 
 ## How to close an exception
 
@@ -1248,15 +1262,23 @@ But they are NOT Tier 2 concept instantiation. They are wrappers around two real
 
 **SP audit round:** SP12 round 1 Phase B (2026-04-14)
 **Decision date:** 2026-04-14
-**Status:** **Permanent** — `.claude/commands/prime.md` will remain absent. Both upstream candidates are documented non-imports.
+**Status:** **Permanent** — `.claude/commands/prime.md` will remain absent. All upstream candidates are documented non-imports.
+
+**SP15 r1 extension (2026-04-14):** Two additional upstream candidates discovered. The collision is now 4-way:
+- Upstream candidate 4: `agent-sandboxes/.claude/commands/prime.md` — primes for the E2B sandboxes monorepo (E2B SDK, obox CLI, sandbox MCP, fundamentals). Skipped per this exception.
+- Upstream candidate 5: `agent-sandbox-skill/.claude/commands/prime.md` — primes for the sandbox skill (SKILL.md, sandbox_cli, cookbook, examples). Skipped per this exception.
+
+The rationale below (ArhuGula SP1 `/prime` skill as the authoritative harness context loader) applies equally to these two new candidates: neither knows about the full ArhuGula harness. Deferral is permanent.
 
 **Rationale:**
 
-Three upstream sources want to own the `/prime` slash command:
+Four upstream sources want to own the `/prime` slash command:
 
 1. **mac-mini-agent** (SP8) ships a prime.md for its 4-app Swift+Python monorepo. SP8 r1 imported this byte-identical — but noted the conflict with ArhuGula's own SP1 `/prime` skill and deferred resolution: "`/prime` slash routing: SP1 prime skill + mac-mini prime command coexist; runtime precedence unspecified, deferred."
 2. **pi-vs-claude-code** (SP12) ships a different prime.md for its Pi TUI demo. SP12 r1 Phase A tree walk discovered this collision (upstream has `.claude/commands/prime.md` that differs from the SP8-imported version).
-3. **ArhuGula SP1** owns `.claude/skills/prime/SKILL.md` — the primary `/prime` that primes the full harness context and is invoked via `just prime`.
+3. **agent-sandboxes** (SP15) ships a prime.md for the E2B sandbox monorepo. SP15 r1 Phase B3 skipped per this exception.
+4. **agent-sandbox-skill** (SP15) ships a prime.md for the sandbox skill. SP15 r1 Phase B3 skipped per this exception.
+5. **ArhuGula SP1** owns `.claude/skills/prime/SKILL.md` — the primary `/prime` that primes the full harness context and is invoked via `just prime`.
 
 Only one file can live at `.claude/commands/prime.md`. ArhuGula's SP1 `/prime` skill is the functional source of truth (it knows about the full harness: hooks, agents, commands, skills, source of truth, all SPs). Neither the SP8 nor the SP12 prime.md knows about the other SPs' existence — each one primes for its standalone project only, and would be misleading when invoked inside the arhugula harness.
 
@@ -1420,3 +1442,34 @@ This mirrors the distinction between SP13 Steer's justfile carve-outs (Exception
 
 **Review cadence:** Per-SP audit. Review Exception 25 in the next SP14 round (if any) OR when the user explicitly asks to revert items 3 and 6 (the revertible preference/bug-fix items). Items 1, 2, 4, 5 are **permanent** for as long as (a) the damage-control security model is in place (items 1, 5), and (b) the root `justfile` remains a multi-SP composite (items 2, 4). The `patterns.yaml` hardening rules that item 1 protects (Exception 14) share the same lifecycle — if Exception 14 is ever fully resolved (browser-automation hardening folded into upstream), Exception 25 item 1 can be re-evaluated at the same time.
 
+---
+
+## Exception 26 — SP15 E2B Sandboxes justfile carve-out recipes
+
+**Path(s):** Root `justfile` SP15 block (4 recipes: `sbx-run`, `sbx`, `sbx-fork`, `sbx-mcp`)
+
+**SP audit round:** SP15 round 1 (2026-04-14) — first greenfield build
+
+**Decision date:** 2026-04-14
+
+**Rationale:**
+Neither `disler/agent-sandboxes` nor `disler/agent-sandbox-skill` ships a root-level justfile.
+The four recipes are ArhuGula-native dev-ergonomics wrappers — thin conveniences over the
+upstream CLI tools and apps using the CWD-based invocation pattern established in SP8 (mac-mini-agent).
+There is no upstream justfile content against which to compute drift; the block is purely additive.
+
+This is analogous to Exception 22 (SP12 Pi carve-outs) and Exception 24 (SP13 Steer carve-outs):
+all three cover justfile blocks with no upstream equivalent. Exception 25 (SP14 Bowser) is a
+different case — it covers recipes that DO exist upstream with drift items, whereas Exception 26
+covers recipes that do not exist upstream at all.
+
+**Review cadence:** Per-SP audit. Review if agent-sandboxes or agent-sandbox-skill adds a
+justfile in a future release.
+
+**Related findings:**
+- Exception 22 — SP12 Pi carve-out (no-upstream-equivalent precedent)
+- Exception 24 — SP13 Steer carve-out (no-upstream-equivalent precedent)
+- SoT §1 SP15 r1 block — full round-1 details
+
+**Follow-up actions:**
+- None. All four recipes are permanent for as long as the SP15 apps are present.
