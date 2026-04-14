@@ -1174,6 +1174,7 @@ The `feedback_disler_authoritative.md` rule says "Tier 1 full-clones are byte-le
 | 24 | SP13 justfile carve-out recipes (`steer-build`/`see`/`apps`/`ocr`) + SecureTmp security regression flag | SP13 r1 C+D | 2026-04-14 | active | SP13 r2 / SP2 security follow-up |
 | 25 | SP14 root `justfile` block content-level adaptations (6 items: damage-control flag removal, multi-SP variable inlining, bug-fix headed default, agent-teams env prefix, shell-metachar warning, prompt trim) | SP14 r1 D | 2026-04-14 | active | SP14 r2 / revert items 3+6 when convenient |
 | 26 | SP15 E2B Sandboxes justfile carve-out recipes (`sbx-run`, `sbx`, `sbx-fork`, `sbx-mcp`) — no upstream justfile in agent-sandboxes or agent-sandbox-skill | SP15 r1 D | 2026-04-14 | active | Per-SP audit |
+| 27 | SP16 R02 `voice_to_claude_code.py` landed at `apps/voice/` (upstream places it at repo root) + SP16 `just voice` carve-out recipe — no upstream justfile in claude-code-is-programmable | SP16 r1 B+D | 2026-04-14 | active | Per-SP audit |
 
 ## How to close an exception
 
@@ -1473,3 +1474,44 @@ justfile in a future release.
 
 **Follow-up actions:**
 - None. All four recipes are permanent for as long as the SP15 apps are present.
+
+---
+
+## Exception 27 — SP16 R02 voice_to_claude_code.py landing path + justfile carve-out
+
+**Path(s):**
+- `apps/voice/voice_to_claude_code.py` (byte-identical with upstream, but at a different path)
+- Root `justfile` SP16 block (1 recipe: `voice`)
+
+**SP audit round:** SP16 round 1 (2026-04-14) — second greenfield build in the audit sweep (after SP15)
+
+**Decision date:** 2026-04-14
+
+**Rationale:**
+
+Two coupled deviations from upstream, both driven by the ArhuGula harness structure:
+
+**1. Landing path `apps/voice/` vs upstream repo root:**
+Upstream `disler/claude-code-is-programmable` places `voice_to_claude_code.py` at the repo root because that repo is a flat collection of ~12 standalone single-purpose scripts (`claude_code_is_programmable_*.{sh,js,py}`, `aider_is_programmable_*.{sh,js,py}`, `anthropic_search.py`, `claude_testing_v1.py`, `voice_to_claude_code.py`). The repo root IS the script directory.
+
+ArhuGula's root directory hosts harness infrastructure: `justfile`, `CLAUDE.md`, `README.md`, `.claude/`, `scripts/`, `apps/`, `audits/`, `tests/`, etc. Placing a runtime app script at repo root would either (a) require a new convention-exception ("some runtime code lives at root, some under apps/"), or (b) collide with the harness-reserved root space. Neither is acceptable.
+
+The ArhuGula convention established across SP7 (single-file agents under `agents/sfa/`), SP8 (`apps/drive/`, `apps/listen/`, `apps/direct/`), SP10 (`apps/dropzone/`), SP11 (`apps/prompt-testing/`), SP15 (`apps/sandbox_*/`) is: **runtime application code lives under `apps/<name>/`**. The `apps/voice/voice_to_claude_code.py` landing is the minimum necessary deviation from upstream root placement and the maximum consistency with ArhuGula conventions. **The script content itself is byte-identical with upstream (verified via `filecmp.cmp` during SP16 r1 Phase C).**
+
+**2. Justfile `voice` recipe:**
+Upstream `claude-code-is-programmable` ships no justfile at all. The root `justfile` SP16 block (Exception 13 composite-justfile umbrella) adds one thin wrapper: `just voice` → `uv run apps/voice/voice_to_claude_code.py`. Purely additive, no upstream content to diff against.
+
+**Combined rationale:** Analogous to Exception 26 (SP15 E2B sandboxes) and Exception 24 (SP13 Steer) — all three cover no-upstream-equivalent justfile blocks paired with the associated ArhuGula apps/ landing. SP16 is the second round where the upstream was a single-purpose script repo (first was SP15 agent-sandboxes), so the apps/ landing mandate is stronger than in SP3–SP14 where upstreams were multi-file projects with their own directory structure.
+
+**Review cadence:** Per-SP audit. Review if `claude-code-is-programmable` ever adds a justfile or restructures into per-script directories.
+
+**Related findings:**
+- Exception 22 — SP12 Pi carve-out (no-upstream-equivalent precedent)
+- Exception 24 — SP13 Steer carve-out (no-upstream-equivalent precedent)
+- Exception 26 — SP15 E2B sandboxes carve-out (closest sibling — same dual landing + justfile pattern)
+- SoT §1 SP16 r1 block — full round-1 details
+- SoT §4.14 — SP16 R01/R02 feature inventory (R01 imports required no landing-path deviation because hooks-mastery's `.claude/` structure maps 1:1 to ArhuGula's `.claude/`; only R02 at repo root triggers this exception)
+
+**Follow-up actions:**
+- None. Both the landing path and the `voice` recipe are permanent for as long as SP16 runtime usage is supported.
+- R02 runtime prerequisite: `brew install portaudio` — documented in `.env.example` SP16 comment block and in `justfile` SP16 header comment. Not an exception, but a runtime caveat.

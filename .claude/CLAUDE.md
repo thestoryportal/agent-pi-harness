@@ -49,7 +49,8 @@ These rules prevent scope drift, invented features, and missed gaps:
 
 2. **Follow the sub-project priority order.** Section 8 of the source of truth defines
    priority order. Do not skip ahead. Do not reorder without explicit user approval.
-   Current: SP15 → SP16 → ...
+   Current: SP1-SP16 all BUILT + AUDIT R1 COMPLETE. Next work is /harness-review,
+   post-audit cleanup (Exception 18 revert), or user-directed SP r2 rounds.
 
 3. **No invented components.** If a feature does not exist in any IndyDevDan repo
    (code, architecture doc, or concept), do not add it. The goal is identical replication.
@@ -115,6 +116,7 @@ See Source of Truth Section 8 for priority order. Fix structural issues (Section
 | SP13 | Steer (Swift GUI) | BUILT + AUDIT R1 (2026-04-14) | 3 | mac-mini-agent |
 | SP14 | Browser Automation | BUILT + AUDIT R1 (2026-04-14) | 8 | bowser |
 | SP15 | E2B Sandboxes | BUILT + AUDIT R1 (2026-04-14) | 4 | agent-sandboxes |
+| SP16 | Voice & Real-Time | BUILT + AUDIT R1 (2026-04-14) | 2 | hooks-mastery + claude-code-is-programmable |
 
 ## Hook Security Model
 
