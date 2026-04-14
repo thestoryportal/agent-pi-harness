@@ -1,6 +1,6 @@
 #!/usr/bin/env -S uv run --script
 # /// script
-# requires-python = ">=3.12"
+# requires-python = ">=3.11"
 # dependencies = []
 # ///
 """
@@ -14,17 +14,14 @@ Outputs JSON decision for Claude Code PostToolUse hook:
 """
 import json
 import logging
-import os
 import subprocess
 import sys
 from pathlib import Path
 
+# Logging setup - log file next to this script
 SCRIPT_DIR = Path(__file__).parent
 LOG_FILE = SCRIPT_DIR / "ruff_validator.log"
-PROJECT_DIR = os.environ.get("CLAUDE_PROJECT_DIR", os.getcwd())
 
-_fd = os.open(LOG_FILE, os.O_WRONLY | os.O_CREAT | os.O_APPEND, 0o600)
-os.close(_fd)
 logging.basicConfig(
     level=logging.INFO,
     format="%(asctime)s | %(levelname)s | %(message)s",
@@ -38,6 +35,7 @@ def main():
     logger.info("=" * 50)
     logger.info("RUFF VALIDATOR POSTTOOLUSE HOOK TRIGGERED")
 
+    # Read hook input from stdin (Claude Code passes JSON)
     try:
         stdin_data = sys.stdin.read()
         if stdin_data.strip():
@@ -48,34 +46,31 @@ def main():
     except json.JSONDecodeError:
         hook_input = {}
 
+    # Extract file_path from PostToolUse input
     file_path = hook_input.get("tool_input", {}).get("file_path", "")
     logger.info(f"file_path: {file_path}")
 
+    # Only run for Python files
     if not file_path.endswith(".py"):
         logger.info("Skipping non-Python file")
         print(json.dumps({}))
         return
 
-    resolved = Path(file_path).resolve()
-    if not str(resolved).startswith(str(Path(PROJECT_DIR).resolve()) + "/"):
-        logger.info(f"Skipping file outside project: {resolved}")
-        print(json.dumps({}))
-        return
-
+    # Run uvx ruff check on the single file
     logger.info(f"Running: uvx ruff check {file_path}")
     try:
         result = subprocess.run(
             ["uvx", "ruff", "check", file_path],
             capture_output=True,
             text=True,
-            timeout=20
+            timeout=120
         )
 
         stdout = result.stdout.strip()
         stderr = result.stderr.strip()
 
         if stdout:
-            for line in stdout.split('\n')[:20]:
+            for line in stdout.split('\n')[:20]:  # Limit log lines
                 logger.info(f"  {line}")
 
         if result.returncode == 0:
@@ -93,8 +88,11 @@ def main():
             }))
 
     except subprocess.TimeoutExpired:
-        logger.info("RESULT: PASS (timeout, fail-open)")
-        print(json.dumps({}))
+        logger.info("RESULT: BLOCK (timeout)")
+        print(json.dumps({
+            "decision": "block",
+            "reason": "Lint check timed out after 120 seconds"
+        }))
     except FileNotFoundError:
         logger.info("RESULT: PASS (uvx ruff not found, skipping)")
         print(json.dumps({}))
