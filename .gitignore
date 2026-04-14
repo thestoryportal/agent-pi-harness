@@ -14,6 +14,9 @@ node_modules/
 .claude/logs/
 .claude/hooks/validators/*.log
 
+# hooks-mastery upstream form post_tool_use.py writes here (Path.cwd() / 'logs')
+logs/
+
 # macOS
 .DS_Store
 
