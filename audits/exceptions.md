@@ -1173,9 +1173,11 @@ The `feedback_disler_authoritative.md` rule says "Tier 1 full-clones are byte-le
 | 23 | `.claude/commands/prime.md` cross-SP namespace collision (SP8 ↔ SP12 `prime.md` vs SP1 `/prime` skill) | SP12 r1 A | 2026-04-14 | active | Quarterly |
 | 24 | SP13 justfile carve-out recipes (`steer-build`/`see`/`apps`/`ocr`) + SecureTmp security regression flag | SP13 r1 C+D | 2026-04-14 | active | SP13 r2 / SP2 security follow-up |
 | 25 | SP14 root `justfile` block content-level adaptations (6 items: damage-control flag removal, multi-SP variable inlining, bug-fix headed default, agent-teams env prefix, shell-metachar warning, prompt trim) | SP14 r1 D | 2026-04-14 | active | SP14 r2 / revert items 3+6 when convenient |
-| 26 | SP15 E2B Sandboxes justfile carve-out recipes (`sbx-run`, `sbx`, `sbx-fork`, `sbx-mcp`) — no upstream justfile in agent-sandboxes or agent-sandbox-skill | SP15 r1 D | 2026-04-14 | active | Per-SP audit |
+| 26 | SP15 E2B Sandboxes justfile carve-out recipes (`sbx-run`, `sbx`, `sbx-mcp`) — no upstream justfile. **Scope reduced 2026-04-15 via Exception 30** — `sbx-fork` removed with obox | SP15 r1 D → SP15 r2 | 2026-04-15 | active | Per-SP audit |
 | 27 | SP16 R02 `voice_to_claude_code.py` landed at `apps/voice/` (upstream places it at repo root) + SP16 `just voice` carve-out recipe — no upstream justfile in claude-code-is-programmable | SP16 r1 B+D | 2026-04-14 | active | Per-SP audit |
 | 28 | SP16 voice-loop upstream runtime security posture — 6 Tier 1 byte-identical findings (S-01/S-03/S-05/S-06/S-08/S-09 from /harness-review). Documented, not patched. | SP16 r1 post-review | 2026-04-14 | active | Every upstream change; re-run /harness-review |
+| 29 | SP15 E2B sandbox apps upstream runtime security posture — 9 findings (S-01..S-09). **Scope reduced 2026-04-15 via Exception 30** — 7 findings RESOLVED by deletion; only S-04 (cc_in_sandbox + sandbox_fundamentals/09) and S-06 (sandbox_mcp) remain active and dormant. | SP15 r1 post-review → SP15 r2 | 2026-04-15 | active (scope reduced) | Every upstream change; re-run /harness-review |
+| 30 | SP15 custom Phase 2 audit workflow deprecation — obox subtree deleted (`apps/sandbox_workflows/`, `apps/sandbox_agent_working_dir/`, `.claude/commands/prime_obox.md`). Breaks byte-identical parity for the obox sub-scope. Resolves 7 of 9 Exception 29 findings. | SP15 r2 | 2026-04-15 | active (permanent) | None — structural |
 
 ## How to close an exception
 
@@ -1448,11 +1450,11 @@ This mirrors the distinction between SP13 Steer's justfile carve-outs (Exception
 
 ## Exception 26 — SP15 E2B Sandboxes justfile carve-out recipes
 
-**Path(s):** Root `justfile` SP15 block (4 recipes: `sbx-run`, `sbx`, `sbx-fork`, `sbx-mcp`)
+**Path(s):** Root `justfile` SP15 block — 3 recipes as of 2026-04-15 (`sbx-run`, `sbx`, `sbx-mcp`). Originally 4 recipes (2026-04-14); `sbx-fork` removed 2026-04-15 per Exception 30 along with its obox target.
 
-**SP audit round:** SP15 round 1 (2026-04-14) — first greenfield build
+**SP audit round:** SP15 round 1 (2026-04-14) — first greenfield build. Updated SP15 round 2 (2026-04-15) via Exception 30.
 
-**Decision date:** 2026-04-14
+**Decision date:** 2026-04-14 (original); scope reduced 2026-04-15 (via Exception 30)
 
 **Rationale:**
 Neither `disler/agent-sandboxes` nor `disler/agent-sandbox-skill` ships a root-level justfile.
@@ -1593,21 +1595,23 @@ Analogous in structure to what SP15 r1 /harness-review proposed (option 2, defer
 ## Exception 29 — SP15 E2B sandbox apps upstream runtime security posture
 
 **Path(s):**
-- `apps/sandbox_workflows/src/modules/agents.py` (Tier 1 byte-identical — upstream `disler/agent-sandboxes`)
-- `apps/sandbox_workflows/src/modules/hooks.py` (Tier 1 byte-identical)
-- `apps/sandbox_workflows/src/modules/constants.py` (Tier 1 byte-identical)
-- `apps/sandbox_workflows/src/modules/logs.py` (Tier 1 byte-identical)
-- `apps/sandbox_workflows/src/prompts/sandbox_fork_agent_system_prompt.md` (Tier 1 byte-identical)
-- `apps/sandbox_workflows/src/prompts/sandbox_fork_agent_w_github_token_system_prompt.md` (Tier 1 byte-identical)
-- `apps/cc_in_sandbox/run_claude_in_sandbox.py` (Tier 1 byte-identical)
-- `apps/sandbox_fundamentals/09_claude_code_agent.py` (Tier 1 byte-identical)
-- `apps/sandbox_mcp/server.py` (Tier 1 byte-identical)
+- ~~`apps/sandbox_workflows/src/modules/agents.py`~~ **DELETED 2026-04-15 per Exception 30**
+- ~~`apps/sandbox_workflows/src/modules/hooks.py`~~ **DELETED 2026-04-15 per Exception 30**
+- ~~`apps/sandbox_workflows/src/modules/constants.py`~~ **DELETED 2026-04-15 per Exception 30**
+- ~~`apps/sandbox_workflows/src/modules/logs.py`~~ **DELETED 2026-04-15 per Exception 30**
+- ~~`apps/sandbox_workflows/src/prompts/sandbox_fork_agent_system_prompt.md`~~ **DELETED 2026-04-15 per Exception 30**
+- ~~`apps/sandbox_workflows/src/prompts/sandbox_fork_agent_w_github_token_system_prompt.md`~~ **DELETED 2026-04-15 per Exception 30**
+- `apps/cc_in_sandbox/run_claude_in_sandbox.py` (Tier 1 byte-identical) — **active** (affected by S-04)
+- `apps/sandbox_fundamentals/09_claude_code_agent.py` (Tier 1 byte-identical) — **active** (affected by S-04)
+- `apps/sandbox_mcp/server.py` (Tier 1 byte-identical) — **active** (affected by S-06)
 
-**SP audit round:** SP15 round 1 post-review (2026-04-14) — `/harness-review` multi-agent consensus review surfaced 7 prior findings (all CONFIRMED on re-review) + 2 net-new findings, all inherited from upstream byte-identical code.
+**SP audit round:** SP15 round 1 post-review (2026-04-14) — `/harness-review` multi-agent consensus review surfaced 7 prior findings (all CONFIRMED on re-review) + 2 net-new findings, all inherited from upstream byte-identical code. Scope reduced SP15 round 2 (2026-04-15) via Exception 30.
 
-**Decision date:** 2026-04-14
+**Decision date:** 2026-04-14 (original); scope reduced 2026-04-15 (via Exception 30)
 
-**Status:** active (permanent — byte-identical mandate preserved; findings documented, not patched)
+**Status:** active (scope reduced 2026-04-15 via Exception 30 — S-01/S-02/S-03/S-05/S-07/S-08/S-09 RESOLVED by file deletion; only S-04 and S-06 remain active and dormant pending credentials)
+
+**Scope reduction 2026-04-15:** Exception 30 deleted `apps/sandbox_workflows/` and `apps/sandbox_agent_working_dir/` as part of the custom Phase 2 audit workflow deprecation. 6 of the 9 original path entries in this exception no longer exist on disk. Findings S-01, S-02, S-03, S-05, S-07, S-08, S-09 are RESOLVED by file deletion. Only S-04 (affects `apps/cc_in_sandbox/run_claude_in_sandbox.py` + `apps/sandbox_fundamentals/09_claude_code_agent.py`) and S-06 (affects `apps/sandbox_mcp/server.py`) remain active and dormant pending credentials. The historical finding text below is preserved as a record of the original posture; each resolved finding is annotated inline.
 
 **Rationale:**
 
@@ -1619,41 +1623,41 @@ This exception was originally proposed as "Exception 27 or later" in the SP15 r1
 
 **Upstream-posture findings (9 — documented, not patched):**
 
-**S-01 P0 — GITHUB_TOKEN plaintext injection into agent system prompt, then logged.**
-`apps/sandbox_workflows/src/modules/agents.py:118-127` reads `GITHUB_TOKEN` from env and injects it verbatim into `self.system_prompt` via `template.format(github_token=...)`. Line 153 then calls `self.logger.log("INFO", self.system_prompt)` which writes the entire formatted system prompt — token included — to a flat log file under `apps/sandbox_agent_working_dir/logs/`. The `sandbox_fork_agent_w_github_token_system_prompt.md` template at line 18 and line 115 also embeds the token directly in visible prompt text (e.g., `git remote set-url origin https://{github_token}@github.com/...`). **Threat model:** any log reader (human or agent) with Read access to the log dir gets the live token. **Mitigation:** not patched — blast radius bounded by dormancy (no GITHUB_TOKEN in `.env`).
+**S-01 P0 — GITHUB_TOKEN plaintext injection into agent system prompt, then logged.** ✅ **RESOLVED 2026-04-15 — source files deleted per Exception 30.**
+`apps/sandbox_workflows/src/modules/agents.py:118-127` reads `GITHUB_TOKEN` from env and injects it verbatim into `self.system_prompt` via `template.format(github_token=...)`. Line 153 then calls `self.logger.log("INFO", self.system_prompt)` which writes the entire formatted system prompt — token included — to a flat log file under `apps/sandbox_agent_working_dir/logs/`. The `sandbox_fork_agent_w_github_token_system_prompt.md` template at line 18 and line 115 also embeds the token directly in visible prompt text (e.g., `git remote set-url origin https://{github_token}@github.com/...`). **Threat model:** any log reader (human or agent) with Read access to the log dir gets the live token. **Historical mitigation:** not patched — blast radius bounded by dormancy (no GITHUB_TOKEN in `.env`). **Current status:** the files referenced above no longer exist on disk (obox subtree deleted 2026-04-15). Runtime trigger #1 (GITHUB_TOKEN in `.env`) can no longer activate this finding.
 
-**S-02 P1 — Agent can self-exfiltrate GITHUB_TOKEN by reading its own log file.**
-`apps/sandbox_workflows/src/modules/constants.py:38-43` puts `LOG_DIR` inside `ALLOWED_DIRECTORIES`. The path hook at `hooks.py:77-95` allows `Read` from any path under `ALLOWED_DIRECTORIES`. Combined with S-01, a hostile or confused fork agent can call `Read(file_path="logs/<fork>.log")` to retrieve its own GITHUB_TOKEN from the session log, then exfiltrate via any network-capable tool (`WebFetch`, `mcp__e2b-sandbox__execute_command`, etc.). **Threat model:** prompt injection in the cloned repo → agent instructed to "debug by reading logs" → token egress. **Mitigation:** not patched — blast radius bounded by S-01 dormancy and by the need for prompt-injection pre-condition.
+**S-02 P1 — Agent can self-exfiltrate GITHUB_TOKEN by reading its own log file.** ✅ **RESOLVED 2026-04-15 — source files deleted per Exception 30.**
+`apps/sandbox_workflows/src/modules/constants.py:38-43` puts `LOG_DIR` inside `ALLOWED_DIRECTORIES`. The path hook at `hooks.py:77-95` allows `Read` from any path under `ALLOWED_DIRECTORIES`. Combined with S-01, a hostile or confused fork agent can call `Read(file_path="logs/<fork>.log")` to retrieve its own GITHUB_TOKEN from the session log, then exfiltrate via any network-capable tool (`WebFetch`, `mcp__e2b-sandbox__execute_command`, etc.). **Threat model:** prompt injection in the cloned repo → agent instructed to "debug by reading logs" → token egress. **Historical mitigation:** not patched — blast radius bounded by S-01 dormancy and by the need for prompt-injection pre-condition. **Current status:** the files and the log directory referenced above no longer exist on disk.
 
-**S-03 P1 — Unrestricted Bash in the sandbox-fork subagent.**
-`apps/sandbox_workflows/src/modules/agents.py:93` sets `permission_mode="acceptEdits"`; `constants.py:87` includes `Bash` in `ALLOWED_TOOLS`. The SDK-level hooks dict built by `hooks.py:119-125` (`create_hook_dict`) only *logs* Bash calls — no pattern matching, no block decision. **The project-level `bash_damage_control.py` hook registered in `.claude/settings.json` does NOT propagate to this subagent** — `ClaudeAgentOptions` uses `setting_sources=["project"]` (agents.py:98) which passes slash-commands only, not hook bindings. Bash inside the fork agent runs without any pattern-based restriction. **Threat model:** prompt injection → arbitrary shell execution inside the caller's host. **Mitigation:** not patched — blast radius bounded by dormancy.
+**S-03 P1 — Unrestricted Bash in the sandbox-fork subagent.** ✅ **RESOLVED 2026-04-15 — source files deleted per Exception 30.**
+`apps/sandbox_workflows/src/modules/agents.py:93` sets `permission_mode="acceptEdits"`; `constants.py:87` includes `Bash` in `ALLOWED_TOOLS`. The SDK-level hooks dict built by `hooks.py:119-125` (`create_hook_dict`) only *logs* Bash calls — no pattern matching, no block decision. **The project-level `bash_damage_control.py` hook registered in `.claude/settings.json` does NOT propagate to this subagent** — `ClaudeAgentOptions` uses `setting_sources=["project"]` (agents.py:98) which passes slash-commands only, not hook bindings. Bash inside the fork agent runs without any pattern-based restriction. **Threat model:** prompt injection → arbitrary shell execution inside the caller's host. **Historical mitigation:** not patched — blast radius bounded by dormancy. **Current status:** the fork subagent no longer exists (obox deleted).
 
 **S-04 P1 — `--dangerously-skip-permissions` in E2B sandbox runner.**
 `apps/cc_in_sandbox/run_claude_in_sandbox.py:41` spawns `claude -p --dangerously-skip-permissions` inside an E2B sandbox with `ANTHROPIC_API_KEY` env-injected at line 28. A second callsite at `apps/sandbox_fundamentals/09_claude_code_agent.py:67` uses the same pattern. Prompt injection in the cloned repo inside the sandbox could issue arbitrary billed API calls under the user's Anthropic key. **Threat model:** cost exhaustion + data egress through Anthropic API. **Mitigation:** not patched — blast radius bounded by dormancy (no `ANTHROPIC_API_KEY` in `.env`).
 
-**S-05 P1 — Path gating hook covers Read/Write/Edit only, bypassable via Bash.**
-`apps/sandbox_workflows/src/modules/constants.py:106-110` defines `PATH_RESTRICTED_TOOLS = {"Read","Write","Edit"}`. The path hook at `hooks.py:60-95` gates only those three tools. `Bash` has no path restriction — `Bash(command="cat /etc/passwd")` reads arbitrary files, `Bash(command="cp /tmp/evil ~/.ssh/authorized_keys")` writes arbitrary files. This is **moot given S-03** (Bash is already unrestricted at the permission layer), but if S-03 were fixed by adding a Bash hook, this finding would remain as a separate gap. **Mitigation:** not patched.
+**S-05 P1 — Path gating hook covers Read/Write/Edit only, bypassable via Bash.** ✅ **RESOLVED 2026-04-15 — source files deleted per Exception 30.**
+`apps/sandbox_workflows/src/modules/constants.py:106-110` defines `PATH_RESTRICTED_TOOLS = {"Read","Write","Edit"}`. The path hook at `hooks.py:60-95` gates only those three tools. `Bash` has no path restriction — `Bash(command="cat /etc/passwd")` reads arbitrary files, `Bash(command="cp /tmp/evil ~/.ssh/authorized_keys")` writes arbitrary files. This is **moot given S-03** (Bash is already unrestricted at the permission layer), but if S-03 were fixed by adding a Bash hook, this finding would remain as a separate gap. **Historical mitigation:** not patched. **Current status:** the path-gating hook and the subagent it protected no longer exist.
 
 **S-06 P2 — NEW — MCP `env_vars` comma-split enables partial argument injection.**
 `apps/sandbox_mcp/server.py:107-109, 143-145, 465-467` splits agent-supplied `env_vars` strings on `,` and appends each piece as a `--env` flag to the `sbx` CLI subprocess. Values containing `--`, spaces, or `=` inside values could inject flags into `sbx` CLI argument parsing (e.g., `LEGIT=val,FOO=x --root`). Actual exploitability depends on `sbx` CLI argument parser behavior. The Python subprocess call itself uses list-form `subprocess.run(cmd, ...)` with no `shell=True`, so no shell injection at the Python layer. **Threat model:** agent-controlled env_vars → flag injection → potentially elevate sandbox privileges. **Mitigation:** not patched — validate `^[A-Za-z_][A-Za-z0-9_]*=` per entry before passing to CLI.
 
-**S-07 P2 — Log files contain full tool_input dumps including file contents.**
-`apps/sandbox_workflows/src/modules/hooks.py:53-57` logs every tool call with `tool_input=str(tool_input)`. `logs.py:64-83` writes all kwargs to disk in plaintext. For `Write`/`Edit` calls this includes full file bodies; for `Bash` it includes full command lines. Any secret written through the agent also appears in logs. Combined with S-02 (agent can self-read the log dir), the log file becomes a readable sink for anything the agent touches. **Mitigation:** not patched — truncate/redact `tool_input` before logging; exclude `LOG_DIR` from `ALLOWED_DIRECTORIES`.
+**S-07 P2 — Log files contain full tool_input dumps including file contents.** ✅ **RESOLVED 2026-04-15 — source files deleted per Exception 30.**
+`apps/sandbox_workflows/src/modules/hooks.py:53-57` logs every tool call with `tool_input=str(tool_input)`. `logs.py:64-83` writes all kwargs to disk in plaintext. For `Write`/`Edit` calls this includes full file bodies; for `Bash` it includes full command lines. Any secret written through the agent also appears in logs. Combined with S-02 (agent can self-read the log dir), the log file becomes a readable sink for anything the agent touches. **Historical mitigation:** not patched — truncate/redact `tool_input` before logging; exclude `LOG_DIR` from `ALLOWED_DIRECTORIES`. **Current status:** the logging module and log directory no longer exist on disk.
 
-**S-08 P2 — `MAX_FORKS=100` with no rate limit or cost guard.**
-`apps/sandbox_workflows/src/modules/constants.py:50`: `MAX_FORKS: Final[int] = 100`. Combined with `DEFAULT_SANDBOX_TIMEOUT = 300` and `DEFAULT_MAX_TURNS = 100` (lines 53, 56), a single `sandbox_fork` invocation can spawn up to 100 parallel E2B sandboxes × 100 Claude agent turns each, with no confirmation prompt, no per-invocation cost cap, no cumulative spend check. **Threat model:** runaway spend via misconfigured `num_forks` argument. **Mitigation:** not patched — add interactive confirmation above a threshold (e.g., > 3 forks).
+**S-08 P2 — `MAX_FORKS=100` with no rate limit or cost guard.** ✅ **RESOLVED 2026-04-15 — source files deleted per Exception 30.**
+`apps/sandbox_workflows/src/modules/constants.py:50`: `MAX_FORKS: Final[int] = 100`. Combined with `DEFAULT_SANDBOX_TIMEOUT = 300` and `DEFAULT_MAX_TURNS = 100` (lines 53, 56), a single `sandbox_fork` invocation can spawn up to 100 parallel E2B sandboxes × 100 Claude agent turns each, with no confirmation prompt, no per-invocation cost cap, no cumulative spend check. **Threat model:** runaway spend via misconfigured `num_forks` argument. **Historical mitigation:** not patched — add interactive confirmation above a threshold (e.g., > 3 forks). **Current status:** the `sandbox_fork` command and its constants module no longer exist on disk; runtime trigger #4 can no longer activate.
 
-**S-09 UPSTREAM-ISSUE — Prompt variant divergence undocumented.**
-Two system prompt files exist: `sandbox_fork_agent_system_prompt.md` (base) and `sandbox_fork_agent_w_github_token_system_prompt.md` (with token embedded). `constants.py:26` hard-codes `SYSTEM_PROMPT_PATH` to the base prompt only — the github-token variant is never loaded by current code but sits in-tree. The routing logic that would select between them is absent. The github-token variant contains the most explicit credential-exposure instruction (prompt line 115: `mcp__e2b-sandbox__init_sandbox(... env_vars='GITHUB_TOKEN={github_token}')`). SoT §4.13 does not document this bifurcation. **Mitigation:** not patched — capture as a documented content delta if the routing logic is ever added; confirm no future SP audit accidentally reverts one to match the other.
+**S-09 UPSTREAM-ISSUE — Prompt variant divergence undocumented.** ✅ **RESOLVED 2026-04-15 — source files deleted per Exception 30.**
+Two system prompt files exist: `sandbox_fork_agent_system_prompt.md` (base) and `sandbox_fork_agent_w_github_token_system_prompt.md` (with token embedded). `constants.py:26` hard-codes `SYSTEM_PROMPT_PATH` to the base prompt only — the github-token variant is never loaded by current code but sits in-tree. The routing logic that would select between them is absent. The github-token variant contains the most explicit credential-exposure instruction (prompt line 115: `mcp__e2b-sandbox__init_sandbox(... env_vars='GITHUB_TOKEN={github_token}')`). SoT §4.13 does not document this bifurcation. **Historical mitigation:** not patched — capture as a documented content delta if the routing logic is ever added; confirm no future SP audit accidentally reverts one to match the other. **Current status:** both prompt variants no longer exist on disk.
 
-**Runtime activation checklist (how dormant findings become active):**
+**Runtime activation checklist (how dormant findings become active — updated 2026-04-15 for post-Exception-30 scope):**
 
-1. **`GITHUB_TOKEN` in `.env`** → activates S-01 (plaintext in prompt + logged), S-02 (self-exfiltration via log read), S-09 (routes to the leaky prompt variant if routing added)
-2. **`ANTHROPIC_API_KEY` in `.env`** → activates S-03 (Bash unrestricted), S-04 (`--dangerously-skip-permissions`), S-05 (Bash path bypass), S-07 (tool_input log dumps)
-3. **`E2B_API_KEY` in `.env` or `.mcp.json.sandbox`** → activates MCP `execute_command` with `root=True` + S-06 env_vars injection
-4. **Caller passing `num_forks` value close to `MAX_FORKS=100`** → activates S-08 cost vector
+1. ~~**`GITHUB_TOKEN` in `.env`** → activates S-01, S-02, S-09~~ **No longer active** — all 3 findings resolved by Exception 30 deletion. `GITHUB_TOKEN` has no remaining activation targets within Exception 29 scope.
+2. **`ANTHROPIC_API_KEY` in `.env`** → activates **S-04** (`--dangerously-skip-permissions` in `apps/cc_in_sandbox/run_claude_in_sandbox.py` + `apps/sandbox_fundamentals/09_claude_code_agent.py`). S-03/S-05/S-07 are RESOLVED by Exception 30.
+3. **`E2B_API_KEY` in `.env` or `.mcp.json.sandbox`** → activates **S-06** (MCP `env_vars` comma-split injection in `apps/sandbox_mcp/server.py`). Generic `execute_command` with `root=True` also remains — unchanged by Exception 30.
+4. ~~**Caller passing `num_forks` value close to `MAX_FORKS=100`** → activates S-08 cost vector~~ **No longer active** — `sandbox_fork` command deleted per Exception 30.
 
-All four pre-conditions are currently absent on this branch.
+Post-reduction: only 2 findings (S-04, S-06) remain active and dormant pending credentials.
 
 **Sibling upstream-posture exceptions:**
 
@@ -1671,7 +1675,90 @@ All four pre-conditions are currently absent on this branch.
 - SoT §4.13 E01–E04 — feature inventory
 
 **Follow-up actions:**
-- (Documentation only) S-01 through S-09 — no patch applied; byte-identical parity + dormancy is the mitigation
-- (Deferred to SP15 r2 or runtime adoption) local hardening deltas to the 9 upstream-byte-identical files — requires explicit user authorization to break Tier 1 mandate
-- (Cross-round) re-run `/harness-review` whenever upstream SP15 code changes
-- (Runtime gate) before provisioning any of the 4 runtime-activation env vars, review this exception + Exception 28 + the rest of the runtime-blocker ledger
+- ~~(Documentation only) S-01 through S-09 — no patch applied; byte-identical parity + dormancy is the mitigation~~ superseded 2026-04-15 — 7 findings resolved by deletion, 2 remain dormant
+- ~~(Deferred to SP15 r2 or runtime adoption) local hardening deltas to the 9 upstream-byte-identical files~~ superseded 2026-04-15 — SP15 r2 chose deletion over hardening for the obox sub-scope; remaining 3 files (cc_in_sandbox, sandbox_fundamentals/09, sandbox_mcp/server.py) are still candidates for hardening if runtime use becomes imminent
+- (Cross-round) re-run `/harness-review` whenever upstream SP15 code changes — scope now limited to the 3 surviving files
+- (Runtime gate) before provisioning any of the remaining runtime-activation env vars, review this exception + Exception 30 + Exception 28 + the rest of the runtime-blocker ledger
+
+---
+
+## Exception 30 — SP15 custom Phase 2 audit workflow deprecation — obox subtree removed
+
+**Path(s):**
+- `apps/sandbox_workflows/` — entire subtree DELETED (17 tracked files from upstream `disler/agent-sandboxes`)
+- `apps/sandbox_agent_working_dir/` — entire subtree DELETED (5 tracked files from upstream `disler/agent-sandboxes`)
+- `.claude/commands/prime_obox.md` — DELETED (from upstream `disler/agent-sandbox-skill`)
+
+**SP audit round:** SP15 round 2 — Comprehensive Audit Phase 2 deprecation (2026-04-15)
+
+**Decision date:** 2026-04-15
+
+**Status:** active (permanent — structural removal; byte-identical parity to upstream SP15 deliberately broken for the obox sub-scope)
+
+**Rationale:**
+
+The Comprehensive Audit Phase 2 per-SP sandbox fanout workflow (`scripts/phase2_sp_fanout.sh` → obox runtime → `sfa_coder_validator_loop.py`) failed consistently across multiple hardening rounds (CA-U23..U28, four bug-hardening passes, two staged re-runs, 8 of 16 SPs infra-failed at Stage 2). The user directed complete deprecation 2026-04-15. The obox runtime (`apps/sandbox_workflows/`) and its working directory (`apps/sandbox_agent_working_dir/`) were deleted in the same sweep because:
+
+1. **Single consumer.** The obox was the sole in-repo consumer of the deleted custom workflow. No other ArhuGula runtime (skill, agent, command, hook) referenced `apps/sandbox_workflows/` or `apps/sandbox_agent_working_dir/`.
+2. **Canonical replacement already present.** Sandboxed code verification in ArhuGula now uses the native IndyDevDan sandbox framework already imported in SP15 r1: the `agent-sandboxes` skill at `.claude/skills/agent-sandboxes/SKILL.md` (505 lines, byte-identical upstream) + the `sbx` CLI at `.claude/skills/agent-sandboxes/sandbox_cli/` (17 files) or `apps/sandbox_cli/` (15 files), invoked via `just sbx ...`. This path is the documented canonical surface per SKILL.md — "ALWAYS USE --timeout", "Change directory to SANDBOX_CLI_PATH", `sbx init` → `sbx exec` → report.
+3. **Security upside.** Deletion simultaneously resolves 7 of the 9 Exception 29 findings (S-01, S-02, S-03, S-05, S-07, S-08, S-09). The remaining 2 findings (S-04, S-06) apply to `apps/cc_in_sandbox/`, `apps/sandbox_fundamentals/09_claude_code_agent.py`, and `apps/sandbox_mcp/server.py` — still dormant pending credentials, not impacted by this deletion.
+
+**Tier 1 parity impact:**
+
+- SP15 r1 Phase B1 originally imported `apps/sandbox_workflows/` (19 files) and `apps/sandbox_agent_working_dir/` (5 files) as byte-identical upstream from `disler/agent-sandboxes`. Exception 30 documents the structural removal of both subtrees from ArhuGula.
+- SP15 r1 Phase B3 imported `.claude/commands/prime_obox.md` from `disler/agent-sandbox-skill`. Removed because its only documented target (the obox) no longer exists.
+- **Future audit rounds must NOT re-import these paths.** The removal is load-bearing for the custom-workflow deprecation. If a future round of SP15 audit runs and flags these paths as "missing vs upstream", cite this exception to explain the deliberate omission.
+- SP15 feature count remains **4** (E01–E04). §4.13 E01 description updated to remove "parallel forking" — the obox was the parallel-forking implementation, but the base "E2B SDK integration" survives via `apps/sandbox_fundamentals/` + `apps/cc_in_sandbox/` + skill cookbook/examples.
+
+**Exception net change (sibling exceptions updated 2026-04-15):**
+
+- **Exception 29 scope reduction** — 9 findings → 2 active findings. 7 findings (S-01/S-02/S-03/S-05/S-07/S-08/S-09) RESOLVED by file deletion and annotated inline in Exception 29. Path(s) list strikes through the 6 deleted paths. Runtime activation checklist reduced from 4 triggers to 2 (only S-04 and S-06 remain activatable).
+- **Exception 26 scope reduction** — 4 recipes → 3 recipes. The `sbx-fork` recipe (which invoked the obox runtime) is removed from the SP15 justfile block in Stage 5. `sbx-run`, `sbx`, and `sbx-mcp` remain.
+- **Exception 18** — unaffected. Exception 18's SP15 arm refers to `mcp/just-prompt/.env.sample` and `agents/sfa/.env.sample` which are outside the deleted subtrees. The two `.env.sample` files inside `apps/sandbox_workflows/` and `apps/sandbox_agent_working_dir/` were untracked in the working tree and are removed as a side-effect of directory deletion, not as a separate Exception 18 entry.
+
+**Related custom-workflow file deletions (not part of this exception, but same sweep):**
+
+The following files were also deleted 2026-04-15 as part of the custom Phase 2 workflow deprecation. They are not upstream byte-identical (all ArhuGula-invented during Comprehensive Audit phases), so their deletion does not require a parity-breaking exception:
+
+- `scripts/phase2_sp_fanout.sh` — fanout driver (CA-U06/U23..U28)
+- `agents/sfa/sfa_coder_validator_loop.py` — coder/validator SFA (CA-U06)
+- `agents/sfa/sfa_byte_diff_audit.py` — Phase 1 byte-parity tool
+- `agents/sfa/sfa_exception_ledger_auditor.py`, `sfa_hook_coverage_matrix.py`, `sfa_namespace_collision_detector.py`, `sfa_sot_consistency_checker.py` — audit SFAs
+- `.claude/agents/sandbox-validator-agent.md` — CA Phase 2 adversarial validator subagent
+- `.claude/agents/cross-model-consensus-agent.md` — CA Phase 4 multi-model consensus subagent
+- `audits/phase2-mailbox*.jsonl`, `audits/phase2-summary-2026-04-14.md`, `audits/phase2-fanout-bugfix-spec.md`, `audits/sp6-audit-summary.txt`, `audits/ca-current-gate.txt`, `audits/comprehensive-audit-{spec,scout,plan}.md`, `audits/bundles/`, `audits/test-prompts/`
+- Justfile recipes: `phase2-sp-fanout`, `phase1-byte-diff`, `phase0-verify-deps`, `ca-gate`, `setup-mcp-json`, `sbx-fork`
+
+**Post-deprecation audit posture:**
+
+- **SP1–SP16 r1 audits:** unaffected. SP15 gains an r2 delta documented in this exception.
+- **Comprehensive Audit Phase 2:** abandoned. Custom coder/validator loop pipeline removed.
+- **Future sandboxed code verification:** will invoke the `agent-sandboxes` skill + `sbx` CLI directly. The user will reidentify which audit phases require sandboxed code verification and run those through the built-in surface, not a custom pipeline.
+
+**Memory files deleted in same sweep:**
+
+- `project_comprehensive_audit_in_progress.md` — session-scoped resume marker for the deprecated workflow
+- `project_phase2_stage2_verdicts.md` — Phase 2 Stage 2 per-SP verdict table
+- `project_ca_u28_step_g_hardening.md` — CA-U28 4-bug hardening record
+
+**Memory files preserved (general lessons, applicable to any future sandboxed-agent work):**
+
+- `feedback_obox_improvisation_surface.md` — architectural lesson: sandboxed agents improvise when tool surface is loose
+- `feedback_sfa_fabricated_findings_pattern.md` — SFA-level quality pattern: haiku + deadline produces unverified findings
+- `feedback_audit_model_budget.md`, `feedback_audit_autonomy.md`, `feedback_disler_authoritative.md` — general audit ground rules
+
+**Review cadence:** permanent — not re-evaluated per round. The deletion is structural and final unless the user directs reinstatement.
+
+**Related findings:**
+
+- Exception 29 — upstream-posture findings for the SP15 sandbox apps (scope reduced via this exception)
+- Exception 26 — SP15 justfile carve-out recipes (scope reduced via this exception)
+- Exception 28 — SP16 voice-loop upstream runtime security posture (same pattern, different SP)
+- `project_runtime_blockers_ledger.md` — consolidated runtime-blocker ledger (updated for reduced Exception 29 scope)
+- SoT §1 SP15 r2 block — full round-2 details
+
+**Follow-up actions:**
+
+- (This exception) no further action — removal is structural
+- (SP15 r2 downstream) when reviewing the 2 remaining Exception 29 findings (S-04, S-06), note that the attack surface is now limited to `apps/cc_in_sandbox/`, `apps/sandbox_fundamentals/09_claude_code_agent.py`, and `apps/sandbox_mcp/server.py`
+- (Cross-SP) if a future round re-imports `apps/sandbox_workflows/` or similar, check this exception first — reinstatement requires explicit user authorization

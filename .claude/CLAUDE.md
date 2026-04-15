@@ -115,7 +115,7 @@ See Source of Truth Section 8 for priority order. Fix structural issues (Section
 | SP12 | Pi Integration + Harness Spec | BUILT + AUDIT R1 (2026-04-14) | 14 | pi-vs-claude-code + harness-spec (Tier 2 concept) |
 | SP13 | Steer (Swift GUI) | BUILT + AUDIT R1 (2026-04-14) | 3 | mac-mini-agent |
 | SP14 | Browser Automation | BUILT + AUDIT R1 (2026-04-14) | 8 | bowser |
-| SP15 | E2B Sandboxes | BUILT + AUDIT R1 (2026-04-14) | 4 | agent-sandboxes |
+| SP15 | E2B Sandboxes | BUILT + AUDIT R1 (2026-04-14) + R2 obox deprecated (2026-04-15) | 4 | agent-sandboxes |
 | SP16 | Voice & Real-Time | BUILT + AUDIT R1 (2026-04-14) | 2 | hooks-mastery + claude-code-is-programmable |
 
 ## Hook Security Model
