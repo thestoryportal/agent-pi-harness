@@ -358,26 +358,6 @@ sbx-run script:
 sbx *args:
     cd .claude/skills/agent-sandboxes/sandbox_cli && uv run sbx {{args}}
 
-# Run obox sandbox-fork workflow
-sbx-fork repo prompt forks="1":
-    cd apps/sandbox_workflows && uv run obox sandbox-fork "{{repo}}" --prompt "{{prompt}}" --forks {{forks}}
-
-# Generate apps/sandbox_agent_working_dir/.mcp.json from .mcp.json.sandbox
-# Substitutes E2B_API_KEY (loaded from .env via set dotenv-load). Run once
-# before any obox sandbox-fork invocation. Output file is gitignored-by-convention
-# (contains a credential); do NOT commit it.
-setup-mcp-json:
-    #!/usr/bin/env python3
-    import os, pathlib
-    tmpl = pathlib.Path("apps/sandbox_agent_working_dir/.mcp.json.sandbox").read_text()
-    key = os.getenv("E2B_API_KEY", "")
-    if not key:
-        raise SystemExit("E2B_API_KEY not set — add it to .env before running setup-mcp-json")
-    out = tmpl.replace("<E2B_API_KEY>", key)
-    dest = pathlib.Path("apps/sandbox_agent_working_dir/.mcp.json")
-    dest.write_text(out)
-    print(f"wrote {dest}  (key len={len(key)})")
-
 # Start E2B MCP server (for use with .mcp.json.sandbox)
 sbx-mcp:
     cd apps/sandbox_mcp && uv run python server.py
@@ -405,155 +385,19 @@ sbx-mcp:
 voice:
     uv run apps/voice/voice_to_claude_code.py
 
-# === Comprehensive Audit Infrastructure ===
-# Tier 3 audit tooling (Exception 1). No upstream justfile counterpart — these
-# recipes wrap forward-looking audit SFAs + subagents built per
-# audits/comprehensive-audit-spec.md. See audits/comprehensive-audit-plan.md for
-# per-unit context. Recipes are added per-wave; phase2/phase3/phase4/phase5
-# recipes are stubbed until their underlying artifacts land (CA-U06..U16).
-
-# Phase 1 byte-parity sweep across upstream full-clones (pass `-- --clone NAME` to filter)
-phase1-byte-diff *args:
-    uv run agents/sfa/sfa_byte_diff_audit.py \
-        --clones ~/Projects/indydevdan-harness-research/research/full-clones \
-        --repo . \
-        --exceptions audits/exceptions.md \
-        --output audits/phase1-byte-parity-$(date -u +%Y-%m-%d).md \
-        {{args}}
-
-# Phase 2 per-SP sandbox fan-out (CA-U07). Wraps scripts/phase2_sp_fanout.sh
-# so the allow-listed `just` channel can drive it. The live path is gated
-# behind --ack-exceptions + --confirm-cost (memory §10 cost gate) and is
-# additionally blocked until CA-U10 lands. Use --dry-run for smoke tests.
-phase2-sp-fanout *args:
-    scripts/phase2_sp_fanout.sh {{args}}
-
-# Phase 0 runtime dependency verification (CA-U08 + CA-U09)
-# Checks provisioned credentials without printing them. No sandbox spin-up, no cost.
-phase0-verify-deps:
-    #!/usr/bin/env bash
-    set -euo pipefail
-    echo "=== CA-U08 — just-prompt multi-model API availability ==="
-    for key in ANTHROPIC_API_KEY OPENAI_API_KEY GOOGLE_API_KEY GEMINI_API_KEY DEEPSEEK_API_KEY GROQ_API_KEY; do
-        val="${!key:-}"
-        if [ -n "$val" ]; then
-            echo "  ✓ $key provisioned (length=${#val})"
-        else
-            echo "  - $key absent"
-        fi
-    done
-    echo
-    echo "=== CA-U09 — SP15 sbx-fork + E2B runtime ==="
-    if [ -n "${E2B_API_KEY:-}" ]; then
-        echo "  ✓ E2B_API_KEY provisioned (length=${#E2B_API_KEY})"
-        cd apps/sandbox_cli && uv run python -c "
-    import os, sys
-    key = os.environ.get('E2B_API_KEY', '')
-    if not key:
-        print('  ✗ key disappeared in subprocess'); sys.exit(1)
-    try:
-        from e2b import Sandbox
-    except ImportError as e:
-        print(f'  ! e2b SDK not installed: {e}'); sys.exit(2)
-    try:
-        paginator = Sandbox.list()
-        # If we got any object back from the API call, auth was accepted.
-        # Iteration semantics don't matter for the auth probe.
-        got_type = type(paginator).__name__
-        print(f'  ✓ E2B SDK auth OK — received {got_type} from api.e2b.dev')
-    except Exception as e:
-        msg = str(e)
-        low = msg.lower()
-        if 'auth' in low or '401' in msg or '403' in msg or 'unauthor' in low or 'forbidden' in low:
-            print(f'  ✗ E2B SDK auth failed: {e}'); sys.exit(3)
-        # Non-auth exceptions (network, version, iteration) still prove
-        # the call reached E2B, which is what we're verifying.
-        print(f'  ~ auth probably OK (non-auth error): {type(e).__name__}: {msg[:80]}')
-    "
-    else
-        echo "  ✗ E2B_API_KEY absent — CA-U09 cannot proceed"
-        exit 1
-    fi
-    echo
-    echo "phase0 verification complete"
-
-# Save current Comprehensive Audit gate to memory so /clear + /prime loads the right context.
-# Claude runs this automatically at each step handoff — users never need to call it directly.
-# With no args it re-saves whatever label is already in audits/ca-current-gate.txt.
-# Usage: just ca-gate               ← re-save current gate (no label change)
-#        just ca-gate "G next"      ← advance to new gate label
-ca-gate label="" note="":
-    #!/usr/bin/env python3
-    import pathlib, re, datetime
-
-    gate_file = pathlib.Path("audits/ca-current-gate.txt")
-    gate_file.parent.mkdir(parents=True, exist_ok=True)
-
-    # If no label given, read the existing one so re-saves are idempotent
-    label = """{{label}}""".strip()
-    if not label:
-        if gate_file.exists():
-            first_line = gate_file.read_text().splitlines()[0] if gate_file.exists() else ""
-            # format is "TIMESTAMP  label text"
-            parts = first_line.split("  ", 1)
-            label = parts[1].strip() if len(parts) == 2 else "checkpoint"
-        else:
-            label = "checkpoint"
-
-    note  = """{{note}}"""
-    ts    = datetime.datetime.now(datetime.timezone.utc).strftime("%Y-%m-%dT%H:%M:%SZ")
-
-    # 1 — write machine-readable gate file (survives /clear)
-    gate_file = pathlib.Path("audits/ca-current-gate.txt")
-    gate_file.parent.mkdir(parents=True, exist_ok=True)
-    gate_file.write_text(f"{ts}  {label}\n{note}\n")
-    print(f"  wrote {gate_file}")
-
-    # 2 — update the MEMORY.md index line
-    home = pathlib.Path.home()
-    mem_dir = home / ".claude/projects/-Users-robertrhu-Projects-arhugula/memory"
-    mem_index = mem_dir / "MEMORY.md"
-    if mem_index.exists():
-        text = mem_index.read_text()
-        new_line = (
-            f"- [Comprehensive Audit — **NEXT: {label}** (2026-04-14)](project_comprehensive_audit_in_progress.md)"
-            f" — **RESUME MARKER.** Steps C/D/E done in working tree."
-            f" Gate: {label}. $0 spent, $20 approved."
-        )
-        text = re.sub(
-            r"- \[Comprehensive Audit[^\n]+project_comprehensive_audit_in_progress\.md\)[^\n]*",
-            new_line,
-            text,
-        )
-        mem_index.write_text(text)
-        print(f"  updated MEMORY.md index line")
-
-    # 3 — update §0 NEXT ACTION in the memory file
-    mem_file = mem_dir / "project_comprehensive_audit_in_progress.md"
-    if mem_file.exists():
-        text = mem_file.read_text()
-        # Replace the "NEXT ACTION → ..." line
-        text = re.sub(
-            r"\*\*NEXT ACTION →[^\n]+\*\*",
-            f"**NEXT ACTION → {label}**",
-            text,
-        )
-        # Replace the name: frontmatter line
-        text = re.sub(
-            r"^name:.*$",
-            f"name: Comprehensive Audit IN PROGRESS — {label}",
-            text,
-            flags=re.MULTILINE,
-        )
-        # Replace the description: frontmatter line
-        text = re.sub(
-            r"^description:.*$",
-            f"description: Resume marker. Gate: {label}. {note}",
-            text,
-            flags=re.MULTILINE,
-        )
-        mem_file.write_text(text)
-        print(f"  updated §0 NEXT ACTION in memory file")
-
-    print(f"\n  Gate saved: {label}")
-    print(f"  /clear + /prime will now resume at: {label}")
+# === Comprehensive Audit Infrastructure — DEPRECATED 2026-04-15 ===
+#
+# The custom Phase 2 sandbox fanout workflow (scripts/phase2_sp_fanout.sh +
+# agents/sfa/sfa_coder_validator_loop.py + the obox runtime at
+# apps/sandbox_workflows/) was removed per user direction 2026-04-15. See
+# audits/exceptions.md Exception 30 for the full deprecation rationale.
+#
+# Future audit phases that need sandboxed code verification should use the
+# built-in native IndyDevDan sandbox framework directly:
+#
+#   just sbx init --timeout 43200
+#   just sbx exec <sandbox_id> "..."
+#   just sbx files ...
+#
+# The canonical surface is documented in
+# .claude/skills/agent-sandboxes/SKILL.md (byte-identical upstream).
