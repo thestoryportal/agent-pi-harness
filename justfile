@@ -338,7 +338,7 @@ ui-review headed="false" filter="" *flags="":
     export CLAUDE_CODE_EXPERIMENTAL_AGENT_TEAMS=1 && claude "/ui-review {{headed}} {{filter}} {{flags}}"
 
 # Amazon add-to-cart — multiple items in one shot (requires --chrome)
-automate-amazon prompt="m4 mac mini with top specs, flowers for valentines day, pack of 10 sketch notebooks":
+automate-amazon prompt="m4 mac mini with top specs, flowers for valentines day, pack of 10 sketch notebooks, mechanical keyboard with brown switches, USB-C docking station, blue light blocking glasses, standing desk anti-fatigue mat, Anker wireless charging pad":
     just hop amazon-add-to-cart "{{prompt}}"
 
 # Summarize a blog's latest post (headless, no auth needed)

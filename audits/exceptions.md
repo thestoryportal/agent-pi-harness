@@ -1171,12 +1171,12 @@ The `feedback_disler_authoritative.md` rule says "Tier 1 full-clones are byte-le
 | 17 | `ty_validator.py` sub-package skip block (load-bearing for nested pyproject.toml structure) | SP3 r1 B | 2026-04-13 | active | None (permanent) |
 | 18 | `.env.sample` damage-control hard stop — **FULLY RESOLVED 2026-04-17** (permanent `.env*.sample` pathExclusion; both arms byte-identical upstream; chr-code workaround retroactively authorized) | SP4 r1 + SP7 r1 + SP r2 | 2026-04-17 | **RESOLVED** | — |
 | 19 | `~/.claude/skills/library/library.yaml` ArhuGula catalog population (upstream-schema-compatible) | SP6 r1 D | 2026-04-14 | active | None (permanent — grows via `/library add`) |
-| 20 | SP12 Pi extensions (`drive-dispatch.ts`, `listen-submit.ts`) reference pre-SP8-r1 Drive/Listen interface — deferred cross-SP fix | SP8 r1 D | 2026-04-14 | active | **SP12 r1 mandatory** |
+| 20 | SP12 Pi extensions (`drive-dispatch.ts`, `listen-submit.ts`) reference pre-SP8-r1 Drive/Listen interface — deferred cross-SP fix | SP8 r1 D | 2026-04-14 | **RESOLVED 2026-04-14** | — |
 | 21 | SP11 pattern-SP posture (upstream reference + local pattern-instantiation coexist) | SP11 r1 A | 2026-04-14 | active | None (permanent foundational rule) |
 | 22 | SP12 Pi extensions carve-out (`drive-dispatch.ts`, `listen-submit.ts`, `pi-drive`/`pi-listen`/`pi-full` recipes) | SP12 r1 A | 2026-04-14 | active | None (permanent carve-out under Exception 1 umbrella) |
 | 23 | `.claude/commands/prime.md` cross-SP namespace collision (SP8 ↔ SP12 `prime.md` vs SP1 `/prime` skill) | SP12 r1 A | 2026-04-14 | active | Quarterly |
-| 24 | SP13 justfile carve-out recipes (`steer-build`/`see`/`apps`/`ocr`) + SecureTmp security regression flag | SP13 r1 C+D | 2026-04-14 | active | SP13 r2 / SP2 security follow-up (reviewed 2026-04-17 option C — upstream still lacks SecureTmp) |
-| 25 | SP14 root `justfile` block content-level adaptations (6 items: damage-control flag removal, multi-SP variable inlining, bug-fix headed default, agent-teams env prefix, shell-metachar warning, prompt trim) | SP14 r1 D | 2026-04-14 | active | SP14 r2 / revert items 3+6 when convenient |
+| 24 | SP13 justfile carve-out recipes (`steer-build`/`see`/`apps`/`ocr`) + SecureTmp security regression permanently deferred 2026-04-17 | SP13 r1 C+D | 2026-04-14 | active (permanent — security regression deferred) | None — re-introduction is a new dedicated SP13 r2 security sprint, not a follow-up item |
+| 25 | SP14 root `justfile` block content-level adaptations (5 items: damage-control flag removal, multi-SP variable inlining, bug-fix headed default, agent-teams env prefix, shell-metachar warning — item 6 prompt-trim reverted 2026-04-17) | SP14 r1 D | 2026-04-14 | active (permanent — 5 items; item 6 closed) | None — items 1/2/4/5 immovable; item 3 permanently kept as bug-fix |
 | 26 | SP15 E2B Sandboxes justfile carve-out recipes (`sbx-run`, `sbx`, `sbx-mcp`) — no upstream justfile. **Scope reduced 2026-04-15 via Exception 30** — `sbx-fork` removed with obox | SP15 r1 D → SP15 r2 | 2026-04-15 | active | Per-SP audit |
 | 27 | SP16 R02 `voice_to_claude_code.py` landed at `apps/voice/` (upstream places it at repo root) + SP16 `just voice` carve-out recipe — no upstream justfile in claude-code-is-programmable | SP16 r1 B+D | 2026-04-14 | active | Per-SP audit |
 | 28 | SP16 voice-loop upstream runtime security posture — 6 Tier 1 byte-identical findings (S-01/S-03/S-05/S-06/S-08/S-09 from /harness-review). Documented, not patched. | SP16 r1 post-review | 2026-04-14 | active | Every upstream change; re-run /harness-review (reviewed 2026-04-17 option C — all 6 still present, no patches) |
@@ -1325,7 +1325,7 @@ Claude Code's slash-command resolver searches the skills index first (per SP1 sk
 
 **SP audit round:** SP13 round 1 Phase C+D (2026-04-14)
 **Decision date:** 2026-04-14
-**Status:** **Permanent** (carve-out recipes) + **Open follow-up** (security regression)
+**Status:** **Permanent** (carve-out recipes + security regression permanently deferred 2026-04-17)
 
 **Rationale (carve-out recipes):**
 
@@ -1376,6 +1376,8 @@ The 4 recipes live in the project root `justfile`, which is already a composite 
 
 **Security-posture review (option C, 2026-04-17):** Verified upstream `mac-mini-agent/apps/steer/Sources/steer/` — `SecureTmp.swift` absent; `AXSecureTextField` redaction enforcement absent. Upstream posture unchanged since SP13 r1. The security regression (reverted ArhuGula hardening) remains open. No action taken — re-introduction requires explicit user authorization to break Tier 1 byte-identical mandate. Open follow-up: SP13 r2 or a user-directed security round.
 
+**Closure (2026-04-17):** User-authorized permanent deferral of the SecureTmp re-introduction. Rationale: the original SecureTmp hardening was **architectural** (routed all write paths through a per-UID `/tmp/steer-<uid>/` directory, renamed/merged Swift files: `Keyboard.swift`+`MouseControl.swift`→`Input.swift`, `OCR.swift`→`OCRCommand.swift`, `Accessibility.swift`→`AccessibilityTree.swift`). A content-level re-introduction (per option 3 above) would require writing entirely new Swift hardening code from scratch — it is a dedicated new engineering effort, not a follow-up task resolvable in a review pass. Steer runs under the trusted-operator threat model (same as upstream). Re-introduction, if ever pursued, must be scoped as a dedicated SP13 r2 security sprint with a new Exception entry covering the content-level Swift additions.
+
 ---
 
 ## Exception 25 — SP14 root `justfile` block content-level adaptations
@@ -1387,7 +1389,7 @@ The 4 recipes live in the project root `justfile`, which is already a composite 
 
 **SP audit round:** SP14 round 1 Phase D (2026-04-14)
 **Decision date:** 2026-04-14
-**Status:** **Permanent** (items 1, 2, 4, 5 immovable; items 3, 6 revertible but left in place — see Review cadence)
+**Status:** **Permanent** (items 1, 2, 3, 4, 5; item 6 reverted 2026-04-17 — see Closure note)
 
 **The 6 drift items:**
 
@@ -1456,7 +1458,9 @@ This mirrors the distinction between SP13 Steer's justfile carve-outs (Exception
 - Exception 22 — SP12 Pi extensions carve-out (sibling pattern)
 - Exception 24 — SP13 Steer justfile carve-out recipes (sibling pattern)
 
-**Review cadence:** Per-SP audit. Review Exception 25 in the next SP14 round (if any) OR when the user explicitly asks to revert items 3 and 6 (the revertible preference/bug-fix items). Items 1, 2, 4, 5 are **permanent** for as long as (a) the damage-control security model is in place (items 1, 5), and (b) the root `justfile` remains a multi-SP composite (items 2, 4). The `patterns.yaml` hardening rules that item 1 protects (Exception 14) share the same lifecycle — if Exception 14 is ever fully resolved (browser-automation hardening folded into upstream), Exception 25 item 1 can be re-evaluated at the same time.
+**Review cadence:** Per-SP audit. Items 1, 2, 4, 5 are **permanent** for as long as (a) the damage-control security model is in place (items 1, 5), and (b) the root `justfile` remains a multi-SP composite (items 2, 4). Item 3 is permanently kept as a bug-fix adaptation. Item 6 reverted 2026-04-17. The `patterns.yaml` hardening rules that item 1 protects (Exception 14) share the same lifecycle — if Exception 14 is ever fully resolved (browser-automation hardening folded into upstream), Exception 25 item 1 can be re-evaluated at the same time.
+
+**Closure (2026-04-17):** Item 6 (`automate-amazon` 3-item default prompt) reverted to upstream 8-item default — pure preference drift with no functional cost. Item 3 (`ui-review headed="false"`) permanently kept: it is a bug-fix divergence correcting an upstream inconsistency between `bowser/justfile` and `bowser/commands/ui-review.md`; reverting would re-introduce the upstream bug. Exception 25 scope reduced from 6 items to 5; all 5 remaining items are permanent.
 
 ---
 
