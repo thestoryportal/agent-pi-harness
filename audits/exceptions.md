@@ -335,8 +335,8 @@ E4 was escalated because scout could not byte-compare `.env.example` against ups
 - `project_sp2_architectural_gaps.md` — `pre_tool_use.py` path-matching over-reach
 
 **Follow-up actions:**
-1. SP2 audit: narrow the `.env` path-match rule to not block `.env.example` Reads, or add an explicit exemption
-2. SP8 audit: confirm the env-var list in `.env.example` matches what apps/ actually consume — **REVIEWED SP8 r1 Phase D (2026-04-14):** post-revert upstream `apps/listen/main.py`, `apps/direct/main.py`, and `apps/direct/client.py` do **not** read env vars directly (Listen hardcodes port 7600, Direct takes URL as positional CLI arg). Env-var consumption happens in the `justfile` `_sandbox_url := env("AGENT_SANDBOX_URL", "")` expression and in the imported `.env.sample` (4 API keys + AGENT_SANDBOX_URL). The local `.env.example` captures ArhuGula-runtime vars (LISTEN_PORT, OBSERVE_PORT, OBSERVE_RETENTION_DAYS, DATABASE_URL) that are consumed by `apps/observe/` and `apps/dropzone/` — separate concerns from SP8. No merge between `.env.example` and `.env.sample` needed — they document different scopes (ArhuGula runtime vs upstream Listen/Direct wrapper). Exception 9 remains active pending SP2 hook narrowing.
+1. SP2 audit: narrow the `.env` path-match rule to not block `.env.example` Reads, or add an explicit exemption — **RESOLVED SP r2 2026-04-17:** `.env*.example` added to `pathExclusions` in `patterns.yaml` (user-authorized direct IDE edit). Read/Glob/Grep on `*.example` env template files no longer blocked.
+2. SP8 audit: confirm the env-var list in `.env.example` matches what apps/ actually consume — **REVIEWED SP8 r1 Phase D (2026-04-14):** post-revert upstream `apps/listen/main.py`, `apps/direct/main.py`, and `apps/direct/client.py` do **not** read env vars directly (Listen hardcodes port 7600, Direct takes URL as positional CLI arg). Env-var consumption happens in the `justfile` `_sandbox_url := env("AGENT_SANDBOX_URL", "")` expression and in the imported `.env.sample` (4 API keys + AGENT_SANDBOX_URL). The local `.env.example` captures ArhuGula-runtime vars (LISTEN_PORT, OBSERVE_PORT, OBSERVE_RETENTION_DAYS, DATABASE_URL) that are consumed by `apps/observe/` and `apps/dropzone/` — separate concerns from SP8. No merge between `.env.example` and `.env.sample` needed — they document different scopes (ArhuGula runtime vs upstream Listen/Direct wrapper).
 3. If a future Disler repo adds a `.env.example`, upgrade this classification from invention to DRIFT[T1] and byte-compare
 
 ---
@@ -1151,7 +1151,7 @@ The `feedback_disler_authoritative.md` rule says "Tier 1 full-clones are byte-le
 | 6 | Extended Bash permission allow-list (D1b) | SP1 r1 | 2026-04-13 | active | SP2 audit |
 | 7 | SP2 damage-control wiring in settings.json (D2) | SP1 r1 | 2026-04-13 | active | SP2 audit |
 | 8 | Security-critical hooks + `_base.py` kept (D4 Option C, absorbs D5 + D6) | SP1 r1 | 2026-04-13 | active | SP2 audit / SP3 audit / Quarterly |
-| 9 | `.env.example` invention (E4) | SP1 r1 | 2026-04-13 | active | SP2 audit / SP8 audit |
+| 9 | `.env.example` invention (E4) | SP1 r1 | 2026-04-13 | active (follow-ups 1+2 resolved; invention status permanent) | None — follow-up 3 triggers if Disler ships `.env.example` |
 | 10 | `fork-terminal` skill (E6, T2-only) | SP1 r1 | 2026-04-13 | active | Quarterly Disler repo check |
 | 11 | `package.json` + `.tool-versions` (D7, load-bearing for SP11) | SP1 r1 | 2026-04-13 | active | SP11 audit / Quarterly |
 | 12 | `.claude/CLAUDE.md` comprehensive doc + nested path | SP1 r1 mini-gate | 2026-04-13 | active | Quarterly |
@@ -1174,6 +1174,10 @@ The `feedback_disler_authoritative.md` rule says "Tier 1 full-clones are byte-le
 | 29 | SP15 E2B sandbox apps upstream runtime security posture — 9 findings (S-01..S-09). **Scope reduced 2026-04-15 via Exception 30** — 7 findings RESOLVED by deletion; only S-04 (cc_in_sandbox + sandbox_fundamentals/09) and S-06 (sandbox_mcp) remain active and dormant. | SP15 r1 post-review → SP15 r2 | 2026-04-15 | active (scope reduced) | Every upstream change; re-run /harness-review |
 | 30 | SP15 custom Phase 2 audit workflow deprecation — obox subtree deleted (`apps/sandbox_workflows/`, `apps/sandbox_agent_working_dir/`, `.claude/commands/prime_obox.md`). Breaks byte-identical parity for the obox sub-scope. Resolves 7 of 9 Exception 29 findings. | SP15 r2 | 2026-04-15 | active (permanent) | None — structural |
 | 31 | `apps/listen/main.py` localhost bind hardening — `0.0.0.0` → `127.0.0.1` per CSO security review 2026-04-17. One-line deviation from SP8 byte-identical upstream. Eliminates LAN/remote RCE surface on the unauthenticated listen server. | SP8 r1 post-audit | 2026-04-17 | active (permanent) | None — security hardening |
+| 32 | `setup_maintenance.py` ArhuGula-adapted maintenance routine (per-app uv sync, observe prune, patterns.yaml validation, hook health check) — Tier 3 carve-out | SP r2 post-audit | 2026-04-17 | active (permanent) | None — Tier 3 structural |
+| 33 | `patterns.yaml` circular trust gap — all 4 `load_patterns()` functions prefer global `~/.claude/skills/damage-control/patterns.yaml` (chmod 444) over project-local. Closes SP2 Gap 1. | SP r2 | 2026-04-17 | **RESOLVED** | — |
+| 34 | `pre_tool_use.py` Grep directory traversal — `_check_grep_traversal()` added. Closes SP2 Gap 2. | SP r2 | 2026-04-17 | **RESOLVED** | — |
+| 35 | O06 Scribe agent — permanent DEFERRED. No Tier 1 source in any full-clone; playbook-only (Tier 2). O09/O11 precedent. SP r2 2026-04-17. | SP9 r1 + SP r2 | 2026-04-17 | active (permanent DEFERRED) | Quarterly Disler repo check |
 
 ## How to close an exception
 
@@ -1941,3 +1945,29 @@ include the directory traversal pre-check.
 
 **Review cadence:** Re-examine if `zeroAccessPaths` gains new glob patterns that might
 interact unexpectedly with `rglob()` behavior.
+
+---
+
+## Exception 35 — O06 Scribe agent — permanent DEFERRED (no Tier 1 source)
+
+**Date:** 2026-04-17
+**Status:** active (permanent DEFERRED)
+**Tier:** N/A — feature gap, not a file deviation
+
+**Feature:** O06 Multi-agent hierarchy (SP9). The IndyDevDan playbook (Tier 2) describes 6 agents in the hierarchy: architect, builder, validator, scribe, scout, security. ArhuGula has 5 of 6 — Scribe is absent.
+
+**Verification:** Grep across all 19 full-clone repos at `~/Projects/indydevdan-harness-research/research/full-clones/` returns zero matches for a `scribe.md` agent definition or `name: scribe` frontmatter. The word "scribe" appears in:
+- `promptfoo-main`: `elevenlabs:stt:scribe_v1` (ElevenLabs STT model product name — not a Claude agent)
+- `agent-sandbox-skill`: `realtime_scribe` endpoint and `scribe` as an incident-response app role — not a Claude agent
+
+Neither repo ships a Scribe Claude subagent.
+
+**Rationale:** Per O09 + O11 precedent (SP9 r1): when a feature exists only in Tier 2 (playbook concept) with zero Tier 1 implementation across all upstream repos, the correct classification is DEFERRED — not GAP (which implies the feature should be built) and not REJECTED (which requires explicit user exclusion). Scribe cannot be byte-identically imported because no bytes exist.
+
+**Decision:** SP r2 2026-04-17 — user confirmed after verification of both `promptfoo-main` and `agent-sandbox-skill` full clones. Permanent DEFERRED pending Disler shipping a Scribe agent.
+
+**Review cadence:** Quarterly — check if any new Disler full-clone adds a `scribe.md` agent. If found, upgrade to MISSING[T1] and add to the next SP r2 round.
+
+**Related findings:**
+- SP9 r1 memory (`project_sp9_r1_resume.md`) §O06 — original deferral note
+- Exception 1 — Tier 3 audit infrastructure (architect, scout-agent, security are Tier 3; Scribe is Tier 2 DEFERRED — distinct categories)
