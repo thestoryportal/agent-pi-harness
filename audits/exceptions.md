@@ -60,7 +60,7 @@ These files are the audit pipeline itself — the `/scout`, `/architect`, `/buil
 **Follow-up actions:**
 1. (Complete) Attribution round 2: CONFIRMED NO MATCH for spec-checker + schema-reviewer across all 19 full-clones
 2. Tier-3 files stay permanently under this exception; expansion of Tier 3 requires explicit user approval + new exception entry
-3. Quarterly review to check if Disler has added any self-audit patterns
+3. Quarterly review to check if Disler has added any self-audit patterns — **Reviewed SP r2 2026-04-17: no new self-audit patterns in any of 19 full-clones. No change.**
 
 ---
 
@@ -98,6 +98,8 @@ ArhuGula's `ruff_validator.py` PostToolUse hook blocks file writes that fail ruf
 ---
 
 ## Exception 3 — SP2-blocked SP1 reverts
+
+**STATUS:** RESOLVED 2026-04-13 — All blocked commits landed during SP2 r1 Phase C (commits `c693420` and `d4aaf27`). Follow-up action 6 executed SP r2 2026-04-17.
 
 **Decision:** Option 2 path, SP1 round 1; expanded at decision gate 2026-04-13 to include D1a, D3, and D4 Option C leaf-hook reverts.
 
@@ -137,12 +139,12 @@ Cleaner path: let SP2 audit fix the underlying bug (`patterns.yaml` narrowing or
 - Builder execution reports from 2026-04-13 SP1 run (Commit 1 block + Commit 4 block)
 
 **Follow-up actions:**
-1. SP2 scout: identifies the fnmatch bug + `.claude/settings.json` in `readOnlyPaths`
-2. SP2 architect: proposes `patterns.yaml` narrowing or `write_damage_control.py` path-matching fix
-3. SP2 build: executes the fix
-4. SP2 verify: re-runs SP1 Commits 1, 2, 4, 5, 6, 7, 8, 14 against fixed rules
-5. Mark SP1 as "SP1 round 1 complete" once those 8 commits land
-6. Update this exception to "resolved"
+1. ✅ SP2 scout: identifies the fnmatch bug + `.claude/settings.json` in `readOnlyPaths`
+2. ✅ SP2 architect: proposes `patterns.yaml` narrowing or `write_damage_control.py` path-matching fix
+3. ✅ SP2 build: executes the fix
+4. ✅ SP2 verify: re-runs SP1 Commits 1, 2, 4, 5, 6, 7, 8, 14 against fixed rules
+5. ✅ Mark SP1 as "SP1 round 1 complete" once those 8 commits land
+6. ✅ Update this exception to "resolved" — **executed SP r2 2026-04-17**
 
 ---
 
@@ -304,11 +306,16 @@ Option C (chosen) splits the revert: 9 non-security leaf hooks revert to upstrea
 - `feedback_disler_authoritative.md` — drift is drift, but exceptions are documented drift with rationale
 
 **Follow-up actions:**
-1. SP1 resume pass: execute 9 leaf-hook reverts (tracked under Exception 3 item 11)
-2. SP2 audit: may revisit `pre_tool_use.py` once the `patterns.yaml` fnmatch bug is fixed and the ripgrep-walk gap is addressed
+1. ✅ SP1 resume pass: execute 9 leaf-hook reverts (tracked under Exception 3 item 11) — **landed SP2 r1 Phase C 2026-04-13 (commits `c693420` + `d4aaf27`)**
+2. ✅ SP2 audit: may revisit `pre_tool_use.py` once the `patterns.yaml` fnmatch bug is fixed and the ripgrep-walk gap is addressed — **Exception 34 (`_check_grep_traversal()`) closed Gap 2 2026-04-17**
 3. SP3 audit: may revisit observability infrastructure as part of validator pipeline scope
 4. If SP9 (orchestration / dashboard) needs a different event schema, update `_base.py` + consumers in that audit round
 5. Quarterly review: check if any Disler repo has added a shared hook helper pattern we should align with
+
+**2026-04-16 harness-review additions (within Exception 8 scope):**
+The 2026-04-16 `/harness-review` round applied the following additional ArhuGula-hardened changes to Exception 8 files. All changes are within Exception 8's existing approved scope (security-critical hooks kept in ArhuGula form). No new exception number is required for these files.
+- `pre_tool_use.py` — S-OLD-02: `os.path.realpath()` symlink resolution added to `check_read()` to prevent symlink-escape attacks on zero-access paths; S-OLD-03: `ValueError` in `check_bash()` changed to fail-closed (exit 2) rather than exception-propagating.
+- `session_start.py` — S-NEW-02: `.env` value logging redacted (key names only, values suppressed); S-OLD-04: health-check coverage extended to all 17 `REQUIRED_HOOKS`.
 
 ---
 
@@ -363,7 +370,7 @@ If a future Disler repo ships `fork-terminal`, this exception upgrades to MISSIN
 - `audits/SP1-plan.md` — E6 escalation, architect recommendation: defer
 
 **Follow-up actions:**
-1. Quarterly Disler repo check: does any new full-clone ship `fork-terminal`?
+1. Quarterly Disler repo check: does any new full-clone ship `fork-terminal`? — **Reviewed SP r2 2026-04-17: no `fork-terminal` in any of 19 full-clones. No change.**
 2. If found: upgrade to MISSING[T1], generate SP1 resume-pass commit
 3. If not: exception stays active indefinitely
 
@@ -435,7 +442,7 @@ This is analogous to Exception 1 (Tier 3 audit infrastructure) — the content i
 - `audits/SP1-plan.md` — flagged in Cross-reference table as "(deferred — see note)" / DECISION-REQUIRED, separate from D1–D7 gate
 
 **Follow-up actions:**
-1. Quarterly review: check if Disler has added CLAUDE.md content to any full-clone. If so, re-audit the content delta against the new reference.
+1. Quarterly review: check if Disler has added CLAUDE.md content to any full-clone. If so, re-audit the content delta against the new reference. — **Reviewed SP r2 2026-04-17: no upstream CLAUDE.md content found in any of 19 full-clones beyond the existing 0-byte stubs. No change.**
 2. If the Source of Truth document at `~/Projects/indydevdan-harness-research/docs/superpowers/specs/arhugula-source-of-truth.md` moves or gets superseded, update the pointer in `.claude/CLAUDE.md` and note the change here.
 3. If ArhuGula ever needs a root `CLAUDE.md` (e.g., for a tool that only checks root), symlink rather than move — preserves the existing path while adding the new one.
 
@@ -671,7 +678,7 @@ The above remains under Exception 14's umbrella (no separate exception number ne
 1. (Phase H — landed `ee49a01`) Restore the security boundary in `readOnlyPaths` as a 7-file explicit list per D10=A and the settings file rule per D11=A. Section N's commented-out block is now active code; this exception covers the structural delta but the active enforcement state is documented in patterns.yaml itself.
 2. (Phase I) Re-run `audits/sp2_verify.py` and `audits/sp2_e1_test.py` after E1 patch lands; both confirm regression cases pass.
 3. (Resolved SP3 r1 Phase F — 2026-04-13) The 3 SQL convention rules in category I are formally accepted as permanent harness-shipped style rules. No file move; no separate `sql_validator.py`. This sub-decision is closed.
-4. (Future SP14 round, if any) Cite new rounds against this exception to maintain rolling round attribution.
+4. (Future SP14 round, if any) Cite new rounds against this exception to maintain rolling round attribution. — **Reviewed SP r2 2026-04-17: no new SP14 upstream changes since R1 (full-clones pinned to 2026-04-13 hashes, not refreshed). No change.**
 
 ---
 
@@ -1145,7 +1152,7 @@ The `feedback_disler_authoritative.md` rule says "Tier 1 full-clones are byte-le
 |---|---|---|---|---|---|
 | 1 | Audit infrastructure tier (Tier 3) | SP1 r1 | 2026-04-13 | active | Quarterly |
 | 2 | Validator-forced drift (ruff) | SP1 r1 → SP3 r1 | 2026-04-13 | **RESOLVED 2026-04-13** | — |
-| 3 | SP2-blocked SP1 reverts (10 commits remaining; item 10/D3 resolved 2026-04-13) | SP1 r1 | 2026-04-13 | active (partial) | SP2 audit |
+| 3 | SP2-blocked SP1 reverts — all commits landed SP2 r1 Phase C | SP1 r1 | 2026-04-13 | **RESOLVED 2026-04-13** | — |
 | 4 | builder/validator location + content | SP1 r1 | 2026-04-13 | **RESOLVED 2026-04-13** | — |
 | 5 | Confirmed invention deletions (spec-checker, schema-reviewer) | SP1 r1 | 2026-04-13 | **RESOLVED 2026-04-13** | — |
 | 6 | Extended Bash permission allow-list (D1b) | SP1 r1 | 2026-04-13 | active | SP2 audit |
@@ -1178,6 +1185,7 @@ The `feedback_disler_authoritative.md` rule says "Tier 1 full-clones are byte-le
 | 33 | `patterns.yaml` circular trust gap — all 4 `load_patterns()` functions prefer global `~/.claude/skills/damage-control/patterns.yaml` (chmod 444) over project-local. Closes SP2 Gap 1. | SP r2 | 2026-04-17 | **RESOLVED** | — |
 | 34 | `pre_tool_use.py` Grep directory traversal — `_check_grep_traversal()` added. Closes SP2 Gap 2. | SP r2 | 2026-04-17 | **RESOLVED** | — |
 | 35 | O06 Scribe agent — permanent DEFERRED. No Tier 1 source in any full-clone; playbook-only (Tier 2). O09/O11 precedent. SP r2 2026-04-17. | SP9 r1 + SP r2 | 2026-04-17 | active (permanent DEFERRED) | Quarterly Disler repo check |
+| 36 | `post_tool_use.py` + `stop.py` log_dir path fix (S-NEW-01, commit `ae252c1`) — `Path.cwd()` → `Path(__file__).parent.parent` to prevent unprotected CWD-relative log writes | SP r2 | 2026-04-17 | active (permanent) | None (permanent security fix) |
 
 ## How to close an exception
 
@@ -1971,3 +1979,50 @@ Neither repo ships a Scribe Claude subagent.
 **Related findings:**
 - SP9 r1 memory (`project_sp9_r1_resume.md`) §O06 — original deferral note
 - Exception 1 — Tier 3 audit infrastructure (architect, scout-agent, security are Tier 3; Scribe is Tier 2 DEFERRED — distinct categories)
+
+**Follow-up actions:**
+1. Quarterly Disler repo check: does any new full-clone add a `scribe.md` agent? If found, upgrade to MISSING[T1] and add to next SP r2 round. — **Reviewed SP r2 2026-04-17 (first review post-addition): zero matches for `scribe.md` across 19 full-clones. No change.**
+
+---
+
+## Exception 36 — `post_tool_use.py` + `stop.py` log_dir security path fix (S-NEW-01)
+
+**Decision:** SP r2 systematic re-audit (2026-04-17) — retrospective documentation of S-NEW-01 harness-review fix applied pre-R1-merge in commit `ae252c1`.
+
+**Path(s):**
+- `.claude/hooks/post_tool_use.py` — `log_dir` changed from `Path.cwd() / 'logs'` to `Path(__file__).parent.parent / 'logs'`
+- `.claude/hooks/stop.py` — `log_dir` changed from `os.path.join(os.getcwd(), "logs")` to `os.path.join(os.path.dirname(os.path.dirname(__file__)), "logs")`
+
+**SP audit round:** SP r2 systematic re-audit (2026-04-17). Fix was applied pre-R1-merge in commit `ae252c1` (2026-04-14).
+
+**Decision date:** 2026-04-17
+
+**Status:** active (permanent — security hardening)
+
+**Rationale:**
+
+The upstream `claude-code-hooks-mastery` form of both hooks resolves `log_dir` relative to the current working directory (`Path.cwd() / 'logs'` and `os.path.join(os.getcwd(), "logs")`). When Claude Code launches subagents or changes its working directory across tool calls, `os.getcwd()` and `Path.cwd()` can resolve to unexpected directories — causing log writes to land in an unprotected, unpredictable location outside the ArhuGula project tree.
+
+The S-NEW-01 harness-review finding (2026-04-16) identified this as a security risk: a log directory created via `Path.cwd()` at an arbitrary location is not protected by `zeroAccessPaths` (which only covers the canonical `.claude/logs/` path in Exception 14 Category J). An adaptive agent could manipulate the working directory to cause hook logs to be written to a path the agent can later read without triggering the zero-access gate.
+
+The fix resolves `log_dir` from the hook file's own path (`__file__`), making it invariant across working-directory changes:
+- `Path(__file__).parent.parent / 'logs'` — always resolves to `{project_root}/logs/`
+- `os.path.join(os.path.dirname(os.path.dirname(__file__)), "logs")` — identical semantics in `os.path` style
+
+This change is **substantive** (not whitespace). Two scope clarifications:
+
+1. **Exception 16 does NOT cover this.** Exception 16 covers trailing-whitespace-only drift on reverted upstream files. The log_dir change is a one-line code change.
+2. **Exception 8 does NOT cover this.** Exception 8 covers the 3 security-critical hooks + `_base.py` kept in full ArhuGula-hardened form. `post_tool_use.py` and `stop.py` are non-security leaf hooks that were reverted to upstream form under Exception 3 / SP2 Phase C. Exception 36 creates a new documented targeted deviation on those two leaf hooks specifically for the log_dir fix.
+
+**The `.gitignore` V-04 entry** at lines 14 and 18-19 (`logs/` and `.claude/logs/`) was added in the same S-NEW-01 commit, protecting both the upstream-expected CWD log path and the hook-relative path against accidental git-tracking of log content. V-04 confirmed ✓ during SP r2 verification.
+
+**Review cadence:** Permanent — the fix is a structural improvement to log path reliability. If upstream updates these hooks to use `__file__`-relative paths in a future version, this exception closes and the local files become MATCH.
+
+**Related findings:**
+- `audits/harness-review_4-16-26.md` — S-NEW-01 P0 finding
+- Commit `ae252c1` — pre-R1-merge landing of S-NEW-01 fix
+- Exception 8 — security-critical hooks kept in ArhuGula form (different scope — covers full-form ArhuGula hooks, not targeted one-line changes to leaf hooks)
+- Exception 16 — whitespace drift on reverted upstream files (does NOT cover this substantive change)
+
+**Follow-up actions:**
+None. The fix is permanent and self-contained.
