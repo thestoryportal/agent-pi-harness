@@ -22,6 +22,7 @@ Load the complete ArhuGula project state so you understand the codebase before d
 8. Scan `.claude/skills/` for available skills
 9. Read `skills/library.yaml` for the skill catalog
 10. Read the source of truth at `~/Projects/indydevdan-harness-research/docs/superpowers/specs/arhugula-source-of-truth.md` Section 1 for current build status
+11. Scan the auto-loaded MEMORY.md for the most recent entries (last 5-8 lines of the index — these are the active work threads). Read the memory files they point to for active context. Also check `~/.claude/roles/` git status for any uncommitted cross-repo state.
 
 ## Report
 
