@@ -929,9 +929,9 @@ bashToolExclusions:
     reason: "Removing node_modules is safe"
   - pattern: '\bls\s+.*\.claude/hooks/'
     reason: "Listing hook files is safe"
-  - pattern: '\bcat\s+.*\.claude/hooks/'
-    reason: "Reading hook source code is safe for debugging"
-  - pattern: '\bhead\s+.*\.claude/hooks/'
-    reason: "Reading hook headers is safe"
-  - pattern: '\bwc\s+.*\.claude/hooks/'
-    reason: "Counting lines in hook files is safe"
+  - pattern: '\bcat\s+\.claude/hooks/[a-z_]+\.py\b'
+    reason: "Reading hook source .py files is safe; excludes non-.py names including symlinks"
+  - pattern: '\bhead\s+\.claude/hooks/[a-z_]+\.py\b'
+    reason: "Reading hook headers is safe for .py files only"
+  - pattern: '\bwc\s+\.claude/hooks/[a-z_]+\.py\b'
+    reason: "Counting lines in hook .py files is safe"

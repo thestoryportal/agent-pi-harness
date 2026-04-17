@@ -349,7 +349,12 @@ def _check_single_command(command: str, rules: dict[str, Any]) -> tuple[str, str
             for p in paths:
                 if not is_within_project(p):
                     return "block", f"{cmd} path outside project: {p}"
-
+            if cmd == "ln" and paths:
+                target = os.path.realpath(os.path.expanduser(paths[0]))
+                for zap in rules.get("zeroAccessPaths", []):
+                    expanded_zap = os.path.expanduser(zap)
+                    if target.startswith(expanded_zap.rstrip("/")) or target == expanded_zap.rstrip("/"):
+                        return "block", f"ln target resolves to zero-access path: {zap}"
     return "allow", None
 
 
