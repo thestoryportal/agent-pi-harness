@@ -40,7 +40,7 @@ Projects built with ArhuGula live in their own repos. This harness is the shared
 
 ## Runtime Boundary
 
-n8n remains the sole runtime orchestrator for production data flows. This harness augments Claude Code development sessions only.
+Orchestration is project-defined — Pi, n8n, OpenClaw, or other tools depending on project needs. This harness provides the Claude Code layer (agents, hooks, commands, recipes) regardless of which orchestrator a given project uses.
 
 ## Directory Navigation
 
