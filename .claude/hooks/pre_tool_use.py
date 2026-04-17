@@ -81,7 +81,42 @@ def match_path(file_path: str, pattern: str) -> bool:
         return False
 
 
-def check_read(tool_input: dict, rules: dict) -> tuple[str, str | None]:
+
+def _check_grep_traversal(search_path: str, rules: dict) -> tuple[bool, str | None]:
+    """Return (True, reason) if a directory-targeted Grep would walk into a zero-access path.
+
+    Gap 2 (SP2 AR3): ripgrep walks into zero-access files when Grep's path
+    argument is a broad directory. check_read() only checked the path token
+    itself, not what ripgrep traverses. This pre-walk closes that gap.
+    """
+    try:
+        search_dir = Path(os.path.realpath(os.path.expanduser(search_path)))
+    except Exception:
+        return False, None
+    if not search_dir.is_dir():
+        return False, None
+
+    search_str = str(search_dir)
+    for zero_path in rules.get("zeroAccessPaths", []):
+        expanded = os.path.expanduser(zero_path)
+        if is_glob_pattern(zero_path):
+            try:
+                if next(search_dir.rglob(expanded.lstrip("/")), None) is not None:
+                    return True, f"Grep of directory would traverse zero-access path: {zero_path}"
+            except Exception:
+                return True, f"Grep traversal check failed for pattern {zero_path!r} (fail-closed)"
+        else:
+            if os.path.isabs(expanded):
+                abs_zero = os.path.normpath(expanded)
+            else:
+                abs_zero = os.path.normpath(os.path.join(PROJECT_ROOT, expanded))
+            if abs_zero.startswith(search_str + os.sep) or abs_zero == search_str:
+                if Path(abs_zero).exists():
+                    return True, f"Grep of directory would traverse zero-access path: {zero_path}"
+    return False, None
+
+
+def check_read(tool_input: dict, rules: dict, tool_name: str = "") -> tuple[str, str | None]:
     """Check Read/Glob/Grep tool inputs against zeroAccessPaths."""
     file_path = tool_input.get("file_path", "") or tool_input.get("path", "")
     pattern = tool_input.get("pattern", "")
@@ -100,6 +135,13 @@ def check_read(tool_input: dict, rules: dict) -> tuple[str, str | None]:
     for zero_path in rules.get("zeroAccessPaths", []):
         if match_path(check_str, zero_path):
             return "block", f"Read/search of protected path: {zero_path}"
+
+    # Gap 2 (SP2 AR3): if Grep targets a directory, pre-walk to detect
+    # zero-access files that ripgrep would traverse.
+    if tool_name == "Grep" and file_path:
+        hit, reason = _check_grep_traversal(file_path, rules)
+        if hit:
+            return "block", reason
 
     return "allow", None
 
@@ -236,7 +278,12 @@ def check_mcp_tool(tool_name: str) -> tuple[str, str | None]:
 
 
 def load_patterns() -> dict:
-    patterns_path = Path(PROJECT_DIR) / ".claude" / "skills" / "damage-control" / "patterns.yaml"
+    # Gap 1 (SP2 AR3): prefer OS-protected global copy to break circular trust.
+    # If ~/.claude/skills/damage-control/patterns.yaml exists (chmod 444),
+    # an agent cannot modify it even after editing the project-local copy.
+    global_path = Path.home() / ".claude" / "skills" / "damage-control" / "patterns.yaml"
+    local_path = Path(PROJECT_DIR) / ".claude" / "skills" / "damage-control" / "patterns.yaml"
+    patterns_path = global_path if global_path.exists() else local_path
     with open(patterns_path) as f:
         return yaml.safe_load(f)
 
@@ -285,7 +332,7 @@ def main():
         print(json.dumps({"error": f"patterns.yaml load failed: {e}"}), file=sys.stderr)
         sys.exit(2)
 
-    decision, reason = check_read(tool_input, rules)
+    decision, reason = check_read(tool_input, rules, tool_name)
     elapsed = int((time.monotonic() - start_time) * 1000)
 
     payload = {"tool": tool_name, "decision": decision}

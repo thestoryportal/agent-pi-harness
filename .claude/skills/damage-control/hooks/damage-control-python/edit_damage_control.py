@@ -118,7 +118,9 @@ def check_path(file_path: str, rules: dict[str, Any]) -> tuple[str, str | None]:
 
 
 def load_patterns() -> dict:
-    patterns_path = Path(PROJECT_DIR) / ".claude" / "skills" / "damage-control" / "patterns.yaml"
+    global_path = Path.home() / ".claude" / "skills" / "damage-control" / "patterns.yaml"
+    local_path = Path(PROJECT_DIR) / ".claude" / "skills" / "damage-control" / "patterns.yaml"
+    patterns_path = global_path if global_path.exists() else local_path
     with open(patterns_path) as f:
         return yaml.safe_load(f)
 

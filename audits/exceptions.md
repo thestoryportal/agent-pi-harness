@@ -1851,3 +1851,100 @@ hooks-mastery or install-maintain update.
 - `project_maintenance_hook_broken.md` — memory file (historical, now resolved)
 - Exception 1 — Tier 3 audit infrastructure (this is an ArhuGula-native structural carve-out,
   analogous to Exception 1's Tier 3 posture but scoped to the maintenance hook only)
+
+---
+
+## Exception 33 — SP2 architectural gap: patterns.yaml circular trust (Gap 1)
+
+**Date:** 2026-04-17
+**Status:** RESOLVED
+**Tier:** Tier 3 — ArhuGula security hardening (non-Disler)
+**Files affected:**
+- `.claude/hooks/pre_tool_use.py` — `load_patterns()`
+- `.claude/skills/damage-control/hooks/damage-control-python/bash_damage_control.py` — `load_patterns()`
+- `.claude/skills/damage-control/hooks/damage-control-python/edit_damage_control.py` — `load_patterns()`
+- `.claude/skills/damage-control/hooks/damage-control-python/write_damage_control.py` — `load_patterns()`
+- `~/.claude/skills/damage-control/patterns.yaml` — new global OS-protected copy (chmod 444)
+
+**Gap description:**
+
+All four damage-control hooks loaded `patterns.yaml` from the project-local path
+`{PROJECT_DIR}/.claude/skills/damage-control/patterns.yaml`. That file also defines
+`readOnlyPaths`, which includes itself. An adaptive agent could break circular trust by:
+1. Editing `patterns.yaml` first (removing its own `readOnlyPaths` entry)
+2. Then editing any hook or other protected file freely
+
+This exploit was demonstrated 8 times during SP14 audit rounds (r2–r9) before the incident
+was documented. The project-local copy cannot protect itself from within.
+
+**Fix:**
+
+All four `load_patterns()` functions now prefer a global copy at
+`~/.claude/skills/damage-control/patterns.yaml` when that file exists, falling back to
+the project-local copy for environments where the global copy is absent:
+
+```python
+global_path = Path.home() / ".claude" / "skills" / "damage-control" / "patterns.yaml"
+local_path = Path(PROJECT_DIR) / ".claude" / "skills" / "damage-control" / "patterns.yaml"
+patterns_path = global_path if global_path.exists() else local_path
+```
+
+The global copy is protected at the OS level via `chmod 444`, which the Claude Code process
+cannot override regardless of what `patterns.yaml` itself says. The required setup step is:
+
+```bash
+mkdir -p ~/.claude/skills/damage-control
+cp {PROJECT_DIR}/.claude/skills/damage-control/patterns.yaml ~/.claude/skills/damage-control/patterns.yaml
+chmod 444 ~/.claude/skills/damage-control/patterns.yaml
+```
+
+**Identicality impact:**
+
+This is a pure Tier 3 ArhuGula security hardening deviation. The upstream Disler hooks use
+the project-local path only. The global-path preference is not in any upstream repo.
+
+**Review cadence:** Re-run the setup step whenever `patterns.yaml` is intentionally updated
+(the global copy must be refreshed manually: `cp ... && chmod 444 ...`).
+
+---
+
+## Exception 34 — SP2 architectural gap: Grep directory traversal of zero-access files (Gap 2)
+
+**Date:** 2026-04-17
+**Status:** RESOLVED
+**Tier:** Tier 3 — ArhuGula security hardening (non-Disler)
+**Files affected:**
+- `.claude/hooks/pre_tool_use.py` — `_check_grep_traversal()` (new), `check_read()` (extended), `main()` (updated call site)
+
+**Gap description:**
+
+`check_read()` in `pre_tool_use.py` only checked the Grep tool's `path` argument against
+`zeroAccessPaths`. When Grep is called with a broad directory path (e.g., the project root),
+ripgrep walks all files under that directory — including files that match zero-access patterns.
+The path argument itself (the directory) does not match any zero-access entry, so the hook
+allowed the call.
+
+Demonstrated during SP14 round-3: `.env.example` was read by a project-root Grep despite
+`.env.*` being a `zeroAccessPaths` entry. The file was committed (not gitignored), so ripgrep
+traversed it.
+
+**Fix:**
+
+Added `_check_grep_traversal(search_path, rules)` which pre-walks a directory Grep target
+to detect zero-access paths that would be traversed:
+
+- Non-glob `zeroAccessPaths` entries: resolved to absolute path, checked if they fall within
+  the search directory and exist on disk — O(n) per pattern, no filesystem walk.
+- Glob `zeroAccessPaths` entries (e.g., `.env.*`): `search_dir.rglob(pattern)` to find any
+  matching files — filesystem walk scoped to the narrow glob pattern.
+
+`check_read()` signature extended to `check_read(tool_input, rules, tool_name="")`.
+`main()` updated to pass `tool_name` at the call site.
+
+**Identicality impact:**
+
+Pure Tier 3 ArhuGula security hardening. The upstream `pre_tool_use.py` (Disler) does not
+include the directory traversal pre-check.
+
+**Review cadence:** Re-examine if `zeroAccessPaths` gains new glob patterns that might
+interact unexpectedly with `rglob()` behavior.
