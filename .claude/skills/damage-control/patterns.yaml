@@ -886,27 +886,7 @@ noDeletePaths:
 # Checked BEFORE zeroAccessPaths/readOnlyPaths in all 4 hooks:
 #   - bash_damage_control._check_single_command (token-level filter
 #     applied to cmd_tokens before the zero-access loop)
-#   - edit_damage_control.check_path (early-exit on file_path)
-#   - write_damage_control.check_path (early-exit on file_path)
-#   - pre_tool_use.check_read (early-exit on Read/Glob/Grep file_path)
-#
-# Token-level semantics (not command-level) for the bash hook ensures
-# that `cat .env .env.example` still blocks on .env even though
-# .env.example is excluded — the exclusion only filters the matching
-# token, not the whole command.
-# ──────────────────────────────────────────────────────────────────
-
-pathExclusions:
-  - ".env.example"
-  - ".env*.example"
-  - ".envrc.example"
-  # SP7 r1 (2026-04-14, user-authorized): audit-workflow carve-out
-  # for upstream repos that use .sample instead of .example for env
-  # templates. TEMPORARY — revert along with the .example entries
-  # post-audit-complete per feedback_audit_pathexclusions_temporary.
-  - ".env.sample"
-  - ".env.*.sample"
-  - ".envrc.sample"
+pathExclusions: []
 
 # ──────────────────────────────────────────────────────────────────
 # BASH TOOL EXCLUSIONS
@@ -915,12 +895,6 @@ pathExclusions:
 # ──────────────────────────────────────────────────────────────────
 
 bashToolExclusions:
-  - pattern: '\bcat\s+\.env\.example'
-    reason: "Reading .env.example is safe — no secrets"
-  - pattern: '\bcat\s+\.envrc\.example'
-    reason: "Reading .envrc.example is safe — no secrets"
-  - pattern: '\bgrep\s+.*\.(envrc|env)\.'
-    reason: "Grepping for .envrc/.env references in code is safe"
   - pattern: '\brm\s+.*\.pyc$'
     reason: "Removing .pyc files is safe"
   - pattern: '\brm\s+.*__pycache__'
