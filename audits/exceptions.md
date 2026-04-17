@@ -666,6 +666,8 @@ The above remains under Exception 14's umbrella (no separate exception number ne
 
 **Review cadence:** SP14 follow-up rounds (if any new browser-automation tools surface), SP3 audit (validator / linter scope split), and quarterly review of any flagged-for-re-evaluation rules.
 
+**Security-posture review (option C, 2026-04-17):** All category groups reviewed. No obsolete rules found. Playwright-CLI chain (6 rules, run-code/eval/upload/$()/{backtick}/$VAR) remains relevant while SP14 browser automation is active. File-upload exfiltration chain (10 rules across -F/--form/-d/--data variants/-T/--upload-file/wget/curl -K) intact with correct POSIX bundling coverage per convention. SQL convention violations (ENUM, public schema) still encode active ArhuGula policy — no SQL-writing command exists to trigger false positives. Category J (pathExclusions audit carve-out) already reverted 2026-04-17. Cloud provider rules (AWS/GCP/Firebase/Vercel/Netlify/Cloudflare/Docker/k8s/DB CLI/IaC/Heroku/Fly/DO/Supabase/gh/npm) all applicable and current. `bashToolExclusions` pattern `[a-z_]+` covers `_base.py` correctly. No action required.
+
 **Related findings:**
 - `audits/sp2-patterns-diff.txt` — full unified diff captured during D8.1
 - `audits/SP2-checkpoint.md` — Phase F D8 audit goal + E1 fix dependency
@@ -1163,7 +1165,7 @@ The `feedback_disler_authoritative.md` rule says "Tier 1 full-clones are byte-le
 | 11 | `package.json` + `.tool-versions` (D7, load-bearing for SP11) | SP1 r1 | 2026-04-13 | active | SP11 audit / Quarterly |
 | 12 | `.claude/CLAUDE.md` comprehensive doc + nested path | SP1 r1 mini-gate | 2026-04-13 | active | Quarterly |
 | 13 | `justfile` 307-line multi-SP form (security-coupled via `--dangerously-skip-permissions` omission) | SP1 r1 mini-gate | 2026-04-13 | active | Per-SP recipe audits |
-| 14 | `patterns.yaml` 289-line hardening delta (SP14 r2–r10 + SP2-original additions; SQL Cat I reclassified SP3 r1 Phase F as permanent style enforcement) | SP2 r1 D8 → SP3 r1 F | 2026-04-13 | active | SP14 follow-up rounds |
+| 14 | `patterns.yaml` 289-line hardening delta (SP14 r2–r10 + SP2-original additions; SQL Cat I reclassified SP3 r1 Phase F as permanent style enforcement) | SP2 r1 D8 → SP3 r1 F | 2026-04-13 | active | SP14 follow-up rounds; next quarterly (reviewed 2026-04-17 option C — no obsolete rules) |
 | 15 | Damage-control hook files keep underscore form (D1=B carve-out per CLAUDE.md §Naming) | SP2 r1 D1 | 2026-04-13 | active | None (permanent) |
 | 16 | Stylistic drift on reverted upstream files (Write-tool trailing-whitespace strip; expanded SP3 r1 to 13 files) | SP2 r1 → SP3 r1 | 2026-04-13 | active | None (permanent) |
 | 17 | `ty_validator.py` sub-package skip block (load-bearing for nested pyproject.toml structure) | SP3 r1 B | 2026-04-13 | active | None (permanent) |
@@ -1173,12 +1175,12 @@ The `feedback_disler_authoritative.md` rule says "Tier 1 full-clones are byte-le
 | 21 | SP11 pattern-SP posture (upstream reference + local pattern-instantiation coexist) | SP11 r1 A | 2026-04-14 | active | None (permanent foundational rule) |
 | 22 | SP12 Pi extensions carve-out (`drive-dispatch.ts`, `listen-submit.ts`, `pi-drive`/`pi-listen`/`pi-full` recipes) | SP12 r1 A | 2026-04-14 | active | None (permanent carve-out under Exception 1 umbrella) |
 | 23 | `.claude/commands/prime.md` cross-SP namespace collision (SP8 ↔ SP12 `prime.md` vs SP1 `/prime` skill) | SP12 r1 A | 2026-04-14 | active | Quarterly |
-| 24 | SP13 justfile carve-out recipes (`steer-build`/`see`/`apps`/`ocr`) + SecureTmp security regression flag | SP13 r1 C+D | 2026-04-14 | active | SP13 r2 / SP2 security follow-up |
+| 24 | SP13 justfile carve-out recipes (`steer-build`/`see`/`apps`/`ocr`) + SecureTmp security regression flag | SP13 r1 C+D | 2026-04-14 | active | SP13 r2 / SP2 security follow-up (reviewed 2026-04-17 option C — upstream still lacks SecureTmp) |
 | 25 | SP14 root `justfile` block content-level adaptations (6 items: damage-control flag removal, multi-SP variable inlining, bug-fix headed default, agent-teams env prefix, shell-metachar warning, prompt trim) | SP14 r1 D | 2026-04-14 | active | SP14 r2 / revert items 3+6 when convenient |
 | 26 | SP15 E2B Sandboxes justfile carve-out recipes (`sbx-run`, `sbx`, `sbx-mcp`) — no upstream justfile. **Scope reduced 2026-04-15 via Exception 30** — `sbx-fork` removed with obox | SP15 r1 D → SP15 r2 | 2026-04-15 | active | Per-SP audit |
 | 27 | SP16 R02 `voice_to_claude_code.py` landed at `apps/voice/` (upstream places it at repo root) + SP16 `just voice` carve-out recipe — no upstream justfile in claude-code-is-programmable | SP16 r1 B+D | 2026-04-14 | active | Per-SP audit |
-| 28 | SP16 voice-loop upstream runtime security posture — 6 Tier 1 byte-identical findings (S-01/S-03/S-05/S-06/S-08/S-09 from /harness-review). Documented, not patched. | SP16 r1 post-review | 2026-04-14 | active | Every upstream change; re-run /harness-review |
-| 29 | SP15 E2B sandbox apps upstream runtime security posture — 9 findings (S-01..S-09). **Scope reduced 2026-04-15 via Exception 30** — 7 findings RESOLVED by deletion; only S-04 (cc_in_sandbox + sandbox_fundamentals/09) and S-06 (sandbox_mcp) remain active and dormant. | SP15 r1 post-review → SP15 r2 | 2026-04-15 | active (scope reduced) | Every upstream change; re-run /harness-review |
+| 28 | SP16 voice-loop upstream runtime security posture — 6 Tier 1 byte-identical findings (S-01/S-03/S-05/S-06/S-08/S-09 from /harness-review). Documented, not patched. | SP16 r1 post-review | 2026-04-14 | active | Every upstream change; re-run /harness-review (reviewed 2026-04-17 option C — all 6 still present, no patches) |
+| 29 | SP15 E2B sandbox apps upstream runtime security posture — 9 findings (S-01..S-09). **Scope reduced 2026-04-15 via Exception 30** — 7 findings RESOLVED by deletion; only S-04 (cc_in_sandbox + sandbox_fundamentals/09) and S-06 (sandbox_mcp) remain active and dormant. | SP15 r1 post-review → SP15 r2 | 2026-04-15 | active (scope reduced) | Every upstream change; re-run /harness-review (reviewed 2026-04-17 option C — S-04 + S-06 still present, dormant, no patches) |
 | 30 | SP15 custom Phase 2 audit workflow deprecation — obox subtree deleted (`apps/sandbox_workflows/`, `apps/sandbox_agent_working_dir/`, `.claude/commands/prime_obox.md`). Breaks byte-identical parity for the obox sub-scope. Resolves 7 of 9 Exception 29 findings. | SP15 r2 | 2026-04-15 | active (permanent) | None — structural |
 | 31 | `apps/listen/main.py` localhost bind hardening — `0.0.0.0` → `127.0.0.1` per CSO security review 2026-04-17. One-line deviation from SP8 byte-identical upstream. Eliminates LAN/remote RCE surface on the unauthenticated listen server. | SP8 r1 post-audit | 2026-04-17 | active (permanent) | None — security hardening |
 | 32 | `setup_maintenance.py` ArhuGula-adapted maintenance routine (per-app uv sync, observe prune, patterns.yaml validation, hook health check) — Tier 3 carve-out | SP r2 post-audit | 2026-04-17 | active (permanent) | None — Tier 3 structural |
@@ -1371,6 +1373,8 @@ The 4 recipes live in the project root `justfile`, which is already a composite 
 - SP14 B02 (SoT §4.12) — content-level security hardening precedent (analogous to what a future SP13 re-hardening would look like)
 
 **Review cadence:** Per-SP audit. Review Exception 24 in the next SP13 round (if any) OR as part of a security-focused SP2 follow-up round. The carve-out recipes portion is stable; the SecureTmp regression is the open follow-up item.
+
+**Security-posture review (option C, 2026-04-17):** Verified upstream `mac-mini-agent/apps/steer/Sources/steer/` — `SecureTmp.swift` absent; `AXSecureTextField` redaction enforcement absent. Upstream posture unchanged since SP13 r1. The security regression (reverted ArhuGula hardening) remains open. No action taken — re-introduction requires explicit user authorization to break Tier 1 byte-identical mandate. Open follow-up: SP13 r2 or a user-directed security round.
 
 ---
 
@@ -1584,6 +1588,8 @@ Analogous in structure to what SP15 r1 /harness-review proposed (option 2, defer
 
 **Review cadence:** Every time SP16 upstream code changes in `claude-code-is-programmable` or `hooks-mastery`. Re-run `/harness-review` on SP16 diff to check if upstream has patched any of the 6 findings. Re-evaluate Option (c) — local hardening deltas — when runtime use becomes imminent (per SP15 r1 Option 3 pattern).
 
+**Security-posture review (option C, 2026-04-17):** Checked upstream `claude-code-is-programmable` HEAD (commit 3889265). S-01 confirmed: `subprocess.run(cmd, ...)` still at line 450 — unsanitized STT text piped to `claude -p` subprocess with no sanitization. S-03 confirmed: `TRIGGER_WORDS = ["claude", "cloud", "sonnet", "sonny"]` still at line 84 — substring match still prone to false positives on "cloudy", "Google Cloud", etc. S-05/S-06/S-08/S-09: not patched — byte-identical upstream code unchanged. No runtime activation (no ElevenLabs MCP session active; `just voice` not invoked). All 6 findings still present. No upstream patches detected. Exception status unchanged. No action required.
+
 **Related findings:**
 - SP15 r1 /harness-review — 6 upstream-posture findings for sandbox apps (still deferred, not yet adopted as Exception 29+)
 - Exception 14 — `patterns.yaml` 289-line hardening delta for browser automation (SP14 r2–r10) — the closest prior precedent for ArhuGula hardening upstream code content; rejected here for SP16 per Tier 1 mandate
@@ -1673,6 +1679,8 @@ Post-reduction: only 2 findings (S-04, S-06) remain active and dormant pending c
 - Exception 14 — `patterns.yaml` 289-line hardening delta for browser automation (SP14 r2–r10) — the closest prior precedent for ArhuGula hardening upstream content; rejected here for SP15 per Tier 1 mandate
 
 **Review cadence:** Every time SP15 upstream code changes in `disler/agent-sandboxes` or `disler/agent-sandbox-skill`. Re-run `/harness-review` on the SP15 diff to check if upstream has patched any of the 9 findings. Re-evaluate option (c) — local hardening deltas — when runtime use becomes imminent (per SP15 r1 Option 3 pattern).
+
+**Security-posture review (option C, 2026-04-17):** Checked upstream `agent-sandboxes` HEAD. S-04 confirmed: `--dangerously-skip-permissions` still at `cc_in_sandbox/run_claude_in_sandbox.py:41` and `sandbox_fundamentals/09_claude_code_agent.py:67` with `ANTHROPIC_API_KEY` injected via env at line 28/38 respectively. S-06 confirmed: `sandbox_mcp/server.py` still splits agent-supplied `env_vars` on `,` at lines 107-109/143-145/465-467 and appends as `--env` flags with no input validation — `os.environ.copy()` at line 50 also passes full host environment to subprocess. No credentials provisioned (`ANTHROPIC_API_KEY` and `E2B_API_KEY` absent from `.env`) → both findings remain dormant. No upstream patches detected. Exception status unchanged. No action required.
 
 **Related findings:**
 - Memory file `project_sp15_r1_resume.md` §11 — original /harness-review memo (2026-04-14) proposing this exception

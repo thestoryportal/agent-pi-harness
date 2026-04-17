@@ -53,7 +53,8 @@ These rules prevent scope drift, invented features, and missed gaps:
    comprised: (a) systematic re-audit all 16 SPs — 1 new finding (Exception 36, log_dir
    path fix); (b) deferred-items pass — all 6 items resolved or permanently deferred.
    Post-audit cleanup DONE (Ex32-34, 2026-04-17). main merged + pushed.
-   Next: option (c) security-posture review (Ex14/24/28/29) or user-directed work.
+   Option (c) security-posture review COMPLETE (2026-04-17): Ex14/24/28/29 reviewed — no
+   upstream patches, no obsolete rules, all dormant findings unchanged. Next: user-directed work.
 
 3. **No invented components.** If a feature does not exist in any IndyDevDan repo
    (code, architecture doc, or concept), do not add it. The goal is identical replication.
