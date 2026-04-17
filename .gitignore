@@ -48,3 +48,12 @@ ai_review/screenshots/
 
 # Audit session temp files (commit message drafts, etc.)
 audits/.commit-msg*
+
+# gstack local analytics + security reports (contain exploit scenarios — never commit)
+.gstack/
+
+# IDE
+.vscode/
+
+# Audit session JSON outputs (generated, not source)
+audits/*.json

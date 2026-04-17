@@ -747,10 +747,6 @@ readOnlyPaths:
   - ~/.bash_profile
 
   # ---------------------------------------------------------------------------
-  # HOOK AND SETTINGS FILES (ArhuGula-specific)
-  # patterns.yaml is intentionally excluded — it is the user-configurable
-  # security rule file that the damage-control skill edits directly.
-  # ---------------------------------------------------------------------------
   # SP2 audit Phase H (2026-04-13): security boundary restored after the
   # decision gate resolution + SP1 resume-pass + Phase D-G work. The original
   # `.claude/hooks/*.py` glob is replaced by an explicit 7-file security-
@@ -768,6 +764,7 @@ readOnlyPaths:
   - ".claude/skills/damage-control/hooks/damage-control-python/edit_damage_control.py"
   - ".claude/skills/damage-control/hooks/damage-control-python/write_damage_control.py"
   - ".claude/settings.json"
+  - ".claude/skills/damage-control/patterns.yaml"
 
   # ---------------------------------------------------------------------------
   # LOCK FILES — Never manually edit, use package managers
