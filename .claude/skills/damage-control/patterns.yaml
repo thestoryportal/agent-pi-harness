@@ -889,6 +889,7 @@ noDeletePaths:
 
 pathExclusions: 
   - ".env*.sample" # Safe template/example files; SP r2 2026-04-17 (Exception 18 opt 3)
+  - ".env*.example"
 
 # ──────────────────────────────────────────────────────────────────
 # BASH TOOL EXCLUSIONS
