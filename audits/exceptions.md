@@ -1795,3 +1795,59 @@ Upstream `disler/mac-mini-agent` binds to `0.0.0.0` with no auth middleware. The
 - S-01 (`worker.py` tmux prompt injection) — pre-existing; localhost binding reduces reachability
 - S-03 (CSRF on `POST /jobs/clear`) — pre-existing; browser CSRF still reachable via localhost
 - Exception 29 — SP15 E2B sandbox security posture (separate surface)
+
+---
+
+## Exception 32 — `setup_maintenance.py` ArhuGula-adapted maintenance routine
+
+**Path(s):**
+- `.claude/hooks/setup_maintenance.py`
+
+**SP audit round:** Post-audit cleanup (2026-04-17)
+
+**Decision date:** 2026-04-17
+
+**Status:** active (permanent — structural adaptation; upstream targets a different app layout)
+
+**Rationale:**
+
+The upstream `setup_maintenance.py` (from IndyDevDan's `install-maintain` repo) targets a
+`apps/backend` + `apps/frontend` + SQLite monorepo layout that does not exist in ArhuGula.
+The hook crashed on every `claude --maintenance` run because `subprocess.run(["uv", "sync",
+"--upgrade"], cwd="apps/backend")` raised an uncaught exception when the directory was absent.
+
+ArhuGula-adapted replacement:
+
+1. **Per-app uv sync** — sweeps all `apps/*/pyproject.toml` directories (direct, drive, listen,
+   sandbox_cli, sandbox_mcp) instead of a single `apps/backend` sync. Discovers apps dynamically
+   via glob so future additions are picked up without hook edits.
+2. **Observe log pruning** — delegates to `apps/observe/prune.py` (byte-identical upstream from
+   `disler/hooks-mastery`) to prune `events.jsonl` per `OBSERVE_RETENTION_DAYS` (default 7 days).
+3. **patterns.yaml YAML validation** — loads and parses
+   `.claude/skills/damage-control/patterns.yaml` via `pyyaml` to catch syntax errors before they
+   silently break all damage-control hooks at next session.
+4. **Hook health check** — mirrors `session_start.py`'s `REQUIRED_HOOKS` list and re-runs
+   `--health-check` on all 17 hooks; surfaces any broken hooks in the maintenance summary.
+5. **`--health-check` handler** — adds early-exit `if "--health-check" in sys.argv` so
+   `session_start.py`'s `run_health_checks()` probe returns `OK:setup_maintenance.py` instead
+   of timing out while attempting to read stdin.
+6. **Fail-open crash wrapper** — wraps `main()` in a `try/except BaseException` that logs the
+   crash to `setup.maintenance.log` and exits 1 (pass-through), matching the IndyDevDan
+   fail-open default for non-security hooks.
+
+**Tier 1 parity impact:**
+
+The upstream `setup_maintenance.py` is replaced byte-for-byte. The deviation is structural:
+ArhuGula has no `apps/backend/` or `apps/frontend/` directory and no SQLite database.
+The upstream file is preserved in full-clones at
+`~/Projects/indydevdan-harness-research/full-clones/install-maintain/`.
+
+**Review cadence:** Re-examine if ArhuGula ever adds a frontend app (npm) or SQLite database
+(restore those sections). Re-examine if upstream adds new maintenance patterns in a future
+hooks-mastery or install-maintain update.
+
+**Related findings:**
+- `audits/maintenance_4-14-26_11-30-pm-mst.md` — full crash analysis and fix specification
+- `project_maintenance_hook_broken.md` — memory file (historical, now resolved)
+- Exception 1 — Tier 3 audit infrastructure (this is an ArhuGula-native structural carve-out,
+  analogous to Exception 1's Tier 3 posture but scoped to the maintenance hook only)
