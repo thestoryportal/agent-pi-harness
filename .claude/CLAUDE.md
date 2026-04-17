@@ -49,9 +49,11 @@ These rules prevent scope drift, invented features, and missed gaps:
 
 2. **Follow the sub-project priority order.** Section 8 of the source of truth defines
    priority order. Do not skip ahead. Do not reorder without explicit user approval.
-   Current: SP1-SP16 BUILT + AUDIT R1 COMPLETE. Post-audit cleanup DONE (Ex32-34,
-   2026-04-17). main merged + pushed to github.com:thestoryportal/agent-pi-harness.
-   Next: SP r2 rounds (second identicality audit pass) or user-directed work.
+   Current: SP1-SP16 BUILT + AUDIT R1 COMPLETE + SP r2 COMPLETE (2026-04-17). SP r2
+   comprised: (a) systematic re-audit all 16 SPs — 1 new finding (Exception 36, log_dir
+   path fix); (b) deferred-items pass — all 6 items resolved or permanently deferred.
+   Post-audit cleanup DONE (Ex32-34, 2026-04-17). main merged + pushed.
+   Next: option (c) security-posture review (Ex14/24/28/29) or user-directed work.
 
 3. **No invented components.** If a feature does not exist in any IndyDevDan repo
    (code, architecture doc, or concept), do not add it. The goal is identical replication.
