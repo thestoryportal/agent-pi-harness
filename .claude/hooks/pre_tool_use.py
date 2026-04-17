@@ -53,8 +53,8 @@ def match_path(file_path: str, pattern: str) -> bool:
     `.claude/hooks/utils/tts/foo.py`.
     """
     expanded_pattern = os.path.expanduser(pattern)
-    normalized = os.path.normpath(file_path)
-    expanded_normalized = os.path.expanduser(normalized)
+    normalized = os.path.normpath(os.path.realpath(os.path.expanduser(file_path)))
+    expanded_normalized = normalized
 
     # Resolve relative patterns against project root
     if not os.path.isabs(expanded_pattern):
@@ -70,8 +70,8 @@ def match_path(file_path: str, pattern: str) -> bool:
             if PurePath(expanded_normalized).match(abs_pattern, case_sensitive=False):
                 return True
         except ValueError:
-            # Invalid pattern — fail closed
-            pass
+              # Invalid pattern — fail closed (block rather than allow)
+              return True
         return False
     else:
         if expanded_normalized.startswith(expanded_pattern) or expanded_normalized == expanded_pattern.rstrip("/"):

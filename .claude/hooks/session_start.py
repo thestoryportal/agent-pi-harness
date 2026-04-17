@@ -78,20 +78,23 @@ def resolve_session_id(logger) -> str:
     return session_id
 
 
-REQUIRED_HOOKS = [
-    "session_start.py", "setup_init.py", "setup_maintenance.py",
-    "pre_tool_use.py", "post_tool_use.py",
-    "notification.py", "stop.py", "user_prompt_submit.py", "pre_compact.py",
-    "subagent_start.py", "subagent_stop.py", "session_end.py",
-    "permission_request.py", "post_tool_use_failure.py",
-    # Note: bash/edit/write_damage_control.py moved to
-    # .claude/skills/damage-control/hooks/damage-control-python/ during
-    # SP2 Phase E (2026-04-13). They are no longer at the project hooks/
-    # location and so are not validated by this health check, which only
-    # walks the project hooks directory. The skill-located copies are
-    # still loaded by settings.json PreToolUse matchers and are
-    # transitively exercised on every tool call.
-]
+REQUIRED_HOOKS = [                           
+      "session_start.py", "setup_init.py", "setup_maintenance.py",
+      "pre_tool_use.py", "post_tool_use.py",                                                  
+      "notification.py", "stop.py", "user_prompt_submit.py", "pre_compact.py",
+      "subagent_start.py", "subagent_stop.py", "session_end.py",                              
+      "permission_request.py", "post_tool_use_failure.py",                                    
+      # Damage-control skill hooks — absolute paths because they live outside               
+      # the project hooks directory. hooks_dir / absolute_path resolves to                    
+      # the absolute path (pathlib semantics), so run_health_checks handles                   
+      # these correctly without any changes to its logic.                                     
+      str(Path(PROJECT_DIR) /
+  ".claude/skills/damage-control/hooks/damage-control-python/bash_damage_control.py"),
+      str(Path(PROJECT_DIR) /
+  ".claude/skills/damage-control/hooks/damage-control-python/edit_damage_control.py"),
+      str(Path(PROJECT_DIR) /
+  ".claude/skills/damage-control/hooks/damage-control-python/write_damage_control.py"),
+  ]
 
 
 def run_health_checks(logger) -> list[str]:
