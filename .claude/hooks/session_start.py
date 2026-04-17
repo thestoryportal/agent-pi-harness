@@ -229,8 +229,8 @@ def main():
         context_parts.extend(git_lines)
 
     if safe_env:
-        env_summary = ", ".join(f"{k}={v}" for k, v in safe_env.items())
-        context_parts.append(f"Injected env: {env_summary}")
+        env_summary = ", ".join(safe_env.keys())                                                    
+        context_parts.append(f"Injected env keys: {env_summary}")
 
     context_parts.append(f"All {len(REQUIRED_HOOKS)} hooks passed health check.")
 
