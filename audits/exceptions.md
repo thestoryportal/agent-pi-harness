@@ -623,7 +623,7 @@ This is the Phase A `feedback_damage_control_self_unlock.md`-compliant temporary
 
 The above sub-bullet remains under Exception 14's umbrella (no separate exception number needed). A subsequent audit round (or a SP6 cleanup) can revisit if a SQL-writing command is added to ArhuGula.
 
-### Category J — `pathExclusions` audit-workflow carve-out (2026-04-14) — **TEMPORARY**
+### Category J — `pathExclusions` audit-workflow carve-out (2026-04-14) — **REVERTED 2026-04-17**
 
 **Scope:** All 6 `pathExclusions` entries in `patterns.yaml`:
 
@@ -653,7 +653,9 @@ After the audit is complete, no further restoration work is needed, so the carve
 - Exception 18 resolution record (2026-04-14)
 - SP2 r1 Phase F initial addition of `.env*.example` entries
 
-The above remains under Exception 14's umbrella (no separate exception number needed). When the revert is executed, this category entry should be updated to note "REVERTED <date>" and the entries removed from `patterns.yaml`.
+**REVERTED 2026-04-17** — All 6 pathExclusions entries and the 3 matching bashToolExclusions entries removed in commit `0abb095` on branch `audit/identicality-2026-04-13`. `pathExclusions: []` left in place as dormant infrastructure. Regression suites referenced above (`audits/sp2_verify.py`, `audits/sp2_e1_test.py`) were never built; revert verified by code inspection.
+
+The above remains under Exception 14's umbrella (no separate exception number needed).
 
 **Review cadence:** SP14 follow-up rounds (if any new browser-automation tools surface), SP3 audit (validator / linter scope split), and quarterly review of any flagged-for-re-evaluation rules.
 
