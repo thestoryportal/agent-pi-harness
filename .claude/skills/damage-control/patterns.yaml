@@ -886,7 +886,9 @@ noDeletePaths:
 # Checked BEFORE zeroAccessPaths/readOnlyPaths in all 4 hooks:
 #   - bash_damage_control._check_single_command (token-level filter
 #     applied to cmd_tokens before the zero-access loop)
-pathExclusions: []
+
+pathExclusions: 
+  - ".env*.sample" # Safe template/example files; SP r2 2026-04-17 (Exception 18 opt 3)
 
 # ──────────────────────────────────────────────────────────────────
 # BASH TOOL EXCLUSIONS
