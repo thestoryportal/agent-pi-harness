@@ -1,39 +1,82 @@
 #!/usr/bin/env -S uv run --script
 # /// script
-# requires-python = ">=3.12"
-# dependencies = []
+# requires-python = ">=3.11"
+# dependencies = [
+#     "python-dotenv",
+# ]
 # ///
-"""PostToolUseFailure hook: full traceback capture for debugging."""
 
-import json, os, sys
+import json
+import sys
+from datetime import datetime
 from pathlib import Path
 
-PROJECT_DIR = os.environ.get("CLAUDE_PROJECT_DIR", os.getcwd())
-sys.path.insert(0, str(Path(PROJECT_DIR) / ".claude" / "hooks"))
 try:
-    from _base import Logger, emit_event, handle_health_check, read_stdin, run_hook
-except Exception:
-    import sys; sys.exit(2)
+    from dotenv import load_dotenv
+    load_dotenv()
+except ImportError:
+    pass  # dotenv is optional
 
-HOOK_NAME = "post_tool_use_failure.py"
-handle_health_check(HOOK_NAME)
 
 def main():
-    import time
-    logger = Logger("post_tool_use_failure")
-    start_time = time.monotonic()
+    try:
+        # Read JSON input from stdin
+        input_data = json.load(sys.stdin)
 
-    d = read_stdin()
-    tool_name = d.get("tool_name", "")
-    tool_input = d.get("tool_input", {})
-    tool_output = d.get("tool_output", {})
-    command = tool_input.get("command", "") if isinstance(tool_input, dict) else ""
-    error_text = str(tool_output.get("stderr", tool_output))[:1000] if isinstance(tool_output, dict) else str(tool_output)[:1000]
-    payload = {"tool": tool_name, "command": command[:500], "error": error_text}
-    elapsed = int((time.monotonic() - start_time) * 1000)
-    emit_event("PostToolUseFailure", HOOK_NAME, 0, payload, elapsed)
-    logger.log(f"FAILURE: {tool_name} — {error_text[:200]}")
-    sys.exit(0)
+        # Add timestamp to the log entry
+        input_data['logged_at'] = datetime.now().isoformat()
 
-if __name__ == "__main__":
-    run_hook(main, HOOK_NAME, event_type="PostToolUseFailure")
+        # Extract key fields for enhanced logging
+        tool_name = input_data.get('tool_name', 'unknown')
+        tool_use_id = input_data.get('tool_use_id', 'unknown')
+        error = input_data.get('error', {})
+
+        # Create a structured log entry with error details
+        log_entry = {
+            'timestamp': input_data['logged_at'],
+            'session_id': input_data.get('session_id', ''),
+            'hook_event_name': input_data.get('hook_event_name', 'PostToolUseFailure'),
+            'tool_name': tool_name,
+            'tool_use_id': tool_use_id,
+            'tool_input': input_data.get('tool_input', {}),
+            'error': error,
+            'cwd': input_data.get('cwd', ''),
+            'permission_mode': input_data.get('permission_mode', ''),
+            'transcript_path': input_data.get('transcript_path', ''),
+            'raw_input': input_data
+        }
+
+        # Ensure log directory exists
+        log_dir = Path.cwd() / 'logs'
+        log_dir.mkdir(parents=True, exist_ok=True)
+        log_path = log_dir / 'post_tool_use_failure.json'
+
+        # Read existing log data or initialize empty list
+        if log_path.exists():
+            with open(log_path, 'r') as f:
+                try:
+                    log_data = json.load(f)
+                except (json.JSONDecodeError, ValueError):
+                    log_data = []
+        else:
+            log_data = []
+
+        # Append new log entry
+        log_data.append(log_entry)
+
+        # Write back to file with formatting
+        with open(log_path, 'w') as f:
+            json.dump(log_data, f, indent=2)
+
+        sys.exit(0)
+
+    except json.JSONDecodeError:
+        # Handle JSON decode errors gracefully
+        sys.exit(0)
+    except Exception:
+        # Exit cleanly on any other error
+        sys.exit(0)
+
+
+if __name__ == '__main__':
+    main()

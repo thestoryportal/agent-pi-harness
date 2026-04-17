@@ -10,7 +10,7 @@ allowed-tools:
 
 ## Purpose
 
-Read-only analysis of the current diff against a target spec. Identifies deviations, missing requirements, convention violations, and potential issues. Fans out to validator and spec-checker subagents.
+Read-only analysis of the current diff against a target spec. Identifies deviations, missing requirements, convention violations, and potential issues. Fans out to validator and security subagents.
 
 ## Variables
 
@@ -36,19 +36,17 @@ Read the full specification document. Extract:
 
 ### Step 3 — Fan Out to Analysis Agents
 
-Dispatch three specialist agents in parallel:
+Dispatch two specialist agents in parallel:
 
-**Convention Compliance** (via @validator):
+**Convention + Spec Compliance** (via @validator):
 - File naming conventions (lowercase-with-hyphens, underscores for hooks)
 - Code style and lint compliance
 - Schema conventions (if SQL present)
 - Error handling patterns and edge cases
-
-**Spec Compliance** (via @spec-checker):
-- Requirements coverage against the source of truth
+- Requirements coverage against the spec / source of truth
 - Missing artifacts listed in the spec
 - Deviations from IndyDevDan patterns
-- Source attribution verification (code matches repo snapshot)
+- Source attribution verification (code matches full-clone)
 
 **Security Review** (via @security):
 - Command injection vectors (regex bypass, script escape, TOCTOU)
@@ -58,14 +56,13 @@ Dispatch three specialist agents in parallel:
 
 ### Step 4 — Aggregate Report
 
-Collect findings from all three agents and produce a unified review report:
+Collect findings from both agents and produce a unified review report:
 
 ## Review: [Spec ID]
 
 ### Summary
 - Files changed: N
-- Convention violations: N (from @validator)
-- Spec deviations: N (from @spec-checker)
+- Convention + spec violations: N (from @validator)
 - Security findings: N (from @security)
 - Missing requirements: N
 

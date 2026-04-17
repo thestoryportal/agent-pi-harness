@@ -214,12 +214,12 @@ export default function (pi: ExtensionAPI) {
 		setTimeout(() => {
 			if (!ctx.hasUI) return;
 			// Reduce max width slightly to ensure it never overflows and breaks the next line
-			const width = Math.min((process.stdout.columns || 80) - 4, 100);
+			const width = Math.min((process.stdout.columns || 80) - 4, 100); 
 			const pad = bg(" ".repeat(width));
 			const lines: string[] = [];
 
 			lines.push(""); // space from prev
-
+			
 			for (let i = 0; i < groups.length; i++) {
 				const g = groups[i];
 
@@ -253,7 +253,7 @@ export default function (pi: ExtensionAPI) {
 				}
 
 				const body = items.join("\n");
-
+				
 				// Top padding
 				lines.push(pad);
 
@@ -283,8 +283,8 @@ export default function (pi: ExtensionAPI) {
 				// Spacing between groups
 				if (i < groups.length - 1) lines.push("");
 			}
-
-			// We send it as "info" which forces it to be a raw text element in the chat
+			
+			// We send it as "info" which forces it to be a raw text element in the chat 
 			// without the widget container, but preserving all our ANSI colors!
 			ctx.ui.notify(lines.join("\n"), "info");
 		}, 100);

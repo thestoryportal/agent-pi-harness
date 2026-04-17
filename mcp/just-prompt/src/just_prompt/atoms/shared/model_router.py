@@ -2,12 +2,11 @@
 Model router for dispatching requests to the appropriate provider.
 """
 
-import importlib
 import logging
-import os
-
-from .data_types import ModelProviders
+from typing import List, Dict, Any, Optional
+import importlib
 from .utils import split_provider_and_model
+from .data_types import ModelProviders
 
 logger = logging.getLogger(__name__)
 
@@ -16,9 +15,6 @@ class ModelRouter:
     """
     Routes requests to the appropriate provider based on the model string.
     """
-
-    # Allowlisted provider names for importlib safety
-    _VALID_PROVIDERS = frozenset(p.full_name for p in ModelProviders)
 
     @staticmethod
     def validate_and_correct_model(provider_name: str, model_name: str) -> str:
@@ -32,24 +28,19 @@ class ModelRouter:
         Returns:
             Validated and potentially corrected model name
         """
-        if provider_name not in ModelRouter._VALID_PROVIDERS:
-            raise ValueError(f"Unknown provider: {provider_name}")
-
         # Early return for our thinking token models to bypass validation
         thinking_models = [
             "claude-3-7-sonnet-20250219",
-            "claude-opus-4-20250514",
+            "claude-opus-4-20250514", 
             "claude-sonnet-4-20250514",
-            "gemini-2.5-flash-preview-04-17",
+            "gemini-2.5-flash-preview-04-17"
         ]
         if any(thinking_model in model_name for thinking_model in thinking_models):
             return model_name
 
         try:
             # Import the provider module
-            provider_module_name = (
-                f"just_prompt.atoms.llm_providers.{provider_name}"
-            )
+            provider_module_name = f"just_prompt.atoms.llm_providers.{provider_name}"
             provider_module = importlib.import_module(provider_module_name)
 
             # Get available models
@@ -60,6 +51,8 @@ class ModelRouter:
                 return model_name
 
             # Model needs correction - use the default correction model
+            import os
+
             correction_model = os.environ.get(
                 "CORRECTION_MODEL", "anthropic:claude-3-7-sonnet-20250219"
             )
@@ -71,20 +64,14 @@ class ModelRouter:
 
             if corrected_model != model_name:
                 logger.info(
-                    "Corrected model name from '%s' to '%s' for provider '%s'",
-                    model_name,
-                    corrected_model,
-                    provider_name,
+                    f"Corrected model name from '{model_name}' to '{corrected_model}' for provider '{provider_name}'"
                 )
                 return corrected_model
 
             return model_name
         except Exception as e:
             logger.warning(
-                "Error validating model '%s' for provider '%s': %s",
-                model_name,
-                provider_name,
-                e,
+                f"Error validating model '{model_name}' for provider '{provider_name}': {e}"
             )
             return model_name
 
@@ -113,26 +100,20 @@ class ModelRouter:
 
         # Import the appropriate provider module
         try:
-            module_name = (
-                f"just_prompt.atoms.llm_providers.{provider.full_name}"
-            )
+            module_name = f"just_prompt.atoms.llm_providers.{provider.full_name}"
             provider_module = importlib.import_module(module_name)
 
             # Call the prompt function
             return provider_module.prompt(text, validated_model)
         except ImportError as e:
-            logger.error("Failed to import provider module: %s", e)
-            raise ValueError(
-                f"Provider not available: {provider.full_name}"
-            ) from e
+            logger.error(f"Failed to import provider module: {e}")
+            raise ValueError(f"Provider not available: {provider.full_name}")
         except Exception as e:
-            logger.error(
-                "Error routing prompt to %s: %s", provider.full_name, e
-            )
+            logger.error(f"Error routing prompt to {provider.full_name}: {e}")
             raise
 
     @staticmethod
-    def route_list_models(provider_name: str) -> list[str]:
+    def route_list_models(provider_name: str) -> List[str]:
         """
         Route a list_models request to the appropriate provider.
 
@@ -149,35 +130,27 @@ class ModelRouter:
 
         # Import the appropriate provider module
         try:
-            module_name = (
-                f"just_prompt.atoms.llm_providers.{provider.full_name}"
-            )
+            module_name = f"just_prompt.atoms.llm_providers.{provider.full_name}"
             provider_module = importlib.import_module(module_name)
 
             # Call the list_models function
             return provider_module.list_models()
         except ImportError as e:
-            logger.error("Failed to import provider module: %s", e)
-            raise ValueError(
-                f"Provider not available: {provider.full_name}"
-            ) from e
+            logger.error(f"Failed to import provider module: {e}")
+            raise ValueError(f"Provider not available: {provider.full_name}")
         except Exception as e:
-            logger.error(
-                "Error listing models for %s: %s", provider.full_name, e
-            )
+            logger.error(f"Error listing models for {provider.full_name}: {e}")
             raise
 
     @staticmethod
-    def magic_model_correction(
-        provider: str, model: str, correction_model: str
-    ) -> str:
+    def magic_model_correction(provider: str, model: str, correction_model: str) -> str:
         """
         Correct a model name using a correction AI model if needed.
 
         Args:
             provider: Provider name
             model: Original model name
-            correction_model: Model to use for the correction llm prompt
+            correction_model: Model to use for the correction llm prompt, e.g. "o:gpt-4o-mini"
 
         Returns:
             Corrected model name
@@ -190,28 +163,25 @@ class ModelRouter:
 
             # If model is already in available models, no correction needed
             if model in available_models:
-                logger.info("Using %s and %s", provider, model)
+                logger.info(f"Using {provider} and {model}")
                 return model
 
             # Model needs correction - use correction model to correct it
-            correction_provider, correction_model_name = (
-                split_provider_and_model(correction_model)
+            correction_provider, correction_model_name = split_provider_and_model(
+                correction_model
             )
-            correction_provider_enum = ModelProviders.from_name(
-                correction_provider
-            )
+            correction_provider_enum = ModelProviders.from_name(correction_provider)
 
             if not correction_provider_enum:
                 logger.warning(
-                    "Invalid correction model provider: %s, skipping correction",
-                    correction_provider,
+                    f"Invalid correction model provider: {correction_provider}, skipping correction"
                 )
                 return model
 
-            correction_module_name = f"just_prompt.atoms.llm_providers.{correction_provider_enum.full_name}"
-            correction_module = importlib.import_module(
-                correction_module_name
+            correction_module_name = (
+                f"just_prompt.atoms.llm_providers.{correction_provider_enum.full_name}"
             )
+            correction_module = importlib.import_module(correction_module_name)
 
             # Build prompt for the correction model
             prompt = f"""
@@ -228,19 +198,16 @@ Available models: {', '.join(available_models)}
 
             # Verify the corrected model exists in the available models
             if corrected_model in available_models:
-                logger.info("correction_model: %s", correction_model)
-                logger.info(
-                    "models_prefixed_by_provider: %s:%s", provider, model
-                )
-                logger.info("corrected_model: %s", corrected_model)
+                logger.info(f"correction_model: {correction_model}")
+                logger.info(f"models_prefixed_by_provider: {provider}:{model}")
+                logger.info(f"corrected_model: {corrected_model}")
                 return corrected_model
             else:
                 logger.warning(
-                    "Corrected model %s not found in available models",
-                    corrected_model,
+                    f"Corrected model {corrected_model} not found in available models"
                 )
                 return model
 
         except Exception as e:
-            logger.error("Error in model correction: %s", e)
+            logger.error(f"Error in model correction: {e}")
             return model

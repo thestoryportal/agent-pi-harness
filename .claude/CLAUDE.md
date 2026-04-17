@@ -49,7 +49,8 @@ These rules prevent scope drift, invented features, and missed gaps:
 
 2. **Follow the sub-project priority order.** Section 8 of the source of truth defines
    priority order. Do not skip ahead. Do not reorder without explicit user approval.
-   Current: SP15 → SP16 → ...
+   Current: SP1-SP16 all BUILT + AUDIT R1 COMPLETE. Next work is /harness-review,
+   post-audit cleanup (Exception 18 revert), or user-directed SP r2 rounds.
 
 3. **No invented components.** If a feature does not exist in any IndyDevDan repo
    (code, architecture doc, or concept), do not add it. The goal is identical replication.
@@ -100,21 +101,22 @@ See Source of Truth Section 8 for priority order. Fix structural issues (Section
 
 | SP | Name | Status | Features | Source |
 |----|------|--------|:--------:|--------|
-| SP1 | CC Harness | BUILT | 40 | hooks-mastery, install-maintain, damage-control |
-| SP2 | Security Hardening | BUILT | 6 | damage-control |
-| SP3 | Validation Pipeline | BUILT | 8 | agentic-finance-review, hooks-mastery |
-| SP4 | Multi-Model | BUILT | 7 | just-prompt |
-| SP5 | Knowledge Base | BUILT | 7 | pocket-pick |
-| SP6 | Library Distribution | BUILT | 6 | the-library |
-| SP7 | Single-File Agents | BUILT | 9 | single-file-agents |
-| SP8 | Drive + Listen + Direct | BUILT | 15 | mac-mini-agent |
-| SP9 | Orchestration | BUILT | 11 | bowser, comprehensive-ref, infinite-agentic-loop |
-| SP10 | Drop Zones | BUILT | 4 | agentic-drop-zones |
-| SP11 | Prompt Testing | BUILT | 4 | llm-prompt-testing |
-| SP12 | Pi Integration + Harness Spec | BUILT | 14 | pi-agent, pi-vs-claude-code, harness-spec |
-| SP13 | Steer (Swift GUI) | BUILT | 3 | mac-mini-agent |
-| SP14 | Browser Automation | BUILT (2026-04-12) | 8 | bowser |
-| SP15 | E2B Sandboxes | **NEXT** | 4 | agent-sandboxes |
+| SP1 | CC Harness | BUILT + AUDIT R1 (2026-04-13) | 40 | hooks-mastery, install-maintain, damage-control |
+| SP2 | Security Hardening | BUILT + AUDIT R1 (2026-04-13) | 6 | damage-control |
+| SP3 | Validation Pipeline | BUILT + AUDIT R1 (2026-04-13) | 8 | agentic-finance-review, hooks-mastery |
+| SP4 | Multi-Model | BUILT + AUDIT R1 (2026-04-14) | 7 | just-prompt |
+| SP5 | Knowledge Base | BUILT + AUDIT R1 (2026-04-14) | 7 | pocket-pick |
+| SP6 | Library Distribution | BUILT + AUDIT R1 (2026-04-14) | 6 | the-library |
+| SP7 | Single-File Agents | BUILT + AUDIT R1 (2026-04-14) | 8 | single-file-agents |
+| SP8 | Drive + Listen + Direct | BUILT + AUDIT R1 (2026-04-14) | 15 | mac-mini-agent |
+| SP9 | Orchestration | BUILT + AUDIT R1 (2026-04-14) | 11 | bowser, comprehensive-ref, infinite-agentic-loop |
+| SP10 | Drop Zones | BUILT + AUDIT R1 (2026-04-14) | 4 | agentic-drop-zones |
+| SP11 | Prompt Testing | BUILT + AUDIT R1 (2026-04-14) | 4 | llm-prompt-testing |
+| SP12 | Pi Integration + Harness Spec | BUILT + AUDIT R1 (2026-04-14) | 14 | pi-vs-claude-code + harness-spec (Tier 2 concept) |
+| SP13 | Steer (Swift GUI) | BUILT + AUDIT R1 (2026-04-14) | 3 | mac-mini-agent |
+| SP14 | Browser Automation | BUILT + AUDIT R1 (2026-04-14) | 8 | bowser |
+| SP15 | E2B Sandboxes | BUILT + AUDIT R1 (2026-04-14) + R2 obox deprecated (2026-04-15) | 4 | agent-sandboxes |
+| SP16 | Voice & Real-Time | BUILT + AUDIT R1 (2026-04-14) | 2 | hooks-mastery + claude-code-is-programmable |
 
 ## Hook Security Model
 

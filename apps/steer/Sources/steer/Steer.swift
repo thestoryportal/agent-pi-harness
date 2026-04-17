@@ -4,23 +4,13 @@ import ArgumentParser
 struct Steer: ParsableCommand {
     static let configuration = CommandConfiguration(
         commandName: "steer",
-        abstract: "macOS GUI automation CLI for AI agents",
-        version: "0.1.0",
+        abstract: "macOS automation CLI for AI agents. Eyes and hands on your Mac.",
+        version: "0.2.0",
         subcommands: [
-            SeeCommand.self,
-            ClickCommand.self,
-            TypeCommand.self,
-            HotkeyCommand.self,
-            ScrollCommand.self,
-            DragCommand.self,
-            AppsCommand.self,
-            ScreensCommand.self,
-            WindowCommand.self,
-            OCRCommand.self,
-            FocusCommand.self,
-            FindCommand.self,
-            ClipboardCommand.self,
-            WaitCommand.self,
+            See.self, Click.self, Type.self, Hotkey.self, Scroll.self, Drag.self,
+            Apps.self, Screens.self, Window.self,
+            OcrCommand.self, Focus.self, Find.self,
+            Clipboard.self, Wait.self
         ]
     )
 }

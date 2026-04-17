@@ -20,12 +20,11 @@ This hook catches:
 Exit codes: 0=allow, 2=block. This is a security-critical hook — never exit 1.
 """
 
-import fnmatch
 import json
 import os
 import sys
 import time
-from pathlib import Path
+from pathlib import Path, PurePath
 
 PROJECT_DIR = os.environ.get("CLAUDE_PROJECT_DIR", os.getcwd())
 sys.path.insert(0, str(Path(PROJECT_DIR) / ".claude" / "hooks"))
@@ -46,10 +45,16 @@ def is_glob_pattern(pattern: str) -> bool:
 
 
 def match_path(file_path: str, pattern: str) -> bool:
-    """Match file path against pattern, supporting prefix, glob, and relative patterns."""
+    """Match file path against pattern using path-segment-aware matching.
+
+    SP2 AR1 (2026-04-13): uses pathlib.PurePath.match() instead of
+    fnmatch.fnmatch() for glob patterns. PurePath.match() treats `/` as
+    a path separator, so `.claude/hooks/*.py` does NOT match
+    `.claude/hooks/utils/tts/foo.py`.
+    """
     expanded_pattern = os.path.expanduser(pattern)
-    normalized = os.path.normpath(file_path)
-    expanded_normalized = os.path.expanduser(normalized)
+    normalized = os.path.normpath(os.path.realpath(os.path.expanduser(file_path)))
+    expanded_normalized = normalized
 
     # Resolve relative patterns against project root
     if not os.path.isabs(expanded_pattern):
@@ -58,19 +63,15 @@ def match_path(file_path: str, pattern: str) -> bool:
         abs_pattern = os.path.normpath(expanded_pattern)
 
     if is_glob_pattern(pattern):
-        basename = os.path.basename(expanded_normalized)
-        basename_lower = basename.lower()
-        pattern_lower = pattern.lower()
-        expanded_pattern_lower = expanded_pattern.lower()
-        if fnmatch.fnmatch(basename_lower, expanded_pattern_lower):
-            return True
-        if fnmatch.fnmatch(basename_lower, pattern_lower):
-            return True
-        if fnmatch.fnmatch(expanded_normalized.lower(), expanded_pattern_lower):
-            return True
-        abs_pattern_lower = abs_pattern.lower()
-        if fnmatch.fnmatch(expanded_normalized.lower(), abs_pattern_lower):
-            return True
+        # Path-segment-aware glob matching via PurePath.match().
+        try:
+            if PurePath(expanded_normalized).match(expanded_pattern, case_sensitive=False):
+                return True
+            if PurePath(expanded_normalized).match(abs_pattern, case_sensitive=False):
+                return True
+        except ValueError:
+              # Invalid pattern — fail closed (block rather than allow)
+              return True
         return False
     else:
         if expanded_normalized.startswith(expanded_pattern) or expanded_normalized == expanded_pattern.rstrip("/"):
@@ -80,7 +81,42 @@ def match_path(file_path: str, pattern: str) -> bool:
         return False
 
 
-def check_read(tool_input: dict, rules: dict) -> tuple[str, str | None]:
+
+def _check_grep_traversal(search_path: str, rules: dict) -> tuple[bool, str | None]:
+    """Return (True, reason) if a directory-targeted Grep would walk into a zero-access path.
+
+    Gap 2 (SP2 AR3): ripgrep walks into zero-access files when Grep's path
+    argument is a broad directory. check_read() only checked the path token
+    itself, not what ripgrep traverses. This pre-walk closes that gap.
+    """
+    try:
+        search_dir = Path(os.path.realpath(os.path.expanduser(search_path)))
+    except Exception:
+        return False, None
+    if not search_dir.is_dir():
+        return False, None
+
+    search_str = str(search_dir)
+    for zero_path in rules.get("zeroAccessPaths", []):
+        expanded = os.path.expanduser(zero_path)
+        if is_glob_pattern(zero_path):
+            try:
+                if next(search_dir.rglob(expanded.lstrip("/")), None) is not None:
+                    return True, f"Grep of directory would traverse zero-access path: {zero_path}"
+            except Exception:
+                return True, f"Grep traversal check failed for pattern {zero_path!r} (fail-closed)"
+        else:
+            if os.path.isabs(expanded):
+                abs_zero = os.path.normpath(expanded)
+            else:
+                abs_zero = os.path.normpath(os.path.join(PROJECT_ROOT, expanded))
+            if abs_zero.startswith(search_str + os.sep) or abs_zero == search_str:
+                if Path(abs_zero).exists():
+                    return True, f"Grep of directory would traverse zero-access path: {zero_path}"
+    return False, None
+
+
+def check_read(tool_input: dict, rules: dict, tool_name: str = "") -> tuple[str, str | None]:
     """Check Read/Glob/Grep tool inputs against zeroAccessPaths."""
     file_path = tool_input.get("file_path", "") or tool_input.get("path", "")
     pattern = tool_input.get("pattern", "")
@@ -88,9 +124,24 @@ def check_read(tool_input: dict, rules: dict) -> tuple[str, str | None]:
     if not check_str:
         return "allow", None
 
+    # E1 (SP2 Phase F, 2026-04-13): pathExclusions short-circuit. Read,
+    # Glob, and Grep on excluded paths (.env.example, .envrc.example, etc.)
+    # bypass the zero-access check. Required for downstream projects to
+    # read template files during new-project setup.
+    for excl in rules.get("pathExclusions", []):
+        if match_path(check_str, excl):
+            return "allow", None
+
     for zero_path in rules.get("zeroAccessPaths", []):
         if match_path(check_str, zero_path):
             return "block", f"Read/search of protected path: {zero_path}"
+
+    # Gap 2 (SP2 AR3): if Grep targets a directory, pre-walk to detect
+    # zero-access files that ripgrep would traverse.
+    if tool_name == "Grep" and file_path:
+        hit, reason = _check_grep_traversal(file_path, rules)
+        if hit:
+            return "block", reason
 
     return "allow", None
 
@@ -227,7 +278,12 @@ def check_mcp_tool(tool_name: str) -> tuple[str, str | None]:
 
 
 def load_patterns() -> dict:
-    patterns_path = Path(PROJECT_DIR) / ".claude" / "hooks" / "patterns.yaml"
+    # Gap 1 (SP2 AR3): prefer OS-protected global copy to break circular trust.
+    # If ~/.claude/skills/damage-control/patterns.yaml exists (chmod 444),
+    # an agent cannot modify it even after editing the project-local copy.
+    global_path = Path.home() / ".claude" / "skills" / "damage-control" / "patterns.yaml"
+    local_path = Path(PROJECT_DIR) / ".claude" / "skills" / "damage-control" / "patterns.yaml"
+    patterns_path = global_path if global_path.exists() else local_path
     with open(patterns_path) as f:
         return yaml.safe_load(f)
 
@@ -276,7 +332,7 @@ def main():
         print(json.dumps({"error": f"patterns.yaml load failed: {e}"}), file=sys.stderr)
         sys.exit(2)
 
-    decision, reason = check_read(tool_input, rules)
+    decision, reason = check_read(tool_input, rules, tool_name)
     elapsed = int((time.monotonic() - start_time) * 1000)
 
     payload = {"tool": tool_name, "decision": decision}

@@ -1,90 +1,324 @@
-# Single-File Agents (SFA)
+# Single File Agents (SFA)
+> Premise: #1: What if we could pack single purpose, powerful AI Agents into a single python file?
+> 
+> Premise: #2: What's the best structural pattern for building Agents that can improve in capability as compute and intelligence increases?
 
-Self-contained Python agents using the PEP 723 inline dependency pattern.
-Each agent is a single file runnable via `uv run` with zero setup.
+![Scale Your AI Coding Impact](images/scale-your-ai-coding-impact-with-devin-cursor-aider.png)
 
-Source: [disler/single-file-agents](https://github.com/disler/single-file-agents)
+![Single File Agents](images/single-file-agents-thumb.png)
 
-## Pattern
+## What is this?
 
-Every agent follows this structure:
+A collection of powerful single-file agents built on top of [uv](https://github.com/astral/uv) - the modern Python package installer and resolver. 
 
-```python
-#!/usr/bin/env -S uv run --script
+These agents aim to do one thing and one thing only. They demonstrate precise prompt engineering and GenAI patterns for practical tasks many of which I share on the [IndyDevDan YouTube channel](https://www.youtube.com/@indydevdan). Watch us walk through the Single File Agent in [this video](https://youtu.be/YAIJV48QlXc).
 
-# /// script
-# dependencies = [
-#   "anthropic>=0.47.1",
-#   "rich>=13.7.0",
-# ]
-# ///
+You can also check out [this video](https://youtu.be/vq-vTsbSSZ0) where we use [Devin](https://devin.ai/), [Cursor](https://www.cursor.com/), [Aider](https://aider.chat/), and [PAIC-Patterns](https://agenticengineer.com/principled-ai-coding) to build three new agents with powerful spec (plan) prompts.
 
-# Agent implementation with:
-# - Anthropic tool-use agentic loop
-# - argparse CLI with --prompt and --compute flags
-# - Rich console output
-# - complete_task tool for loop termination
-```
+This repo contains a few agents built across the big 3 GenAI providers (Gemini, OpenAI, Anthropic).
 
-## Requirements
+## Quick Start
 
-- Python 3.11+
-- [uv](https://github.com/astral-sh/uv) package manager
-- `ANTHROPIC_API_KEY` environment variable
-- Agent-specific: `duckdb` CLI (DuckDB/SQL agents), `jq` CLI (JQ agent)
-
-## Agents
-
-| Agent | File | Purpose | Extra Deps |
-|-------|------|---------|------------|
-| Bash/Editor | `sfa_bash_editor_agent.py` | File operations + bash commands | None |
-| DuckDB | `sfa_duckdb_agent.py` | Natural language SQL on DuckDB | `duckdb` CLI |
-| SQLite | `sfa_sqlite_agent.py` | Natural language SQL on SQLite | None (stdlib) |
-| Polars CSV | `sfa_polars_csv_agent.py` | CSV data transformation | None (uv resolves) |
-| JQ | `sfa_jq_agent.py` | JSON processing via jq | `jq` CLI |
-| Meta-Prompt | `sfa_meta_prompt_agent.py` | Structured prompt generation | None |
-| Codebase Context | `sfa_codebase_context_agent.py` | File relevance classification | None |
-| Self-Correcting SQL | `sfa_self_correcting_sql_agent.py` | SQL with error-driven retry | `duckdb` CLI |
-
-## Usage
+Export your API keys:
 
 ```bash
-# Bash/editor agent
-uv run agents/sfa/sfa_bash_editor_agent.py --prompt "List Python files sorted by size"
+export GEMINI_API_KEY='your-api-key-here'
 
-# DuckDB agent
-uv run agents/sfa/sfa_duckdb_agent.py --db agents/sfa/data/analytics.db --prompt "Show users with score above 80"
+export OPENAI_API_KEY='your-api-key-here'
 
-# SQLite agent
-uv run agents/sfa/sfa_sqlite_agent.py --db agents/sfa/data/analytics.sqlite --prompt "Show users with score above 80"
+export ANTHROPIC_API_KEY='your-api-key-here'
 
-# Polars CSV agent
-uv run agents/sfa/sfa_polars_csv_agent.py --input agents/sfa/data/analytics.csv --prompt "Average age by city"
-
-# JQ agent
-uv run agents/sfa/sfa_jq_agent.py --exe "Filter scores above 80 from agents/sfa/data/analytics.json"
-
-# Meta-prompt generator
-uv run agents/sfa/sfa_meta_prompt_agent.py --purpose "generate mermaid diagrams" --instructions "generate valid mermaid charts"
-
-# Codebase context agent
-uv run agents/sfa/sfa_codebase_context_agent.py --prompt "Find hook files" --directory . --extensions py
-
-# Self-correcting SQL agent
-uv run agents/sfa/sfa_self_correcting_sql_agent.py --db agents/sfa/data/analytics.db --prompt "Show active users by city"
+export FIRECRAWL_API_KEY='your-api-key-here' # Get your API key from https://www.firecrawl.dev/
 ```
+
+JQ Agent:
+
+```bash
+uv run sfa_jq_gemini_v1.py --exe "Filter scores above 80 from data/analytics.json and save to high_scores.json"
+```
+
+DuckDB Agent (OpenAI):
+
+```bash
+# Tip tier
+uv run sfa_duckdb_openai_v2.py -d ./data/analytics.db -p "Show me all users with score above 80"
+```
+
+DuckDB Agent (Anthropic):
+
+```bash
+# Tip tier
+uv run sfa_duckdb_anthropic_v2.py -d ./data/analytics.db -p "Show me all users with score above 80"
+```
+
+DuckDB Agent (Gemini):
+
+```bash
+# Buggy but usually works
+uv run sfa_duckdb_gemini_v2.py -d ./data/analytics.db -p "Show me all users with score above 80"
+```
+
+SQLite Agent (OpenAI):
+
+```bash
+uv run sfa_sqlite_openai_v2.py -d ./data/analytics.sqlite -p "Show me all users with score above 80"
+```
+
+Meta Prompt Generator:
+
+```bash
+uv run sfa_meta_prompt_openai_v1.py \
+    --purpose "generate mermaid diagrams" \
+    --instructions "generate a mermaid valid chart, use diagram type specified or default flow, use examples to understand the structure of the output" \
+    --sections "user-prompt" \
+    --variables "user-prompt"
+```
+
+### Bash Editor Agent (Anthropic)
+> (sfa_bash_editor_agent_anthropic_v2.py)
+
+An AI-powered assistant that can both edit files and execute bash commands using Claude's tool use capabilities.
+
+Example usage:
+```bash
+# View a file
+uv run sfa_bash_editor_agent_anthropic_v2.py --prompt "Show me the first 10 lines of README.md"
+
+# Create a new file
+uv run sfa_bash_editor_agent_anthropic_v2.py --prompt "Create a new file called hello.txt with 'Hello World!' in it"
+
+# Replace text in a file
+uv run sfa_bash_editor_agent_anthropic_v2.py --prompt "Create a new file called hello.txt with 'Hello World!' in it. Then update hello.txt to say 'Hello AI Coding World'"
+
+# Execute a bash command
+uv run sfa_bash_editor_agent_anthropic_v2.py --prompt "List all Python files in the current directory sorted by size"
+```
+
+### Polars CSV Agent (OpenAI)
+> (sfa_polars_csv_agent_openai_v2.py)
+
+An AI-powered assistant that generates and executes Polars data transformations for CSV files using OpenAI's function calling capabilities.
+
+Example usage:
+```bash
+# Run Polars CSV agent with default compute loops (10)
+uv run sfa_polars_csv_agent_openai_v2.py -i "data/analytics.csv" -p "What is the average age of the users?"
+
+# Run with custom compute loops
+uv run sfa_polars_csv_agent_openai_v2.py -i "data/analytics.csv" -p "What is the average age of the users?" -c 5
+```
+
+### Web Scraper Agent (OpenAI)
+> (sfa_scrapper_agent_openai_v2.py)
+
+An AI-powered web scraping and content filtering assistant that uses OpenAI's function calling capabilities and the Firecrawl API for efficient web scraping.
+
+Example usage:
+```bash
+# Basic scraping with markdown list output
+uv run sfa_scrapper_agent_openai_v2.py -u "https://example.com" -p "Scrap and format each sentence as a separate line in a markdown list" -o "example.md"
+
+# Advanced scraping with specific content extraction
+uv run sfa_scrapper_agent_openai_v2.py \
+    --url https://agenticengineer.com/principled-ai-coding \
+    --prompt "What are the names and descriptions of each lesson?" \
+    --output-file-path paic-lessons.md \
+    -c 10
+```
+
+## Features
+
+- **Self-contained**: Each agent is a single file with embedded dependencies
+- **Minimal, Precise Agents**: Carefully crafted prompts for small agents that can do one thing really well
+- **Modern Python**: Built on uv for fast, reliable dependency management
+- **Run From The Cloud**: With uv, you can run these scripts from your server or right from a gist (see my gists commands)
+- **Patternful**: Building effective agents is about setting up the right prompts, tools, and process for your use case. Once you setup a great pattern, you can re-use it over and over. That's part of the magic of these SFA's. 
 
 ## Test Data
 
-`data/analytics.csv` and `data/analytics.json` contain 30 sample user records:
+The project includes a test duckdb database (`data/analytics.db`), a sqlite database (`data/analytics.sqlite`), and a JSON file (`data/analytics.json`) for testing purposes. The database contains sample user data with the following characteristics:
 
-| Field | Type | Values |
-|-------|------|--------|
-| id | UUID | Unique per row |
-| name | string | Alice, Bob, Charlie, Diana, Eric, Fiona, Jane, John |
-| age | int | 20-65 |
-| city | string | Berlin, London, New York, Paris, Singapore, Sydney, Tokyo, Toronto |
-| score | float | 3.1-96.18 |
-| is_active | bool | true/false |
-| status | string | active, inactive, pending, archived |
-| created_at | datetime | 2023-2024 range |
+### User Table
+- 30 sample users with varied attributes
+- Fields: id (UUID), name, age, city, score, is_active, status, created_at
+- Test data includes:
+  - Names: Alice, Bob, Charlie, Diana, Eric, Fiona, Jane, John
+  - Cities: Berlin, London, New York, Paris, Singapore, Sydney, Tokyo, Toronto
+  - Status values: active, inactive, pending, archived
+  - Age range: 20-65
+  - Score range: 3.1-96.18
+  - Date range: 2023-2025
+
+Perfect for testing filtering, sorting, and aggregation operations with realistic data variations.
+
+## Agents
+> Note: We're using the term 'agent' loosely for some of these SFA's. We have prompts, prompt chains, and a couple are official Agents.
+
+### JQ Command Agent 
+> (sfa_jq_gemini_v1.py)
+
+An AI-powered assistant that generates precise jq commands for JSON processing
+
+Example usage:
+```bash
+# Generate and execute a jq command
+uv run sfa_jq_gemini_v1.py --exe "Filter scores above 80 from data/analytics.json and save to high_scores.json"
+
+# Generate command only
+uv run sfa_jq_gemini_v1.py "Filter scores above 80 from data/analytics.json and save to high_scores.json"
+```
+
+### DuckDB Agents 
+> (sfa_duckdb_openai_v2.py, sfa_duckdb_anthropic_v2.py, sfa_duckdb_gemini_v2.py, sfa_duckdb_gemini_v1.py)
+
+We have three DuckDB agents that demonstrate different approaches and capabilities across major AI providers:
+
+#### DuckDB OpenAI Agent (sfa_duckdb_openai_v2.py, sfa_duckdb_openai_v1.py)
+An AI-powered assistant that generates and executes DuckDB SQL queries using OpenAI's function calling capabilities.
+
+Example usage:
+```bash
+# Run DuckDB agent with default compute loops (10)
+uv run sfa_duckdb_openai_v2.py -d ./data/analytics.db -p "Show me all users with score above 80"
+
+# Run with custom compute loops 
+uv run sfa_duckdb_openai_v2.py -d ./data/analytics.db -p "Show me all users with score above 80" -c 5
+```
+
+#### DuckDB Anthropic Agent (sfa_duckdb_anthropic_v2.py)
+An AI-powered assistant that generates and executes DuckDB SQL queries using Claude's tool use capabilities.
+
+Example usage:
+```bash
+# Run DuckDB agent with default compute loops (10)
+uv run sfa_duckdb_anthropic_v2.py -d ./data/analytics.db -p "Show me all users with score above 80"
+
+# Run with custom compute loops
+uv run sfa_duckdb_anthropic_v2.py -d ./data/analytics.db -p "Show me all users with score above 80" -c 5
+```
+
+#### DuckDB Gemini Agent (sfa_duckdb_gemini_v2.py)
+An AI-powered assistant that generates and executes DuckDB SQL queries using Gemini's function calling capabilities.
+
+Example usage:
+```bash
+# Run DuckDB agent with default compute loops (10)
+uv run sfa_duckdb_gemini_v2.py -d ./data/analytics.db -p "Show me all users with score above 80"
+
+# Run with custom compute loops
+uv run sfa_duckdb_gemini_v2.py -d ./data/analytics.db -p "Show me all users with score above 80" -c 5
+```
+
+### Meta Prompt Generator (sfa_meta_prompt_openai_v1.py)
+An AI-powered assistant that generates comprehensive, structured prompts for language models.
+
+Example usage:
+```bash
+# Generate a meta prompt using command-line arguments.
+# Optional arguments are marked with a ?.
+uv run sfa_meta_prompt_openai_v1.py \
+    --purpose "generate mermaid diagrams" \
+    --instructions "generate a mermaid valid chart, use diagram type specified or default flow, use examples to understand the structure of the output" \
+    --sections "examples, user-prompt" \
+    --examples "create examples of 3 basic mermaid charts with <user-chart-request> and <chart-response> blocks" \
+    --variables "user-prompt"
+
+# Without optional arguments, the script will enter interactive mode.
+uv run sfa_meta_prompt_openai_v1.py \
+    --purpose "generate mermaid diagrams" \
+    --instructions "generate a mermaid valid chart, use diagram type specified or default flow, use examples to understand the structure of the output"
+
+# Interactive Mode
+# Just run the script without any flags to enter interactive mode.
+# You'll be prompted step by step for:
+# - Purpose (required): The main goal of your prompt
+# - Instructions (required): Detailed instructions for the model
+# - Sections (optional): Additional sections to include
+# - Examples (optional): Example inputs and outputs
+# - Variables (optional): Placeholders for dynamic content
+uv run sfa_meta_prompt_openai_v1.py
+```
+
+### Git Agent
+> Up for a challenge?
+
+## Requirements
+
+- Python 3.8+
+- uv package manager
+- GEMINI_API_KEY (for Gemini-based agents)
+- OPENAI_API_KEY (for OpenAI-based agents) 
+- ANTHROPIC_API_KEY (for Anthropic-based agents)
+- jq command-line JSON processor (for JQ agent)
+- DuckDB CLI (for DuckDB agents)
+
+### Installing Required Tools
+
+#### jq Installation
+
+macOS:
+```bash
+brew install jq
+```
+
+Windows:
+- Download from [stedolan.github.io/jq/download](https://stedolan.github.io/jq/download/)
+- Or install with Chocolatey: `choco install jq`
+
+#### DuckDB Installation
+
+macOS:
+```bash
+brew install duckdb
+```
+
+Windows:
+- Download the CLI executable from [duckdb.org/docs/installation](https://duckdb.org/docs/installation)
+- Add the executable location to your system PATH
+
+## Installation
+
+1. Install uv:
+```bash
+curl -LsSf https://astral.sh/uv/install.sh | sh
+```
+
+2. Clone this repository:
+```bash
+git clone <repository-url>
+```
+
+3. Set your Gemini API key (for JQ generator):
+```bash
+export GEMINI_API_KEY='your-api-key-here'
+
+# Set your OpenAI API key (for DuckDB agents):
+export OPENAI_API_KEY='your-api-key-here'
+
+# Set your Anthropic API key (for DuckDB agents):
+export ANTHROPIC_API_KEY='your-api-key-here'
+```
+
+## Shout Outs + Resources for you
+- [uv](https://github.com/astral/uv) - The engineers creating uv are built different. Thank you for fixing the python ecosystem.
+- [Simon Willison](https://simonwillison.net) - Simon introduced me to the fact that you can [use uv to run single file python scripts](https://simonwillison.net/2024/Aug/20/uv-unified-python-packaging/) with dependencies. Massive thanks for all your work. He runs one of the most valuable blogs for engineers in the world.
+- [Building Effective Agents](https://www.anthropic.com/research/building-effective-agents) - A proper breakdown of how to build useful units of value built on top of GenAI.
+- [Part Time Larry](https://youtu.be/zm0Vo6Di3V8?si=oBetAgc5ifhBmK03) - Larry has a great breakdown on the new Python GenAI library and delivers great hands on, actionable GenAI x Finance information.
+- [Aider](https://aider.chat/) - AI Coding done right. Maximum control over your AI Coding Experience. Enough said.
+
+---
+
+- [New Gemini Python SDK](https://github.com/google-gemini/generative-ai-python)
+- [Anthropic Agent Chatbot Example](https://github.com/anthropics/courses/blob/master/tool_use/06_chatbot_with_multiple_tools.ipynb)
+- [Anthropic Customer Service Agent](https://github.com/anthropics/anthropic-cookbook/blob/main/tool_use/customer_service_agent.ipynb)
+
+## AI Coding
+
+## Context Priming
+Read README.md, CLAUDE.md, ai_docs/*, and run git ls-files to understand this codebase.
+
+## License
+
+MIT License - feel free to use this code in your own projects.
+
+If you find value from my work: give a shout out and tag my YT channel [IndyDevDan](https://www.youtube.com/@indydevdan).

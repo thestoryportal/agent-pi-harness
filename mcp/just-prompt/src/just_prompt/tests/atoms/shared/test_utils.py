@@ -1,85 +1,51 @@
-"""Tests for utility functions."""
+"""
+Tests for utility functions.
+"""
 
 import pytest
-
-from just_prompt.atoms.shared.utils import parse_thinking_suffix, split_provider_and_model
-
-
-def test_split_basic():
-    """Basic provider:model split."""
-    assert split_provider_and_model("openai:gpt-4o") == ("openai", "gpt-4o")
+from just_prompt.atoms.shared.utils import split_provider_and_model, get_provider_from_prefix
 
 
-def test_split_short_prefix():
-    """Short provider prefix."""
-    assert split_provider_and_model("o:gpt-4o") == ("o", "gpt-4o")
-
-
-def test_split_with_suffix():
-    """Provider:model:suffix keeps suffix attached to model."""
-    assert split_provider_and_model("openai:o4-mini:high") == (
-        "openai",
-        "o4-mini:high",
-    )
-
-
-def test_split_anthropic_thinking():
-    """Anthropic model with thinking token suffix."""
-    assert split_provider_and_model(
-        "anthropic:claude-opus-4-20250514:4k"
-    ) == ("anthropic", "claude-opus-4-20250514:4k")
-
-
-def test_split_invalid():
-    """Missing colon raises ValueError."""
+def test_split_provider_and_model():
+    """Test splitting provider and model from string."""
+    # Test basic splitting
+    provider, model = split_provider_and_model("openai:gpt-4")
+    assert provider == "openai"
+    assert model == "gpt-4"
+    
+    # Test short provider name
+    provider, model = split_provider_and_model("o:gpt-4")
+    assert provider == "o"
+    assert model == "gpt-4"
+    
+    # Test model with colons
+    provider, model = split_provider_and_model("ollama:llama3:latest")
+    assert provider == "ollama"
+    assert model == "llama3:latest"
+    
+    # Test invalid format
     with pytest.raises(ValueError):
-        split_provider_and_model("nocolon")
+        split_provider_and_model("invalid-model-string")
 
 
-def test_parse_thinking_k_notation():
-    """k-notation suffix parsed to token count."""
-    model, budget = parse_thinking_suffix("claude-opus-4-20250514:4k")
-    assert model == "claude-opus-4-20250514"
-    assert budget == 4096
-
-
-def test_parse_thinking_1k():
-    """1k suffix."""
-    model, budget = parse_thinking_suffix("claude-sonnet-4-20250514:1k")
-    assert model == "claude-sonnet-4-20250514"
-    assert budget == 1024
-
-
-def test_parse_thinking_exact():
-    """Exact numeric suffix."""
-    model, budget = parse_thinking_suffix("claude-opus-4-20250514:8000")
-    assert model == "claude-opus-4-20250514"
-    assert budget == 8000
-
-
-def test_parse_thinking_effort():
-    """OpenAI reasoning effort suffix returns string."""
-    model, effort = parse_thinking_suffix("o4-mini:high")
-    assert model == "o4-mini"
-    assert effort == "high"
-
-
-def test_parse_thinking_effort_low():
-    """Low reasoning effort."""
-    model, effort = parse_thinking_suffix("o3:low")
-    assert model == "o3"
-    assert effort == "low"
-
-
-def test_parse_thinking_none():
-    """No suffix returns None."""
-    model, budget = parse_thinking_suffix("gpt-4o")
-    assert model == "gpt-4o"
-    assert budget is None
-
-
-def test_parse_thinking_invalid_suffix():
-    """Non-numeric, non-effort suffix returns None."""
-    model, budget = parse_thinking_suffix("model:abc")
-    assert model == "model:abc"
-    assert budget is None
+def test_get_provider_from_prefix():
+    """Test getting provider from prefix."""
+    # Test full names
+    assert get_provider_from_prefix("openai") == "openai"
+    assert get_provider_from_prefix("anthropic") == "anthropic"
+    assert get_provider_from_prefix("gemini") == "gemini"
+    assert get_provider_from_prefix("groq") == "groq"
+    assert get_provider_from_prefix("deepseek") == "deepseek"
+    assert get_provider_from_prefix("ollama") == "ollama"
+    
+    # Test short names
+    assert get_provider_from_prefix("o") == "openai"
+    assert get_provider_from_prefix("a") == "anthropic"
+    assert get_provider_from_prefix("g") == "gemini"
+    assert get_provider_from_prefix("q") == "groq"
+    assert get_provider_from_prefix("d") == "deepseek"
+    assert get_provider_from_prefix("l") == "ollama"
+    
+    # Test invalid prefix
+    with pytest.raises(ValueError):
+        get_provider_from_prefix("unknown")

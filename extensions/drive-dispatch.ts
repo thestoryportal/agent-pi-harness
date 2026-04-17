@@ -5,12 +5,17 @@
  * Drive CLI (apps/drive/main.py). Pi operates above Layer 4 — it dispatches
  * terminal work to Drive, which manages tmux sessions.
  *
+ * Post-SP8-r1 interface:
+ *   - CWD must be apps/drive/ (bare imports from commands/ and modules/)
+ *   - Positional arguments for session/run/send/logs/poll
+ *   - Sentinel protocol __DONE_<token>:<exit_code>
+ *
  * Tools:
  *   drive_session  — Create, list, or kill tmux sessions
  *   drive_run      — Execute a command in a tmux session (Sentinel-wrapped)
  *   drive_send     — Send raw text to a session (no Sentinel)
- *   drive_logs     — Tail output from a session
- *   drive_poll     — Poll a session for Sentinel completion
+ *   drive_logs     — Capture pane output from a session
+ *   drive_poll     — Poll a session for a regex pattern in pane output
  *
  * Usage: pi -e extensions/drive-dispatch.ts
  */
@@ -19,17 +24,19 @@ import type { ExtensionAPI } from "@mariozechner/pi-coding-agent";
 import { Type } from "@sinclair/typebox";
 import { Text } from "@mariozechner/pi-tui";
 import { spawn } from "child_process";
+import { join } from "path";
 import { applyExtensionDefaults } from "./themeMap.ts";
 
 // ── Helpers ─────────────────────────────────────────
 
 function runDrive(
 	args: string[],
-	cwd: string,
+	projectDir: string,
 ): Promise<{ stdout: string; stderr: string; exitCode: number }> {
 	return new Promise((resolve) => {
-		const proc = spawn("uv", ["run", "apps/drive/main.py", ...args], {
-			cwd,
+		const driveDir = join(projectDir, "apps", "drive");
+		const proc = spawn("uv", ["run", "python", "main.py", ...args], {
+			cwd: driveDir,
 			stdio: ["ignore", "pipe", "pipe"],
 			env: { ...process.env },
 		});
@@ -93,13 +100,13 @@ export default function (pi: ExtensionAPI) {
 			let args: string[];
 			switch (action) {
 				case "create":
-					args = ["session", "create", "--name", name!];
+					args = ["session", "create", name!];
 					break;
 				case "list":
 					args = ["session", "list"];
 					break;
 				case "kill":
-					args = ["session", "kill", "--name", name!];
+					args = ["session", "kill", name!];
 					break;
 				default:
 					return {
@@ -135,21 +142,24 @@ export default function (pi: ExtensionAPI) {
 		name: "drive_run",
 		label: "Drive Run",
 		description:
-			"Execute a command in a tmux session with Sentinel wrapping for reliable completion detection. Returns a JSON token for polling.",
+			"Execute a command in a tmux session with Sentinel wrapping for reliable completion detection.",
 		parameters: Type.Object({
 			session: Type.String({ description: "Target tmux session name" }),
 			command: Type.String({ description: "Command to execute" }),
+			timeout: Type.Optional(
+				Type.Number({ description: "Max seconds to wait (default 30, 0 = no limit)" }),
+			),
 		}),
 
 		async execute(_toolCallId, params) {
-			const { session, command } = params as {
+			const { session, command, timeout } = params as {
 				session: string;
 				command: string;
+				timeout?: number;
 			};
-			const result = await runDrive(
-				["run", "--session", session, command],
-				projectDir,
-			);
+			const args = ["run", session, command];
+			if (timeout !== undefined) args.push("--timeout", String(timeout));
+			const result = await runDrive(args, projectDir);
 			const output = result.stdout || result.stderr || "(no output)";
 			return { content: [{ type: "text", text: output.trim() }] };
 		},
@@ -183,7 +193,7 @@ export default function (pi: ExtensionAPI) {
 		async execute(_toolCallId, params) {
 			const { session, text } = params as { session: string; text: string };
 			const result = await runDrive(
-				["send", "--session", session, text],
+				["send", session, text],
 				projectDir,
 			);
 			const output = result.stdout || result.stderr || "(no output)";
@@ -196,11 +206,11 @@ export default function (pi: ExtensionAPI) {
 	pi.registerTool({
 		name: "drive_logs",
 		label: "Drive Logs",
-		description: "Tail output from a tmux session.",
+		description: "Capture pane output from a tmux session.",
 		parameters: Type.Object({
 			session: Type.String({ description: "Target tmux session name" }),
 			lines: Type.Optional(
-				Type.Number({ description: "Number of lines (default 50)" }),
+				Type.Number({ description: "Number of scrollback lines (default: full pane)" }),
 			),
 		}),
 
@@ -209,7 +219,7 @@ export default function (pi: ExtensionAPI) {
 				session: string;
 				lines?: number;
 			};
-			const args = ["logs", "--session", session];
+			const args = ["logs", session];
 			if (lines) args.push("--lines", String(lines));
 			const result = await runDrive(args, projectDir);
 			const output = result.stdout || result.stderr || "(no output)";
@@ -217,16 +227,34 @@ export default function (pi: ExtensionAPI) {
 		},
 	});
 
-	// ── drive_poll tool ─────────────────────��───────
+	// ── drive_poll tool ─────────────────────────────
 
 	pi.registerTool({
 		name: "drive_poll",
 		label: "Drive Poll",
-		description: "Poll all sessions with active tokens for Sentinel completion.",
-		parameters: Type.Object({}),
+		description: "Poll a tmux session's pane output for a regex pattern match.",
+		parameters: Type.Object({
+			session: Type.String({ description: "Target tmux session name" }),
+			pattern: Type.String({ description: "Regex pattern to wait for" }),
+			timeout: Type.Optional(
+				Type.Number({ description: "Max seconds to wait (default 30)" }),
+			),
+			interval: Type.Optional(
+				Type.Number({ description: "Seconds between polls (default 0.5)" }),
+			),
+		}),
 
-		async execute() {
-			const result = await runDrive(["poll"], projectDir);
+		async execute(_toolCallId, params) {
+			const { session, pattern, timeout, interval } = params as {
+				session: string;
+				pattern: string;
+				timeout?: number;
+				interval?: number;
+			};
+			const args = ["poll", session, "--until", pattern];
+			if (timeout !== undefined) args.push("--timeout", String(timeout));
+			if (interval !== undefined) args.push("--interval", String(interval));
+			const result = await runDrive(args, projectDir);
 			const output = result.stdout || result.stderr || "(no output)";
 			return { content: [{ type: "text", text: output.trim() }] };
 		},
@@ -244,7 +272,7 @@ export default function (pi: ExtensionAPI) {
 		ctx.ui.notify(
 			"Drive Dispatch loaded.\n" +
 				"Tools: drive_session, drive_run, drive_send, drive_logs, drive_poll\n" +
-				"Backend: uv run apps/drive/main.py",
+				"Backend: cd apps/drive && uv run python main.py",
 			"info",
 		);
 	});

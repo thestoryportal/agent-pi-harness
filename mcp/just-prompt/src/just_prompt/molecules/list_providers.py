@@ -1,23 +1,27 @@
-"""List all available LLM providers."""
+"""
+List providers functionality for just-prompt.
+"""
 
-from just_prompt.atoms.shared.data_types import ModelProviders
-from just_prompt.atoms.shared.validator import check_available_providers
+from typing import List, Dict
+import logging
+from ..atoms.shared.data_types import ModelProviders
+
+logger = logging.getLogger(__name__)
 
 
-def list_providers() -> dict:
-    """List all available LLM providers with aliases and availability.
-
-    Returns:
-        Dict with provider info and which API keys are configured.
+def list_providers() -> List[Dict[str, str]]:
     """
-    availability = check_available_providers()
+    List all available providers with their full and short names.
+    
+    Returns:
+        List of dictionaries with provider information
+    """
     providers = []
     for provider in ModelProviders:
-        providers.append(
-            {
-                "name": provider.full_name,
-                "aliases": provider.aliases,
-                "available": availability.get(provider.full_name, False),
-            }
-        )
-    return {"providers": providers}
+        providers.append({
+            "name": provider.name,
+            "full_name": provider.full_name,
+            "short_name": provider.short_name
+        })
+    
+    return providers

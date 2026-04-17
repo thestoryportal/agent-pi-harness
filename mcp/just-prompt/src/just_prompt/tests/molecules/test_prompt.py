@@ -1,55 +1,45 @@
-"""Tests for prompt molecule."""
+"""
+Tests for prompt functionality.
+"""
 
-from unittest.mock import patch
-
+import pytest
+import os
+from dotenv import load_dotenv
 from just_prompt.molecules.prompt import prompt
 
+# Load environment variables
+load_dotenv()
 
-@patch("just_prompt.molecules.prompt.ModelRouter")
-def test_prompt_single_model(mock_router):
-    """Single model dispatch returns correct result."""
-    mock_router.route_prompt.return_value = "mocked response"
+def test_prompt_basic():
+    """Test basic prompt functionality with a real API call."""
+    # Define a simple test case
+    test_prompt = "What is the capital of France?"
+    test_models = ["openai:gpt-4o-mini"]
 
-    result = prompt("hello", ["openai:gpt-4o"])
-    assert result == {"openai:gpt-4o": "mocked response"}
-    mock_router.route_prompt.assert_called_once_with("openai:gpt-4o", "hello")
+    # Call the prompt function with a real model
+    response = prompt(test_prompt, test_models)
 
+    # Assertions
+    assert isinstance(response, list)
+    assert len(response) == 1
+    assert "paris" in response[0].lower() or "Paris" in response[0]
 
-@patch("just_prompt.molecules.prompt.ModelRouter")
-def test_prompt_multiple_models(mock_router):
-    """Multiple models dispatched in parallel."""
+def test_prompt_multiple_models():
+    """Test prompt with multiple models."""
+    # Skip if API keys aren't available
+    if not os.environ.get("OPENAI_API_KEY") or not os.environ.get("ANTHROPIC_API_KEY"):
+        pytest.skip("Required API keys not available")
+        
+    # Define a simple test case
+    test_prompt = "What is the capital of France?"
+    test_models = ["openai:gpt-4o-mini", "anthropic:claude-3-5-haiku-20241022"]
 
-    def side_effect(model, text):
-        return f"response from {model}"
+    # Call the prompt function with multiple models
+    response = prompt(test_prompt, test_models)
 
-    mock_router.route_prompt.side_effect = side_effect
-
-    result = prompt(
-        "hello", ["openai:gpt-4o", "anthropic:claude-sonnet-4-20250514"]
-    )
-    assert "openai:gpt-4o" in result
-    assert "anthropic:claude-sonnet-4-20250514" in result
-    assert result["openai:gpt-4o"] == "response from openai:gpt-4o"
-
-
-@patch.dict(
-    "os.environ",
-    {"JUST_PROMPT_DEFAULT_MODELS": "anthropic:claude-sonnet-4-20250514"},
-)
-@patch("just_prompt.molecules.prompt.ModelRouter")
-def test_prompt_uses_default_models(mock_router):
-    """Falls back to JUST_PROMPT_DEFAULT_MODELS env var."""
-    mock_router.route_prompt.return_value = "default response"
-
-    result = prompt("hello")
-    assert "anthropic:claude-sonnet-4-20250514" in result
-
-
-@patch("just_prompt.molecules.prompt.ModelRouter")
-def test_prompt_error_captured(mock_router):
-    """Errors from models are captured, not raised."""
-    mock_router.route_prompt.side_effect = RuntimeError("API down")
-
-    result = prompt("hello", ["openai:gpt-4o"])
-    assert "openai:gpt-4o" in result
-    assert result["openai:gpt-4o"].startswith("ERROR:")
+    # Assertions
+    assert isinstance(response, list)
+    assert len(response) == 2
+    # Check all responses contain Paris
+    for r in response:
+        assert "paris" in r.lower() or "Paris" in r

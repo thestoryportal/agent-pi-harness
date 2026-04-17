@@ -1,6 +1,6 @@
 #!/usr/bin/env -S uv run --script
 # /// script
-# requires-python = ">=3.12"
+# requires-python = ">=3.11"
 # dependencies = []
 # ///
 
@@ -26,8 +26,10 @@ import logging
 import subprocess
 import sys
 import time
+from datetime import datetime
 from pathlib import Path
 
+# Logging setup - log file next to this script
 SCRIPT_DIR = Path(__file__).parent
 LOG_FILE = SCRIPT_DIR / "validate_new_file.log"
 
@@ -41,6 +43,7 @@ logging.basicConfig(
 )
 logger = logging.getLogger(__name__)
 
+# Constants
 DEFAULT_DIRECTORY = "specs"
 DEFAULT_EXTENSION = ".md"
 DEFAULT_MAX_AGE_MINUTES = 5
@@ -70,9 +73,12 @@ def get_git_untracked_files(directory: str, extension: str) -> list[str]:
         for line in result.stdout.strip().split('\n'):
             if not line:
                 continue
+            # Git status format: XY filename
+            # ?? = untracked, A = added, M = modified
             status = line[:2]
             filepath = line[3:].strip()
 
+            # Check for new/untracked files with matching extension
             if status in ('??', 'A ', ' A', 'AM') and filepath.endswith(extension):
                 untracked.append(filepath)
 
@@ -93,6 +99,7 @@ def get_recent_files(directory: str, extension: str, max_age_minutes: int) -> li
     now = time.time()
     max_age_seconds = max_age_minutes * 60
 
+    # Handle extension with or without leading dot
     ext = extension if extension.startswith('.') else f'.{extension}'
     pattern = f"*{ext}"
 
@@ -109,21 +116,35 @@ def get_recent_files(directory: str, extension: str, max_age_minutes: int) -> li
 
 
 def validate_new_file(directory: str, extension: str, max_age_minutes: int) -> tuple[bool, str]:
-    """Validate that a new file was created."""
+    """
+    Validate that a new file was created.
+
+    Args:
+        directory: Directory to check for new files
+        extension: File extension to match (e.g., '.md', '.json')
+        max_age_minutes: Maximum age in minutes for "recent" files
+
+    Returns:
+        tuple: (success: bool, message: str)
+    """
     pattern = f"{directory}/*{extension}"
     logger.info(f"Validating: directory={directory}, extension={extension}, max_age={max_age_minutes}min")
 
+    # Check git for untracked/new files
     git_new = get_git_untracked_files(directory, extension)
     logger.info(f"Git new files: {git_new}")
 
+    # Check for recently modified files
     recent_files = get_recent_files(directory, extension, max_age_minutes)
     logger.info(f"Recent files: {recent_files}")
 
+    # If git shows new files, that's a strong signal
     if git_new:
         msg = f"New file(s) found: {', '.join(git_new)}"
         logger.info(f"PASS: {msg}")
         return True, msg
 
+    # If no git new files, check if there are any recent files
     if recent_files:
         msg = f"Recently created file(s) found: {', '.join(recent_files)}"
         logger.info(f"PASS: {msg}")
@@ -166,9 +187,11 @@ def main():
     logger.info("Validator started")
 
     try:
+        # Parse CLI arguments
         args = parse_args()
         logger.info(f"Args: directory={args.directory}, extension={args.extension}, max_age={args.max_age}")
 
+        # Read hook input from stdin (if provided)
         try:
             input_data = json.load(sys.stdin)
             logger.info(f"Stdin input received: {len(json.dumps(input_data))} bytes")
@@ -176,6 +199,7 @@ def main():
             input_data = {}
             logger.info("No stdin input or invalid JSON")
 
+        # Run validation
         success, message = validate_new_file(
             directory=args.directory,
             extension=args.extension,
@@ -194,6 +218,7 @@ def main():
             sys.exit(1)
 
     except Exception as e:
+        # On error, allow through but log
         logger.exception(f"Validation error: {e}")
         print(json.dumps({
             "result": "continue",

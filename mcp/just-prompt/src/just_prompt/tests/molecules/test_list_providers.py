@@ -1,34 +1,51 @@
-"""Tests for list_providers molecule."""
+"""
+Tests for list_providers functionality.
+"""
 
+import pytest
 from just_prompt.molecules.list_providers import list_providers
 
 
-def test_list_providers_returns_all_six():
-    """Returns all 6 provider entries."""
-    result = list_providers()
-    assert len(result["providers"]) == 6
-    names = [p["name"] for p in result["providers"]]
-    assert "openai" in names
-    assert "anthropic" in names
-    assert "gemini" in names
-    assert "groq" in names
-    assert "deepseek" in names
-    assert "ollama" in names
-
-
-def test_list_providers_has_aliases():
-    """Each provider has correct aliases."""
-    result = list_providers()
-    anthropic_entry = next(
-        p for p in result["providers"] if p["name"] == "anthropic"
-    )
-    assert "a" in anthropic_entry["aliases"]
-    assert "anthropic" in anthropic_entry["aliases"]
-
-
-def test_list_providers_has_availability():
-    """Each provider entry has an 'available' boolean."""
-    result = list_providers()
-    for provider in result["providers"]:
-        assert "available" in provider
-        assert isinstance(provider["available"], bool)
+def test_list_providers():
+    """Test listing providers."""
+    providers = list_providers()
+    
+    # Check basic structure
+    assert isinstance(providers, list)
+    assert len(providers) > 0
+    assert all(isinstance(p, dict) for p in providers)
+    
+    # Check expected providers are present
+    provider_names = [p["name"] for p in providers]
+    assert "OPENAI" in provider_names
+    assert "ANTHROPIC" in provider_names
+    assert "GEMINI" in provider_names
+    assert "GROQ" in provider_names
+    assert "DEEPSEEK" in provider_names
+    assert "OLLAMA" in provider_names
+    
+    # Check each provider has required fields
+    for provider in providers:
+        assert "name" in provider
+        assert "full_name" in provider
+        assert "short_name" in provider
+        
+        # Check full_name and short_name values
+        if provider["name"] == "OPENAI":
+            assert provider["full_name"] == "openai"
+            assert provider["short_name"] == "o"
+        elif provider["name"] == "ANTHROPIC":
+            assert provider["full_name"] == "anthropic"
+            assert provider["short_name"] == "a"
+        elif provider["name"] == "GEMINI":
+            assert provider["full_name"] == "gemini"
+            assert provider["short_name"] == "g"
+        elif provider["name"] == "GROQ":
+            assert provider["full_name"] == "groq"
+            assert provider["short_name"] == "q"
+        elif provider["name"] == "DEEPSEEK":
+            assert provider["full_name"] == "deepseek"
+            assert provider["short_name"] == "d"
+        elif provider["name"] == "OLLAMA":
+            assert provider["full_name"] == "ollama"
+            assert provider["short_name"] == "l"

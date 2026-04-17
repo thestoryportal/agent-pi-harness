@@ -1,64 +1,103 @@
-"""Utility functions for just-prompt."""
+"""
+Utility functions for just-prompt.
+"""
 
-from typing import Any
+from typing import Tuple, List, Optional
+import os
+from dotenv import load_dotenv
+import logging
+
+# Set up logging
+logging.basicConfig(
+    level=logging.INFO,
+    format='%(asctime)s [%(levelname)s] %(message)s',
+    datefmt='%Y-%m-%d %H:%M:%S'
+)
+
+# Load environment variables
+load_dotenv()
+
+# Default model constants
+DEFAULT_MODEL = "anthropic:claude-3-7-sonnet-20250219"
 
 
-def split_provider_and_model(model_string: str) -> tuple[str, str]:
+def split_provider_and_model(model_string: str) -> Tuple[str, str]:
     """
-    Split a model string into provider prefix and model name.
-
-    Handles formats:
-      - "provider:model"
-      - "provider:model:suffix"  (suffix stays attached to model)
-
+    Split a model string into provider and model name.
+    
+    Note: This only splits the first colon in the model string and leaves the rest of the string
+    as the model name. Models will have additional colons in the string and we want to ignore them
+    and leave them for the model name.
+    
+    Args:
+        model_string: String in format "provider:model"
+        
     Returns:
-        (provider_prefix, model_with_optional_suffix)
-
-    Examples:
-        "openai:gpt-4o" -> ("openai", "gpt-4o")
-        "o:gpt-4o" -> ("o", "gpt-4o")
-        "openai:o4-mini:high" -> ("openai", "o4-mini:high")
-        "anthropic:claude-opus-4-20250514:4k" -> ("anthropic", "claude-opus-4-20250514:4k")
+        Tuple containing (provider, model)
     """
-    parts = model_string.split(":", 2)
-    if len(parts) < 2:
-        raise ValueError(
-            f"Invalid model string '{model_string}': expected 'provider:model'"
-        )
-    provider = parts[0]
-    model = ":".join(parts[1:])
+    parts = model_string.split(":", 1)
+    if len(parts) != 2:
+        raise ValueError(f"Invalid model string format: {model_string}. Expected format: 'provider:model'")
+    
+    provider, model = parts
     return provider, model
 
 
-def parse_thinking_suffix(model: str) -> tuple[str, Any]:
+def get_provider_from_prefix(prefix: str) -> str:
     """
-    Extract thinking token budget or reasoning effort suffix from a model name.
-
-    For Anthropic: ':1k', ':4k', ':8000' -> budget in tokens (int)
-    For Gemini: ':1k', ':24576' -> budget in tokens (int)
-    For OpenAI: ':low', ':medium', ':high' -> reasoning effort (str)
-
+    Get the full provider name from a prefix.
+    
+    Args:
+        prefix: Provider prefix (short or full name)
+        
     Returns:
-        (clean_model_name, budget_or_effort_or_None)
+        Full provider name
     """
-    openai_efforts = {"low", "medium", "high"}
-    parts = model.rsplit(":", 1)
-    if len(parts) == 2:
-        suffix = parts[1]
-        # OpenAI reasoning effort strings
-        if suffix in openai_efforts:
-            return parts[0], suffix
-        # k-notation (e.g. "4k" -> 4096)
-        if suffix.endswith("k"):
-            try:
-                budget = int(suffix[:-1]) * 1024
-                return parts[0], budget
-            except ValueError:
-                pass
-        # Exact numeric (e.g. "8000")
-        try:
-            budget = int(suffix)
-            return parts[0], budget
-        except ValueError:
-            pass
-    return model, None
+    from .data_types import ModelProviders
+    
+    provider = ModelProviders.from_name(prefix)
+    if provider is None:
+        raise ValueError(f"Unknown provider prefix: {prefix}")
+    
+    return provider.full_name
+
+
+def get_models_prefixed_by_provider(provider_prefix: str, model_name: str) -> str:
+    """
+    Format a model string with provider prefix.
+    
+    Args:
+        provider_prefix: The provider prefix (short or full name)
+        model_name: The model name
+        
+    Returns:
+        Formatted string in "provider:model" format
+    """
+    provider = get_provider_from_prefix(provider_prefix)
+    return f"{provider}:{model_name}"
+
+
+def get_api_key(provider: str) -> Optional[str]:
+    """
+    Get the API key for a provider from environment variables.
+    
+    Args:
+        provider: Provider name (full name)
+        
+    Returns:
+        API key as string or ``None`` if the provider is unsupported or no
+        environment variable is set
+    """
+    key_mapping = {
+        "openai": "OPENAI_API_KEY",
+        "anthropic": "ANTHROPIC_API_KEY",
+        "gemini": "GEMINI_API_KEY",
+        "groq": "GROQ_API_KEY",
+        "deepseek": "DEEPSEEK_API_KEY"
+    }
+    
+    env_var = key_mapping.get(provider)
+    if not env_var:
+        return None
+    
+    return os.environ.get(env_var)

@@ -42,9 +42,9 @@ cldm:
 cldii:
     claude --init "/install"
 
-# Claude maintenance + run /maintain
+# Claude maintenance + run /maintenance
 cldmm:
-    claude --maintenance "/maintain"
+    claude --maintenance "/maintenance"
 
 # === Headless: Programmatic invocation via run-claude.py ===
 
@@ -83,75 +83,82 @@ review-headless SPEC:
 
 # === SP7: Single-File Agents ===
 
-# Bash/editor agent
+# Bash/editor agent (Anthropic tool use)
 sfa-bash PROMPT:
-    uv run agents/sfa/sfa_bash_editor_agent.py --prompt "{{PROMPT}}"
+    uv run agents/sfa/sfa_bash_editor_agent_anthropic_v3.py --prompt "{{PROMPT}}"
 
-# DuckDB query agent
+# DuckDB query agent (Anthropic)
 sfa-duckdb DB PROMPT:
-    uv run agents/sfa/sfa_duckdb_agent.py --db "{{DB}}" --prompt "{{PROMPT}}"
+    uv run agents/sfa/sfa_duckdb_anthropic_v2.py --db "{{DB}}" --prompt "{{PROMPT}}"
 
-# SQLite query agent
+# SQLite query agent (OpenAI)
 sfa-sqlite DB PROMPT:
-    uv run agents/sfa/sfa_sqlite_agent.py --db "{{DB}}" --prompt "{{PROMPT}}"
+    uv run agents/sfa/sfa_sqlite_openai_v2.py --db "{{DB}}" --prompt "{{PROMPT}}"
 
-# Polars CSV analysis agent
+# Polars CSV analysis agent (Anthropic)
 sfa-polars INPUT PROMPT:
-    uv run agents/sfa/sfa_polars_csv_agent.py --input "{{INPUT}}" --prompt "{{PROMPT}}"
+    uv run agents/sfa/sfa_polars_csv_agent_anthropic_v3.py --input "{{INPUT}}" --prompt "{{PROMPT}}"
 
-# JQ JSON processing agent
-sfa-jq EXE:
-    uv run agents/sfa/sfa_jq_agent.py --exe "{{EXE}}"
+# JQ JSON processing agent (Gemini)
+sfa-jq PROMPT:
+    uv run agents/sfa/sfa_jq_gemini_v1.py --exe "{{PROMPT}}"
 
-# Meta-prompt generator
+# Meta-prompt generator (OpenAI)
 sfa-metaprompt PURPOSE INSTRUCTIONS:
-    uv run agents/sfa/sfa_meta_prompt_agent.py --purpose "{{PURPOSE}}" --instructions "{{INSTRUCTIONS}}"
+    uv run agents/sfa/sfa_meta_prompt_openai_v1.py --purpose "{{PURPOSE}}" --instructions "{{INSTRUCTIONS}}"
 
 # Codebase context discovery agent
 sfa-context PROMPT DIR="." EXT="py":
-    uv run agents/sfa/sfa_codebase_context_agent.py --prompt "{{PROMPT}}" --directory "{{DIR}}" --extensions "{{EXT}}"
-
-# Self-correcting SQL agent
-sfa-sql-correcting DB PROMPT:
-    uv run agents/sfa/sfa_self_correcting_sql_agent.py --db "{{DB}}" --prompt "{{PROMPT}}"
+    uv run agents/sfa/sfa_codebase_context_agent_v3.py --prompt "{{PROMPT}}" --directory "{{DIR}}" --extensions "{{EXT}}"
 
 # === Layer 4: Just — infrastructure app recipes ===
+# SP8 recipes match upstream mac-mini-agent justfile interface (byte-identical
+# command patterns). Uses per-app CWD + bare `python main.py` invocations.
 
-# Start Listen job server
+_sandbox_url := env("AGENT_SANDBOX_URL", "")
+default_url := if _sandbox_url == "" { "http://localhost:7600" } else { _sandbox_url }
+
+# Start the listen server
 listen:
-    uv run apps/listen/main.py
+    cd apps/listen && uv run python main.py
 
-# Send single command to Listen
-send CMD:
-    uv run apps/direct/main.py "{{CMD}}"
+# Send a job to the listen server
+send prompt url=default_url:
+    cd apps/direct && uv run python main.py start {{url}} "{{prompt}}"
 
-# Parallel dispatch from file (daily use)
-fanout FILE:
-    uv run apps/drive/main.py fanout --file "{{FILE}}"
+# Send a job from a local file
+sendf file url=default_url:
+    #!/usr/bin/env bash
+    prompt="$(cat '{{file}}')"
+    cd apps/direct && uv run python main.py start '{{url}}' "$prompt"
 
-# Drive session management
-session CMD:
-    uv run apps/drive/main.py session "{{CMD}}"
+# Get a job's status
+job id url=default_url:
+    cd apps/direct && uv run python main.py get {{url}} {{id}}
 
-# Poll running sessions for completion
-poll:
-    uv run apps/drive/main.py poll
+# List all jobs (pass --archived to see archived)
+jobs *flags:
+    cd apps/direct && uv run python main.py list {{default_url}} {{flags}}
 
-# List queued/running jobs
-jobs:
-    uv run apps/direct/main.py jobs
+# Show full details of the latest N jobs (default: 1)
+latest n="1" url=default_url:
+    cd apps/direct && uv run python main.py latest {{url}} {{n}}
+
+# Stop a running job
+stop id url=default_url:
+    cd apps/direct && uv run python main.py stop {{url}} {{id}}
+
+# Archive all jobs
+clear url=default_url:
+    cd apps/direct && uv run python main.py clear {{url}}
 
 # Prune Observe events older than retention window
 db-prune:
     uv run apps/observe/prune.py
 
-# Start Drop Zone watcher (uses drops.yaml in cwd)
+# Start Drop Zone watcher (reads drops.yaml from apps/dropzone/)
 dropzone:
-    uv run apps/dropzone/main.py watch
-
-# Start Drop Zone watcher with custom config
-dropzone-config CONFIG:
-    uv run apps/dropzone/main.py watch --config "{{CONFIG}}"
+    cd apps/dropzone && uv run sfs_agentic_drop_zone.py
 
 # === SP11: Prompt Testing ===
 
@@ -178,28 +185,91 @@ promptfoo-view:
     npx promptfoo view
 
 # === SP12: Pi Integration ===
+# Recipes byte-identical with upstream disler/pi-vs-claude-code justfile.
+# ArhuGula-specific carve-outs (Exception 22) live at the end of this block.
 
-# Launch Pi (default TUI)
+# g1
+
+# 1. default pi
 pi:
     pi
 
-# Pi with agent-team orchestrator + theme cycler
-pi-team:
+# 2. Pure focus pi: strip footer and status line entirely
+ext-pure-focus:
+    pi -e extensions/pure-focus.ts
+
+# 3. Minimal pi: model name + 10-block context meter
+ext-minimal:
+    pi -e extensions/minimal.ts -e extensions/theme-cycler.ts
+
+# 4. Cross-agent pi: load commands from .claude/, .gemini/, .codex/ dirs
+ext-cross-agent:
+    pi -e extensions/cross-agent.ts -e extensions/minimal.ts
+
+# 5. Purpose gate pi: declare intent before working, persistent widget, focus the system prompt on the ONE PURPOSE for this agent
+ext-purpose-gate:
+    pi -e extensions/purpose-gate.ts -e extensions/minimal.ts
+
+# 6. Customized footer pi: Tool counter, model, branch, cwd, cost, etc.
+ext-tool-counter:
+    pi -e extensions/tool-counter.ts
+
+# 7. Tool counter widget: tool call counts in a below-editor widget
+ext-tool-counter-widget:
+    pi -e extensions/tool-counter-widget.ts -e extensions/minimal.ts
+
+# 8. Subagent widget: /sub <task> with live streaming progress
+ext-subagent-widget:
+    pi -e extensions/subagent-widget.ts -e extensions/pure-focus.ts -e extensions/theme-cycler.ts
+
+# 9. TillDone: task-driven discipline — define tasks before working
+ext-tilldone:
+    pi -e extensions/tilldone.ts -e extensions/theme-cycler.ts
+
+# g2
+
+# 10. Agent team: dispatcher orchestrator with team select and grid dashboard
+ext-agent-team:
     pi -e extensions/agent-team.ts -e extensions/theme-cycler.ts
 
-# Pi with agent-chain sequential pipeline + theme cycler
-pi-chain:
-    pi -e extensions/agent-chain.ts -e extensions/theme-cycler.ts
+# 11. System select: /system to pick an agent persona as system prompt
+ext-system-select:
+    pi -e extensions/system-select.ts -e extensions/minimal.ts -e extensions/theme-cycler.ts
 
-# Pi with damage-control safety rules + minimal + theme cycler
-pi-safe:
+# 12. Launch with Damage-Control safety auditing
+ext-damage-control:
     pi -e extensions/damage-control.ts -e extensions/minimal.ts -e extensions/theme-cycler.ts
 
-# Pi with ArhuGula Drive dispatch
+# 13. Agent chain: sequential pipeline orchestrator
+ext-agent-chain:
+    pi -e extensions/agent-chain.ts -e extensions/theme-cycler.ts
+
+# g3
+
+# 14. Pi Pi: meta-agent that builds Pi agents with parallel expert research
+ext-pi-pi:
+    pi -e extensions/pi-pi.ts -e extensions/theme-cycler.ts
+
+# ext
+
+# 15. Session Replay: scrollable timeline overlay of session history
+ext-session-replay:
+    pi -e extensions/session-replay.ts -e extensions/minimal.ts
+
+# 16. Theme cycler: Ctrl+X forward, Ctrl+Q backward, /theme picker
+ext-theme-cycler:
+    pi -e extensions/theme-cycler.ts -e extensions/minimal.ts
+
+# ArhuGula-specific carve-outs (Exception 22): bridge Pi to SP8 mac-mini-agent
+# runtime (Drive + Listen). No upstream equivalent — pi-vs-claude-code has no
+# SP8 apps. Extensions target post-SP8-r1 interface (positional Drive args,
+# Listen port 7600 no-auth).
+
+# Pi with ArhuGula Drive dispatch (tmux control via apps/drive)
 pi-drive:
     pi -e extensions/drive-dispatch.ts -e extensions/minimal.ts -e extensions/theme-cycler.ts
 
-# Pi with ArhuGula Listen job submission
+# Pi with ArhuGula Listen job submission (apps/listen port 7600)
 pi-listen:
     pi -e extensions/listen-submit.ts -e extensions/minimal.ts -e extensions/theme-cycler.ts
 
@@ -207,43 +277,12 @@ pi-listen:
 pi-full:
     pi -e extensions/drive-dispatch.ts -e extensions/listen-submit.ts -e extensions/damage-control.ts -e extensions/theme-cycler.ts
 
-# Pi with pi-pi meta-agent (builds Pi components via expert research)
-pi-pi:
-    pi -e extensions/pi-pi.ts -e extensions/theme-cycler.ts
-
-# Pi with cross-agent compatibility (loads .claude/ commands + agents)
-pi-cross:
-    pi -e extensions/cross-agent.ts -e extensions/theme-cycler.ts
-
-# Pi with system prompt selector (/system to pick agent persona)
-pi-system:
-    pi -e extensions/system-select.ts -e extensions/minimal.ts -e extensions/theme-cycler.ts
-
-# Pi with subagent widget (/sub, /subcont, /subclear)
-pi-sub:
-    pi -e extensions/subagent-widget.ts -e extensions/theme-cycler.ts
-
-# Pi with agent-im chat room (scaffold)
-pi-im:
-    pi -e extensions/agent-im.ts -e extensions/theme-cycler.ts
-
-# Pi with agent-forge evolutionary tools (scaffold)
-pi-forge:
-    pi -e extensions/agent-forge.ts -e extensions/theme-cycler.ts
-
-# Pi with chronicle state machine (scaffold)
-pi-chronicle:
-    pi -e extensions/chronicle.ts -e extensions/agent-team.ts -e extensions/theme-cycler.ts
-
-# Pi with domain ownership enforcement + team dispatch
-pi-team-safe:
-    pi -e extensions/agent-team.ts -e extensions/domain-ownership.ts -e extensions/theme-cycler.ts
-
-# Pi with full harness: team + domain + damage-control + chain
-pi-harness:
-    pi -e extensions/agent-team.ts -e extensions/domain-ownership.ts -e extensions/damage-control.ts -e extensions/agent-chain.ts -e extensions/theme-cycler.ts
-
 # === SP13: Steer GUI Automation ===
+# ArhuGula-specific carve-outs (Exception 24): thin wrappers over the built
+# steer binary for dev ergonomics. No upstream equivalent in mac-mini-agent
+# justfile (upstream has `steer1/2/3` variables that cat prompt files from
+# specs/ and invoke via `just send` or `claude --dangerously-skip-permissions`
+# for full agent-level control, not direct binary invocation).
 
 # Build steer Swift CLI (release mode)
 steer-build:
@@ -305,3 +344,60 @@ automate-amazon prompt="m4 mac mini with top specs, flowers for valentines day, 
 # Summarize a blog's latest post (headless, no auth needed)
 summarize-blog url="https://simonwillison.net/":
     claude "/bowser:hop-automate blog-summarizer \"{{url}}\" playwright headless"
+
+# === SP15: E2B Sandboxes ===
+# ArhuGula-specific recipes (Exception 26): no upstream justfile in agent-sandboxes
+# or agent-sandbox-skill. Thin wrappers for dev ergonomics, CWD=app dir pattern
+# matches SP8 mac-mini-agent (Exception 24 Steer precedent for no-upstream blocks).
+
+# Run a sandbox fundamental example (e.g.: just sbx-run 01_basic_sandbox.py)
+sbx-run script:
+    cd apps/sandbox_fundamentals && uv run "{{script}}"
+
+# Run the sandbox CLI (sbx subcommand, e.g.: just sbx sandbox list)
+sbx *args:
+    cd .claude/skills/agent-sandboxes/sandbox_cli && uv run sbx {{args}}
+
+# Start E2B MCP server (for use with .mcp.json.sandbox)
+sbx-mcp:
+    cd apps/sandbox_mcp && uv run python server.py
+
+# === SP16: Voice & Real-Time ===
+# ArhuGula-specific recipe (Exception 27): voice_to_claude_code.py lives under
+# apps/voice/ per ArhuGula apps/ convention (upstream claude-code-is-programmable
+# places it at repo root, which is reserved for harness infrastructure). PEP 723
+# inline deps handle Python packages via uv run. System prerequisite:
+# `brew install portaudio` (required by sounddevice + RealtimeSTT).
+#
+# INVOCATION: only `just voice` is supported. Do NOT invoke the script directly
+# via `uv run apps/voice/voice_to_claude_code.py` from outside the project tree —
+# the child `claude -p` subprocess the script spawns resolves settings.json +
+# damage-control hooks by walking up from the parent cwd, and direct invocation
+# from an arbitrary cwd may fail to locate the hooks. /harness-review 2026-04-14 S-02.
+#
+# SECURITY NOTE: This recipe runs an always-on microphone feeding speech
+# transcripts verbatim to `claude -p`. Do not run in shared spaces or near
+# untrusted audio sources — ambient speech containing a trigger word can drive
+# arbitrary Bash/Edit/Write in the spawned session. /harness-review 2026-04-14
+# S-01, S-03. Full upstream-posture findings tracked in Exception 28.
+
+# Start the voice-to-Claude-Code assistant (requires OPENAI_API_KEY + ANTHROPIC_API_KEY)
+voice:
+    uv run apps/voice/voice_to_claude_code.py
+
+# === Comprehensive Audit Infrastructure — DEPRECATED 2026-04-15 ===
+#
+# The custom Phase 2 sandbox fanout workflow (scripts/phase2_sp_fanout.sh +
+# agents/sfa/sfa_coder_validator_loop.py + the obox runtime at
+# apps/sandbox_workflows/) was removed per user direction 2026-04-15. See
+# audits/exceptions.md Exception 30 for the full deprecation rationale.
+#
+# Future audit phases that need sandboxed code verification should use the
+# built-in native IndyDevDan sandbox framework directly:
+#
+#   just sbx init --timeout 43200
+#   just sbx exec <sandbox_id> "..."
+#   just sbx files ...
+#
+# The canonical surface is documented in
+# .claude/skills/agent-sandboxes/SKILL.md (byte-identical upstream).

@@ -1,43 +1,31 @@
-"""Tests for DeepSeek provider module."""
+"""
+Tests for DeepSeek provider.
+"""
 
-from unittest.mock import MagicMock, patch
+import pytest
+import os
+from dotenv import load_dotenv
+from just_prompt.atoms.llm_providers import deepseek
 
-from just_prompt.atoms.llm_providers import deepseek as deepseek_mod
+# Load environment variables
+load_dotenv()
 
-
-@patch.dict("os.environ", {"DEEPSEEK_API_KEY": "test-key"})
-@patch("just_prompt.atoms.llm_providers.deepseek.OpenAI")
-def test_prompt_basic(mock_openai_cls):
-    """Basic prompt uses OpenAI SDK with DeepSeek base URL."""
-    mock_client = MagicMock()
-    mock_openai_cls.return_value = mock_client
-
-    mock_message = MagicMock()
-    mock_message.content = "DeepSeek response"
-    mock_choice = MagicMock()
-    mock_choice.message = mock_message
-    mock_response = MagicMock()
-    mock_response.choices = [mock_choice]
-    mock_client.chat.completions.create.return_value = mock_response
-
-    result = deepseek_mod.prompt("Say hello", "deepseek-chat")
-    assert result == "DeepSeek response"
-
-    # Verify DeepSeek base URL was used
-    call_kwargs = mock_openai_cls.call_args[1]
-    assert call_kwargs["base_url"] == "https://api.deepseek.com"
+# Skip tests if API key not available
+if not os.environ.get("DEEPSEEK_API_KEY"):
+    pytest.skip("DeepSeek API key not available", allow_module_level=True)
 
 
-@patch.dict("os.environ", {"DEEPSEEK_API_KEY": "test-key"})
-@patch("just_prompt.atoms.llm_providers.deepseek.OpenAI")
-def test_list_models(mock_openai_cls):
-    """list_models returns model IDs."""
-    mock_client = MagicMock()
-    mock_openai_cls.return_value = mock_client
+def test_list_models():
+    """Test listing DeepSeek models."""
+    models = deepseek.list_models()
+    assert isinstance(models, list)
+    assert len(models) > 0
+    assert all(isinstance(model, str) for model in models)
 
-    m1 = MagicMock()
-    m1.id = "deepseek-chat"
-    mock_client.models.list.return_value = MagicMock(data=[m1])
 
-    result = deepseek_mod.list_models()
-    assert result == ["deepseek-chat"]
+def test_prompt():
+    """Test sending prompt to DeepSeek."""
+    response = deepseek.prompt("What is the capital of France?", "deepseek-coder")
+    assert isinstance(response, str)
+    assert len(response) > 0
+    assert "paris" in response.lower() or "Paris" in response
