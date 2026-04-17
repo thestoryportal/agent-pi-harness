@@ -101,15 +101,15 @@ See Source of Truth Section 8 for priority order. Fix structural issues (Section
 
 | SP | Name | Status | Features | Source |
 |----|------|--------|:--------:|--------|
-| SP1 | CC Harness | BUILT | 40 | hooks-mastery, install-maintain, damage-control |
-| SP2 | Security Hardening | BUILT | 6 | damage-control |
-| SP3 | Validation Pipeline | BUILT | 8 | agentic-finance-review, hooks-mastery |
-| SP4 | Multi-Model | BUILT | 7 | just-prompt |
-| SP5 | Knowledge Base | BUILT | 7 | pocket-pick |
-| SP6 | Library Distribution | BUILT | 6 | the-library |
-| SP7 | Single-File Agents | BUILT | 8 | single-file-agents |
-| SP8 | Drive + Listen + Direct | BUILT | 15 | mac-mini-agent |
-| SP9 | Orchestration | BUILT | 11 | bowser, comprehensive-ref, infinite-agentic-loop |
+| SP1 | CC Harness | BUILT + AUDIT R1 (2026-04-13) | 40 | hooks-mastery, install-maintain, damage-control |
+| SP2 | Security Hardening | BUILT + AUDIT R1 (2026-04-13) | 6 | damage-control |
+| SP3 | Validation Pipeline | BUILT + AUDIT R1 (2026-04-13) | 8 | agentic-finance-review, hooks-mastery |
+| SP4 | Multi-Model | BUILT + AUDIT R1 (2026-04-14) | 7 | just-prompt |
+| SP5 | Knowledge Base | BUILT + AUDIT R1 (2026-04-14) | 7 | pocket-pick |
+| SP6 | Library Distribution | BUILT + AUDIT R1 (2026-04-14) | 6 | the-library |
+| SP7 | Single-File Agents | BUILT + AUDIT R1 (2026-04-14) | 8 | single-file-agents |
+| SP8 | Drive + Listen + Direct | BUILT + AUDIT R1 (2026-04-14) | 15 | mac-mini-agent |
+| SP9 | Orchestration | BUILT + AUDIT R1 (2026-04-14) | 11 | bowser, comprehensive-ref, infinite-agentic-loop |
 | SP10 | Drop Zones | BUILT + AUDIT R1 (2026-04-14) | 4 | agentic-drop-zones |
 | SP11 | Prompt Testing | BUILT + AUDIT R1 (2026-04-14) | 4 | llm-prompt-testing |
 | SP12 | Pi Integration + Harness Spec | BUILT + AUDIT R1 (2026-04-14) | 14 | pi-vs-claude-code + harness-spec (Tier 2 concept) |
