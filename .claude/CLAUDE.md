@@ -1,75 +1,46 @@
 # CLAUDE.md — ArhuGula
 
-Portable Pi-orchestrated agent development environment. Identical clone of IndyDevDan's
-complete agent harness development environment.
+Pi-orchestrated Claude Code agent development environment. Four-layer architecture for building AI applications with agents, hooks, and orchestrated workflows.
 
 ## What This Repo Does
 
-This repo implements IndyDevDan's four-layer architecture (Skill -> Subagent -> Command -> Justfile)
-as a standalone, portable agent development environment. It provides the harness for building
-projects with Claude Code agents, hooks, and orchestrated workflows.
+This repo is the harness for building software projects with Claude Code. It provides:
+- Agents, hooks, and slash commands pre-wired for agentic development
+- Single-file agent templates for common data tasks (SQL, CSV, JSON, web)
+- Browser automation, voice input, E2B sandboxes, and Pi terminal integration
+- A validation pipeline for reviewing agent output against specs
 
-## What This Repo Does NOT Do
+Projects built with ArhuGula live in their own repos. This harness is the shared platform.
 
-- No production application code lives here (projects built with ArhuGula live in their own repos)
-- No direct API calls to external services from the harness itself
-- No invented features — only features documented in IndyDevDan's repos
+## Starting a New Project
+
+1. Create a new repo for the project (not in ArhuGula)
+2. Run `just prime` to load project context
+3. Run `just scout` to decompose the spec into implementation units
+4. Run `just architect` to produce a build plan
+5. Run `just build` to implement each unit
+6. Run `just harness-review` to validate against the spec
+
+## Capabilities
+
+| Category | Recipes |
+|----------|---------|
+| **Build pipeline** | `prime`, `scout`, `architect`, `build`, `harness-review` |
+| **Session management** | `cldi`, `cldii`, `cldm`, `cldmm` |
+| **Single-file agents** | `sfa-bash`, `sfa-duckdb`, `sfa-sqlite`, `sfa-polars`, `sfa-jq`, `sfa-metaprompt`, `sfa-context` |
+| **Drive + Listen** | `listen`, `send`, `sendf`, `job`, `jobs`, `latest`, `stop`, `clear` |
+| **Browser automation** | `hop`, `ui-review`, `automate-amazon`, `summarize-blog` |
+| **Drop zones** | `dropzone` |
+| **Prompt testing** | `eval-builder`, `eval-validator`, `eval-scout`, `eval-all`, `promptfoo-view` |
+| **Pi integration** | `pi`, `pi-drive`, `pi-listen`, `pi-full`, `ext-*` (16 extensions) |
+| **Steer (Swift GUI)** | `steer-build`, `steer-see`, `steer-apps`, `steer-ocr` |
+| **E2B sandboxes** | `sbx`, `sbx-run`, `sbx-mcp` |
+| **Voice** | `voice` |
+| **Observe** | `db-prune` |
 
 ## Runtime Boundary
 
-n8n remains the sole runtime orchestrator for production data flows. This harness augments
-Claude Code development sessions only.
-
-## Canonical Source Document
-
-| Document | Path | Role |
-|----------|------|------|
-| **Source of Truth** | `~/Projects/indydevdan-harness-research/docs/superpowers/specs/arhugula-source-of-truth.md` | **THE** canonical document. 101 features, 19 patterns, 14 principles, 15 sub-projects. Drives all implementation. |
-
-All prior specs (v1, v2, feature-inventory.md) are SUPERSEDED by this document.
-Reference docs (method-synthesis, comprehensive reference, repo analyses) remain as background material.
-
-## Source Precedence
-
-| Rank | Source | Role |
-|------|--------|------|
-| 1 | Official Anthropic docs | Ground truth for Claude Code capabilities |
-| 2 | v2 Design Spec + Feature Inventory | What to build and implementation status |
-| 3 | IndyDevDan method reference + repos | Patterns, conventions, source code |
-| 4 | Project-specific constraints | Hardware limits, environment config |
-
-## Implementation Rules (MANDATORY)
-
-These rules prevent scope drift, invented features, and missed gaps:
-
-1. **Check the Source of Truth BEFORE building anything.** Read `arhugula-source-of-truth.md`
-   Section 4 and verify the feature is classified as GAP (not REJECTED).
-   If a feature is REJECTED, do not build it. If it is not in the document, it is not
-   in scope — flag it as NON-INDYDEVDAN and get user approval.
-
-2. **Follow the sub-project priority order.** Section 8 of the source of truth defines
-   priority order. Do not skip ahead. Do not reorder without explicit user approval.
-   Current: SP1-SP16 BUILT + AUDIT R1 COMPLETE + SP r2 COMPLETE (2026-04-17). SP r2
-   comprised: (a) systematic re-audit all 16 SPs — 1 new finding (Exception 36, log_dir
-   path fix); (b) deferred-items pass — all 6 items resolved or permanently deferred.
-   Post-audit cleanup DONE (Ex32-34, 2026-04-17). main merged + pushed.
-   Option (c) security-posture review COMPLETE (2026-04-17): Ex14/24/28/29 reviewed — no
-   upstream patches, no obsolete rules, all dormant findings unchanged. Next: user-directed work.
-
-3. **No invented components.** If a feature does not exist in any IndyDevDan repo
-   (code, architecture doc, or concept), do not add it. The goal is identical replication.
-   The REJECTED list (Section 7) is final — do not re-propose rejected features.
-
-4. **Verify source attribution.** For every component, identify the source repo and
-   whether code exists or is concept-only. Check the repo snapshot in
-   `research/repo-snapshots/` for actual implementation patterns to follow.
-
-5. **Use the IndyDevDan planning workflow.** The pipeline is:
-   `/scout` (decompose) → `/build` (implement) → `/harness-review` (verify).
-   External tools (gstack) may supplement but do not replace this pipeline.
-
-6. **Update the Source of Truth after each sub-project.** When a feature moves from
-   GAP to BUILT, update `arhugula-source-of-truth.md` Section 4 with the date.
+n8n remains the sole runtime orchestrator for production data flows. This harness augments Claude Code development sessions only.
 
 ## Directory Navigation
 
@@ -82,7 +53,7 @@ These rules prevent scope drift, invented features, and missed gaps:
 | Review settings/permissions | `.claude/settings.json` |
 | Check skill catalog | `~/.claude/skills/library/library.yaml` (global catalog) |
 | View environment config | `.env.example` |
-| Check feature status | `~/Projects/indydevdan-harness-research/docs/superpowers/specs/arhugula-source-of-truth.md` |
+| Review audit history | `audits/exceptions.md` |
 
 ## Naming Conventions
 
@@ -98,29 +69,6 @@ These rules prevent scope drift, invented features, and missed gaps:
 | 2. Subagent | Isolated agent sessions | `just build`, `just harness-review` |
 | 3. Command | Saved workflows | `just cldi`, `just cldii` |
 | 4. Justfile | Composable recipes | All `just` commands |
-
-## Sub-Project Status
-
-See Source of Truth Section 8 for priority order. Fix structural issues (Section 3) first.
-
-| SP | Name | Status | Features | Source |
-|----|------|--------|:--------:|--------|
-| SP1 | CC Harness | BUILT + AUDIT R1 (2026-04-13) | 40 | hooks-mastery, install-maintain, damage-control |
-| SP2 | Security Hardening | BUILT + AUDIT R1 (2026-04-13) | 6 | damage-control |
-| SP3 | Validation Pipeline | BUILT + AUDIT R1 (2026-04-13) | 8 | agentic-finance-review, hooks-mastery |
-| SP4 | Multi-Model | BUILT + AUDIT R1 (2026-04-14) | 7 | just-prompt |
-| SP5 | Knowledge Base | BUILT + AUDIT R1 (2026-04-14) | 7 | pocket-pick |
-| SP6 | Library Distribution | BUILT + AUDIT R1 (2026-04-14) | 6 | the-library |
-| SP7 | Single-File Agents | BUILT + AUDIT R1 (2026-04-14) | 8 | single-file-agents |
-| SP8 | Drive + Listen + Direct | BUILT + AUDIT R1 (2026-04-14) | 15 | mac-mini-agent |
-| SP9 | Orchestration | BUILT + AUDIT R1 (2026-04-14) | 11 | bowser, comprehensive-ref, infinite-agentic-loop |
-| SP10 | Drop Zones | BUILT + AUDIT R1 (2026-04-14) | 4 | agentic-drop-zones |
-| SP11 | Prompt Testing | BUILT + AUDIT R1 (2026-04-14) | 4 | llm-prompt-testing |
-| SP12 | Pi Integration + Harness Spec | BUILT + AUDIT R1 (2026-04-14) | 14 | pi-vs-claude-code + harness-spec (Tier 2 concept) |
-| SP13 | Steer (Swift GUI) | BUILT + AUDIT R1 (2026-04-14) | 3 | mac-mini-agent |
-| SP14 | Browser Automation | BUILT + AUDIT R1 (2026-04-14) | 8 | bowser |
-| SP15 | E2B Sandboxes | BUILT + AUDIT R1 (2026-04-14) + R2 obox deprecated (2026-04-15) | 4 | agent-sandboxes |
-| SP16 | Voice & Real-Time | BUILT + AUDIT R1 (2026-04-14) | 2 | hooks-mastery + claude-code-is-programmable |
 
 ## Hook Security Model
 
