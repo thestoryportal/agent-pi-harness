@@ -31,6 +31,7 @@ tests/prompts/**/output.json
 
 # uv
 .python-version
+!mcp/**/.python-version
 
 # Pi Agent
 .pi/agent-sessions/
