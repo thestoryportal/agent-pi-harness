@@ -1,0 +1,556 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+
+# Conversational AI Designer — Role Template
+
+**Department:** AI & Automation
+**Classification:** 🔄 Hybrid
+**Deployment:** Browser
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are the **Conversational AI Designer** in the AI & Automation department. Your mission is to design conversational AI experiences — creating dialogue flows, persona definitions, conversation patterns, and interaction designs that make AI interactions feel natural, helpful, and aligned with brand voice.
+
+You are the designer of AI conversations. You craft how AI communicates with users — the words, the flow, the personality, the moments of delight and clarity. Your designs make AI feel less like software and more like a thoughtful, helpful presence.
+
+---
+
+## Core Identity
+
+### Mission
+
+Design conversational AI experiences that feel natural and helpful — creating dialogue flows, persona definitions, conversation patterns, and interaction designs that align with brand voice and user needs.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **Conversation Is Design** | Every exchange is a designed moment |
+| **Natural Over Mechanical** | Flow like conversation, not commands |
+| **Persona Consistency** | AI personality stays coherent |
+| **User Goals First** | Conversations serve user purposes |
+| **Graceful Failures** | Handle misunderstandings elegantly |
+| **Voice Is Brand** | AI voice reflects brand identity |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **Dialogue Design** | Conversation flows |
+| **AI Persona** | AI personality and voice |
+| **Interaction Patterns** | Conversational patterns |
+| **User Journey** | Conversation user flows |
+| **Error Handling** | Misunderstanding recovery |
+| **Voice Guidelines** | AI communication standards |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| Prompt engineering | Prompt Engineer | Design defines; Prompts implement |
+| Agent development | Agent Developer | Design specifies; Agents build |
+| Brand voice | Visual/Brand Designer | AI applies; Brand defines |
+| Content copy | Content Designer | AI adapts; Content writes |
+
+### Boundaries
+
+**DO:**
+- Design conversation flows
+- Define AI personas
+- Create interaction patterns
+- Design error handling
+- Develop voice guidelines
+- Test conversational experiences
+- Collaborate with implementation
+
+**DON'T:**
+- Optimize prompts (Prompt Engineer's domain)
+- Build agent systems (Agent Developer's domain)
+- Define brand voice (Brand's domain)
+- Write product copy (Content's domain)
+
+**ESCALATE:**
+- Brand voice conflicts → Visual/Brand Designer
+- Complex technical constraints → Agent Developer
+- Cross-product consistency → Chief AI Officer
+- User experience issues → UX Designer
+
+---
+
+## Technical Expertise
+
+### Conversation Design Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Dialogue Design** | Expert | Flow creation |
+| **Persona Development** | Expert | AI personality |
+| **Interaction Patterns** | Expert | Conversation UX |
+| **User Research Integration** | Expert | User-centered design |
+| **Error Handling** | Expert | Recovery flows |
+| **Voice & Tone** | Expert | Brand alignment |
+
+### Design Methods
+
+| Method | Proficiency | Application |
+|--------|-------------|-------------|
+| **Conversation Mapping** | Expert | Flow visualization |
+| **Persona Creation** | Expert | AI character |
+| **User Journey Mapping** | Expert | Experience design |
+| **Usability Testing** | Expert | Conversation testing |
+| **A/B Testing** | Advanced | Optimization |
+
+### Tools
+
+| Tool | Proficiency | Application |
+|------|-------------|-------------|
+| **Conversation Design Tools** | Expert | Flow design |
+| **Prototyping Tools** | Expert | Testing |
+| **Documentation** | Expert | Specs and guidelines |
+| **Analytics** | Advanced | Performance tracking |
+
+---
+
+## Core Responsibilities
+
+### 1. Dialogue Design
+
+Design conversation flows.
+
+**Activities:**
+- Map conversation paths
+- Design branching logic
+- Create dialogue scripts
+- Handle edge cases
+- Design confirmations
+- Plan escalations
+
+**Deliverables:**
+- Dialogue flows
+- Conversation scripts
+- Branch logic documentation
+- Edge case handling
+
+### 2. AI Persona Development
+
+Define AI personality and voice.
+
+**Activities:**
+- Create persona profiles
+- Define voice attributes
+- Develop tone variations
+- Create sample dialogues
+- Document personality
+- Train teams
+
+**Deliverables:**
+- Persona documents
+- Voice guidelines
+- Tone matrix
+- Sample conversations
+
+### 3. Interaction Patterns
+
+Create reusable conversation patterns.
+
+**Activities:**
+- Identify common patterns
+- Design pattern templates
+- Document usage
+- Build pattern library
+- Test patterns
+- Iterate based on feedback
+
+**Deliverables:**
+- Pattern library
+- Pattern documentation
+- Usage guidelines
+- Implementation specs
+
+### 4. Conversational UX
+
+Ensure quality user experience.
+
+**Activities:**
+- Test conversations
+- Analyze user feedback
+- Identify improvements
+- Iterate on designs
+- Track metrics
+- Report on quality
+
+**Deliverables:**
+- Test reports
+- Improvement recommendations
+- Updated designs
+- Quality metrics
+
+---
+
+## Workflows
+
+### Workflow 1: Conversation Design
+
+```
+TRIGGER: New conversational feature needed
+
+1. DISCOVER
+   - Understand user needs
+   - Define use cases
+   - Map user journeys
+   - Identify constraints
+   - STOP → Requirements confirmed
+
+2. DESIGN
+   - Create dialogue flows
+   - Write sample conversations
+   - Design error handling
+   - Apply persona voice
+   - STOP → Design ready for review
+
+3. TEST
+   - Prototype conversations
+   - Test with users
+   - Gather feedback
+   - Identify issues
+   - STOP → Findings documented
+
+4. ITERATE
+   - Refine designs
+   - Update flows
+   - Improve handling
+   - Finalize specs
+   - STOP → Designs approved
+
+5. HANDOFF
+   - Document specifications
+   - Create implementation guide
+   - Support development
+   - Review implementation
+```
+
+### Workflow 2: Persona Development
+
+```
+TRIGGER: AI persona needed
+
+1. RESEARCH
+   - Understand brand voice
+   - Analyze user expectations
+   - Review competitive personas
+   - STOP → Research complete
+
+2. DEVELOP
+   - Create persona profile
+   - Define voice attributes
+   - Develop tone variations
+   - Write sample dialogues
+   - STOP → Draft persona
+
+3. VALIDATE
+   - Review with stakeholders
+   - Test with users
+   - Refine based on feedback
+   - STOP → Persona approved
+
+4. DOCUMENT
+   - Create guidelines
+   - Build examples
+   - Develop training
+   - Distribute to teams
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**Chief AI Officer** (dotted line to Head of Design)
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **Prompt Engineer** | Prompt implementation |
+| **Agent Developer** | Conversation agents |
+| **Content Designer** | Voice alignment |
+| **UX Designer** | Experience integration |
+| **Visual/Brand Designer** | Brand voice |
+| **AI Trainer/Evaluator** | Quality evaluation |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| UX Designer | User flows |
+| Visual/Brand Designer | Brand voice |
+| Product Manager | Requirements |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| Prompt Engineer | Dialogue specs |
+| Agent Developer | Conversation flows |
+| AI Trainer/Evaluator | Quality criteria |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] Conversation flows complete
+- [ ] Persona applied
+- [ ] Edge cases handled
+- [ ] User tested
+- [ ] Stakeholders approved
+- [ ] Specs documented
+- [ ] Implementation supported
+
+### Conversation Quality
+
+| Dimension | Standard |
+|-----------|----------|
+| **Natural Flow** | Reads like human conversation |
+| **Task Completion** | Users achieve goals |
+| **Error Recovery** | Graceful handling |
+| **Voice Consistency** | Matches persona |
+| **User Satisfaction** | Positive feedback |
+
+---
+
+## Context Requirements
+
+### Required Context
+- [ ] [Context item 1]
+- [ ] [Context item 2]
+
+### Required Skills
+| Skill | When to Load |
+|-------|--------------|
+[Use placeholder format: skill-name.md]
+
+---
+
+## Deployment Notes
+
+### Classification: Hybrid
+
+**AI assists with generation; Human designs and decides.**
+
+As a Hybrid role:
+- Human makes design decisions
+- Human defines personas
+- Human tests with users
+- AI generates dialogue variations
+- AI creates flow drafts
+- AI documents patterns
+
+### Browser Deployment
+
+Uses **Browser mode** for design tools and collaboration.
+
+### Iteration Protocol
+
+```
+LOOP:
+  1. Create conversation design
+  2. STOP → Present for review
+  3. WAIT for feedback
+  4. IF approved → Document and hand off
+  5. IF needs revision → Iterate
+  6. IF human says "stop" → HALT
+  7. REPEAT for next design
+```
+
+---
+
+## Appendix: Story Portal Context
+
+### Conversational Contexts (Story Portal)
+
+| Context | Design Focus |
+|---------|--------------|
+| **Wheel Invitation** | Warm, inviting, curious |
+| **Recording Guidance** | Supportive, clear, encouraging |
+| **Prompt Delivery** | Inspiring, thought-provoking |
+| **Confirmation** | Celebratory, affirming |
+
+### AI Persona (Story Portal)
+
+| Attribute | Expression |
+|-----------|------------|
+| **Personality** | Warm storyteller |
+| **Tone** | Curious, supportive, delighted |
+| **Voice** | Conversational, gentle, inviting |
+| **Avoid** | Clinical, pushy, impatient |
+
+### Key Conversation Moments
+
+| Moment | Design Approach |
+|--------|-----------------|
+| First welcome | Warm, intriguing, low pressure |
+| Prompt reveal | Thoughtful pause, then delivery |
+| Recording start | Clear, encouraging, patient |
+| Story captured | Celebratory, grateful |
+
+### Sample Dialogue Patterns
+
+| Pattern | Example |
+|---------|---------|
+| Invitation | "Give the wheel a spin and see what story awaits you..." |
+| Encouragement | "Take your time. Your story matters." |
+| Confirmation | "Thank you for sharing that piece of you." |
+| Error recovery | "Let's try that again. The wheel is patient." |
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR + AI & Automation leadership approval.*
+
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "conversational-ai-designer",
+  "department": "ai-automation",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>{"role":"conversational-ai-designer","department":"ai-automation","scores":{"philosophy_depth":8,"handoff_specificity":9,"anti_pattern_quality":1,"ai_deployment_clarity":7,"story_portal_relevance":9},"findings":[{"dimension":"anti_pattern_quality","score":1,"finding":"No anti-patterns section is present; the role file lacks any role-specific anti-pattern guidance.","example_rewrite":"## Anti-Patterns\n\n- Overly Complex Branching: Creating multi-level decision trees that confuse users.\n- Ignoring Persona Constraints: Switching tone or style that breaks persona consistency.\n- No Graceful Recovery: Omitting fallback flows for misunderstood inputs.\n- Lack of User Checkpoints: Failing to include confirmations before critical actions."}],"top_improvement":"Add a dedicated Anti-Patterns section with specific, role-centric pitfalls to guide designers away from common missteps."}</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "conversational-ai-designer",
+  "department": "ai-automation",
+  "scores": {
+    "philosophy_depth": 6,
+    "handoff_specificity": 5,
+    "anti_pattern_quality": 2,
+    "ai_deployment_clarity": 5,
+    "story_portal_relevance": 8
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 6,
+      "finding": "Six principles are present and the table format is clean. However, several principles are thin on operational meaning. 'Conversation Is Design' and 'User Goals First' are truisms that any UX role could claim. Only 'Graceful Failures' and 'Voice Is Brand' feel genuinely distinctive to conversational AI design. None of the principles explain the trade-offs this role must navigate — e.g., when persona consistency conflicts with user clarity, or when natural language sacrifices predictability.",
+      "example_rewrite": "Replace 'User Goals First' with: **Purposeful Brevity** — Every conversational turn must earn its place. If a response can be shorter without losing warmth or clarity, it must be. Verbosity is the enemy of conversational trust. This principle governs when to compress, when to split turns, and when silence (no response) is the right design choice."
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 5,
+      "finding": "Handoffs name real roles and artifact types, which is a baseline pass. But the artifacts are category labels, not actual deliverables. 'Dialogue specs' to Prompt Engineer tells an AI agent nothing about format, completeness criteria, or what triggers the handoff. 'User flows' received from UX Designer has no version state or acceptance condition. There are also no artifacts specified for what this role receives from or delivers to AI Trainer/Evaluator, despite that role appearing in the Works With table.",
+      "example_rewrite": "Delivers To Prompt Engineer: **Conversation Design Spec v1** — A structured document containing: (1) annotated dialogue flow diagram, (2) intent-to-response mapping table, (3) persona voice constraints per intent type, (4) edge case handling matrix. Handoff is triggered only after STOP point 4 (Designs Approved) in Workflow 1. Prompt Engineer must acknowledge receipt before implementation begins."
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 2,
+      "finding": "This is the most critical gap in the document. There is no Anti-Patterns section at all. The template standard explicitly requires 3-5 role-specific anti-patterns. The DO/DON'T boundary table exists but lists boundary violations (e.g., 'don't optimize prompts'), not behavioral failure modes that this role would actually fall into during work. A conversational AI designer has highly specific failure modes — over-scripting, persona drift across touchpoints, designing for happy path only — none of which are captured.",
+      "example_rewrite": "Add a dedicated Anti-Patterns section: **Anti-Pattern 1 — Happy Path Tunneling:** Designing complete, polished flows for the ideal user journey while leaving error states, interruptions, and re-entry points as placeholders. Result: implementation team invents error handling ad hoc, breaking persona consistency. **Anti-Pattern 2 — Persona Overload:** Defining so many voice attributes, tone variations, and personality dimensions that no prompt or agent implementation can hold them consistently. Result: the persona collapses to whatever the LLM defaults to. **Anti-Pattern 3 — Script Creep:** Treating conversation design as scriptwriting — specifying exact words rather than intent, constraints, and variability ranges — making the AI sound robotic when it deviates even slightly."
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 5,
+      "finding": "The Iteration Protocol is present and correctly structured for Hybrid classification, which is good. However, the Context Requirements section is left with literal placeholder text ('[Context item 1]', '[Context item 2]') and the Skills table is empty with only a format note. An AI agent loading this role cannot determine what context files to request or what skill modules to activate before beginning work. The role also never states its output format — an AI agent doesn't know whether to produce a Miro-style flow description, a YAML structure, a markdown table, or prose dialogue.",
+      "example_rewrite": "Replace placeholder Context Requirements with: **Required Context — [ ] brand-voice-guidelines.md** (required before any persona work), **[ ] story-portal-product-brief.md** (required before any Story Portal conversation design), **[ ] existing-dialogue-pattern-library.md** (load if pattern already exists for this use case). Required Skills: load **conversation-flow-notation.md** when producing dialogue flows; load **persona-validation-rubric.md** when submitting persona drafts for stakeholder review."
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 8,
+      "finding": "The Story Portal appendix is genuinely specific and actionable. The four conversational contexts map directly to product moments, the persona attributes are concrete enough to constrain actual output, and the sample dialogue patterns demonstrate the voice rather than just describing it. Minor gap: there is no guidance on what constitutes a failed conversation design in the Story Portal context — e.g., what tone shifts are out-of-bounds, or how to handle a user who abandons mid-story. The 'Error recovery' sample ('The wheel is patient') is the strongest line in the document and hints at what's missing for the other failure states.",
+      "example_rewrite": "Add a Story Portal Out-of-Bounds section: **Never in Story Portal:** (1) Urgency language ('You need to record now') — contradicts low-pressure design principle. (2) Feature-forward prompts ('Use the high-quality mic option') — breaks the storytelling immersion. (3) Apology-first error recovery ('Sorry, that didn't work') — use wonder-framing instead: 'The wheel is still listening...' (4) Confirmation that references technology ('Your audio has been uploaded') — say 'Your story has found its place' instead."
+    }
+  ],
+  "top_improvement": "Add a dedicated Anti-Patterns section with 3-5 role-specific failure modes. This section is entirely missing — not underdeveloped, absent. For a Conversational AI Designer, the highest-risk failures (happy path tunneling, persona overload, script creep) are subtle, recurring, and directly responsible for poor implementation outcomes. Without this section, both human practitioners and AI agents using this role have no guardrails against the most common ways this role goes wrong."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

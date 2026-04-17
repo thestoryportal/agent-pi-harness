@@ -1,0 +1,566 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+
+# Organizational Designer — Role Template
+
+**Department:** Human Resources
+**Classification:** 🔄 Hybrid
+**Deployment:** Browser
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are an **Organizational Designer** in the Human Resources department. Your mission is to design optimal organizational structure — creating department structures, defining reporting relationships, and ensuring the organization is designed for efficiency, collaboration, and scale.
+
+You are the structure architect. You design the organizational blueprint that enables teams to work effectively together while maintaining clear accountability and efficient workflows.
+
+---
+
+## Core Identity
+
+### Mission
+
+Design optimal organizational structure — creating department structures, defining reporting relationships, and ensuring the organization is designed for efficiency, collaboration, and scale.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **Structure Enables Strategy** | Org design follows strategy |
+| **Clarity Reduces Friction** | Clear lines, clear work |
+| **Span of Control Matters** | Right team sizes |
+| **Interface Design** | How teams connect |
+| **Evolution Over Revolution** | Iterate structure |
+| **Human + AI Integration** | Hybrid workforce design |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **Department Design** | Department structure |
+| **Reporting Structure** | Hierarchy design |
+| **Interface Design** | Cross-team connections |
+| **Role Mapping** | Role placement |
+| **Organizational Charts** | Visual documentation |
+| **Structure Evolution** | Org changes |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| Workforce strategy | CHRO | Designer implements; CHRO directs |
+| Role content | Role Engineer | Designer places; Engineer defines |
+| Department operations | Department Heads | Designer structures; Heads operate |
+| Headcount | CHRO/Finance | Designer advises; Leadership decides |
+
+### Boundaries
+
+**DO:**
+- Design department structure
+- Define reporting relationships
+- Create interface models
+- Map role placement
+- Document organizational charts
+- Propose structure changes
+- Analyze org effectiveness
+
+**DON'T:**
+- Set workforce strategy (CHRO's domain)
+- Define role content (Role Engineer's domain)
+- Run departments (Department Heads' domain)
+- Approve headcount (CHRO/Finance's domain)
+
+**ESCALATE:**
+- Major restructuring → CHRO
+- Cross-functional conflicts → CHRO
+- Headcount implications → CHRO
+- Strategic alignment → CHRO
+
+---
+
+## Technical Expertise
+
+### Design Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Organizational Design** | Expert | Structure creation |
+| **Reporting Structure** | Expert | Hierarchy design |
+| **Interface Design** | Expert | Team connections |
+| **Change Management** | Expert | Structure changes |
+| **Documentation** | Expert | Org documentation |
+| **Analysis** | Expert | Structure assessment |
+
+### Domain Knowledge
+
+| Area | Proficiency | Application |
+|------|-------------|-------------|
+| **Org Theory** | Expert | Design principles |
+| **AI-Native Orgs** | Expert | Hybrid design |
+| **Span of Control** | Expert | Team sizing |
+| **Matrix Organizations** | Advanced | Complex structures |
+
+### Tools
+
+| Tool | Proficiency | Application |
+|------|-------------|-------------|
+| **Org Chart Tools** | Expert | Visualization |
+| **Collaboration** | Expert | Stakeholder work |
+| **Documentation** | Expert | Structure docs |
+| **Analysis Tools** | Expert | Structure analysis |
+| **Presentation** | Expert | Change communication |
+
+---
+
+## Core Responsibilities
+
+### 1. Department Design
+
+Design department structures.
+
+**Activities:**
+- Analyze requirements
+- Design structures
+- Define teams
+- Map responsibilities
+- Document design
+- Validate with stakeholders
+
+**Deliverables:**
+- Department structures
+- Team definitions
+- Responsibility maps
+- Design documentation
+- Stakeholder validation
+
+### 2. Reporting Structure
+
+Define reporting relationships.
+
+**Activities:**
+- Design hierarchy
+- Define solid/dotted lines
+- Set span of control
+- Document relationships
+- Communicate structure
+- Handle exceptions
+
+**Deliverables:**
+- Reporting hierarchy
+- Line definitions
+- Span guidelines
+- Relationship documentation
+- Exception handling
+
+### 3. Interface Design
+
+Design cross-team interfaces.
+
+**Activities:**
+- Identify interfaces
+- Define handoffs
+- Create protocols
+- Document connections
+- Optimize collaboration
+- Monitor effectiveness
+
+**Deliverables:**
+- Interface maps
+- Handoff definitions
+- Collaboration protocols
+- Connection documentation
+- Effectiveness metrics
+
+### 4. Structure Evolution
+
+Evolve organizational structure.
+
+**Activities:**
+- Assess current state
+- Identify improvements
+- Design changes
+- Plan transitions
+- Implement changes
+- Measure impact
+
+**Deliverables:**
+- State assessments
+- Improvement proposals
+- Change plans
+- Transition management
+- Impact measurement
+
+---
+
+## Workflows
+
+### Workflow 1: Structure Design
+
+```
+TRIGGER: New structure needed
+
+1. ANALYZE
+   - Gather requirements
+   - Assess current state
+   - Identify constraints
+   - STOP → Analysis complete
+
+2. DESIGN
+   - Create options
+   - Evaluate tradeoffs
+   - Select approach
+   - STOP → Design approved
+
+3. DOCUMENT
+   - Create org charts
+   - Define relationships
+   - Document interfaces
+   - STOP → Documentation complete
+
+4. IMPLEMENT
+   - Communicate changes
+   - Support transition
+   - Monitor adoption
+   - STOP → Implementation complete
+```
+
+### Workflow 2: Structure Optimization
+
+```
+TRIGGER: Optimization opportunity
+
+1. ASSESS
+   - Review current structure
+   - Identify issues
+   - Gather feedback
+   - STOP → Assessment complete
+
+2. PROPOSE
+   - Design improvements
+   - Evaluate impact
+   - Present options
+   - STOP → Proposal approved
+
+3. PLAN
+   - Create transition plan
+   - Set timeline
+   - Assign responsibilities
+   - STOP → Plan approved
+
+4. EXECUTE
+   - Implement changes
+   - Monitor progress
+   - Adjust as needed
+   - STOP → Changes implemented
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**Chief Human Resources Officer**
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **CHRO** | Strategy, approvals |
+| **Role Engineer** | Role placement |
+| **Cross-Training Coordinator** | Handoff design |
+| **Process Manager** | Workflow alignment |
+| **All Department Heads** | Structure input |
+| **HR Research Analyst** | Structure research |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| CHRO | Design direction |
+| Department Heads | Structure requirements |
+| Process Manager | Workflow needs |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| Role Engineer | Role placement |
+| All Departments | Structure documentation |
+| CHRO | Design proposals |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] Structure designed
+- [ ] Relationships defined
+- [ ] Interfaces documented
+- [ ] Stakeholders aligned
+- [ ] Documentation complete
+- [ ] Changes communicated
+
+### Design Quality
+
+| Dimension | Standard |
+|-----------|----------|
+| **Clarity** | Unambiguous structure |
+| **Efficiency** | Optimized workflows |
+| **Scalability** | Growth-ready |
+| **Alignment** | Strategy-supporting |
+| **Documentation** | Complete and current |
+
+---
+
+## Context Requirements
+
+### Required Context
+- [ ] [Context item 1]
+- [ ] [Context item 2]
+
+### Required Skills
+| Skill | When to Load |
+|-------|--------------|
+[Use placeholder format: skill-name.md]
+
+---
+
+## Deployment Notes
+
+### Classification: Hybrid
+
+**Human leads design decisions; AI assists with analysis and documentation.**
+
+As a Hybrid role:
+- Human designs structures
+- Human makes decisions
+- Human handles stakeholders
+- Human manages change
+- AI analyzes options
+- AI generates documentation
+- AI identifies patterns
+- AI tracks metrics
+
+### Browser Deployment
+
+Uses **Browser mode** for organizational design work.
+
+### Iteration Protocol
+
+```
+LOOP:
+  1. Work on design activities
+  2. STOP → Report on design status
+  3. WAIT for guidance on priorities
+  4. IF approved → Continue
+  5. IF changes → Adjust approach
+  6. IF human says "stop" → HALT
+  7. REPEAT
+```
+
+---
+
+## Appendix: Story Portal Context
+
+### Design Focus (Story Portal)
+
+| Area | Focus |
+|------|-------|
+| **Festival Operations** | Event structure |
+| **Platform Teams** | Engineering org |
+| **Community** | Engagement structure |
+| **Creative** | Content organization |
+
+### Key Design Areas
+
+| Area | Application |
+|------|-------------|
+| Festival surge | Temporary structure |
+| Platform development | Engineering teams |
+| Community management | Engagement teams |
+| Content creation | Creative teams |
+
+### Design Priorities
+
+| Priority | Focus |
+|----------|-------|
+| 1 | Platform engineering structure |
+| 2 | Festival operations design |
+| 3 | Community engagement structure |
+| 4 | Creative team organization |
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR leadership approval.*
+
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "organizational-designer",
+  "department": "human-resources",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>{
+  "role": "organizational-designer",
+  "department": "human-resources",
+  "scores": {
+    "philosophy_depth": 6,
+    "handoff_specificity": 8,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 8,
+    "story_portal_relevance": 8
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 6,
+      "finding": "Principles are somewhat generic and lack role-specific actionable insights.",
+      "example_rewrite": "Replace 'Interface Design' with 'Cross-Functional Collaboration Framework: Define specific interface protocols (e.g., quarterly sync meetings, RACI matrices) to ensure clear handoffs between departments.'"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "No anti-patterns are provided, missing critical guidance on pitfalls specific to organizational design.",
+      "example_rewrite": "Add anti-patterns such as:\n• 'Siloed Command Hierarchy: Creating isolated teams without cross-functional liaisons, leading to duplicated efforts.'\n• 'Overloaded Spans: Assigning too many direct reports to a single manager, causing decision bottlenecks.'\n• 'Interface Vagueness: Failing to document handoff protocols, resulting in dropped tasks and misalignment.'"
+    }
+  ],
+  "top_improvement": "Add role-specific anti-patterns to guide the Organizational Designer away from common pitfalls, such as overly rigid hierarchies, unclear interfaces, and unbalanced spans of control."
+}</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "organizational-designer",
+  "department": "human-resources",
+  "scores": {
+    "philosophy_depth": 4,
+    "handoff_specificity": 3,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 4,
+    "story_portal_relevance": 4
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 4,
+      "finding": "All 6 principles are one-liner slogans with no operational meaning. 'Structure Enables Strategy' and 'Clarity Reduces Friction' could appear in any management textbook from 1987. None explain HOW this designer applies the principle in a hybrid AI workforce context — which is the entire point of the role. 'Human + AI Integration' simply restates the classification emoji.",
+      "example_rewrite": "| **Span of Control Scales Differently for Hybrid Teams** | An AI agent does not fatigue at 8 direct reports. When designing teams that include AI roles, apply a 1 AI agent = 0.3 human equivalent for span calculations, and document the reasoning in the org chart annotation so future designers don't revert to legacy ratios. |"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 3,
+      "finding": "Every artifact in both Receives and Delivers tables is a vague noun phrase: 'Design direction', 'Structure requirements', 'Role placement'. None specify format, trigger condition, or what the receiving role does with it. The handoff to Role Engineer says 'Role placement' — placement of what? A list? A chart? A spreadsheet with department, reporting line, and classification? This cannot be acted on.",
+      "example_rewrite": "| Delivers To | Artifact | Format | Trigger |\n|-------------|----------|--------|---------|\n| Role Engineer | Role Placement Map | Spreadsheet: role name, department, reports-to, classification (Human/AI/Hybrid), FTE or agent count | After each Structure Design workflow Step 3 STOP is signed off by CHRO |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "There is no Anti-Patterns section at all. The template standard explicitly requires 3-5 role-specific anti-patterns. The DO/DON'T boundary section partially substitutes but only lists ownership violations, not failure modes. An AI agent running this role has no guard rails against common org design mistakes like over-matrixing, shadow hierarchies, or designing structure before strategy is locked.",
+      "example_rewrite": "## Anti-Patterns\n| Anti-Pattern | Why It Fails | Correct Behavior |\n|---|---|---|\n| **Designing Before Strategy Is Locked** | Structure built on draft strategy requires full redesign when strategy shifts, wasting stakeholder trust | STOP at Workflow 1 Step 1 until CHRO confirms strategy is finalized, not 'directionally set' |\n| **AI Roles Mapped to Human Spans** | Treating 1 AI agent as 1 headcount inflates team size on paper and triggers unnecessary headcount approvals | Use hybrid-adjusted span ratios; annotate AI roles with [AI] tag in all org charts |\n| **Org Chart as Final Artifact** | A chart without interface protocols leaves team connections undefined, creating coordination gaps | Every department boundary on an org chart must link to a corresponding Interface Map before design is marked Done |"
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 4,
+      "finding": "The Iteration Protocol loop is present but hollow — it says 'Work on design activities' and 'Report on design status' without telling an AI agent what output format to produce, what threshold triggers a STOP, or what 'guidance on priorities' looks like. The Context Requirements section contains unfilled placeholders '[Context item 1]' and '[Context item 2]', and the Required Skills table is entirely blank. An AI agent loading this role cannot determine what context files to load before starting.",
+      "example_rewrite": "### Required Context\n- [ ] current-org-chart.md — existing reporting structure baseline\n- [ ] workforce-strategy-brief.md — CHRO-approved strategy doc this design must serve\n- [ ] role-registry.md — master list of all approved roles for placement validation\n\n### Required Skills\n| Skill | When to Load |\n|-------|-------------|\n| org-chart-notation.md | Before any visualization task |\n| hybrid-span-calculator.md | Before any team sizing task |\n| change-communication-template.md | Before Workflow 1 Step 4 |"
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 4,
+      "finding": "The Story Portal appendix names four areas (Festival Operations, Platform Teams, Community, Creative) but provides no actual structural decisions, constraints, or design artifacts specific to Story Portal. 'Festival surge → Temporary structure' is a label, not guidance. An AI agent reading this cannot produce a Story Portal org chart — it has no team names, no known roles, no surge staffing ratios, and no known reporting lines.",
+      "example_rewrite": "### Story Portal Design Constraints\n| Area | Known Constraint | Design Implication |\n|------|-----------------|--------------------|\n| Festival Surge | 3 annual events require 40-60% headcount spike over 6-week windows | Design Festival Operations as a standing skeleton team (4 roles) with a pre-approved surge template that activates event-specific contractor and AI agent slots without new CHRO approval |\n| Platform Engineering | Two squads: Content Delivery and Community Platform | Each squad reports to Platform Engineering Lead; shared QA role uses dotted-line to both Squad Leads; document in Interface Map INF-PE-001 |\n| Community Engagement | Spans both organic community and festival attendee engagement | Avoid splitting into two separate departments; design as unified team with sub-tracks to prevent duplicate tooling and conflicting voice |"
+    }
+  ],
+  "top_improvement": "Add a complete Anti-Patterns section with 3-5 role-specific failure modes. This role has zero anti-patterns documented, which means an AI agent operating in Hybrid mode has no guard rails. The most dangerous missing pattern is 'Designing Before Strategy Is Locked' — in a hybrid workforce context where org changes cascade into AI agent configurations, a premature design wastes significant downstream Role Engineer and Department Head effort. This single addition would also force the author to write with the specificity that would expose and fix the vagueness problems in every other section."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

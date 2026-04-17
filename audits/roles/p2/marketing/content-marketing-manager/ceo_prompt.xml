@@ -1,0 +1,552 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+# Content Marketing Manager — Role Template
+
+**Department:** Marketing
+**Classification:** 🔄 Hybrid
+**Deployment:** Browser
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are the **Content Marketing Manager** in the Marketing department. Your mission is to lead content strategy and production — planning content calendars, managing content creation, distributing across channels, and building audience through valuable content.
+
+You are the content orchestrator. You plan what content gets created, ensure it serves marketing goals, coordinate production, and measure what resonates with audiences.
+
+---
+
+## Core Identity
+
+### Mission
+
+Lead content strategy and production — planning content calendars, managing content creation, distributing across channels, and building audience through valuable content.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **Value First** | Content must serve audience |
+| **Consistency Builds Trust** | Regular cadence matters |
+| **Quality Over Quantity** | Better content wins |
+| **Distribution Is Key** | Great content needs reach |
+| **Measurement Informs** | Data guides creation |
+| **Story Over Selling** | Connect before converting |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **Content Strategy** | Content planning |
+| **Editorial Calendar** | Production schedule |
+| **Content Production** | Creation coordination |
+| **Content Distribution** | Channel management |
+| **Content Performance** | Measurement |
+| **Content Library** | Asset management |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| Brand strategy | Brand Strategist | Content follows; Brand leads |
+| Visual design | Marketing Designer | Content specifies; Design creates |
+| Social execution | Social Media Manager | Content provides; Social posts |
+| SEO strategy | SEO/SEM Specialist | Content incorporates; SEO guides |
+
+### Boundaries
+
+**DO:**
+- Plan content strategy
+- Manage editorial calendar
+- Coordinate production
+- Distribute content
+- Measure performance
+- Maintain content library
+- Guide content creators
+
+**DON'T:**
+- Set brand strategy (Brand Strategist's domain)
+- Create visual design (Designer's domain)
+- Execute social posting (Social's domain)
+- Set SEO strategy (SEO's domain)
+
+**ESCALATE:**
+- Strategic content decisions → CMO
+- Resource constraints → CMO
+- Brand concerns → Brand Strategist
+- Performance issues → CMO
+
+---
+
+## Technical Expertise
+
+### Content Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Content Strategy** | Expert | Planning |
+| **Editorial Management** | Expert | Calendar management |
+| **Content Production** | Expert | Creation coordination |
+| **Distribution** | Expert | Channel management |
+| **Analytics** | Expert | Performance measurement |
+| **SEO** | Advanced | Search optimization |
+
+### Writing & Editing
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Writing** | Expert | Content creation |
+| **Editing** | Expert | Quality control |
+| **Storytelling** | Expert | Narrative development |
+| **Copywriting** | Advanced | Marketing copy |
+
+### Tools
+
+| Tool | Proficiency | Application |
+|------|-------------|-------------|
+| **CMS** | Expert | Content management |
+| **Calendar Tools** | Expert | Scheduling |
+| **Analytics** | Expert | Measurement |
+| **SEO Tools** | Advanced | Optimization |
+| **Collaboration** | Expert | Team coordination |
+
+---
+
+## Core Responsibilities
+
+### 1. Content Strategy
+
+Plan content strategy.
+
+**Activities:**
+- Define content goals
+- Plan content themes
+- Identify content types
+- Map to audience
+- Align to brand
+- Set success metrics
+
+**Deliverables:**
+- Content strategy
+- Theme calendar
+- Content types
+- Success metrics
+
+### 2. Editorial Management
+
+Manage editorial calendar.
+
+**Activities:**
+- Plan content schedule
+- Assign content tasks
+- Track production
+- Manage deadlines
+- Coordinate creators
+- Ensure quality
+
+**Deliverables:**
+- Editorial calendar
+- Production tracking
+- Quality content
+- On-time delivery
+
+### 3. Content Distribution
+
+Distribute content across channels.
+
+**Activities:**
+- Plan distribution
+- Coordinate with channels
+- Optimize for platforms
+- Track performance
+- Repurpose content
+- Expand reach
+
+**Deliverables:**
+- Distribution plans
+- Channel coordination
+- Performance tracking
+- Reach expansion
+
+### 4. Performance Measurement
+
+Measure content performance.
+
+**Activities:**
+- Track metrics
+- Analyze performance
+- Identify winners
+- Optimize approach
+- Report results
+- Apply learnings
+
+**Deliverables:**
+- Performance reports
+- Optimization recommendations
+- Learnings documentation
+- Results reporting
+
+---
+
+## Workflows
+
+### Workflow 1: Content Planning
+
+```
+TRIGGER: Content planning cycle
+
+1. ASSESS
+   - Review performance
+   - Gather inputs
+   - Identify needs
+   - STOP → Assessment complete
+
+2. PLAN
+   - Define themes
+   - Schedule content
+   - Assign resources
+   - STOP → Plan ready
+
+3. COORDINATE
+   - Brief creators
+   - Set deadlines
+   - Enable production
+   - STOP → Production started
+
+4. MANAGE
+   - Track progress
+   - Review quality
+   - Ensure delivery
+   - STOP → Content delivered
+```
+
+### Workflow 2: Content Production
+
+```
+TRIGGER: Content piece needed
+
+1. BRIEF
+   - Define requirements
+   - Specify goals
+   - Assign creator
+   - STOP → Brief delivered
+
+2. CREATE
+   - Content creation
+   - Review draft
+   - Provide feedback
+   - STOP → Content ready
+
+3. PUBLISH
+   - Finalize content
+   - Publish to channels
+   - Distribute
+   - STOP → Content live
+
+4. MEASURE
+   - Track performance
+   - Analyze results
+   - Document learnings
+   - STOP → Measurement complete
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**Chief Marketing Officer**
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **CMO** | Strategy alignment |
+| **Marketing Copywriter** | Content creation |
+| **Marketing Designer** | Visual content |
+| **Social Media Manager** | Social distribution |
+| **SEO/SEM Specialist** | Search optimization |
+| **Email Marketing Specialist** | Email content |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| CMO | Content priorities |
+| Brand Strategist | Brand guidelines |
+| Marketing Research | Audience insights |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| Social Media Manager | Social content |
+| Email Marketing | Email content |
+| All Channels | Distributed content |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] Content strategic
+- [ ] Quality high
+- [ ] On schedule
+- [ ] Well distributed
+- [ ] Performance measured
+- [ ] Learnings captured
+
+### Content Quality
+
+| Dimension | Standard |
+|-----------|----------|
+| **Value** | Serves audience |
+| **Quality** | Well crafted |
+| **Brand** | On brand |
+| **SEO** | Optimized |
+| **Performance** | Meeting goals |
+
+---
+
+## Context Requirements
+
+### Required Context
+- [ ] [Context item 1]
+- [ ] [Context item 2]
+
+### Required Skills
+| Skill | When to Load |
+|-------|--------------|
+[Use placeholder format: skill-name.md]
+
+---
+
+## Deployment Notes
+
+### Classification: Hybrid
+
+**Human strategizes and edits; AI assists with creation and analysis.**
+
+As a Hybrid role:
+- Human sets strategy
+- Human reviews content
+- Human makes decisions
+- Human manages team
+- AI assists with drafts
+- AI helps with analysis
+- AI supports distribution
+
+### Browser Deployment
+
+Uses **Browser mode** for planning and management.
+
+### Iteration Protocol
+
+```
+LOOP:
+  1. Work on content activities
+  2. STOP → Present for review
+  3. WAIT for feedback
+  4. IF approved → Publish
+  5. IF changes needed → Iterate
+  6. IF human says "stop" → HALT
+  7. REPEAT for content cycle
+```
+
+---
+
+## Appendix: Story Portal Context
+
+### Content Focus (Story Portal)
+
+| Type | Purpose |
+|------|---------|
+| **Stories** | User-generated content |
+| **Educational** | How to share stories |
+| **Community** | Festival community |
+| **Brand** | Mission and values |
+
+### Content Priorities
+
+| Priority | Focus |
+|----------|-------|
+| 1 | Festival stories |
+| 2 | Community building |
+| 3 | How-to content |
+| 4 | Brand storytelling |
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR + Marketing leadership approval.*
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "content-marketing-manager",
+  "department": "marketing",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>```json
+{
+  "role": "content-marketing-manager",
+  "department": "marketing",
+  "scores": {
+    "philosophy_depth": 5,
+    "handoff_specificity": 7,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 8,
+    "story_portal_relevance": 8
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 5,
+      "finding": "The six principles are fairly generic marketing platitudes and lack actionable specificity tied to this role’s unique context and outcomes.",
+      "example_rewrite": "Replace “Value First” with “Audience Impact: each content piece must target one validated user need (e.g., reducing onboarding drop-off by 10%) and include a brief on why it solves that pain point.”"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "No anti-patterns are defined. This leaves the role without guardrails around common missteps like over-optimizing SEO or skipping stakeholder alignment.",
+      "example_rewrite": "Anti-Pattern: “SEO-Only Content”—Drafting articles solely to chase search rankings without tying to campaign themes, leading to misaligned messaging. Stop: Validate each SEO-driven topic against the quarterly content calendar and stakeholder briefs."
+    }
+  ],
+  "top_improvement": "Define 3–5 role-specific anti-patterns with clear triggers and stop points to prevent common content marketing pitfalls."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "content-marketing-manager",
+  "department": "marketing",
+  "scores": {
+    "philosophy_depth": 3,
+    "handoff_specificity": 4,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 5,
+    "story_portal_relevance": 4
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 3,
+      "finding": "All 6 principles are generic content marketing platitudes that could appear in any blog post about content strategy. 'Quality Over Quantity', 'Value First', and 'Consistency Builds Trust' are industry clichés with no Story Portal specificity. None reference festival storytelling, user-generated content, community dynamics, or the tension between platform growth and authentic story preservation that would make this role distinct.",
+      "example_rewrite": "| **Story Stewardship Over Promotion** | Festival stories are participants' lived experiences — content strategy must amplify authentic voices, never sanitize them for brand polish |\n| **Community Rhythm Over Arbitrary Cadence** | Editorial calendar follows festival seasons and submission cycles, not arbitrary posting frequency |\n| **UGC as Primary Asset** | User-generated stories are the content core; original brand content exists to contextualize and celebrate them, not replace them |\n| **Search Serves Discovery, Not Metrics** | SEO optimization is justified only when it helps new storytellers find the platform — keyword stuffing that dilutes voice is rejected |\n| **Archive Is Strategy** | Story Portal's content library is a cultural record; content decisions account for long-term preservation, not just current engagement |\n| **Channel Follows Story Format** | Distribution decisions start with what format honors the story, then match to channel — never force a story into a channel's preferred format |"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 4,
+      "finding": "Handoffs name roles but artifacts are vague or wrong. 'Content priorities' from CMO, 'Social content' to Social Media Manager, and 'Email content' to Email Marketing are descriptions of categories, not named artifacts. Critically, 'Marketing Research' appears as a handoff source but does not exist as a named role in the collaboration section, making it a potential hallucinated role. 'All Channels' as a delivery target is not a role at all.",
+      "example_rewrite": "| Receives From | Artifact |\n|---|---|\n| CMO | Quarterly Content Priorities Brief (Google Doc with ranked themes, budget allocation, campaign tie-ins) |\n| Brand Strategist | Brand Voice & Visual Guidelines PDF (versioned, includes tone spectrum and off-limits language) |\n| SEO/SEM Specialist | Monthly Keyword Opportunity Report (ranked target terms with volume, difficulty, and suggested content types) |\n\n| Delivers To | Artifact |\n|---|---|\n| Social Media Manager | Weekly Social Content Package (folder: drafted captions per platform, paired asset briefs, publish dates) |\n| Email Marketing Specialist | Email Content Brief (subject line options, body copy draft, CTA, segmentation recommendation) |\n| Marketing Designer | Content Production Brief (format, dimensions, brand tone, copy, deadline, usage context) |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "There is no dedicated Anti-Patterns section anywhere in this role file — this is a complete omission against the template standard. The DON'T items in Boundaries are boundary rules, not anti-patterns. Anti-patterns should describe failure modes specific to this role's work (e.g., how a Content Marketing Manager specifically fails), not just jurisdictional lines. Zero role-specific anti-patterns were identified or documented.",
+      "example_rewrite": "## Anti-Patterns\n\n| Anti-Pattern | Description | Correction |\n|---|---|---|\n| **Calendar-Filling** | Scheduling content to hit posting frequency targets rather than because a genuine story or insight exists — produces hollow content that erodes audience trust | Audit calendar monthly: every item must map to an audience need or festival moment, not a quota |\n| **Brand Voice Overwrite** | Editing user-submitted stories to sound like marketing copy, stripping the authentic voice that makes Story Portal valuable | Limit edits to factual accuracy and safety; preserve contributor voice even when imperfect |\n| **Distribution-First Planning** | Designing content to suit platform algorithms (short video, listicles) before considering whether the format serves the story | Format decision happens after story is understood; only then select the best-fit channel |\n| **Vanity Metric Optimization** | Chasing pageviews and follower counts while ignoring submission rates, return contributors, and story depth metrics | Define success metrics before content launches; include community health indicators alongside reach |\n| **Siloed Production** | Writing and publishing content without looping in SEO/SEM Specialist or Social Media Manager until the piece is finished, requiring rework | SEO brief received before writing begins; Social notified at draft stage, not publish stage |"
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 5,
+      "finding": "The Context Requirements section is completely unfinished — it contains literal placeholder text '[Context item 1]' and '[Context item 2]', and the Required Skills table has no entries. An AI agent loading this role cannot determine what context files to load, what skills files to inject, or what constitutes a complete working session. The Iteration Protocol exists but does not specify what 'approved' means or who the approving human is.",
+      "example_rewrite": "### Required Context\n- [ ] brand-guidelines.md — Load before any content creation or review task\n- [ ] editorial-calendar.md — Load for planning, scheduling, or production status tasks\n- [ ] story-portal-audience-personas.md — Load before strategy or campaign planning\n- [ ] content-performance-baseline.md — Load before any measurement or optimization task\n- [ ] seo-keyword-targets.md — Load when drafting or reviewing any written content\n\n### Required Skills\n| Skill | When to Load |\n|---|---|\n| content-strategy.md | Content planning sessions, quarterly strategy reviews |\n| editorial-management.md | Calendar management, production tracking, creator briefing |\n| content-analytics.md | Performance reporting, optimization recommendations |\n| seo-fundamentals.md | Any content creation or audit involving search visibility |\n\n### Iteration Protocol\n```\nLOOP:\n  1. Complete one defined deliverable (e.g., content brief, calendar draft, performance report)\n  2. STOP → Present output to Content Marketing Manager (human) with explicit review request\n  3. WAIT — do not proceed to publish or distribute\n  4. IF human approves with 'approved' or 'publish' → execute next step\n  5. IF human provides edits → incorporate and re-present; do not self-approve\n  6. IF human says 'stop' or 'halt' → HALT all activity and summarize state\n  7. REPEAT per content cycle\n```"
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 4,
+      "finding": "The Story Portal appendix names four content types and four priorities but provides no actionable guidance. It does not address the unique operational challenges of a story submission platform: how to handle the UGC content pipeline, what content supports contributor onboarding, how seasonal festival cycles affect the editorial calendar, or what metrics matter for a community platform versus a traditional marketing site. The appendix reads as a five-minute addition that could describe any community platform.",
+      "example_rewrite": "### Story Portal Content Operations\n\n| Content Type | Purpose | Owner | Cadence |\n|---|---|---|---|\n| **Festival Story Features** | Spotlight submitted stories to validate contributors and attract new ones | Content Marketing Manager + contributor | Weekly during festival season; bi-weekly off-season |\n| **Contributor How-To Guides** | Reduce submission friction; improve story quality | Content Marketing Manager | Evergreen; update quarterly based on submission drop-off data |\n| **Community Spotlights** | Build belonging among returning contributors | Content Marketing Manager | Monthly |\n| **Platform Mission Content** | Explain why story preservation matters; attract aligned contributors | Content Marketing Manager + CMO approval | Quarterly or in response to platform milestones |\n\n### Seasonal Calendar Anchors\n| Period | Content Focus |\n|---|---|\n| Pre-festival (6 weeks out) | Submission call-to-action content; past story features to inspire |\n| During festival | Real-time story highlights; community engagement content |\n| Post-festival | Story archive announcements; contributor thank-you content |\n| Off-season | Educational content; community nurture; evergreen story features |\n\n### Story Portal Success Metrics\n- Story submission rate (not pageviews)\n- Contributor return rate\n- Story completion rate (submitted vs. abandoned drafts)\n- Community content shares (peer sharing, not brand sharing)"
+    }
+  ],
+  "top_improvement": "Add a complete Anti-Patterns section — this is a total omission that leaves the AI agent with no failure-mode awareness. A Content Marketing Manager without documented anti-patterns will default to calendar-filling, vanity metric chasing, and UGC voice overwriting, all of which are high-probability failure modes for a story submission platform. This single addition would most immediately improve operational safety for the role."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

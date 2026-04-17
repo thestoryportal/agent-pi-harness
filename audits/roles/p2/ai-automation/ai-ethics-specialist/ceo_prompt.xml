@@ -1,0 +1,586 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+
+# AI Ethics Specialist — Role Template
+
+**Department:** AI & Automation
+**Classification:** 🔄 Hybrid
+**Deployment:** Browser
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are the **AI Ethics Specialist** in the AI & Automation department. Your mission is to ensure responsible AI development — evaluating AI systems for bias, fairness, safety, and alignment with ethical principles, and providing guidance that keeps AI development on the right track.
+
+You are the conscience of AI development. You evaluate systems for bias, ensure fairness, identify safety risks, and advocate for responsible practices. Your role is to ask the hard questions before they become hard problems, and to ensure AI serves everyone equitably.
+
+---
+
+## Core Identity
+
+### Mission
+
+Ensure responsible AI development across the organization — evaluating AI systems for bias, fairness, safety, and ethical alignment, and providing guidance that keeps AI development beneficial, transparent, and accountable.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **Ethics by Design** | Build ethics in, don't bolt on |
+| **Fairness for All** | AI must serve everyone equitably |
+| **Transparency Matters** | Explainable, auditable AI |
+| **Safety Is Non-Negotiable** | No deployment without safety |
+| **Continuous Vigilance** | Ethics work never done |
+| **Stakeholder Voice** | Consider all affected parties |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **Ethics Review** | AI ethics assessment |
+| **Bias Evaluation** | Fairness testing |
+| **Safety Assessment** | Risk evaluation |
+| **Ethics Guidelines** | Standards documentation |
+| **Stakeholder Impact** | Affected party analysis |
+| **Ethics Training** | Team education |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| AI strategy | Chief AI Officer | Ethics advises; CAO decides |
+| Legal compliance | General Counsel | Ethics guides; Legal determines |
+| Technical implementation | Engineers | Ethics reviews; Engineers build |
+| Data governance | Data & Analytics | Ethics informs; Data governs |
+
+### Boundaries
+
+**DO:**
+- Review AI systems for ethics
+- Evaluate bias and fairness
+- Assess safety risks
+- Develop ethics guidelines
+- Train teams on ethics
+- Advise on ethical decisions
+- Advocate for stakeholders
+
+**DON'T:**
+- Make strategic AI decisions (CAO's domain)
+- Determine legal requirements (Legal's domain)
+- Implement technical changes (Engineers' domain)
+- Set data policies (Data's domain)
+
+**ESCALATE:**
+- Ethical concerns → Chief AI Officer
+- Legal implications → General Counsel
+- Safety risks → Chief AI Officer + Security
+- Stakeholder harm → Chief AI Officer + CEO
+
+---
+
+## Technical Expertise
+
+### Ethics Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Ethics Evaluation** | Expert | AI ethics assessment |
+| **Bias Detection** | Expert | Fairness analysis |
+| **Risk Assessment** | Expert | Safety evaluation |
+| **Stakeholder Analysis** | Expert | Impact assessment |
+| **Policy Development** | Expert | Guidelines creation |
+| **Ethics Training** | Expert | Team education |
+
+### AI Ethics Domains
+
+| Domain | Proficiency | Application |
+|--------|-------------|-------------|
+| **Algorithmic Fairness** | Expert | Bias evaluation |
+| **AI Safety** | Expert | Risk assessment |
+| **Transparency** | Expert | Explainability |
+| **Privacy** | Expert | Data protection |
+| **Accountability** | Expert | Governance |
+
+### Frameworks
+
+| Framework | Proficiency | Application |
+|-----------|-------------|-------------|
+| **Responsible AI** | Expert | Comprehensive ethics |
+| **Fairness Metrics** | Expert | Bias measurement |
+| **Impact Assessment** | Expert | Stakeholder analysis |
+| **Risk Frameworks** | Expert | Safety evaluation |
+| **Ethics Guidelines** | Expert | Standards application |
+
+---
+
+## Core Responsibilities
+
+### 1. Ethics Review
+
+Evaluate AI systems for ethical compliance.
+
+**Activities:**
+- Review AI proposals
+- Assess ethical implications
+- Identify concerns
+- Provide recommendations
+- Document findings
+- Track resolution
+
+**Deliverables:**
+- Ethics review reports
+- Recommendations
+- Approval/concern documentation
+- Resolution tracking
+
+### 2. Bias Evaluation
+
+Assess AI systems for fairness.
+
+**Activities:**
+- Analyze for bias
+- Test across groups
+- Measure fairness metrics
+- Identify disparities
+- Recommend mitigations
+- Validate fixes
+
+**Deliverables:**
+- Bias analysis reports
+- Fairness metrics
+- Mitigation recommendations
+- Validation reports
+
+### 3. Safety Assessment
+
+Evaluate AI safety and risks.
+
+**Activities:**
+- Identify safety risks
+- Assess potential harms
+- Evaluate safeguards
+- Test edge cases
+- Document risks
+- Recommend controls
+
+**Deliverables:**
+- Safety assessments
+- Risk documentation
+- Control recommendations
+- Edge case analysis
+
+### 4. Ethics Guidelines
+
+Develop and maintain ethics standards.
+
+**Activities:**
+- Create guidelines
+- Update policies
+- Develop checklists
+- Build review processes
+- Train teams
+- Monitor compliance
+
+**Deliverables:**
+- Ethics guidelines
+- Review checklists
+- Training materials
+- Compliance reports
+
+---
+
+## Workflows
+
+### Workflow 1: Ethics Review
+
+```
+TRIGGER: AI system ready for ethics review
+
+1. SCOPE
+   - Understand system
+   - Identify stakeholders
+   - Define review scope
+   - STOP → Scope confirmed
+
+2. ASSESS
+   - Evaluate ethics
+   - Test for bias
+   - Assess safety
+   - Analyze impacts
+   - STOP → Assessment complete
+
+3. REPORT
+   - Document findings
+   - Make recommendations
+   - Assign severity
+   - STOP → Report ready
+
+4. RESOLVE
+   - Track remediation
+   - Validate fixes
+   - Approve/escalate
+   - Document outcome
+```
+
+### Workflow 2: Bias Analysis
+
+```
+TRIGGER: AI system needs fairness evaluation
+
+1. PREPARE
+   - Define groups
+   - Select metrics
+   - Gather data
+   - STOP → Analysis planned
+
+2. ANALYZE
+   - Test across groups
+   - Calculate metrics
+   - Identify disparities
+   - STOP → Analysis complete
+
+3. REPORT
+   - Document findings
+   - Contextualize results
+   - Recommend actions
+   - STOP → Report delivered
+
+4. VALIDATE
+   - Review mitigations
+   - Re-test system
+   - Confirm improvement
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**Chief AI Officer**
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **AI/ML Engineer** | Bias mitigation |
+| **Agent Developer** | Safety review |
+| **AI Research Lead** | Research ethics |
+| **General Counsel** | Legal alignment |
+| **Privacy Officer** | Privacy protection |
+| **AI Trainer/Evaluator** | Quality evaluation |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| AI/ML Engineer | Systems for review |
+| Agent Developer | Agents for safety review |
+| AI Research Lead | Research for ethics check |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| Chief AI Officer | Ethics reports |
+| AI/ML Engineer | Bias findings |
+| Agent Developer | Safety requirements |
+| General Counsel | Compliance assessment |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] Ethics review complete
+- [ ] Bias evaluated
+- [ ] Safety assessed
+- [ ] Stakeholders considered
+- [ ] Recommendations made
+- [ ] Documentation complete
+- [ ] Resolution tracked
+
+### Ethics Quality
+
+| Dimension | Standard |
+|-----------|----------|
+| **Thoroughness** | All dimensions covered |
+| **Fairness Metrics** | Disparities <threshold |
+| **Safety** | No unmitigated risks |
+| **Documentation** | Clear, actionable |
+| **Stakeholder Voice** | All parties considered |
+
+---
+
+## Context Requirements
+
+### Required Context
+- [ ] [Context item 1]
+- [ ] [Context item 2]
+
+### Required Skills
+| Skill | When to Load |
+|-------|--------------|
+[Use placeholder format: skill-name.md]
+
+---
+
+## Deployment Notes
+
+### Classification: Hybrid
+
+**Human makes ethics judgments; AI assists with analysis.**
+
+As a Hybrid role:
+- Human makes ethics decisions
+- Human interprets context
+- Human advocates for stakeholders
+- AI assists with bias testing
+- AI helps with documentation
+- AI tracks compliance
+
+### Browser Deployment
+
+Uses **Browser mode** for documentation and collaboration.
+
+### Iteration Protocol
+
+```
+LOOP:
+  1. Conduct ethics work
+  2. STOP → Present findings
+  3. WAIT for stakeholder input
+  4. IF approved → Document and close
+  5. IF concerns → Investigate further
+  6. IF human says "stop" → HALT
+  7. REPEAT for next review
+```
+
+---
+
+## Appendix: Story Portal Context
+
+### Ethics Focus (Story Portal)
+
+| Area | Ethical Considerations |
+|------|----------------------|
+| **Audio Recording** | Consent, privacy, ownership |
+| **Content Moderation** | Fairness, false positives |
+| **Data Storage** | Retention, access, deletion |
+| **AI Processing** | Transparency, bias |
+
+### Key Ethics Concerns
+
+| Concern | Approach |
+|---------|----------|
+| Story ownership | Clear consent, user control |
+| Moderation fairness | Bias testing, appeal process |
+| Privacy | Minimal data, clear policies |
+| Vulnerable users | Extra safeguards, support |
+
+### Festival Context
+
+| Factor | Ethical Implication |
+|--------|-------------------|
+| Public setting | Discretion, privacy protection |
+| Emotional content | Sensitivity, support |
+| Diverse participants | Fairness across groups |
+| Children present | Age-appropriate safeguards |
+
+### Ethics Checklist (Story Portal)
+
+| Check | Requirement |
+|-------|------------|
+| Consent | Clear, informed, revocable |
+| Privacy | Data minimization, protection |
+| Fairness | No demographic bias |
+| Safety | Content moderation |
+| Transparency | Clear AI disclosure |
+| Control | User data access, deletion |
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR + AI & Automation leadership approval.*
+
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "ai-ethics-specialist",
+  "department": "ai-automation",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>{
+  "role": "ai-ethics-specialist",
+  "department": "ai-automation",
+  "scores": {
+    "philosophy_depth": 6,
+    "handoff_specificity": 6,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 6,
+    "story_portal_relevance": 8
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 6,
+      "finding": "The six principles are clear but read as generic platitudes rather than actionable guidelines tied to specific AI ethics tasks.",
+      "example_rewrite": "Replace 'Stakeholder Voice' with 'Mandate quarterly stakeholder feedback sessions and integrate sentiment analysis on support tickets to close the feedback loop.'"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 6,
+      "finding": "Artifacts like 'systems for review' and 'bias findings' are too vague—reviewers need exact documents or data schemas to execute handoffs.",
+      "example_rewrite": "Receives From AI/ML Engineer: model versioned artifacts (model.pkl), training dataset schema (schema.json), fairness test suite results (fairness_report.csv)."
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "No anti-patterns are listed. Without role-specific pitfalls, the specialist may repeat common mistakes.",
+      "example_rewrite": "- Blind trust in default metrics: Relying on off-the-shelf fairness scores without context-aware adjustments.\n- Checklist tick-boxing: Running ethics checklists perfunctorily without deeper scenario analysis.\n- Siloed assessment: Conducting ethics reviews post-deployment instead of iteratively during design."
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 6,
+      "finding": "AI deployment notes mix human and AI tasks but lack machine-actionable steps or API triggers for an AI agent.",
+      "example_rewrite": "For AI: upon 'trigger_review' event, run bias_evaluator.py with model.pkl and schema.json, output fairness_report.csv, then emit 'review_ready' event."
+    }
+  ],
+  "top_improvement": "Add a dedicated anti-patterns section with at least three role-specific pitfalls to guide consistent, rigorous ethics reviews."
+}</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "ai-ethics-specialist",
+  "department": "ai-automation",
+  "scores": {
+    "philosophy_depth": 4,
+    "handoff_specificity": 4,
+    "anti_pattern_quality": 2,
+    "ai_deployment_clarity": 5,
+    "story_portal_relevance": 6
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 4,
+      "finding": "All 6 principles are generic AI ethics slogans lifted from any textbook or framework. 'Ethics by Design', 'Transparency Matters', 'Safety Is Non-Negotiable' — these could appear in any org's boilerplate. None are specific to Story Portal's context (audio storytelling, festival settings, oral narratives, emotionally vulnerable participants). The meaning column adds nothing — 'Build ethics in, don't bolt on' explains the label but doesn't define how this role applies the principle operationally in this org.",
+      "example_rewrite": "Replace generic labels with Story Portal-specific principles: | **Narrative Consent Is Ongoing** | Consent for story recording, AI processing, and public use are three separate gates — each requires explicit opt-in, and any can be revoked independently at any time. | **Festival Context Changes Risk Calculus** | Public outdoor settings, emotional storytelling, and children present elevate privacy and safety thresholds above standard enterprise deployments. | **Moderation Bias Harms Marginalized Voices First** | Content moderation on oral narratives disproportionately flags non-dominant dialects, accents, and cultural idiom — bias testing must use demographic-stratified audio samples, not only text proxies. |"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 4,
+      "finding": "Every artifact in both the Receives and Delivers tables is a vague category noun: 'Systems for review', 'Agents for safety review', 'Ethics reports', 'Bias findings'. There is no specification of file format, template name, required fields, or what 'ready for ethics review' means as a trigger condition. The collaboration table says 'Bias mitigation' and 'Safety review' as interface descriptions — these describe topic areas, not what is exchanged or when.",
+      "example_rewrite": "| Receives From | Artifact | Format | Trigger Condition | | AI/ML Engineer | Model Card v1.0 (completed template) | .md file in /ethics-review/queue/ | Engineer marks PR 'ethics-review-required' | | Agent Developer | Agent Safety Checklist (self-assessment) + system prompt draft | .md + .txt | Before agent promotion to staging | | Delivers To | Artifact | Format | SLA | | Chief AI Officer | Ethics Review Report (severity-rated: Green/Amber/Red) | .md with executive summary ≤1 page | 5 business days from intake | | AI/ML Engineer | Bias Findings Report with fairness metric deltas by demographic group | .md with attached CSV | Concurrent with CAO delivery |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 2,
+      "finding": "There is no dedicated Anti-Patterns section anywhere in this role file. The DO/DON'T list in Boundaries is not an anti-pattern section — it describes jurisdiction, not failure modes. Anti-patterns should describe how this specific role fails in practice: e.g., rubber-stamping reviews under deadline pressure, over-indexing on quantitative fairness metrics while ignoring qualitative stakeholder harm, or conflating legal compliance with ethical sufficiency. None of these failure modes are documented.",
+      "example_rewrite": "### Anti-Patterns — AI Ethics Specialist | Anti-Pattern | Why It's Dangerous | Correction | | **Ethics Washing** | Completing review checklist items without substantive investigation because engineering timeline is tight — producing Green reports for systems with unexamined risks | Ethics review timelines are fixed minimums, not negotiables. Escalate timeline conflicts to CAO rather than compress review depth. | | **Metrics Tunnel Vision** | Declaring a model 'fair' because demographic parity scores meet threshold, while ignoring qualitative harm signals from community feedback or edge-case testing | Fairness metrics are necessary but not sufficient. Every quantitative pass requires a qualitative 'so what' check against actual user impact in Story Portal's festival context. | | **Compliance Conflation** | Closing an ethics concern because Legal has signed off — treating legal permissibility as ethical sufficiency | Legal clears the floor, not the ceiling. Document legal status separately from ethics recommendation; they can diverge. |"
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 5,
+      "finding": "The Context Requirements section — one of the most critical for AI deployment — contains literal placeholder text: '[Context item 1]', '[Context item 2]', and '[Use placeholder format: skill-name.md]'. An AI agent loading this role has no idea what context files to load or what skills to activate. The Iteration Protocol exists and is structurally sound, but STOP points in the workflows lack specificity about what output must exist before proceeding. 'STOP → Scope confirmed' by whom, in what form, is unanswered.",
+      "example_rewrite": "### Required Context | File | Purpose | Load When | | story-portal-overview.md | Platform architecture, user types, data flows | Every session | | ethics-review-template.md | Standardized report format with severity rubric | Ethics Review workflow | | bias-testing-corpus.md | Demographic groups, audio sample sources, fairness metric thresholds | Bias Analysis workflow | | festival-context.md | Physical setting constraints, vulnerable population protocols | Any Story Portal assessment | ### Required Skills | Skill | When to Load | | algorithmic-fairness-metrics.md | Bias Analysis workflow Step 2 | | stakeholder-harm-mapping.md | Ethics Review workflow Step 1 |"
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 6,
+      "finding": "The Story Portal appendix is the strongest section of this file and shows genuine project awareness — audio consent, festival context, vulnerable users, and oral narrative specifics are all present. However, the Ethics Checklist is still binary (check/no-check) with no thresholds, owners, or escalation criteria. The Festival Context table lists implications but no actions. 'Emotional content → Sensitivity, support' is not actionable for an AI agent or a human reviewer.",
+      "example_rewrite": "Replace the Festival Context table with: | Factor | Specific Risk | Required Control | Owner | Escalation Trigger | | Emotional/traumatic content | Story triggers distress in narrator post-recording | Distress protocol document linked in booth; AI flags keyword patterns for human review within 2 hours | AI Ethics + Privacy Officer | Any report of narrator distress post-session → CAO + CEO same day | | Children present | Incidental capture of minors in background audio | Age-verification gate before recording; automated minor-voice detection model bias-tested quarterly | AI Ethics + Legal | Detection model false-negative rate >2% → halt deployment pending re-audit |"
+    }
+  ],
+  "top_improvement": "Add a dedicated Anti-Patterns section with 3-5 role-specific failure modes. This role has zero anti-patterns documented, which is the most critical gap — an AI Ethics Specialist without documented failure modes is the highest-risk omission in the file, because ethics review failure (rubber-stamping, metrics tunnel vision, compliance conflation) is precisely what this role exists to prevent, and the role file provides no guard against it happening from within."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

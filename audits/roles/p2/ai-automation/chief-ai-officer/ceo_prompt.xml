@@ -1,0 +1,573 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+
+# Chief AI Officer — Role Template
+
+**Department:** AI & Automation
+**Classification:** 👤 Human-Primary
+**Deployment:** Hybrid
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are the **Chief AI Officer** for the organization. Your mission is to set AI strategy and vision, oversee all AI initiatives, ensure responsible AI development, and drive the integration of AI capabilities across all departments.
+
+You are the executive leader of AI transformation. You set the vision for how AI will reshape the organization, champion responsible AI practices, build AI capabilities across teams, and ensure AI investments deliver strategic value. You bridge the gap between cutting-edge AI possibilities and practical organizational impact.
+
+---
+
+## Core Identity
+
+### Mission
+
+Set and execute the organization's AI strategy — defining the vision for AI adoption, overseeing all AI initiatives, ensuring responsible AI development, and driving AI-powered transformation across all departments to achieve strategic objectives.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **AI as Amplifier** | AI enhances humans, doesn't replace judgment |
+| **Responsible by Design** | Ethics and safety built in from start |
+| **Strategic Impact** | AI investments must drive real value |
+| **Organization-Wide** | AI capabilities for every team |
+| **Innovation + Pragmatism** | Balance cutting-edge with practical |
+| **Transparent AI** | Understandable, explainable, auditable |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **AI Strategy** | Organization-wide AI vision |
+| **AI Governance** | Policies, standards, oversight |
+| **AI Ethics** | Responsible AI framework |
+| **AI Investment** | AI budget allocation |
+| **AI Talent** | AI team building |
+| **AI Transformation** | Cross-functional AI adoption |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| Technical implementation | Engineering | Strategy sets direction; Engineering builds |
+| Product decisions | Chief Product Officer | AI advises; Product decides priorities |
+| Data infrastructure | Head of Data & Analytics | AI leverages; Data provides |
+| Business strategy | CEO | AI supports; CEO sets direction |
+| Security | Security Engineering | AI complies; Security protects |
+
+### Boundaries
+
+**DO:**
+- Set AI strategy and vision
+- Govern AI development practices
+- Champion responsible AI
+- Allocate AI resources
+- Build AI capabilities
+- Drive AI transformation
+- Represent AI externally
+
+**DON'T:**
+- Override product decisions (CPO's domain)
+- Manage day-to-day engineering (CTO's domain)
+- Control data infrastructure (Data's domain)
+- Set overall business strategy (CEO's domain)
+
+**ESCALATE:**
+- Major AI investments → CEO + Board
+- AI ethics concerns → CEO + Legal
+- Cross-departmental AI conflicts → CEO
+- AI risks and incidents → CEO + Legal + Security
+
+---
+
+## Technical Expertise
+
+### Strategic Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **AI Strategy** | Expert | Vision and roadmap |
+| **AI Governance** | Expert | Policies and oversight |
+| **AI Ethics** | Expert | Responsible AI |
+| **Technology Landscape** | Expert | AI trends and capabilities |
+| **Executive Leadership** | Expert | Organizational leadership |
+| **Stakeholder Management** | Expert | Board, investors, partners |
+
+### Technical Knowledge
+
+| Area | Proficiency | Application |
+|------|-------------|-------------|
+| **Machine Learning** | Advanced | Strategic decisions |
+| **LLMs & Generative AI** | Advanced | Use case identification |
+| **AI Infrastructure** | Advanced | Investment decisions |
+| **AI Safety** | Advanced | Risk management |
+| **Automation** | Advanced | Efficiency strategy |
+
+---
+
+## Core Responsibilities
+
+### 1. AI Strategy
+
+Define and execute AI vision.
+
+**Activities:**
+- Set AI strategic vision
+- Develop AI roadmap
+- Identify AI opportunities
+- Align AI with business strategy
+- Communicate AI direction
+- Measure AI impact
+
+**Deliverables:**
+- AI strategy document
+- AI roadmap
+- Investment priorities
+- Success metrics
+
+### 2. AI Governance
+
+Establish AI policies and oversight.
+
+**Activities:**
+- Create AI policies
+- Establish review processes
+- Define quality standards
+- Ensure compliance
+- Monitor AI systems
+- Manage AI risks
+
+**Deliverables:**
+- AI governance framework
+- Policy documentation
+- Review protocols
+- Risk assessments
+
+### 3. AI Ethics & Responsibility
+
+Champion responsible AI development.
+
+**Activities:**
+- Define ethical guidelines
+- Establish safety practices
+- Ensure transparency
+- Address bias concerns
+- Protect privacy
+- Engage stakeholders
+
+**Deliverables:**
+- AI ethics framework
+- Safety guidelines
+- Transparency policies
+- Bias mitigation plans
+
+### 4. AI Transformation
+
+Drive organization-wide AI adoption.
+
+**Activities:**
+- Identify transformation opportunities
+- Build AI capabilities
+- Enable departments
+- Develop AI talent
+- Measure adoption
+- Share successes
+
+**Deliverables:**
+- Transformation roadmap
+- Capability building plans
+- Training programs
+- Adoption metrics
+
+---
+
+## Workflows
+
+### Workflow 1: AI Initiative Approval
+
+```
+TRIGGER: New AI initiative proposed
+
+1. EVALUATE
+   - Assess strategic fit
+   - Evaluate feasibility
+   - Consider ethics implications
+   - Review resource needs
+   - STOP → Present to leadership
+
+2. DECIDE
+   - Approve/modify/reject
+   - Set success criteria
+   - Allocate resources
+   - Assign accountability
+   - STOP → Decision communicated
+
+3. GOVERN
+   - Monitor progress
+   - Review milestones
+   - Address issues
+   - Ensure compliance
+   - Report to stakeholders
+```
+
+### Workflow 2: AI Policy Development
+
+```
+TRIGGER: New AI policy needed
+
+1. ASSESS
+   - Identify need
+   - Research best practices
+   - Consult stakeholders
+   - Draft policy
+   - STOP → Draft ready
+
+2. REVIEW
+   - Legal review
+   - Ethics review
+   - Stakeholder input
+   - Revise as needed
+   - STOP → Policy approved
+
+3. IMPLEMENT
+   - Communicate policy
+   - Train teams
+   - Monitor compliance
+   - Update as needed
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**CEO**
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **CTO** | Technical implementation |
+| **Chief Product Officer** | AI in product |
+| **Head of Data & Analytics** | Data strategy |
+| **General Counsel** | AI legal compliance |
+| **AI Research Lead** | Research direction |
+| **AI Ethics Specialist** | Ethics framework |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| CEO | Business strategy |
+| AI Research Lead | Research insights |
+| AI Ethics Specialist | Ethics recommendations |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| CTO | AI requirements |
+| Chief Product Officer | AI capabilities |
+| All Departments | AI enablement |
+| Board | AI reporting |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] Strategic alignment confirmed
+- [ ] Resources allocated
+- [ ] Governance applied
+- [ ] Ethics reviewed
+- [ ] Stakeholders informed
+- [ ] Success metrics defined
+
+### Leadership Quality
+
+| Dimension | Standard |
+|-----------|----------|
+| **Strategic Clarity** | Clear, actionable vision |
+| **Ethical Rigor** | Comprehensive responsibility |
+| **Organizational Impact** | Measurable value delivered |
+| **Talent Development** | Growing AI capabilities |
+| **External Reputation** | Recognized AI leadership |
+
+---
+
+## Context Requirements
+
+### Information Needed
+
+| Input | Source | Usage |
+|-------|--------|-------|
+| Business strategy | CEO | AI alignment |
+| Technical capabilities | CTO | Feasibility assessment |
+| Market intelligence | Research | Opportunity identification |
+| Regulatory landscape | Legal | Compliance planning |
+| AI advances | External | Capability planning |
+
+### Decision Authority
+
+| Decision | Authority Level |
+|----------|-----------------|
+| AI strategy | Final (with CEO approval for major shifts) |
+| AI investments <$100K | Final |
+| AI investments >$100K | Recommend to CEO |
+| AI policies | Final |
+| AI ethics standards | Final |
+| AI team structure | Final |
+
+---
+
+## Deployment Notes
+
+### Classification: Human-Primary
+
+**Human leads all strategic decisions; AI assists with analysis.**
+
+As a Human-Primary role:
+- Human sets all strategy
+- Human makes all governance decisions
+- Human represents AI externally
+- Human builds relationships
+- AI assists with research
+- AI drafts documentation
+- AI analyzes metrics
+
+### Hybrid Deployment
+
+Uses **Hybrid mode** for strategic planning and collaboration.
+
+**Why Hybrid:**
+- Requires human judgment for strategy
+- Needs browser for collaboration tools
+- Needs CLI for AI system access
+- High-stakes decisions require human
+
+### Iteration Protocol
+
+```
+LOOP:
+  1. Strategic work (analysis, planning, governance)
+  2. STOP → Present to stakeholders
+  3. WAIT for input and decisions
+  4. IF approved → Implement
+  5. IF needs revision → Iterate
+  6. REPEAT
+```
+
+---
+
+## Appendix: Story Portal Context
+
+### AI Strategy (Story Portal)
+
+| Area | Focus |
+|------|-------|
+| **Audio Processing** | AI-powered transcription potential |
+| **Content Moderation** | AI-assisted safety review |
+| **Prompt Generation** | AI-enhanced prompt variety |
+| **User Insights** | AI pattern analysis |
+
+### AI Priorities
+
+| Priority | Initiative |
+|----------|------------|
+| 1 | Audio content safety AI |
+| 2 | Prompt suggestion enhancement |
+| 3 | User engagement insights |
+| 4 | Accessibility automation |
+
+### Responsible AI (Story Portal)
+
+| Principle | Application |
+|-----------|-------------|
+| Privacy | Audio data protection |
+| Consent | Clear AI disclosure |
+| Safety | Content moderation |
+| Transparency | Explainable recommendations |
+
+### AI Governance (Story Portal)
+
+| Domain | Approach |
+|--------|----------|
+| Data | Festival consent framework |
+| Processing | Edge processing preference |
+| Storage | Minimal data retention |
+| Access | Role-based AI access |
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR + Executive leadership approval.*
+
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "chief-ai-officer",
+  "department": "ai-automation",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>{
+  "role": "chief-ai-officer",
+  "department": "ai-automation",
+  "scores": {
+    "philosophy_depth": 6,
+    "handoff_specificity": 8,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 8,
+    "story_portal_relevance": 7
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 6,
+      "finding": "Principles like “Strategic Impact” and “Innovation + Pragmatism” are high-level and could apply to any executive role rather than this C-suite AI leader.",
+      "example_rewrite": "Add a principle such as **“Quantifiable ROI Mandate”**: “Every AI investment must have a target ROI and a timeline for achieving it, with quarterly reviews against predefined metrics.”"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "The role file lacks any anti-pattern section specific to the Chief AI Officer, leaving users without guidance on what common missteps to avoid.",
+      "example_rewrite": "Anti-Patterns:\n1. **AI Strategy Silo** – Crafting a roadmap without stakeholder input, leading to low adoption.\n2. **Governance Vacuum** – Skipping policy reviews and letting rogue AI pilots run unchecked.\n3. **Ethics Checkbox** – Treating bias mitigation as a one-off audit instead of an ongoing process.\n4. **Tool Fetishism** – Investing in the latest model without aligning to business outcomes.\n5. **Overdelegation** – Handing off all AI decisions to engineering without executive oversight."
+    }
+  ],
+  "top_improvement": "Add a dedicated, role-specific anti-patterns section to guide the Chief AI Officer away from common pitfalls."
+}</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "chief-ai-officer",
+  "department": "ai-automation",
+  "scores": {
+    "philosophy_depth": 5,
+    "handoff_specificity": 4,
+    "anti_pattern_quality": 2,
+    "ai_deployment_clarity": 6,
+    "story_portal_relevance": 5
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 5,
+      "finding": "All 6 principles are present but read as executive buzzword bingo. 'AI as Amplifier', 'Responsible by Design', 'Strategic Impact' could appear verbatim in any AI officer role at any company. None are grounded in Story Portal's specific context (audio storytelling, festival consent, child safety, edge processing). 'Transparent AI' is defined as 'Understandable, explainable, auditable' — that is simply the definition of the word, not a principle with behavioral teeth.",
+      "example_rewrite": "Replace 'Transparent AI — Understandable, explainable, auditable' with: 'Consent-First AI — Story Portal users share intimate audio memories. Every AI system touching that content must surface a plain-language explanation of what is analyzed, stored, and retained before processing begins. No silent inference, no opt-out-later.'"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 4,
+      "finding": "Handoffs name roles but deliver abstractions, not artifacts. 'AI Research Lead → Research insights', 'AI Ethics Specialist → Ethics recommendations', 'Delivers to All Departments → AI enablement' — none of these specify a document format, a named deliverable, or a triggering condition. 'AI capabilities' delivered to Chief Product Officer is meaningless as a handoff artifact. Additionally, 'AI Research Lead' and 'AI Ethics Specialist' are referenced in the Works With table and Receives From table but their existence in the Organizational Charter cannot be verified from this file — hallucination risk flagged.",
+      "example_rewrite": "Replace 'Delivers To: Chief Product Officer | AI capabilities' with: 'Delivers To: Chief Product Officer | Artifact: Quarterly AI Capability Brief (PDF) — lists validated AI features ready for product roadmap inclusion, including feasibility score, ethics clearance status, and estimated engineering cost range. Triggered after each AI governance review cycle.'"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 2,
+      "finding": "This role has NO dedicated anti-patterns section. The template standard explicitly requires 3-5 role-specific anti-patterns. The DON'T list in Boundaries partially covers this ('Override product decisions', 'Manage day-to-day engineering') but these are boundary statements, not behavioral anti-patterns describing failure modes an AI agent or human incumbent would actually exhibit. There is zero coverage of CAIO-specific failure modes such as: over-indexing on AI adoption metrics while ignoring ethical debt, blessing initiatives without legal review to hit roadmap timelines, or using 'responsible AI' language as PR cover without enforcement mechanisms.",
+      "example_rewrite": "Add a dedicated Anti-Patterns section with entries such as: 'Roadmap Theater — Approving AI initiatives based on innovation optics rather than measured user value. Signal: initiative has a demo but no success metric owner. Correction: No initiative advances past EVALUATE without a named metric and a baseline measurement.' and 'Ethics Rubber Stamp — Ethics review is scheduled but conclusions never block or modify an initiative. Signal: zero initiatives have been modified or rejected based on ethics review in the past two quarters. Correction: Publish ethics review outcomes including rejections.'"
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 6,
+      "finding": "The Deployment Notes section correctly identifies Human-Primary classification and explains the Hybrid mode rationale. The Iteration Protocol loop is present and structurally valid. However, an AI agent loading this role cannot determine: what tools are available in Hybrid mode (which CLI, which collaboration tools), what 'AI assists with research' means operationally (which sources, which formats), and what constitutes a completed STOP point versus an informational pause. Workflow STOP points say 'Present to leadership' and 'Decision communicated' but do not specify who specifically approves, what format the presentation takes, or what a rejected outcome triggers.",
+      "example_rewrite": "Replace 'STOP → Present to leadership' in Workflow 1 with: 'STOP → Prepare AI Initiative Brief (use template: /templates/ai-initiative-brief.md). Present to CEO and CTO in weekly AI Steering meeting. Required fields: strategic fit score, ethics flag (green/yellow/red), resource ask, and go/no-go recommendation. Do not proceed to DECIDE until CEO provides written approval in Slack #ai-governance or via email. If rejected, return to EVALUATE with CEO's objections documented.'"
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 5,
+      "finding": "The Story Portal appendix lists four AI focus areas and four priorities, which shows genuine product awareness. However, the content is shallow and non-actionable. 'Audio Processing — AI-powered transcription potential' is a capability observation, not a strategic directive. Priority 1 'Audio content safety AI' has no owner, no timeline, no success metric, and no link to the governance framework described earlier in the role. The Responsible AI table lists 'Privacy — Audio data protection' without specifying what protection means in practice (retention limits, PII redaction thresholds, user-facing controls). The appendix reads as placeholder content dressed up in tables.",
+      "example_rewrite": "Replace 'Priority 1 | Audio content safety AI' row with an expanded entry: 'Priority 1 | Audio Content Safety AI | Initiative: Deploy ML-based audio moderation to flag harmful content before human review. Success metric: <2% harmful content reaching reviewers by Q3. Ethics requirement: Model bias audit across accent and dialect diversity before production deployment. Owner: AI Research Lead. Governance checkpoint: Ethics Specialist sign-off required before model training begins on user audio data. Privacy constraint: No raw audio stored post-analysis; only moderation score and timestamp retained.'"
+    }
+  ],
+  "top_improvement": "Add a dedicated Anti-Patterns section with 3-5 CAIO-specific failure modes and correction protocols. This is the single largest structural gap — the section is entirely missing, which means neither a human incumbent nor an AI agent has guardrails against the most common executive AI leadership failure modes (ethics theater, roadmap optics, unblocked initiative approval). Every other dimension has partial coverage; anti-patterns have none."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

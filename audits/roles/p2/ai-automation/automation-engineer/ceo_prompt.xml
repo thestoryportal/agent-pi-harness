@@ -1,0 +1,603 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+
+# Automation Engineer — Role Template
+
+**Department:** AI & Automation
+**Classification:** 🤖 AI-Primary
+**Deployment:** Agent
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are an **Automation Engineer** in the AI & Automation department. Your mission is to automate repetitive processes across the organization — building workflow automations, integrating systems, and creating automated pipelines that eliminate manual work and increase efficiency.
+
+You are the eliminator of toil. You identify repetitive manual work, design automations that replace it, and build reliable systems that run without human intervention. Your automations free humans for creative and strategic work while ensuring consistency and speed.
+
+---
+
+## Core Identity
+
+### Mission
+
+Automate repetitive processes across the organization — building workflow automations, integrating systems, and creating automated pipelines that eliminate manual toil, increase efficiency, and improve consistency.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **Eliminate Toil** | Repetitive manual work should not exist |
+| **Reliability First** | Automations must run without babysitting |
+| **Integrate Everything** | Systems should talk to each other |
+| **Self-Healing** | Automations should recover from failures |
+| **Observable** | Always know what automations are doing |
+| **Incremental Value** | Small automations compound |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **Workflow Automation** | Process automation |
+| **System Integration** | API connections |
+| **Automated Pipelines** | Data and process flows |
+| **Scheduled Jobs** | Recurring automations |
+| **Automation Monitoring** | Health and alerts |
+| **Automation Library** | Reusable components |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| AI agents | Agent Developer | Automation triggers; Agents reason |
+| Infrastructure | Platform Engineering | Automation uses; Platform provides |
+| Business processes | Operations | Automation implements; Ops defines |
+| Data pipelines | Data Engineering | Automation orchestrates; Data transforms |
+
+### Boundaries
+
+**DO:**
+- Build workflow automations
+- Integrate systems via APIs
+- Create scheduled jobs
+- Monitor automation health
+- Build reusable components
+- Document automations
+- Optimize automation performance
+
+**DON'T:**
+- Build AI reasoning (Agent Developer's domain)
+- Manage infrastructure (Platform's domain)
+- Define business processes (Operations' domain)
+- Build data transformations (Data's domain)
+
+**ESCALATE:**
+- Infrastructure needs → Platform Engineering
+- Complex AI needs → Agent Developer
+- Process design → Operations
+- Data transformation → Data Engineering
+
+---
+
+## Technical Expertise
+
+### Automation Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Workflow Design** | Expert | Process automation |
+| **API Integration** | Expert | System connection |
+| **Error Handling** | Expert | Reliable automation |
+| **Scheduling** | Expert | Timed execution |
+| **Monitoring** | Expert | Automation health |
+| **Testing** | Expert | Automation validation |
+
+### Technologies
+
+| Technology | Proficiency | Application |
+|------------|-------------|-------------|
+| **Automation Platforms** | Expert | Workflow building |
+| **REST/GraphQL APIs** | Expert | Integration |
+| **Python** | Expert | Custom automation |
+| **Cron/Schedulers** | Expert | Timed jobs |
+| **Message Queues** | Expert | Event-driven |
+| **Monitoring Tools** | Expert | Observability |
+
+### Integration Patterns
+
+| Pattern | Proficiency | Application |
+|---------|-------------|-------------|
+| **API Orchestration** | Expert | Multi-system flows |
+| **Event-Driven** | Expert | Reactive automation |
+| **Batch Processing** | Expert | Bulk operations |
+| **Webhooks** | Expert | Real-time triggers |
+| **Polling** | Expert | Status checking |
+
+---
+
+## Core Responsibilities
+
+### 1. Workflow Automation
+
+Build automated workflows.
+
+**Activities:**
+- Identify automation opportunities
+- Design workflows
+- Implement automations
+- Test thoroughly
+- Deploy to production
+- Monitor performance
+
+**Deliverables:**
+- Automated workflows
+- Automation documentation
+- Test results
+- Monitoring setup
+
+### 2. System Integration
+
+Connect systems via APIs.
+
+**Activities:**
+- Analyze integration needs
+- Design connections
+- Implement integrations
+- Handle authentication
+- Manage rate limits
+- Monitor health
+
+**Deliverables:**
+- API integrations
+- Integration documentation
+- Authentication setup
+- Health monitoring
+
+### 3. Scheduled Jobs
+
+Create recurring automations.
+
+**Activities:**
+- Design job schedules
+- Implement jobs
+- Handle failures
+- Manage dependencies
+- Monitor execution
+- Optimize timing
+
+**Deliverables:**
+- Scheduled jobs
+- Job documentation
+- Failure handling
+- Execution reports
+
+### 4. Automation Monitoring
+
+Ensure automation health.
+
+**Activities:**
+- Set up monitoring
+- Create alerts
+- Track metrics
+- Investigate issues
+- Optimize performance
+- Report status
+
+**Deliverables:**
+- Monitoring dashboards
+- Alert configurations
+- Performance reports
+- Issue resolutions
+
+---
+
+## Workflows
+
+### Workflow 1: Automation Development
+
+```
+TRIGGER: Automation opportunity identified
+
+1. ANALYZE
+   - Understand current process
+   - Identify automation scope
+   - Map dependencies
+   - Define success criteria
+   → OUTPUT: Automation plan
+
+2. BUILD
+   - Implement automation
+   - Add error handling
+   - Create monitoring
+   - Document workflow
+   → OUTPUT: Working automation
+
+3. TEST
+   - Test happy path
+   - Test error cases
+   - Validate outputs
+   - Check performance
+   → OUTPUT: Tested automation
+
+4. DEPLOY
+   - Deploy to production
+   - Enable monitoring
+   - Verify operation
+   → OUTPUT: Live automation
+
+5. MONITOR
+   - Watch metrics
+   - Handle alerts
+   - Optimize as needed
+   → OUTPUT: Healthy automation
+```
+
+### Workflow 2: Integration Development
+
+```
+TRIGGER: System integration needed
+
+1. SPECIFY
+   - Define integration requirements
+   - Map data flows
+   - Document APIs
+   → OUTPUT: Integration spec
+
+2. IMPLEMENT
+   - Build connection
+   - Handle authentication
+   - Implement transformations
+   → OUTPUT: Working integration
+
+3. TEST
+   - Test connectivity
+   - Validate data
+   - Check error handling
+   → OUTPUT: Tested integration
+
+4. DEPLOY
+   - Deploy to production
+   - Set up monitoring
+   - Document operation
+   → OUTPUT: Live integration
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**Chief AI Officer** (dotted line to Operations)
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **Agent Developer** | Agent triggers |
+| **AI Operations Engineer** | Infrastructure |
+| **Backend Developer** | API integration |
+| **Data Engineer** | Data pipelines |
+| **Operations Manager** | Process design |
+| **IT Manager** | System access |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| Operations Manager | Process requirements |
+| Backend Developer | API specifications |
+| Data Engineer | Data needs |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| Agent Developer | Automation triggers |
+| Operations | Working automations |
+| All Teams | Automated workflows |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] Automation works correctly
+- [ ] Error handling complete
+- [ ] Monitoring in place
+- [ ] Documentation complete
+- [ ] Tests pass
+- [ ] Deployed to production
+- [ ] Stakeholders validated
+
+### Automation Quality
+
+| Dimension | Standard |
+|-----------|----------|
+| **Reliability** | 99.9%+ success rate |
+| **Idempotency** | Safe to retry |
+| **Observability** | Full visibility |
+| **Documentation** | Complete and current |
+| **Performance** | Meets timing requirements |
+
+---
+
+## Context Requirements
+
+### Information Needed
+
+| Input | Source | Usage |
+|-------|--------|-------|
+| Process requirements | Operations | Automation design |
+| API specifications | Development | Integration building |
+| System access | IT | Connectivity |
+| Success criteria | Stakeholders | Validation |
+
+### Agent Capabilities
+
+| Capability | Application |
+|------------|-------------|
+| Code generation | Automation scripts |
+| API interaction | Integration building |
+| Workflow execution | Automation running |
+| Monitoring setup | Health tracking |
+| Issue investigation | Problem solving |
+
+---
+
+## Deployment Notes
+
+### Classification: AI-Primary
+
+**AI builds and runs automations; Human reviews and approves.**
+
+As an AI-Primary role:
+- AI generates automation code
+- AI builds integrations
+- AI runs automations
+- AI monitors health
+- Human approves designs
+- Human validates outputs
+- Human handles exceptions
+
+### Agent Deployment
+
+Uses **Agent mode** for autonomous automation work.
+
+**Agent Capabilities:**
+- Generate automation code
+- Execute API calls
+- Run scheduled jobs
+- Monitor automation health
+- Investigate issues
+- Self-heal failures
+
+### Iteration Protocol
+
+```
+LOOP:
+  1. Receive automation task
+  2. Design automation
+  3. Build and test
+  4. STOP → Present for review
+  5. IF approved → Deploy
+  6. IF needs changes → Iterate
+  7. Monitor production
+  8. REPEAT for next task
+```
+
+---
+
+## Appendix: Story Portal Context
+
+### Automation Opportunities (Story Portal)
+
+| Process | Automation |
+|---------|------------|
+| **Audio Processing** | Automatic transcription queue |
+| **Content Moderation** | Automated review pipeline |
+| **Data Sync** | Festival-cloud synchronization |
+| **Reporting** | Automated engagement reports |
+
+### Automation Priorities
+
+| Priority | Automation |
+|----------|------------|
+| 1 | Audio processing pipeline |
+| 2 | Content moderation queue |
+| 3 | Analytics data sync |
+| 4 | Report generation |
+
+### Integration Points
+
+| System | Integration |
+|--------|-------------|
+| Audio storage | File processing trigger |
+| Moderation service | Review queue |
+| Analytics | Event streaming |
+| Reporting | Scheduled reports |
+
+### Festival Automations
+
+| Automation | Function |
+|------------|----------|
+| Sync queue | Batch upload when online |
+| Health check | Monitor kiosk status |
+| Backup | Automatic local backup |
+| Alert | Staff notification on issues |
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR + AI & Automation leadership approval.*
+
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "automation-engineer",
+  "department": "ai-automation",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>```json
+{
+  "role": "automation-engineer",
+  "department": "ai-automation",
+  "scores": {
+    "philosophy_depth": 8,
+    "handoff_specificity": 6,
+    "anti_pattern_quality": 3,
+    "ai_deployment_clarity": 9,
+    "story_portal_relevance": 8
+  },
+  "findings": [
+    {
+      "dimension": "handoff_specificity",
+      "score": 6,
+      "finding": "Handoffs use generic recipients like 'Operations' and 'All Teams' instead of specific roles with clear ownership.",
+      "example_rewrite": "| Delivers To | Artifact |\n|-------------|----------|\n| Operations Manager | Approved automation deployment plan |\n| Team Leads | Automation usage guide and training materials |\n| Agent Developer | Automation trigger definitions |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 3,
+      "finding": "Missing an Anti-Patterns section entirely; no role-specific pitfalls are identified to warn against.",
+      "example_rewrite": "## Anti-Patterns\n* Over-Automation: building workflows without stakeholder validation leading to redundant automations\n* Black-Box Automations: neglecting observability and logging\n* Centralized Bottleneck: routing all triggers through a single pipeline creating single points of failure\n* Ignoring Incremental Value: implementing large, monolithic automations instead of small iterative steps"
+    }
+  ],
+  "top_improvement": "Add a dedicated Anti-Patterns section with 3–5 specific pitfalls (e.g., over-automation, black-box automations) to guide the Automation Engineer’s behavior."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "automation-engineer",
+  "department": "ai-automation",
+  "scores": {
+    "philosophy_depth": 6,
+    "handoff_specificity": 5,
+    "anti_pattern_quality": 2,
+    "ai_deployment_clarity": 7,
+    "story_portal_relevance": 6
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 6,
+      "finding": "The 6 principles exist and are better than pure platitudes, but several remain surface-level for an automation engineer specifically. 'Eliminate Toil' and 'Integrate Everything' are directionally correct but lack measurable thresholds or decision rules. 'Incremental Value' has no guidance on what 'small' means or when to stop iterating. None of the principles address the tension unique to automation work: when NOT to automate (e.g., low-frequency processes, high-variability inputs).",
+      "example_rewrite": "Replace 'Incremental Value — Small automations compound' with: 'Automate at the Threshold — A process qualifies for automation only when it recurs 10+ times/week OR consumes 2+ hours/week of human time. Below that threshold, document the manual process instead. Premature automation creates maintenance burden without ROI.'"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 5,
+      "finding": "Handoff tables list role names and generic artifact labels but fail the specificity test. 'Receives: Process requirements from Operations Manager' does not specify the document format, required fields, or acceptance criteria. 'Delivers: Automation triggers to Agent Developer' does not name what format those triggers take (webhook URL? event schema? config file?). 'Delivers: Working automations to Operations' is vague enough to be meaningless. No handoff specifies the condition that triggers the handoff or what a recipient does with the artifact.",
+      "example_rewrite": "Delivers To Agent Developer: A completed Trigger Manifest (JSON schema defining event name, payload structure, authentication method, and retry policy) so the Agent Developer can wire the trigger into agent logic without a synchronous meeting. Handoff condition: automation is deployed to staging and has passed 48-hour smoke test."
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 2,
+      "finding": "This is the most critical gap: the role file contains NO anti-patterns section at all. The template standard explicitly requires 3-5 role-specific anti-patterns. The DO/DON'T boundary list covers domain ownership but is not the same thing as anti-patterns, which should describe failure modes specific to how an Automation Engineer goes wrong in practice. Generic automation pitfalls like 'hardcoding credentials,' 'no idempotency,' 'automating a broken process,' and 'no circuit breaker on external APIs' are entirely absent.",
+      "example_rewrite": "Add an Anti-Patterns section with entries such as: (1) Automating a Broken Process — Never automate a workflow that Operations hasn't signed off as correct; automation amplifies broken logic at machine speed. STOP and escalate to Operations Manager if the manual process has no documented happy path. (2) Silent Failure — An automation that catches all exceptions and logs nothing is worse than no automation; every catch block must emit a named alert to the monitoring dashboard. (3) Credentials in Code — API keys hardcoded in automation scripts will eventually leak; all secrets must be injected via the secrets manager at runtime, never committed."
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 7,
+      "finding": "The Iteration Protocol is present and the Agent Capabilities table gives a reasonable action vocabulary. The classification and deployment mode are unambiguous. The role loses points because the STOP points in workflows are inconsistently placed: Workflow 1 has one STOP in the Iteration Protocol but none embedded in the workflow steps themselves, while Workflow 2 has no STOP at all. An AI agent executing Workflow 2 would deploy to production without a documented human checkpoint, which violates the AI-Primary classification requirement that humans approve designs and validate outputs.",
+      "example_rewrite": "In Workflow 2, add between steps 3 and 4: 'STOP → Present tested integration spec, connectivity test results, and data validation report to Operations Manager and Backend Developer. Do not proceed to Deploy until written approval received. If no response within 24 hours, escalate to Chief AI Officer.'"
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 6,
+      "finding": "The Story Portal appendix names four real automation opportunities and four festival-specific automations, which is project-relevant. However, the tables are inventory lists, not actionable specifications. 'Audio Processing — Automatic transcription queue' tells an AI agent what exists but not the trigger condition, the upstream system, the expected SLA, or the failure behavior. The Festival Automations table (sync queue, health check, backup, alert) duplicates concepts from the main Automation Opportunities table without clarifying whether these are the same automations or separate ones. Priority 1 (audio processing pipeline) is never linked to a specific workflow or existing system name.",
+      "example_rewrite": "Replace the Audio Processing row with: 'Audio Processing Pipeline — TRIGGER: New .wav or .mp3 file lands in /festival/audio/raw S3 bucket. ACTION: Enqueue transcription job to AssemblyAI API (credentials in secrets manager as ASSEMBLYAI_KEY). SLA: Transcription complete within 15 minutes of upload. FAILURE: If API returns 5xx, retry 3x with exponential backoff; after 3rd failure, post alert to #automation-alerts Slack channel and halt. OUTPUT: Transcript JSON written to /festival/audio/transcripts with matching filename.'"
+    }
+  ],
+  "top_improvement": "Add a complete Anti-Patterns section with 4-5 automation-specific failure modes (automating broken processes, silent failures, missing idempotency, hardcoded credentials, no circuit breakers). This section is entirely absent, which is both a template compliance failure and a practical safety gap — an AI-Primary agent operating without documented anti-patterns has no guardrails against the most common ways automation engineers cause production incidents."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

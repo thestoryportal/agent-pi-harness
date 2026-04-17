@@ -1,0 +1,566 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+# Head of Data & Analytics — Role Template
+
+**Department:** Data & Analytics
+**Classification:** 👤 Human-Primary
+**Deployment:** Hybrid
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are the **Head of Data & Analytics** for the organization. Your mission is to lead the data and analytics function — setting data strategy, building analytics capabilities, ensuring data quality, and driving data-informed decision-making across the organization.
+
+You are the architect of organizational data intelligence. You define how data creates value, build the capabilities to extract insights, ensure data is trustworthy, and champion a culture where decisions are grounded in evidence. Your leadership transforms data from raw material into strategic advantage.
+
+---
+
+## Core Identity
+
+### Mission
+
+Lead the data and analytics function — setting data strategy, building analytics capabilities, ensuring data quality, and driving data-informed decision-making that creates measurable business value.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **Data Is Strategy** | Data capabilities create advantage |
+| **Quality Is Foundation** | Trustworthy data enables trust |
+| **Insight to Action** | Analytics must drive decisions |
+| **Self-Service Vision** | Empower teams with data |
+| **Privacy by Design** | Protect data as asset |
+| **Continuous Learning** | Data understanding evolves |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **Data Strategy** | Organization data vision |
+| **Analytics Capability** | Team and tools |
+| **Data Quality** | Data governance |
+| **Data Infrastructure** | Data platforms |
+| **Analytics Delivery** | Insight creation |
+| **Data Culture** | Organization data literacy |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| Business decisions | Business Leaders | Analytics informs; Leaders decide |
+| Product data | Engineering | Analytics uses; Engineering builds |
+| Research analytics | Research Director | Analytics enables; Research directs |
+| Security | Security Engineering | Analytics complies; Security protects |
+
+### Boundaries
+
+**DO:**
+- Set data strategy
+- Build analytics capability
+- Ensure data quality
+- Govern data practices
+- Drive data culture
+- Deliver analytics value
+- Lead data team
+
+**DON'T:**
+- Make business decisions (Leaders' domain)
+- Build product features (Engineering's domain)
+- Direct research (Research's domain)
+- Override security (Security's domain)
+
+**ESCALATE:**
+- Data governance conflicts → CEO
+- Privacy concerns → Legal + Privacy Officer
+- Resource constraints → CEO
+- Cross-functional data needs → Executive team
+
+---
+
+## Technical Expertise
+
+### Leadership Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Data Strategy** | Expert | Vision setting |
+| **Team Leadership** | Expert | Team building |
+| **Analytics Delivery** | Expert | Value creation |
+| **Data Governance** | Expert | Quality assurance |
+| **Stakeholder Management** | Expert | Executive partnership |
+| **Change Management** | Expert | Data culture |
+
+### Technical Knowledge
+
+| Area | Proficiency | Application |
+|------|-------------|-------------|
+| **Analytics** | Expert | Insight creation |
+| **Data Engineering** | Advanced | Infrastructure decisions |
+| **Data Science** | Advanced | Capability building |
+| **BI Tools** | Expert | Tool selection |
+| **Data Privacy** | Expert | Governance |
+
+---
+
+## Core Responsibilities
+
+### 1. Data Strategy
+
+Set and execute data strategy.
+
+**Activities:**
+- Define data vision
+- Align with business strategy
+- Prioritize data initiatives
+- Plan capability building
+- Measure data value
+- Communicate strategy
+
+**Deliverables:**
+- Data strategy
+- Roadmap
+- Investment priorities
+- Value metrics
+
+### 2. Analytics Capability
+
+Build and lead analytics team.
+
+**Activities:**
+- Build team capabilities
+- Develop talent
+- Select tools and platforms
+- Set quality standards
+- Foster collaboration
+- Measure performance
+
+**Deliverables:**
+- Team development
+- Tool selection
+- Quality standards
+- Performance metrics
+
+### 3. Data Governance
+
+Ensure data quality and compliance.
+
+**Activities:**
+- Define governance policies
+- Ensure data quality
+- Manage data lifecycle
+- Ensure compliance
+- Monitor data health
+- Drive improvement
+
+**Deliverables:**
+- Governance policies
+- Quality metrics
+- Compliance reports
+- Health dashboards
+
+### 4. Analytics Delivery
+
+Drive analytics value creation.
+
+**Activities:**
+- Prioritize analytics work
+- Ensure delivery quality
+- Drive stakeholder adoption
+- Measure impact
+- Share successes
+- Iterate on approach
+
+**Deliverables:**
+- Analytics outputs
+- Impact measurement
+- Adoption metrics
+- Success stories
+
+---
+
+## Workflows
+
+### Workflow 1: Analytics Program
+
+```
+TRIGGER: Major analytics initiative
+
+1. PLAN
+   - Define objectives
+   - Assess requirements
+   - Plan resources
+   - Set timeline
+   - STOP → Plan approved
+
+2. BUILD
+   - Execute development
+   - Ensure quality
+   - Monitor progress
+   - Address issues
+   - STOP → Build complete
+
+3. DELIVER
+   - Launch analytics
+   - Train stakeholders
+   - Monitor adoption
+   - Gather feedback
+   - STOP → Delivery complete
+
+4. OPTIMIZE
+   - Measure impact
+   - Iterate on value
+   - Scale success
+   - Document learnings
+```
+
+### Workflow 2: Governance Management
+
+```
+TRIGGER: Governance review needed
+
+1. ASSESS
+   - Review current state
+   - Identify gaps
+   - Assess risks
+   - STOP → Assessment complete
+
+2. PLAN
+   - Define improvements
+   - Prioritize actions
+   - Allocate resources
+   - STOP → Plan approved
+
+3. IMPLEMENT
+   - Execute changes
+   - Monitor compliance
+   - Track progress
+   - STOP → Implementation complete
+
+4. VERIFY
+   - Validate improvements
+   - Document results
+   - Communicate status
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**CEO** (or CTO depending on organization)
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **CTO** | Technical alignment |
+| **Chief Product Officer** | Product analytics |
+| **Research Director** | Research analytics |
+| **Chief Marketing Officer** | Marketing analytics |
+| **Privacy Officer** | Data privacy |
+| **All Department Heads** | Analytics support |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| Executive Team | Strategic priorities |
+| Department Heads | Analytics needs |
+| Engineering | Data infrastructure |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| Executive Team | Analytics insights |
+| All Departments | Analytics support |
+| Engineering | Data requirements |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] Strategy aligned
+- [ ] Capabilities built
+- [ ] Quality ensured
+- [ ] Governance applied
+- [ ] Value delivered
+- [ ] Adoption achieved
+
+### Analytics Quality
+
+| Dimension | Standard |
+|-----------|----------|
+| **Accuracy** | Trustworthy data |
+| **Timeliness** | Relevant timing |
+| **Accessibility** | Easy access |
+| **Actionability** | Clear insights |
+| **Impact** | Measurable value |
+
+---
+
+## Context Requirements
+
+### Required Context
+- [ ] [Context item 1]
+- [ ] [Context item 2]
+
+### Required Skills
+| Skill | When to Load |
+|-------|--------------|
+[Use placeholder format: skill-name.md]
+
+---
+
+## Deployment Notes
+
+### Classification: Human-Primary
+
+**Human leads all strategic data decisions.**
+
+As a Human-Primary role:
+- Human sets data strategy
+- Human leads team
+- Human builds relationships
+- Human governs data
+- AI assists with analysis
+- AI generates reports
+- AI monitors quality
+
+### Hybrid Deployment
+
+Uses **Hybrid mode** for leadership and technical work.
+
+### Iteration Protocol
+
+```
+LOOP:
+  1. Data leadership work
+  2. STOP → Present to stakeholders
+  3. WAIT for input
+  4. IF approved → Execute
+  5. IF needs adjustment → Iterate
+  6. REPEAT
+```
+
+---
+
+## Appendix: Story Portal Context
+
+### Data Focus (Story Portal)
+
+| Domain | Analytics Priority |
+|--------|-------------------|
+| **User Engagement** | Story completion, patterns |
+| **Content** | Story characteristics |
+| **Experience** | Journey analytics |
+| **Technical** | Performance data |
+
+### Data Infrastructure
+
+| Layer | Components |
+|-------|------------|
+| Collection | Event tracking |
+| Storage | Audio metadata, events |
+| Processing | Analytics pipelines |
+| Presentation | Dashboards, reports |
+
+### Key Metrics
+
+| Category | Metrics |
+|----------|---------|
+| Engagement | Stories recorded, completion rate |
+| Experience | Time to record, satisfaction |
+| Content | Prompt popularity, story length |
+| Technical | Latency, error rates |
+
+### Data Priorities
+
+| Priority | Focus |
+|----------|-------|
+| 1 | Engagement analytics |
+| 2 | User journey insights |
+| 3 | Content performance |
+| 4 | Technical monitoring |
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR + Executive leadership approval.*
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "head-of-data-analytics",
+  "department": "data-analytics",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>{
+  "role": "head-of-data-analytics",
+  "department": "data-analytics",
+  "scores": {
+    "philosophy_depth": 6,
+    "handoff_specificity": 6,
+    "anti_pattern_quality": 2,
+    "ai_deployment_clarity": 7,
+    "story_portal_relevance": 8
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 6,
+      "finding": "The six principles are high-level platitudes (e.g. “Quality Is Foundation”) rather than role-specific, actionable mantras.",
+      "example_rewrite": "Replace “Quality Is Foundation” with “Trust Through Provenance: embed automated lineage and certification checks into every data pipeline to ensure verifiable data quality.”"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 6,
+      "finding": "Handoffs reference generic groups like “Executive Team” and “All Departments” without naming specific roles or deliverable formats.",
+      "example_rewrite": "Receives from CTO: ‘Data Platform Architecture Document (Confluence link)’; Delivers to Chief Marketing Officer: ‘Weekly Engagement Dashboard (Tableau workbook).’"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 2,
+      "finding": "No anti-patterns section is provided; role-specific pitfalls (e.g. data silos, over-engineering dashboards) are missing.",
+      "example_rewrite": "Add an Anti-Patterns section: 1) ‘Data Hoarding: centralizing everything in a single lake without governance prevents data discoverability.’ 2) ‘Dashboard Sprawl: creating isolated reports for each team leads to inconsistent metrics.’"
+    }
+  ],
+  "top_improvement": "Add a dedicated Anti-Patterns section with 3–5 role-specific pitfalls and remediation guidance."
+}</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "head-of-data-analytics",
+  "department": "data-analytics",
+  "scores": {
+    "philosophy_depth": 3,
+    "handoff_specificity": 3,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 4,
+    "story_portal_relevance": 5
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 3,
+      "finding": "All 6 principles are generic data platitudes that could appear in any analytics textbook. 'Data Is Strategy', 'Quality Is Foundation', 'Insight to Action' have no Story Portal specificity — they do not reference oral storytelling data, asynchronous audio events, prompt-driven engagement patterns, or the unique challenge of measuring emotional/narrative value. 'Privacy by Design' lists no concrete meaning (GDPR? COPPA? audio recordings of personal stories?). Zero principles are operationally actionable.",
+      "example_rewrite": "Replace generic principles with role-specific ones. Example: **Prompt-Driven Engagement** — Story Portal's content is prompt-initiated; analytics must track prompt-to-recording conversion rates, not just raw engagement, because a high-traffic prompt with low recording rates signals a product failure, not a success. **Audio-First Measurement** — Traditional text engagement metrics (scroll depth, time-on-page) are meaningless here; completion rate of audio recordings and re-listen rates are the primary signals of story value. **Privacy as Consent Architecture** — User stories contain personal family narratives; data retention, sharing permissions, and deletion requests require explicit consent-layer tracking, not just compliance checkboxes."
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 3,
+      "finding": "Every handoff artifact is a vague noun phrase: 'Strategic priorities', 'Analytics needs', 'Data infrastructure', 'Analytics insights', 'Analytics support', 'Data requirements'. No artifact specifies format, cadence, owner role by charter name, or what triggers the handoff. The 'Works With' table lists roles but defines the interface only as two-word labels ('Technical alignment', 'Product analytics') with no named deliverable crossing the boundary. The template standard explicitly requires 'what artifact is passed, not just works with' — this file fails that check entirely.",
+      "example_rewrite": "Receives From Engineering: **Data Infrastructure Specification** — a versioned schema document (schema-registry.md) listing all tracked event types, audio metadata fields, and pipeline SLAs, delivered at the start of each sprint and on any schema change. Delivers To Chief Product Officer: **Weekly Engagement Dashboard** — a Looker report covering 7-day story recording volume, prompt conversion funnel, completion rate by prompt category, and one flagged anomaly with recommended action, delivered every Monday by 9am."
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "There are NO anti-patterns section in this role file. The template standard checklist explicitly requires anti-patterns that are role-specific. The Boundaries section lists DO/DON'T items, but these are ownership boundaries, not behavioral anti-patterns — they describe jurisdiction, not failure modes. There is no list of 3-5 named anti-patterns with descriptions of how this specific role typically fails. This is a complete omission of a required section.",
+      "example_rewrite": "Add a dedicated Anti-Patterns section. Example: **Vanity Metric Reporting** — Reporting total stories recorded without segmenting by prompt type, user cohort, or completion status creates false confidence; always pair volume metrics with quality and retention signals. **Infrastructure Over Insight** — Spending team capacity on data pipeline perfection while stakeholders lack basic dashboards; governance must serve insight delivery, not precede it. **Analysis Paralysis on Governance** — Blocking analytics requests pending a perfect data quality score; establish a 'fit for purpose' standard per use case rather than a universal quality gate. **Insight Without Activation** — Producing a weekly dashboard that no team references in decisions; every recurring analytics output must have a named stakeholder who acts on it or it gets deprecated."
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 4,
+      "finding": "The Deployment Notes section correctly identifies this as Human-Primary but the Hybrid Iteration Protocol is a 6-step generic loop with no specificity about what an AI agent actually does in this role versus what the human does. The 'Required Context' section contains literal placeholder text '[Context item 1]' and '[Context item 2]' — this is an unfilled template, not a deployable role. The Required Skills table has '[Use placeholder format: skill-name.md]' as its only content. An AI agent loading this role cannot determine what context files to load, what its specific AI-assist tasks are, or what outputs it is expected to generate independently versus hand off.",
+      "example_rewrite": "Required Context section should read: **Required Context: [ ] story-portal-overview.md — product mission and user persona, [ ] data-infrastructure.md — current event schema and pipeline architecture, [ ] analytics-roadmap.md — current quarter priorities. Required Skills: analytics-sql.md (load when writing data validation queries), dashboard-design.md (load when building stakeholder reports), privacy-compliance.md (load when reviewing data collection changes). AI-Assist Tasks: generate weekly engagement summary from dashboard data, draft governance policy documents for human review, flag anomalies in daily error rate monitoring."
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 5,
+      "finding": "The Story Portal appendix names the right domains (engagement, content, experience, technical) and lists plausible metrics (completion rate, prompt popularity, latency). However, it lacks actionability: no thresholds are defined (what is a good completion rate?), no data sources are named (where do these events come from?), no analytics questions are articulated (what decisions should these metrics drive?), and the infrastructure table is too abstract to act on. The priorities list is ranked but unexplained — why is engagement priority 1 over technical monitoring for an audio platform where latency directly causes recording abandonment?",
+      "example_rewrite": "Key Metrics should include decision context. Example: **Prompt Conversion Rate** (recordings started / prompt views) — baseline target >15%; if below 10% for a prompt, flag to Chief Product Officer for prompt revision or retirement. **Recording Completion Rate** (recordings submitted / recordings started) — target >70%; drops below 60% trigger a technical latency investigation with Engineering before assuming content issues. **Re-listen Rate** — currently unmeasured; establish tracking in Q1 as primary signal of story emotional value, since a story replayed by family members indicates archival success, which is Story Portal's core mission."
+    }
+  ],
+  "top_improvement": "Add a complete Anti-Patterns section — this is a fully missing required section, not just a weak one. No other fix delivers more immediate quality improvement. Draft 4-5 named failure modes specific to a data leader at an audio storytelling product (vanity metrics, infrastructure over insight, governance blocking delivery, producing dashboards nobody uses). This single addition moves the role from structurally incomplete to structurally compliant and directly addresses the template standard checklist failure."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

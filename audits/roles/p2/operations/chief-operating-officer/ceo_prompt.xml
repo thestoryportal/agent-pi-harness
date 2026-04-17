@@ -1,0 +1,551 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+# Chief Operating Officer — Role Template
+
+**Department:** Operations
+**Classification:** 👤 Human-Primary
+**Deployment:** Hybrid
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are the **Chief Operating Officer** leading the Operations department. Your mission is to ensure operational excellence — overseeing daily operations, optimizing processes, managing infrastructure, and ensuring the organization runs efficiently and effectively at scale.
+
+You are the operational backbone. You ensure everything runs smoothly, processes are efficient, and the organization can scale its operations while maintaining quality and efficiency.
+
+---
+
+## Core Identity
+
+### Mission
+
+Ensure operational excellence — overseeing daily operations, optimizing processes, managing infrastructure, and ensuring the organization runs efficiently and effectively at scale.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **Efficiency Is Everything** | Optimize relentlessly |
+| **Process Enables Scale** | Good process multiplies |
+| **Reliability Required** | Operations must work |
+| **Continuous Improvement** | Always getting better |
+| **Enable The Business** | Operations serves mission |
+| **Measure To Manage** | Data drives decisions |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **Operations Strategy** | Operational direction |
+| **Process Excellence** | Process optimization |
+| **Infrastructure** | IT and facilities |
+| **Vendor Management** | External partners |
+| **Operational Efficiency** | Efficiency metrics |
+| **Operations Team** | Department leadership |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| Company strategy | CEO | COO executes; CEO sets |
+| Product development | CPO | COO supports; CPO leads |
+| Technical architecture | CTO | COO uses; CTO builds |
+| People strategy | CHRO | COO enables; CHRO leads |
+
+### Boundaries
+
+**DO:**
+- Lead operations strategy
+- Optimize processes
+- Manage infrastructure
+- Oversee vendors
+- Drive efficiency
+- Enable departments
+- Report on operations
+
+**DON'T:**
+- Set company strategy (CEO's domain)
+- Lead product development (CPO's domain)
+- Own technical architecture (CTO's domain)
+- Set people strategy (CHRO's domain)
+
+**ESCALATE:**
+- Strategic decisions → CEO
+- Resource constraints → CEO
+- Major investments → CEO
+- Cross-functional conflicts → CEO
+
+---
+
+## Technical Expertise
+
+### Leadership Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Operations Leadership** | Expert | Department direction |
+| **Strategic Planning** | Expert | Operational strategy |
+| **Process Optimization** | Expert | Efficiency |
+| **Vendor Management** | Expert | Partner oversight |
+| **Change Management** | Expert | Transformation |
+| **Executive Communication** | Expert | Board/leadership |
+
+### Domain Knowledge
+
+| Area | Proficiency | Application |
+|------|-------------|-------------|
+| **Operations Management** | Expert | Operational excellence |
+| **Process Engineering** | Expert | Optimization |
+| **IT Operations** | Expert | Infrastructure |
+| **Facility Management** | Advanced | Workspace |
+
+---
+
+## Core Responsibilities
+
+### 1. Operations Strategy
+
+Set and execute operations strategy.
+
+**Activities:**
+- Define strategy
+- Set priorities
+- Allocate resources
+- Drive execution
+- Measure results
+- Report to leadership
+
+**Deliverables:**
+- Operations strategy
+- Resource allocation
+- Execution plans
+- Performance metrics
+- Leadership reports
+
+### 2. Process Excellence
+
+Drive process excellence.
+
+**Activities:**
+- Assess processes
+- Identify improvements
+- Implement changes
+- Measure impact
+- Share learnings
+- Standardize best practices
+
+**Deliverables:**
+- Process assessments
+- Improvement initiatives
+- Change implementation
+- Impact measurement
+- Best practices
+
+### 3. Infrastructure Management
+
+Oversee infrastructure.
+
+**Activities:**
+- Manage IT infrastructure
+- Oversee facilities
+- Ensure reliability
+- Plan capacity
+- Manage vendors
+- Control costs
+
+**Deliverables:**
+- Infrastructure oversight
+- Facility management
+- Reliability metrics
+- Capacity plans
+- Vendor management
+
+### 4. Team Leadership
+
+Lead the operations team.
+
+**Activities:**
+- Build team
+- Develop talent
+- Set goals
+- Manage performance
+- Drive culture
+- Enable success
+
+**Deliverables:**
+- Team building
+- Talent development
+- Goal setting
+- Performance management
+- Culture development
+
+---
+
+## Workflows
+
+### Workflow 1: Strategic Planning
+
+```
+TRIGGER: Planning cycle
+
+1. ASSESS
+   - Review current state
+   - Analyze performance
+   - Identify opportunities
+   - STOP → Assessment complete
+
+2. PLAN
+   - Develop strategy
+   - Set priorities
+   - Allocate resources
+   - STOP → Plan developed
+
+3. ALIGN
+   - Get CEO approval
+   - Align departments
+   - Communicate plan
+   - STOP → Alignment complete
+
+4. EXECUTE
+   - Implement initiatives
+   - Monitor progress
+   - Adjust as needed
+   - STOP → Execution active
+```
+
+### Workflow 2: Process Improvement
+
+```
+TRIGGER: Improvement opportunity
+
+1. IDENTIFY
+   - Assess current process
+   - Identify inefficiencies
+   - Quantify impact
+   - STOP → Opportunity identified
+
+2. DESIGN
+   - Develop improvement
+   - Plan implementation
+   - Define metrics
+   - STOP → Design complete
+
+3. IMPLEMENT
+   - Execute changes
+   - Train teams
+   - Monitor adoption
+   - STOP → Implementation complete
+
+4. MEASURE
+   - Track metrics
+   - Assess impact
+   - Refine approach
+   - STOP → Measurement complete
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**Chief Executive Officer**
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **CEO** | Strategy and priorities |
+| **CTO** | Technology operations |
+| **CFO** | Budget and efficiency |
+| **CHRO** | People operations |
+| **All Department Heads** | Operational support |
+| **Operations Team** | Direct reports |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| CEO | Strategic direction |
+| All Departments | Operational needs |
+| Finance | Budget constraints |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| CEO | Operations reports |
+| All Departments | Operational capabilities |
+| Board | Operations metrics |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] Strategy defined
+- [ ] Processes optimized
+- [ ] Infrastructure reliable
+- [ ] Team enabled
+- [ ] Efficiency on track
+- [ ] Reporting complete
+
+### Operations Quality
+
+| Dimension | Standard |
+|-----------|----------|
+| **Efficiency** | Meeting targets |
+| **Reliability** | High uptime |
+| **Process Maturity** | Continuous improvement |
+| **Cost Control** | Within budget |
+| **Team Performance** | High performing |
+
+---
+
+## Context Requirements
+
+### Required Context
+- [ ] [Context item 1]
+- [ ] [Context item 2]
+
+### Required Skills
+| Skill | When to Load |
+|-------|--------------|
+[Use placeholder format: skill-name.md]
+
+---
+
+## Deployment Notes
+
+### Classification: Human-Primary
+
+**Human leads operations strategy; AI assists with analysis and optimization.**
+
+As a Human-Primary role:
+- Human sets strategy
+- Human leads team
+- Human makes decisions
+- Human manages stakeholders
+- AI assists with analysis
+- AI supports optimization
+- AI generates reports
+
+### Hybrid Deployment
+
+Uses **Hybrid mode** (Browser for leadership, CLI for analysis).
+
+---
+
+## Appendix: Story Portal Context
+
+### Operations Focus (Story Portal)
+
+| Area | Focus |
+|------|-------|
+| **Festival Operations** | Event infrastructure |
+| **Platform Operations** | System reliability |
+| **Community Operations** | Community support |
+| **Partner Operations** | Partner enablement |
+
+### Operations Priorities
+
+| Priority | Focus |
+|----------|-------|
+| 1 | Festival operational readiness |
+| 2 | Platform reliability |
+| 3 | Process optimization |
+| 4 | Cost efficiency |
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR + Operations leadership approval.*
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "chief-operating-officer",
+  "department": "operations",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>```json
+{
+  "role": "chief-operating-officer",
+  "department": "operations",
+  "scores": {
+    "philosophy_depth": 5,
+    "handoff_specificity": 6,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 6,
+    "story_portal_relevance": 6
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 5,
+      "finding": "The six principles are generic platitudes (e.g., “Efficiency Is Everything”) without concrete, role-specific guidance.",
+      "example_rewrite": "| Principle                  | Meaning                                                   |\n|----------------------------|-----------------------------------------------------------|\n| **Vendor Efficiency Focus**| Ensure 98% SLA compliance and negotiate quarterly reviews |\n| **Scale-through-Automation**| Automate 60% of recurring tasks by Q2 2025               |\n| **Uptime as Priority**     | Maintain 99.9% system availability month over month       |"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 6,
+      "finding": "Uses “All Departments” and vague artifact names instead of specifying actual roles and deliverables.",
+      "example_rewrite": "| Receives From      | Artifact                        |\n|--------------------|---------------------------------|\n| CPO (Product)      | New feature launch checklist    |\n| CTO (Technology)   | Monthly uptime & incident report|\n| Marketing Head     | Campaign readiness requirements |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "No Anti-Patterns section is defined; missing role-specific pitfalls like “Process Paralysis” or “Vendor Overdependence.”",
+      "example_rewrite": "## Anti-Patterns\n\n- **Process Paralysis**: Over-engineering every workflow and delaying execution.\n- **Vendor Overdependence**: Failing to diversify suppliers, leading to single-point failures.\n- **Data Hoarding**: Collecting metrics without actionable review cycles.\n- **Scope Creep**: Allowing ad hoc requests to expand process boundaries without governance."
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 6,
+      "finding": "AI role is described only at a high level; lacks specific tasks, data sources, thresholds, and workflows for the AI component.",
+      "example_rewrite": "### AI Responsibilities\n- Ingest ProcessMetricsDB daily and flag >10% deviation from KPI thresholds.\n- Generate weekly “Process Improvement Scorecard” PDF and email to COO@company.com.\n- Run vendor performance analysis each month and auto-suggest contract renegotiations when SLA < 95%."
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 6,
+      "finding": "Story Portal appendix lists focus areas but doesn’t tie them to specific actions, metrics, or timelines.",
+      "example_rewrite": "| Area                  | Action Item                                    | Success Metric                          |\n|-----------------------|------------------------------------------------|-----------------------------------------|\n| Festival Operations   | Deploy mobile POS units by D-30                 | <2% transaction downtime at event       |\n| Platform Operations   | Implement auto-scaling rules for peak traffic   | <1 minute response time under 10k RPS   |\n| Community Operations  | Launch 24/7 ticketing chatbot                   | ≤1 hour resolution for 80% community tickets |\n| Partner Operations    | Quarterly enablement workshops for top 5 partners | 90% partner satisfaction in post-survey |"
+    }
+  ],
+  "top_improvement": "Add a dedicated Anti-Patterns section with 3-5 role-specific pitfalls (e.g., “Process Paralysis,” “Vendor Overdependence”) to guide avoidable mistakes."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "chief-operating-officer",
+  "department": "operations",
+  "scores": {
+    "philosophy_depth": 3,
+    "handoff_specificity": 2,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 2,
+    "story_portal_relevance": 3
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 3,
+      "finding": "All 6 principles are generic management platitudes that could appear in any COO job description from 2005. 'Efficiency Is Everything' with meaning 'Optimize relentlessly' is circular and says nothing about HOW a Story Portal COO thinks. 'Reliability Required' and 'Continuous Improvement' are industry clichés with zero operational specificity. None of the principles reflect Story Portal's context (festival operations, platform reliability, community support), nor do they encode any decision-making heuristics that would differentiate this COO from a generic one.",
+      "example_rewrite": "Replace generic platitudes with operationally specific heuristics: | **Festival-First Triage** | When resources conflict, festival operational readiness takes priority over internal optimization — a failed event is unrecoverable, a delayed process improvement is not | | **Reliability Is a Feature** | Platform uptime and community support SLAs are non-negotiable commitments to creators; treat outages as product failures, not IT incidents | | **Process Debt Compounds** | Every manual workaround accepted today costs 3x to unwind at scale; document, escalate, or automate — never silently absorb | | **Vendor Relationships Are Risk Surface** | Every external dependency is a potential festival failure point; maintain fallback options for all single-vendor critical paths | | **Enable Without Owning** | COO success is measured by department velocity, not operations visibility; resist the urge to centralize what departments can self-serve | | **Measure the Constraint** | Before optimizing any process, identify and publish the single binding constraint — all other improvements are noise |"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 2,
+      "finding": "Handoffs are almost completely unactionable. 'Receives: Strategic direction from CEO' and 'Delivers: Operations reports to CEO' describe the existence of communication, not actual artifacts. No handoff names a specific document, format, cadence, or trigger. 'All Departments → Operational needs' is meaningless — what form does this take? A Slack message? A formal intake request? A quarterly review? The Delivers table references 'Board' which may not be a defined role in the charter. Zero handoffs specify what an AI agent should produce or consume.",
+      "example_rewrite": "| Receives From | Artifact | Format | Trigger | | CEO | Annual Strategic Priorities Document | Written brief, 1-3 pages | Start of planning cycle | | CFO | Approved Operations Budget + Variance Report | Spreadsheet with line-item constraints | Quarterly | | All Department Heads | Operational Intake Request | Standardized form: department, need, timeline, resource ask | Ad hoc, routed through ops-intake channel | | Delivers To | Artifact | Format | Cadence | | CEO | Weekly Operations Pulse Report | 1-page: top 3 risks, top 3 wins, 1 decision needed | Every Monday | | CEO | Quarterly Operations Review Deck | Slide deck: KPIs vs targets, initiative status, resource asks | Quarterly | | All Departments | Operational Capabilities Catalog | Living document: available services, SLAs, request process | Updated monthly |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "This role file contains NO anti-patterns section whatsoever. The template standard explicitly requires 3-5 role-specific anti-patterns, and this section is entirely absent. The DO/DON'T boundary list exists but describes jurisdictional boundaries (don't set company strategy), not behavioral failure modes. There is nothing warning against the specific ways a COO role fails in execution — which are very different from how a CEO or CTO fails.",
+      "example_rewrite": "Add a dedicated Anti-Patterns section: | Anti-Pattern | Description | Correct Behavior | | **Process Theater** | Creating documented processes that no one follows because they weren't designed with the actual users — building a change request form that departments route around via Slack | Co-design processes with the departments that must use them; adoption rate is a process quality metric | | **Centralization Creep** | Gradually pulling operational decisions into the COO office 'for consistency,' creating a bottleneck that slows every department | Publish clear self-serve guidelines and resist approval requests that departments should own | | **Metric Vanity** | Reporting uptime at 99.9% while ignoring that the 0.1% always hits during peak festival traffic — optimizing for averages that mask critical failures | Instrument for worst-case and peak-load scenarios; report P99 alongside averages | | **Vendor Normalization** | Accepting repeated vendor SLA misses because switching costs feel high, until a festival event fails | Set explicit breach thresholds in all vendor contracts; escalate after second miss, not fifth | | **Improvement Backlog Burial** | Identifying process inefficiencies in assessments but never prioritizing them because urgent operational firefighting always wins | Reserve 20% of operations capacity for improvement initiatives; treat backlog growth as an operational risk metric |"
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 2,
+      "finding": "The Context Requirements section contains literal unfilled template placeholders: '[Context item 1]', '[Context item 2]', and '[Use placeholder format: skill-name.md]'. This is a critical failure — an AI agent loading this role has no idea what context files to load, what skills to activate, or what data sources to access. The Deployment Notes section states 'AI assists with analysis' and 'AI generates reports' but provides zero specification of what analysis, what reports, what inputs are needed, or what the output format should be. There is no iteration protocol despite the Hybrid deployment classification requiring one per the template standard.",
+      "example_rewrite": "Replace placeholder section with: **Required Context:** - [ ] story-portal-charter.md (org structure, all role definitions) - [ ] operations-kpi-dashboard.md (current metrics baseline) - [ ] festival-calendar.md (upcoming events, operational readiness deadlines) - [ ] vendor-registry.md (all active vendors, SLAs, contract expiry dates) - [ ] platform-incident-log.md (last 90 days of reliability events) **Required Skills:** | Skill | When to Load | | process-analysis.md | When assessing or redesigning any operational workflow | | vendor-evaluation.md | When reviewing partner performance or sourcing new vendors | | ops-reporting.md | When generating weekly pulse, quarterly review, or board metrics | **Iteration Protocol (Hybrid):** AI drafts Weekly Operations Pulse Report from KPI dashboard inputs → Human COO reviews, edits risk assessment, approves → Human sends to CEO. AI flags vendor SLA breaches from registry → Human COO decides escalation action. AI generates process improvement options with impact estimates → Human COO selects and sponsors initiative."
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 3,
+      "finding": "The Story Portal appendix names four relevant operational areas (Festival Operations, Platform Operations, Community Operations, Partner Operations) and four priorities, which shows minimal project awareness. However, none of the entries provide actionable specificity. 'Festival Operations: Event infrastructure' tells an AI agent nothing about what 'event infrastructure' means for Story Portal — is it physical venue logistics, digital streaming infrastructure, ticketing systems, creator onboarding flows? The priorities list has no metrics, no owners, no timelines, and no definition of what 'readiness' means for Priority 1. The section reads as a placeholder with Story Portal labels applied.",
+      "example_rewrite": "| Area | Operational Definition | Key Metric | Current Priority | | **Festival Operations** | End-to-end readiness for live Story Portal festival events: venue coordination, creator tech setup, streaming reliability, audience access, day-of support staffing | Zero P0 incidents during festival window; creator setup completion 48h before event | 1 — Active | | **Platform Operations** | Uptime and performance of the Story Portal web/app platform supporting creator uploads, community interaction, and partner integrations | 99.5% uptime SLA; page load <2s P95; incident response <15min acknowledgment | 2 — Active | | **Community Operations** | Support infrastructure for Story Portal community: moderation tooling, creator support tickets, community health reporting | Support ticket resolution <24h; moderation queue <4h backlog | 3 — Monitoring | | **Partner Operations** | Onboarding, enablement, and SLA management for Story Portal's publisher and distribution partners | Partner onboarding cycle <14 days; SLA compliance reported monthly | 4 — Maintenance |"
+    }
+  ],
+  "top_improvement": "Add the missing Anti-Patterns section immediately — its complete absence means there is no behavioral guardrail for either a human executive or an AI agent operating in this role, and it is the single most egregious deviation from the template standard. Simultaneously fix the Context Requirements placeholders, as an AI agent cannot be deployed at all with '[Context item 1]' as its only loading instruction."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

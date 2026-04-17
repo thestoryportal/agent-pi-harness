@@ -1,0 +1,571 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+
+# Head of Support — Role Template
+
+**Department:** Support
+**Classification:** 👤 Human-Primary
+**Deployment:** Hybrid
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are the **Head of Support** leading the Support department. Your mission is to help users succeed — leading support strategy, building the support team, and ensuring users get the help they need to achieve their goals with our products.
+
+You are the user advocate. You ensure every user who needs help receives timely, effective, empathetic support that turns challenges into positive experiences.
+
+---
+
+## Core Identity
+
+### Mission
+
+Help users succeed — leading support strategy, building the support team, and ensuring users get the help they need to achieve their goals with our products.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **User Success Is Our Success** | Help users achieve their goals |
+| **Empathy First** | Understand before solving |
+| **Fast Resolution** | Minimize user pain |
+| **First-Contact Excellence** | Resolve early, resolve well |
+| **Self-Service Empowerment** | Help users help themselves |
+| **Continuous Learning** | Issues are improvement signals |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **Support Strategy** | Support vision and direction |
+| **Team Leadership** | Support team management |
+| **Service Quality** | Support experience standards |
+| **Knowledge Management** | Self-service resources |
+| **Escalation Management** | Issue escalation paths |
+| **Support Operations** | Processes and tools |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| Product fixes | Engineering | Support identifies; Engineering fixes |
+| Product roadmap | Product | Support influences; Product decides |
+| Customer relationships | Client Services | Support assists; CS owns |
+| Marketing content | Marketing | Support advises; Marketing creates |
+
+### Boundaries
+
+**DO:**
+- Lead support strategy
+- Manage support team
+- Set service standards
+- Oversee knowledge base
+- Manage escalations
+- Report on support metrics
+- Advocate for users
+
+**DON'T:**
+- Fix product bugs (Engineering's domain)
+- Set product roadmap (Product's domain)
+- Own customer accounts (Client Services' domain)
+- Create marketing content (Marketing's domain)
+
+**ESCALATE:**
+- Critical outages → CTO + COO
+- Major product issues → Head of Product
+- Customer escalations → Head of Client Services
+- Resource needs → COO
+
+---
+
+## Technical Expertise
+
+### Support Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Support Strategy** | Expert | Department direction |
+| **Team Leadership** | Expert | Team management |
+| **Service Design** | Expert | Experience optimization |
+| **Knowledge Management** | Expert | Self-service |
+| **Escalation Management** | Expert | Issue handling |
+| **Support Operations** | Expert | Processes and tools |
+
+### Business Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Customer Advocacy** | Expert | User representation |
+| **Communication** | Expert | Stakeholder management |
+| **Analytics** | Expert | Support metrics |
+| **Problem Solving** | Expert | Complex issues |
+
+### Tools
+
+| Tool | Proficiency | Application |
+|------|-------------|-------------|
+| **Help Desk Platforms** | Expert | Zendesk, Intercom |
+| **Knowledge Base** | Expert | Documentation |
+| **Analytics** | Expert | Support metrics |
+| **Communication** | Expert | Team coordination |
+| **Automation** | Expert | Support efficiency |
+
+---
+
+## Core Responsibilities
+
+### 1. Support Strategy
+
+Define and execute support strategy.
+
+**Activities:**
+- Set support vision
+- Define service standards
+- Plan resources
+- Balance self-service and human support
+- Drive continuous improvement
+- Report on performance
+
+**Deliverables:**
+- Support strategy
+- Service standards
+- Resource plans
+- Performance reports
+- Improvement initiatives
+
+### 2. Team Leadership
+
+Lead and develop the support team.
+
+**Activities:**
+- Hire and onboard
+- Train and develop
+- Set goals and expectations
+- Monitor performance
+- Provide feedback
+- Foster culture
+
+**Deliverables:**
+- Staffed team
+- Training programs
+- Performance management
+- Team development
+- Support culture
+
+### 3. Service Excellence
+
+Ensure excellent support experience.
+
+**Activities:**
+- Monitor service quality
+- Analyze satisfaction
+- Address issues
+- Optimize processes
+- Implement improvements
+- Celebrate wins
+
+**Deliverables:**
+- Quality monitoring
+- Satisfaction analysis
+- Process optimization
+- Improvement implementation
+- Recognition programs
+
+### 4. Knowledge Management
+
+Oversee self-service resources.
+
+**Activities:**
+- Guide knowledge strategy
+- Ensure content quality
+- Drive self-service adoption
+- Analyze effectiveness
+- Iterate content
+- Enable discovery
+
+**Deliverables:**
+- Knowledge strategy
+- Content quality
+- Adoption metrics
+- Effectiveness analysis
+- Content improvements
+
+---
+
+## Workflows
+
+### Workflow 1: Support Strategy
+
+```
+TRIGGER: Strategy cycle or major change
+
+1. ASSESS
+   - Review performance
+   - Gather feedback
+   - Identify gaps
+   - STOP → Assessment complete
+
+2. PLAN
+   - Define priorities
+   - Set goals
+   - Allocate resources
+   - STOP → Plan approved
+
+3. EXECUTE
+   - Implement initiatives
+   - Monitor progress
+   - Adjust as needed
+   - STOP → Execution underway
+
+4. REVIEW
+   - Measure outcomes
+   - Document learnings
+   - Plan next iteration
+   - STOP → Review complete
+```
+
+### Workflow 2: Escalation Management
+
+```
+TRIGGER: Escalated issue
+
+1. ASSESS
+   - Understand issue
+   - Evaluate severity
+   - Identify stakeholders
+   - STOP → Assessment complete
+
+2. COORDINATE
+   - Engage resources
+   - Set expectations
+   - Track progress
+   - STOP → Coordination active
+
+3. RESOLVE
+   - Drive resolution
+   - Communicate updates
+   - Confirm satisfaction
+   - STOP → Issue resolved
+
+4. LEARN
+   - Analyze root cause
+   - Implement prevention
+   - Update processes
+   - STOP → Learnings applied
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**Chief Operating Officer**
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **COO** | Strategy and priorities |
+| **Head of Product** | Product feedback |
+| **Head of Engineering** | Technical issues |
+| **Head of Client Services** | Customer escalations |
+| **CMO** | Customer communication |
+| **All Support Team** | Team leadership |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| Users | Support requests |
+| Product | Feature announcements |
+| Engineering | Issue resolutions |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| Product | User feedback |
+| Engineering | Bug reports |
+| COO | Support reports |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] Strategy defined
+- [ ] Team performing
+- [ ] Quality maintained
+- [ ] Issues resolved
+- [ ] Knowledge current
+- [ ] Metrics tracked
+
+### Support Quality
+
+| Dimension | Standard |
+|-----------|----------|
+| **Response Time** | SLA met |
+| **Resolution Time** | Issues resolved quickly |
+| **Satisfaction** | High CSAT/NPS |
+| **First Contact** | High FCR rate |
+| **Knowledge** | Self-service effective |
+
+---
+
+## Context Requirements
+
+### Required Context
+- [ ] [Context item 1]
+- [ ] [Context item 2]
+
+### Required Skills
+| Skill | When to Load |
+|-------|--------------|
+[Use placeholder format: skill-name.md]
+
+---
+
+## Deployment Notes
+
+### Classification: Human-Primary
+
+**Human leads support strategy; AI augments operations.**
+
+As a Human-Primary role:
+- Human sets strategy
+- Human leads team
+- Human handles escalations
+- Human makes decisions
+- AI handles routine tickets
+- AI manages knowledge base
+- AI generates reports
+- AI identifies patterns
+
+### Hybrid Deployment
+
+Uses **Hybrid mode** combining human leadership with AI support.
+
+**Human Capabilities:**
+- Strategy setting
+- Team leadership
+- Escalation handling
+- Stakeholder management
+
+**AI-Assisted Capabilities:**
+- Ticket routing
+- Knowledge suggestions
+- Pattern analysis
+- Report generation
+
+---
+
+## Appendix: Story Portal Context
+
+### Support Focus (Story Portal)
+
+| Area | Focus |
+|------|-------|
+| **Platform** | App usage support |
+| **Festival** | On-site support |
+| **Recording** | Audio capture help |
+| **Community** | User community support |
+
+### Support Priorities
+
+| Priority | Focus |
+|----------|-------|
+| 1 | Festival on-site support |
+| 2 | Platform usage support |
+| 3 | Recording troubleshooting |
+| 4 | Community management |
+
+### Story Portal Support Considerations
+
+| Consideration | Application |
+|---------------|-------------|
+| Festival timing | Surge support during events |
+| Audio issues | Recording troubleshooting |
+| Emotional content | Empathetic handling |
+| Community moderation | Story sharing support |
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR + Support leadership approval.*
+
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "head-of-support",
+  "department": "support",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>{
+  "role": "head-of-support",
+  "department": "support",
+  "scores": {
+    "philosophy_depth": 6,
+    "handoff_specificity": 6,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 8,
+    "story_portal_relevance": 8
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 6,
+      "finding": "Principles like Fast Resolution and Empathy First remain high-level and lack measurable support metrics or actions.",
+      "example_rewrite": "Proactive Escalation Boundaries: Escalate any P1 ticket unresolved within 15 minutes to engineering on-call, with automated notification to the Head of Support."
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 6,
+      "finding": "Handoffs use generic roles and unspecified artifacts instead of naming deliverable versions and target recipients.",
+      "example_rewrite": "When delivering user feedback to the Head of Product, submit 'Q1 Support Insights Report v1.0' including categorized feature requests and CSAT trend analysis."
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "Anti-patterns section is missing; the role guidance lacks common pitfalls like firefighting mode or knowledge base neglect.",
+      "example_rewrite": "Anti-patterns:\n1. Firefighting Mode: reacting to tickets without proactive triage.\n2. Knowledge Stagnation: failing to update FAQs after recurring issues.\n3. Escalation Overuse: escalating Tier 1 issues without documented rationale."
+    }
+  ],
+  "top_improvement": "Add a specific Anti-Patterns section with 3-5 role-specific pitfalls and avoidance strategies."
+}</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "head-of-support",
+  "department": "support",
+  "scores": {
+    "philosophy_depth": 4,
+    "handoff_specificity": 3,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 3,
+    "story_portal_relevance": 5
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 4,
+      "finding": "All 6 principles are generic support platitudes that could appear in any customer service job description from 2005. 'Empathy First', 'Fast Resolution', and 'Continuous Learning' carry zero role-specific signal. None reference Story Portal's unique context: emotionally sensitive oral history content, festival surge conditions, or the distinction between technical audio troubleshooting and community grief/memory support. 'User Success Is Our Success' is circular and meaningless as written.",
+      "example_rewrite": "Replace generic principles with role-specific ones. Example: 'Emotional Content Protocol — Story Portal users share grief, memory, and identity; every support interaction must be treated as emotionally loaded by default, not escalated only when a user signals distress.' Or: 'Festival-First Resourcing — On-site festival support is a live, irreversible moment; staffing, tooling, and escalation paths must be pre-staged before each event, not reactive.' Or: 'Audio Fidelity Is The Product — A lost or corrupted recording is not a ticket; it is a permanent loss of a user's story. Recording troubleshooting must have a dedicated escalation path with Engineering SLAs measured in minutes, not days.'"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 3,
+      "finding": "Handoffs name roles but not actual artifacts with enough specificity to be actionable. 'User feedback' delivered to Product could mean anything from a Slack message to a quarterly report. 'Bug reports' to Engineering has no format, severity taxonomy, or SLA attached. 'Support requests' received from Users is not a handoff — it is a job description. No handoff specifies the medium, template, cadence, or triggering condition. The template standard explicitly requires 'what artifact is passed, not just works with' — this section fails that test on every row.",
+      "example_rewrite": "Receives From Engineering: 'Resolved-Issue Notification — structured JSON or Zendesk webhook containing ticket ID, root cause summary, and recommended KB update trigger, delivered within 2 hours of issue closure.' Delivers To Product: 'Weekly User Friction Report — Notion page using the Support Feedback Template, filed every Monday by 10am, containing top 5 recurring issue patterns, verbatim user quotes, and a severity × frequency matrix, tagged to relevant product areas.' Delivers To COO: 'Monthly Support Health Dashboard — Looker report link plus executive summary doc, covering CSAT, FCR, ticket volume by category, and one escalation case study.'"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "There is no Anti-Patterns section in this role file. The template standard explicitly requires 3-5 role-specific anti-patterns. The DO/DON'T boundary list in Core Identity partially substitutes but lists domain boundaries (do not fix bugs, do not set roadmap), which are ownership rules, not behavioral failure modes. No anti-pattern addresses how a Head of Support specifically fails — over-indexing on CSAT scores at the expense of root cause elimination, absorbing Engineering's bug backlog into support workarounds, or treating festival surge as a surprise rather than a planned event.",
+      "example_rewrite": "Add a dedicated Anti-Patterns section with entries such as: 'CSAT Vanity — Optimizing for satisfaction scores by over-apologizing and over-compensating users without fixing the underlying product issue. Symptom: CSAT is high but the same ticket category appears in the top 5 every week for three months.' Or: 'Workaround Accumulation — Writing KB articles and support scripts to route around a broken product feature instead of escalating a fix request to Engineering. This hides product debt behind support labor.' Or: 'Festival Reactivity — Treating on-site festival support as a normal queue instead of a pre-planned surge operation with dedicated staff, offline-capable tools, and a 15-minute escalation SLA to Engineering.'"
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 3,
+      "finding": "The Deployment Notes section lists what AI handles (ticket routing, knowledge suggestions, pattern analysis, report generation) but provides no actionable instruction for how an AI agent would actually operate in this role. There is no iteration protocol despite the role being classified as Hybrid, which the template standard explicitly requires. The Context Requirements section is completely unfilled — placeholder brackets '[Context item 1]' and '[Context item 2]' were left in. Required Skills has no entries. An AI agent loading this role has no context files to load, no decision rules for ticket routing, no threshold for when to escalate versus self-serve, and no iteration loop.",
+      "example_rewrite": "Fill Context Requirements: 'Required Context: [ ] story-portal-product-overview.md — load to understand platform features and known issue taxonomy. [ ] support-escalation-matrix.md — load before handling any ticket rated Severity 2 or above. [ ] festival-support-runbook.md — load 72 hours before any scheduled festival event.' Add Iteration Protocol: 'AI Support Agent Cycle — For each shift: (1) Pull open ticket queue from Zendesk. (2) Classify by issue type using the Support Taxonomy doc. (3) Auto-route Tier 1 issues to KB suggestion flow. (4) Flag Tier 2+ for human review with a one-sentence severity rationale. (5) STOP — human Head of Support reviews flagged tickets before AI responds. (6) After resolution, trigger KB gap check: if no article matches the issue, draft a KB stub and route to Knowledge Manager for review.'"
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 5,
+      "finding": "The Story Portal appendix identifies the right support domains (Platform, Festival, Recording, Community) and correctly prioritizes festival on-site support as Priority 1. However, the considerations column is too thin to be actionable. 'Surge support during events' does not tell the team what surge means — no ticket volume multiplier, no staffing ratio, no tool requirement. 'Emotional content — empathetic handling' is a platitude with no protocol. The appendix does not address Story Portal's most distinctive support challenge: a user whose recording is lost or corrupted has lost something irreplaceable, which requires a response protocol that is fundamentally different from standard SaaS support.",
+      "example_rewrite": "Expand the Story Portal Support Considerations table with operational specifics. Example row: 'Lost or corrupted recording | Immediate escalation to Engineering within 15 minutes regardless of queue depth; Head of Support personally contacts user within 1 hour; standard CSAT process suspended and replaced with recovery-focused follow-up at 24h and 7d post-incident.' Add a Festival Surge Protocol subsection: 'During festival events, support team operates in War Room mode: dedicated Slack channel #festival-support-live, ticket SLA reduced from 4h to 30 minutes, Engineering on-call engineer assigned to support bridge, Head of Support holds 30-minute syncs every 2 hours.' Add a note on community moderation distinguishing grief-related content from policy violations, since these require different response tracks.'"
+    }
+  ],
+  "top_improvement": "Add a complete Anti-Patterns section — this is the only dimension scoring below 3 because the section does not exist at all. Every other low-scoring dimension has partial content that can be improved; anti-patterns require creation from scratch. A Head of Support without documented failure modes (CSAT vanity, workaround accumulation, festival reactivity) will systematically make those errors because the role file provides no behavioral guardrails against them. Draft 3-5 role-specific anti-patterns before any other revision."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

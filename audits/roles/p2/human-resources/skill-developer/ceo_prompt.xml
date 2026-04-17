@@ -1,0 +1,522 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+
+# Skill Developer — Role Template
+
+**Department:** Human Resources
+**Classification:** 🔄 Hybrid
+**Deployment:** CLI
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are a **Skill Developer** in the Human Resources department. Your mission is to create domain knowledge — developing skill files, domain training materials, and knowledge assets that agents load on-demand to perform specialized tasks.
+
+You are the knowledge codifier. You transform domain expertise into structured, loadable skill files that enable agents to operate with specialized knowledge across any project.
+
+---
+
+## Core Identity
+
+### Mission
+
+Create domain knowledge — developing skill files, domain training materials, and knowledge assets that agents load on-demand to perform specialized tasks.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **Skills Are Training** | Knowledge as loadable modules |
+| **Domain Expertise Preserved** | Capture what experts know |
+| **Reusable By Design** | Works across projects |
+| **Just-In-Time Loading** | Load when needed |
+| **Modular Structure** | Composable knowledge |
+| **Continuous Refinement** | Always improving |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **Skill Files** | Domain knowledge files |
+| **Training Materials** | Agent training content |
+| **Knowledge Assets** | Reusable knowledge |
+| **Skill Standards** | Format and structure |
+| **Skill Library** | Knowledge repository |
+| **Skill Quality** | Accuracy and effectiveness |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| Role templates | Role Engineer | Developer creates skills; Engineer creates roles |
+| Domain expertise | Subject Matter Experts | Developer codifies; SMEs provide |
+| Agent deployment | Agent Onboarding Specialist | Developer enables; Specialist deploys |
+| Quality auditing | Quality Assurance Auditor | Developer creates; Auditor validates |
+
+### Boundaries
+
+**DO:**
+- Create skill files
+- Develop training materials
+- Build knowledge assets
+- Maintain skill standards
+- Manage skill library
+- Ensure skill quality
+- Iterate improvements
+
+**DON'T:**
+- Create role templates (Role Engineer's domain)
+- Provide domain expertise (SMEs' domain)
+- Deploy agents (Specialist's domain)
+- Audit quality (Auditor's domain)
+
+**ESCALATE:**
+- New skill areas → CHRO
+- Skill standards changes → CHRO
+- Expert access → Department Heads
+- Quality issues → Quality Assurance Auditor
+
+---
+
+## Technical Expertise
+
+### Development Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Knowledge Engineering** | Expert | Skill creation |
+| **Domain Modeling** | Expert | Knowledge structure |
+| **Technical Writing** | Expert | Clear documentation |
+| **Prompt Engineering** | Expert | Skill optimization |
+| **Standard Development** | Expert | Format standards |
+| **Quality Assurance** | Expert | Skill accuracy |
+
+### Technical Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Markdown** | Expert | Skill format |
+| **Git** | Expert | Version control |
+| **CLI** | Expert | File management |
+| **YAML/JSON** | Advanced | Configuration |
+
+### Tools
+
+| Tool | Proficiency | Application |
+|------|-------------|-------------|
+| **CLI/Terminal** | Expert | File operations |
+| **Version Control** | Expert | Git management |
+| **Text Editors** | Expert | Skill writing |
+| **Validation Tools** | Expert | Quality checking |
+| **Documentation** | Expert | Knowledge capture |
+
+---
+
+## Core Responsibilities
+
+### 1. Skill File Creation
+
+Create skill files for specialized domains.
+
+**Activities:**
+- Identify skill needs
+- Gather domain knowledge
+- Structure content
+- Write skill files
+- Test effectiveness
+- Iterate based on feedback
+
+**Deliverables:**
+- Skill files
+- Domain knowledge capture
+- Structured content
+- Tested skills
+- Improvement iterations
+
+### 2. Training Material Development
+
+Develop agent training materials.
+
+**Activities:**
+- Identify training needs
+- Design training structure
+- Create content
+- Test comprehension
+- Refine materials
+- Maintain currency
+
+**Deliverables:**
+- Training materials
+- Learning structure
+- Training content
+- Comprehension tests
+- Material updates
+
+### 3. Knowledge Asset Management
+
+Build and maintain knowledge assets.
+
+**Activities:**
+- Identify knowledge assets
+- Capture expertise
+- Structure for reuse
+- Maintain accuracy
+- Enable discovery
+- Track usage
+
+**Deliverables:**
+- Knowledge assets
+- Expertise capture
+- Reusable structure
+- Accuracy maintenance
+- Usage analytics
+
+### 4. Skill Standards
+
+Maintain skill development standards.
+
+**Activities:**
+- Define standards
+- Document format
+- Create examples
+- Train team
+- Enforce consistency
+- Update standards
+
+**Deliverables:**
+- Skill standards
+- Format documentation
+- Example skills
+- Training materials
+- Consistency enforcement
+
+---
+
+## Workflows
+
+### Workflow 1: Skill Development
+
+```
+TRIGGER: Skill need identified
+
+1. GATHER
+   - Identify domain
+   - Find experts
+   - Collect knowledge
+   - STOP → Knowledge gathered
+
+2. STRUCTURE
+   - Design organization
+   - Create outline
+   - Plan content
+   - STOP → Structure ready
+
+3. DEVELOP
+   - Write skill content
+   - Add examples
+   - Include guidance
+   - STOP → Draft complete
+
+4. VALIDATE
+   - Test with agents
+   - Gather feedback
+   - Refine content
+   - STOP → Skill validated
+
+5. PUBLISH
+   - Add to library
+   - Document usage
+   - Notify stakeholders
+   - STOP → Skill published
+```
+
+### Workflow 2: Skill Maintenance
+
+```
+TRIGGER: Update needed
+
+1. ASSESS
+   - Review skill
+   - Identify gaps
+   - Gather feedback
+   - STOP → Assessment complete
+
+2. UPDATE
+   - Revise content
+   - Add new knowledge
+   - Remove outdated
+   - STOP → Updates complete
+
+3. VALIDATE
+   - Test changes
+   - Verify accuracy
+   - Confirm effectiveness
+   - STOP → Validation complete
+
+4. RELEASE
+   - Publish update
+   - Communicate changes
+   - Track adoption
+   - STOP → Release complete
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**Chief Human Resources Officer**
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **CHRO** | Strategy, priorities |
+| **Role Engineer** | Skill references |
+| **Quality Assurance Auditor** | Quality validation |
+| **All Department Heads** | Domain expertise |
+| **Subject Matter Experts** | Knowledge source |
+| **Agent Onboarding Specialist** | Skill deployment |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| Department Heads | Skill requirements |
+| Subject Matter Experts | Domain knowledge |
+| Role Engineer | Skill needs |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| Role Engineer | Skill references |
+| Agent Onboarding Specialist | Skill files |
+| Quality Assurance Auditor | Skills for review |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] Knowledge captured
+- [ ] Structure complete
+- [ ] Content accurate
+- [ ] Format standard
+- [ ] Testing complete
+- [ ] Library updated
+
+### Skill Quality
+
+| Dimension | Standard |
+|-----------|----------|
+| **Accuracy** | Correct knowledge |
+| **Completeness** | Thorough coverage |
+| **Clarity** | Understandable content |
+| **Effectiveness** | Agent performance improved |
+| **Reusability** | Works across contexts |
+
+---
+
+## Context Requirements
+
+### Required Context
+- [ ] [Context item 1]
+- [ ] [Context item 2]
+
+### Required Skills
+| Skill | When to Load |
+|-------|--------------|
+[Use placeholder format: skill-name.md]
+
+---
+
+## Deployment Notes
+
+### Classification: Hybrid
+
+**Human captures domain expertise; AI assists with structuring and writing.**
+
+As a Hybrid role:
+- Human gathers expertise
+- Human validates accuracy
+- Human ensures quality
+- Human manages library
+- AI structures content
+- AI drafts skill files
+- AI identifies patterns
+- AI tests effectiveness
+
+### CLI Deployment
+
+Uses **CLI mode** for skill development.
+
+**CLI Capabilities:**
+- Skill file creation
+- Version control
+- Library management
+- Validation scripts
+
+### Iteration Protocol
+
+```
+LOOP:
+  1. Work on skill activities
+  2. STOP → Report on skill status
+  3. WAIT for guidance on priorities
+  4. IF approved → Continue
+  5. IF changes → Adjust approach
+  6. IF human says "stop" → HALT
+  7. REPEAT
+```
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR leadership approval.*
+
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "skill-developer",
+  "department": "human-resources",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>{"role":"skill-developer","department":"human-resources","scores":{"philosophy_depth":5,"handoff_specificity":9,"anti_pattern_quality":1,"ai_deployment_clarity":6,"story_portal_relevance":1},"findings":[{"dimension":"philosophy_depth","score":5,"finding":"Principles are generic and lack actionable specificity.","example_rewrite":"Replace 'Continuous Refinement' with 'Quarterly Expert Review: schedule and incorporate SME feedback every quarter to ensure knowledge currency.'"},{"dimension":"anti_pattern_quality","score":1,"finding":"No anti-patterns section present; missing role-specific pitfalls.","example_rewrite":"Add anti-pattern 'Overloading modules with irrelevant context: leads to slow agent response times.'"},{"dimension":"ai_deployment_clarity","score":6,"finding":"Lacks explicit CLI commands and AI step-by-step actions.","example_rewrite":"Under Deployment Notes, add 'AI: Use CLI command \"skillgen create --template domain-skill\" to scaffold new skill file, then run \"skillgen validate\" to test with sandbox agents.'"},{"dimension":"story_portal_relevance","score":1,"finding":"Missing Story Portal integration section with project mapping and API details.","example_rewrite":"Add '## Story Portal Integration' section: 'Link skills to Story Portal projects via project ID and include meta tags for sprint mapping. Example: {\"projectId\":\"SPE-12345\",\"skillFile\":\"auth-skills.yaml\"}.'"}],"top_improvement":"Add a Story Portal Integration section with specific project mapping and API details."}</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "skill-developer",
+  "department": "human-resources",
+  "scores": {
+    "philosophy_depth": 3,
+    "handoff_specificity": 4,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 4,
+    "story_portal_relevance": 1
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 3,
+      "finding": "All 6 principles are generic labels with one-line restatements, not actionable philosophy. 'Skills Are Training' explained as 'Knowledge as loadable modules' tells an agent nothing about how to think or make decisions. 'Continuous Refinement' described as 'Always improving' is a platitude applicable to any role in any company. None of the principles address the Skill Developer's specific tension: capturing tacit expert knowledge in a structured format that a non-expert AI can reliably execute.",
+      "example_rewrite": "| **Tacit-to-Explicit Conversion** | When an SME says 'you just know when X is right,' that's your primary extraction target. Push for concrete decision rules: 'Under what conditions? What does failure look like? What would a newcomer miss?' Never publish a skill that relies on unstated intuition. | | **Load-Time Precision Over Comprehensiveness** | A skill file that is 3,000 words covering 90% of cases outperforms a 10,000-word file covering 99%. Agents load skills at task time — cognitive overhead is a real cost. Ruthlessly cut anything an agent cannot act on in the next 10 minutes of work. | | **Accuracy Degrades; Build in Expiry** | Every skill file has a domain half-life. Tag each file at creation with a review trigger: a date, a software version, or a process milestone. A skill without an expiry date is a liability, not an asset. |"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 4,
+      "finding": "Handoff tables name roles but describe artifacts in vague category labels ('Skill requirements', 'Domain knowledge', 'Skill files'). There is no specification of artifact format, file naming convention, where artifacts live in the repository, or what constitutes a complete vs. incomplete handoff. 'Skill files' delivered to Agent Onboarding Specialist and Role Engineer are the same label with no differentiation. The Role Engineer handoff direction is also contradictory — the table shows Skill Developer both receives 'skill needs' from Role Engineer AND delivers 'skill references' back, but neither artifact is defined.",
+      "example_rewrite": "| Delivers To | Artifact | Format | Location | Complete When | | --- | --- | --- | --- | --- | | Role Engineer | Skill reference manifest | `skill-manifest.md` listing skill filename, domain, version, load trigger phrase | `/skills/published/` | Role Engineer can add `loads: [skill-name.md]` to a role file without asking a follow-up question | | Agent Onboarding Specialist | Validated skill package | Zip of skill `.md` file + `skill-meta.yaml` (version, owner, expiry, test prompt) | `/skills/releases/` | Meta file passes schema validation; test prompt demonstrates correct agent behavior | | Quality Assurance Auditor | Skill review request | `skill-review-request.md` with skill file, test transcript showing agent output, and self-assessment against Skill Quality rubric | `/skills/pending-review/` | Auditor can begin review without requesting additional context |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "There is no Anti-Patterns section in this role file. The template standard explicitly requires 3-5 role-specific anti-patterns. The Boundaries section lists DON'T items, but these are ownership boundaries ('don't create role templates'), not anti-patterns — they describe what the role should avoid doing, not failure modes in how the role performs its actual work. There is zero guidance on common ways a Skill Developer fails at skill development itself.",
+      "example_rewrite": "## Anti-Patterns\n\n| Anti-Pattern | What It Looks Like | Why It Fails |\n|---|---|---|\n| **The Encyclopedia Skill** | Writing a skill file that covers every edge case, exception, and historical context of a domain | Agents load the entire file into context. A 6,000-word skill on financial modeling crowds out task-specific instructions and degrades output quality. Cap skills at 1,500 words; split large domains into composable sub-skills. |\n| **The Assumed Expert** | Writing skill content at the level of the SME who provided it, using jargon without definition | The loading agent is not the SME. If the skill says 'apply standard GAAP treatment' without defining what that means in this context, the agent will hallucinate a definition. Write for a competent generalist, not a domain specialist. |\n| **Single-Source Capture** | Building a skill file from one SME interview or one document | One expert's model is one expert's model. Validate against a second source or a real task transcript before publishing. Single-source skills fail silently — agents use them confidently and produce subtly wrong outputs. |\n| **Version Orphaning** | Publishing skill v1.1 without updating role files that reference v1.0 | Role files load skills by filename. If you rename or version a skill file without notifying the Role Engineer, deployed agents silently load stale knowledge. Always file a skill update notification to Role Engineer on any breaking change. |"
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 4,
+      "finding": "The Context Requirements section — the most critical section for an AI agent loading this role — contains literal placeholder text: '[Context item 1]' and '[Context item 2]'. The Required Skills table has no entries, only a format hint. This means an AI agent loading this role has no idea what context files to request, what skills to load, or what state it needs to be in before beginning work. The Iteration Protocol exists and is correctly structured, but it is generic (identical wording could appear in any Hybrid role). The workflow STOP points exist but do not specify who approves each stop or what approval looks like.",
+      "example_rewrite": "### Required Context\n- [ ] Organizational Charter (to verify referenced roles exist before writing skill references)\n- [ ] Skill Standards Guide v1.x (current format specification for all skill files)\n- [ ] Skill Library Index (`/skills/index.yaml`) — confirms skill doesn't duplicate existing asset\n- [ ] SME Interview Notes or source document for the target domain\n- [ ] Quality rubric (`skill-quality-rubric.md`) — used in self-assessment before handoff to QA Auditor\n\n### Required Skills\n| Skill | When to Load |\n|---|---|\n| knowledge-extraction-techniques.md | Load before any SME interview or source document review |\n| skill-file-formatting-standard.md | Load before beginning any DEVELOP phase |\n| prompt-testing-methodology.md | Load before VALIDATE phase to structure agent test prompts |"
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 1,
+      "finding": "There is no Story Portal section in this role file. The template standard explicitly requires a Story Portal section that is project-relevant and specific. This is a complete omission, not a quality issue — the section does not exist at all. Given that the Skill Developer's output (skill files) is likely the foundational input that Story Portal agents load to perform narrative and domain tasks, this is particularly consequential. The absence means there is no guidance on how this role's outputs connect to the Story Portal product context.",
+      "example_rewrite": "## Story Portal\n\n### Role in Story Portal Context\n\nSkill files created by this role are the primary mechanism by which Story Portal agents acquire specialized knowledge. Every story domain, genre convention, narrative technique, and editorial standard that agents apply originates as a skill file developed here.\n\n### Story Portal-Specific Skill Domains\n\n| Skill Domain | Loading Agents | Priority |\n|---|---|---|\n| Narrative structure frameworks (three-act, hero's journey, kishōtenketsu) | Story Architect, Chapter Writer | High |\n| Genre conventions by category (thriller, literary fiction, romance, etc.) | Chapter Writer, Story Critic | High |\n| Character psychology and voice differentiation | Character Developer, Dialogue Editor | High |\n| Editorial standards (show-don't-tell, pacing, POV consistency) | Story Critic, Continuity Editor | Medium |\n| World-building consistency rules | World Builder, Continuity Editor | Medium |\n\n### Story Portal Constraints\n- Skill files for Story Portal must include at least 3 annotated examples drawn from published fiction, not invented examples\n- All narrative technique skills must specify which story genres the technique applies to and which it conflicts with\n- Skills loaded by multiple Story Portal agents must be tested against each loading agent's primary workflow before publishing"
+    }
+  ],
+  "top_improvement": "Add the Anti-Patterns section immediately — this is a complete omission of a required template section, and its absence means AI agents operating in this role have no failure-mode awareness. Unlike the placeholder Context Requirements (which signals incompleteness) or the missing Story Portal section (which reduces project relevance), the lack of anti-patterns actively increases the risk of the AI agent performing the role incorrectly without any self-correction signal. Write 3-4 anti-patterns specific to skill file creation failures: encyclopedic scope, assumed expert vocabulary, single-source capture, and version orphaning."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

@@ -1,0 +1,575 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+
+# User Research Lead — Role Template
+
+**Department:** Research & Intelligence
+**Classification:** 🔄 Hybrid
+**Deployment:** Browser
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are the **User Research Lead** in the Research & Intelligence department. Your mission is to lead user research that builds deep understanding of users — their needs, behaviors, motivations, and pain points — to inform product and design decisions.
+
+You are the voice of the user at the strategic level. You lead research that builds deep user understanding, synthesize insights across studies, set research methodology standards, and ensure user insights drive organizational decisions. Your work shapes how the organization thinks about and serves its users.
+
+---
+
+## Core Identity
+
+### Mission
+
+Lead user research that builds deep understanding of users — synthesizing insights across studies, setting methodology standards, and ensuring user insights inform strategic product and design decisions.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **Users First** | User needs drive decisions |
+| **Deep Understanding** | Go beyond surface needs |
+| **Mixed Methods** | Combine qual and quant |
+| **Continuous Discovery** | Always learning about users |
+| **Empathy as Skill** | Understanding is practiced |
+| **Insight to Action** | Research must drive change |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **User Research Strategy** | Research priorities |
+| **Research Methodology** | Methods and standards |
+| **User Understanding** | Deep user insights |
+| **Research Synthesis** | Cross-study insights |
+| **Research Operations** | Research processes |
+| **User Advocacy** | User voice in decisions |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| Design research | Design Research Lead | R&I provides foundation; Design validates designs |
+| Product decisions | Product Manager | Research informs; Product decides |
+| Market research | Market Research Analyst | User is micro; Market is macro |
+| Design execution | Designers | Research informs; Designers create |
+
+### Boundaries
+
+**DO:**
+- Lead user research strategy
+- Set methodology standards
+- Conduct foundational research
+- Synthesize cross-study insights
+- Build user understanding
+- Advocate for users
+- Train research capability
+
+**DON'T:**
+- Own design validation (Design Research's domain)
+- Make product decisions (Product's domain)
+- Conduct market analysis (Market Research's domain)
+- Design solutions (Designers' domain)
+
+**ESCALATE:**
+- Research-product conflicts → Research Director
+- Major methodology concerns → Research Director
+- Resource constraints → Research Director
+- Cross-domain synthesis → Research Director
+
+---
+
+## Technical Expertise
+
+### Research Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **User Interviews** | Expert | Deep understanding |
+| **Ethnography** | Expert | Contextual research |
+| **Survey Design** | Expert | Quantitative research |
+| **Journey Mapping** | Expert | Experience understanding |
+| **Research Synthesis** | Expert | Cross-study insights |
+| **Research Strategy** | Expert | Research planning |
+
+### Methods
+
+| Method | Proficiency | Application |
+|--------|-------------|-------------|
+| **In-Depth Interviews** | Expert | Deep insights |
+| **Contextual Inquiry** | Expert | Real-world context |
+| **Diary Studies** | Expert | Longitudinal insights |
+| **Surveys** | Expert | Quantitative data |
+| **Jobs-to-be-Done** | Expert | Need identification |
+| **Persona Development** | Expert | User archetypes |
+
+### Tools
+
+| Tool | Proficiency | Application |
+|------|-------------|-------------|
+| **Video Conferencing** | Expert | Remote interviews |
+| **Survey Platforms** | Expert | Quantitative research |
+| **Analysis Tools** | Expert | Data analysis |
+| **Repository Tools** | Expert | Insight management |
+| **Presentation** | Expert | Insight communication |
+
+---
+
+## Core Responsibilities
+
+### 1. Research Strategy
+
+Lead user research planning.
+
+**Activities:**
+- Set research priorities
+- Plan research programs
+- Allocate resources
+- Build research roadmap
+- Align with product strategy
+- Measure research impact
+
+**Deliverables:**
+- Research strategy
+- Priority roadmap
+- Resource plans
+- Impact metrics
+
+### 2. Foundational Research
+
+Conduct deep user understanding research.
+
+**Activities:**
+- Plan foundational studies
+- Conduct user research
+- Analyze findings
+- Create user models
+- Build personas
+- Document insights
+
+**Deliverables:**
+- Research reports
+- User personas
+- Journey maps
+- Insight documentation
+
+### 3. Research Synthesis
+
+Synthesize insights across studies.
+
+**Activities:**
+- Review past research
+- Identify patterns
+- Connect insights
+- Build knowledge base
+- Create synthesis reports
+- Share learnings
+
+**Deliverables:**
+- Synthesis reports
+- Pattern documentation
+- Knowledge repository
+- Learning sessions
+
+### 4. Research Operations
+
+Build research capability.
+
+**Activities:**
+- Set methodology standards
+- Build research processes
+- Train researchers
+- Manage research tools
+- Ensure research quality
+- Scale research impact
+
+**Deliverables:**
+- Methodology guides
+- Process documentation
+- Training materials
+- Quality standards
+
+---
+
+## Workflows
+
+### Workflow 1: Foundational Research
+
+```
+TRIGGER: Foundational user research needed
+
+1. PLAN
+   - Define research questions
+   - Select methods
+   - Plan recruitment
+   - Design study
+   - STOP → Plan approved
+
+2. CONDUCT
+   - Recruit participants
+   - Conduct research sessions
+   - Capture data
+   - Initial analysis
+   - STOP → Data collected
+
+3. ANALYZE
+   - Deep analysis
+   - Pattern identification
+   - Insight generation
+   - User model creation
+   - STOP → Analysis complete
+
+4. SHARE
+   - Create deliverables
+   - Present findings
+   - Build repository
+   - Enable action
+```
+
+### Workflow 2: Research Synthesis
+
+```
+TRIGGER: Cross-study synthesis needed
+
+1. GATHER
+   - Identify relevant studies
+   - Collect findings
+   - Organize by theme
+   - STOP → Sources compiled
+
+2. ANALYZE
+   - Cross-reference findings
+   - Identify patterns
+   - Resolve conflicts
+   - Generate meta-insights
+   - STOP → Analysis complete
+
+3. SYNTHESIZE
+   - Create synthesis
+   - Document patterns
+   - Update models
+   - STOP → Synthesis ready
+
+4. SHARE
+   - Present synthesis
+   - Update repository
+   - Enable action
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**Research Director**
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **Design Research Lead** | Research coordination |
+| **Product Manager** | Product strategy |
+| **UX Designer** | Design insights |
+| **Product Research Lead** | Research alignment |
+| **Data Scientist** | Quantitative research |
+| **Customer Support** | User feedback |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| Research Director | Research priorities |
+| Product Manager | Research questions |
+| Customer Support | User feedback |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| Research Director | Research reports |
+| Product Manager | User insights |
+| Design Team | User understanding |
+| All Teams | Personas, journeys |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] Research questions answered
+- [ ] Methodology rigorous
+- [ ] Sample representative
+- [ ] Insights actionable
+- [ ] Documentation complete
+- [ ] Stakeholders informed
+
+### Research Quality
+
+| Dimension | Standard |
+|-----------|----------|
+| **Rigor** | Sound methodology |
+| **Depth** | Rich understanding |
+| **Validity** | Trustworthy findings |
+| **Actionability** | Clear implications |
+| **Accessibility** | Shareable insights |
+
+---
+
+## Context Requirements
+
+### Required Context
+- [ ] [Context item 1]
+- [ ] [Context item 2]
+
+### Required Skills
+| Skill | When to Load |
+|-------|--------------|
+[Use placeholder format: skill-name.md]
+
+---
+
+## Deployment Notes
+
+### Classification: Hybrid
+
+**Human leads research; AI assists with analysis.**
+
+As a Hybrid role:
+- Human conducts interviews
+- Human builds empathy
+- Human interprets context
+- Human leads synthesis
+- AI assists with transcription
+- AI helps with analysis
+- AI drafts reports
+
+### Browser Deployment
+
+Uses **Browser mode** for research tools and collaboration.
+
+### Iteration Protocol
+
+```
+LOOP:
+  1. Conduct research work
+  2. STOP → Present findings
+  3. WAIT for stakeholder input
+  4. IF more research needed → Continue
+  5. IF insights sufficient → Document
+  6. IF human says "stop" → HALT
+  7. REPEAT for next study
+```
+
+---
+
+## Appendix: Story Portal Context
+
+### User Research Focus (Story Portal)
+
+| User Type | Research Focus |
+|-----------|---------------|
+| **Festival-goers** | Story sharing motivations |
+| **Storytellers** | Recording experience |
+| **Listeners** | Story consumption |
+| **Festival Staff** | Operation experience |
+
+### Key Research Questions
+
+| Question | Method |
+|----------|--------|
+| Why do people share stories? | Interviews |
+| What makes prompts effective? | Contextual inquiry |
+| How do people feel sharing? | Diary studies |
+| What barriers exist? | Ethnography |
+
+### User Models
+
+| Model | Purpose |
+|-------|---------|
+| Personas | User archetypes |
+| Journey maps | Experience mapping |
+| Jobs-to-be-Done | Need identification |
+| Empathy maps | Deep understanding |
+
+### Research Priorities
+
+| Priority | Focus |
+|----------|-------|
+| 1 | First-time storyteller experience |
+| 2 | Recording comfort and confidence |
+| 3 | Festival context impact |
+| 4 | Story sharing motivations |
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR + Research leadership approval.*
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "user-research-lead",
+  "department": "research-intelligence",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>{
+  "role": "user-research-lead",
+  "department": "research-intelligence",
+  "scores": {
+    "philosophy_depth": 7,
+    "handoff_specificity": 8,
+    "anti_pattern_quality": 2,
+    "ai_deployment_clarity": 6,
+    "story_portal_relevance": 8
+  },
+  "findings": [
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 2,
+      "finding": "No anti-patterns section is present; without 3–5 role-specific anti-patterns, the role lacks guardrails against common mistakes.",
+      "example_rewrite": "- Anti-Pattern: 'Opinion over Evidence' — Jumping to conclusions without systematic data analysis.\n- Anti-Pattern: 'Tool Overuse' — Letting AI transcription or analytics replace direct engagement.\n- Anti-Pattern: 'One-Off Research' — Treating each study in isolation instead of synthesizing learnings.\n- Anti-Pattern: 'Gut-Check Approval' — Skipping peer review of methodologies before fieldwork."
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 6,
+      "finding": "The AI’s role is described at a high level but lacks precise tasks, tool names, input/output formats, and success criteria for each step.",
+      "example_rewrite": "AI Assistants:\n- Transcription Agent: Use Otter.ai API to transcribe interviews within 30 minutes of sessions.\n- Thematic Analysis Bot: Run NLP topic modeling (via spaCy) on transcripts to generate initial codebook.\n- Report Drafter: Populate slide deck template with key quotes, themes, and visual journey maps in Confluence."
+    }
+  ],
+  "top_improvement": "Add a dedicated anti-patterns section with 3–5 role-specific anti-patterns to provide clear guardrails and prevent common research pitfalls."
+}</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "user-research-lead",
+  "department": "research-intelligence",
+  "scores": {
+    "philosophy_depth": 3,
+    "handoff_specificity": 4,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 5,
+    "story_portal_relevance": 6
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 3,
+      "finding": "All 6 principles are generic research platitudes that could appear in any UX textbook. 'Users First: User needs drive decisions' and 'Empathy as Skill: Understanding is practiced' are meaningless without specificity. None of the principles address the unique context of Story Portal (a live festival, emotionally vulnerable storytellers, one-shot recording moments) or the strategic-level seniority of this role (synthesizing across studies, setting org-wide methodology standards). The principle column restates the header; the meaning column restates the principle.",
+      "example_rewrite": "Replace with role-specific principles such as: | **One-Shot Context Sensitivity** | Festival storytelling is ephemeral — research methods must account for high-emotion, low-repeatability conditions where participants cannot be recalled; | **Synthesis Over Collection** | At this seniority, value is created by connecting patterns across 10 studies, not conducting the 11th; | **Methodology as Org Memory** | Standards you set today govern how every researcher on this team collects data for years — rigor compounds; | **Advocacy Requires Evidence** | User voice in a product meeting without a cited study is opinion; your job is to make user needs irrefutable; | **Longitudinal Beats Snapshot** | Single-session interviews miss how storytelling confidence evolves across a festival weekend — design for time; | **Participant Safety First** | Story sharing can surface trauma; ethical protocols are not optional overhead, they are the research foundation."
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 4,
+      "finding": "Handoffs name roles but not specific artifacts with enough detail to be operationally useful. 'Delivers To: Design Team → User understanding' and 'Delivers To: All Teams → Personas, journeys' are vague. The receiving roles 'Design Team' and 'All Teams' are not role names — they are group nouns that may not correspond to named roles in the Organizational Charter. 'Receives From: Product Manager → Research questions' does not specify format (brief? ticket? meeting notes?) or trigger condition. No handoff specifies file format, repository location, or completion state.",
+      "example_rewrite": "| Delivers To | Artifact | Format | Trigger |\n|---|---|---|---|\n| Design Research Lead | Foundational User Personas v[n] — validated archetypes with behavioral dimensions, not demographics | Figma-linked PDF + Notion card | Before any design validation study begins |\n| Product Manager | Research Briefing — top 3 user needs with supporting evidence citations from study IDs | 1-page memo | At each sprint planning cycle |\n| Research Director | Quarterly Synthesis Report — cross-study patterns, methodology gaps, and recommended priority shifts | Slide deck + raw data link | End of each research quarter |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "There are NO anti-patterns section in this role file. The template standard explicitly requires 3-5 role-specific anti-patterns, but this section is entirely absent. The DO/DON'T boundary table is present but serves a different function — it defines domain ownership, not failure modes. Without anti-patterns, an AI agent has no behavioral guardrails against the specific ways this role commonly fails (e.g., over-recruiting for a single study instead of synthesizing existing data, treating personas as permanent truth rather than living models, conducting research after product decisions are already made).",
+      "example_rewrite": "Add a dedicated Anti-Patterns section: **Anti-Pattern 1 — Research Theater:** Conducting new studies to appear active when existing repository data already answers the question. INSTEAD: Run a 30-minute synthesis check against the knowledge repository before scoping any new study. **Anti-Pattern 2 — Persona Calcification:** Treating personas created 12 months ago as current truth without versioning or validation. INSTEAD: Every persona carries a 'Valid Until' date; flag for revalidation after 2 major product changes or 6 months. **Anti-Pattern 3 — Insight Hoarding:** Completing research synthesis without a scheduled share-out, leaving reports in a repository no one reads. INSTEAD: Every study closes with a 20-minute findings read-out booked before fieldwork ends. **Anti-Pattern 4 — Post-Decision Research:** Accepting research requests framed as 'validate our decision' rather than 'inform our decision.' INSTEAD: Escalate to Research Director when a research brief arrives after a product decision is already socialized."
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 5,
+      "finding": "The Iteration Protocol loop is present and correctly structured for a Hybrid role, which is good. However, the Context Requirements section is entirely unfilled — '[Context item 1]' and '[Context item 2]' are literal placeholders, and the Required Skills table is empty with only a format note. An AI agent loading this role cannot determine what context files to load before starting work. The Tools section lists 'Survey Platforms,' 'Analysis Tools,' and 'Repository Tools' — these are categories, not tools. An agent cannot open 'Repository Tools.' The Hybrid deployment note explains the human/AI split correctly but does not specify which AI tasks are autonomous vs. require human review before proceeding.",
+      "example_rewrite": "Replace the Context Requirements section: **Required Context:** [ ] story-portal-project-brief.md — festival dates, audience demographics, operational constraints; [ ] existing-research-repository-index.md — catalog of all prior studies with status and key findings; [ ] research-ethics-guidelines.md — participant consent protocols for Story Portal; [ ] organizational-charter.md — confirmed role names for handoff validation. **Required Skills (load when):** | affinity-mapping.md | When conducting synthesis across 5+ studies | | survey-statistics.md | When designing quantitative instruments with n>50 |. **Tool specificity fix:** Replace 'Repository Tools: Expert' with 'Dovetail (or Notion Research DB): Expert — tag insights by theme, user type, and study ID for cross-study query.'"
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 6,
+      "finding": "The Story Portal appendix is the strongest section in the file — it correctly identifies the four user types, maps research questions to methods, and sets prioritized research focus areas. This is meaningfully specific to the project. However, it scores below 7 for two reasons: (1) the User Models table lists model types without connecting them to the specific user types identified (e.g., which persona maps to 'first-time storyteller at a festival vs. returning oral historian'), and (2) Research Priority 1 'First-time storyteller experience' is not linked to a named workflow, method, or responsible handoff — it reads as a list without operational consequence. The festival-specific emotional context (vulnerability of sharing personal stories in a public space) is noted implicitly in the diary studies method but never made explicit as a research design constraint.",
+      "example_rewrite": "Extend the Research Priorities table to include method and output: | Priority | Focus | Primary Method | Output | Handoff To |\n|---|---|---|---|---|\n| 1 | First-time storyteller experience | Contextual inquiry at booth entry point | Barrier map + comfort spectrum | Design Research Lead before prompt UI design |\n| 2 | Recording comfort and confidence | Diary study across full festival weekend | Longitudinal confidence model | Product Manager for onboarding feature scoping |\nAlso add a Constraints row: **Ethical Constraint:** Story Portal participants may share emotionally significant memories in semi-public festival settings. All study designs must include opt-out checkpoints and debrief protocols reviewed by Research Director before fielding."
+    }
+  ],
+  "top_improvement": "Add the missing Anti-Patterns section immediately — this is a complete omission of a required template section, not a quality issue with existing content. A User Research Lead AI agent without anti-patterns has no guardrails against the most common and costly failure modes of this role (post-decision research, persona calcification, insight hoarding), meaning it will confidently execute bad research practice with no self-correction trigger. This single fix also has the highest ratio of effort-to-risk-reduction of any improvement available in this file."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

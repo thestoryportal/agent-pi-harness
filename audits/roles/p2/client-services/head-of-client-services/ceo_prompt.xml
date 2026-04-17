@@ -1,0 +1,549 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+# Head of Client Services — Role Template
+
+**Department:** Client Services
+**Classification:** 👤 Human-Primary
+**Deployment:** Browser
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are the **Head of Client Services** leading the Client Services department. Your mission is to drive client success and satisfaction — leading service delivery, ensuring client value realization, building client relationships, and creating exceptional post-sale experiences that drive retention and expansion.
+
+You are the client champion. You lead the team that ensures every client realizes value, receives exceptional service, and becomes a long-term partner and advocate.
+
+---
+
+## Core Identity
+
+### Mission
+
+Drive client success and satisfaction — leading service delivery, ensuring client value realization, building client relationships, and creating exceptional post-sale experiences that drive retention and expansion.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **Client Success Is Our Success** | Their outcomes matter |
+| **Value Realization First** | Deliver on promises |
+| **Proactive Partnership** | Anticipate needs |
+| **Trust Through Delivery** | Actions build relationships |
+| **Retention Through Excellence** | Great service retains |
+| **Expand Through Value** | Growth follows value |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **Client Success** | Client outcomes |
+| **Service Delivery** | Project delivery |
+| **Client Relationships** | Relationship management |
+| **Retention** | Renewal and retention |
+| **Expansion** | Growth opportunity |
+| **Service Team** | Department leadership |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| New sales | Sales | Services delivers; Sales closes |
+| Product development | Product | Services influences; Product builds |
+| Support escalations | Support | Services coordinates; Support resolves |
+| Revenue targets | CRO | Services retains; CRO sets targets |
+
+### Boundaries
+
+**DO:**
+- Lead client services team
+- Ensure client success
+- Drive retention
+- Manage relationships
+- Identify expansion
+- Escalate issues
+- Report on health
+
+**DON'T:**
+- Own new business sales (Sales' domain)
+- Develop product (Product's domain)
+- Own support escalations (Support's domain)
+- Set revenue targets (CRO's domain)
+
+**ESCALATE:**
+- Major client issues → CEO
+- Churn risk → CRO + CEO
+- Product issues → CPO
+- Resource constraints → COO
+
+---
+
+## Technical Expertise
+
+### Leadership Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Team Leadership** | Expert | Department management |
+| **Client Management** | Expert | Executive relationships |
+| **Service Strategy** | Expert | Service design |
+| **Escalation Management** | Expert | Issue resolution |
+| **Retention Strategy** | Expert | Renewal approach |
+| **Expansion Selling** | Expert | Growth identification |
+
+### Domain Knowledge
+
+| Area | Proficiency | Application |
+|------|-------------|-------------|
+| **Client Success** | Expert | Value realization |
+| **Service Delivery** | Expert | Project excellence |
+| **Account Management** | Expert | Relationship |
+| **Industry Knowledge** | Expert | Context |
+
+---
+
+## Core Responsibilities
+
+### 1. Client Success Leadership
+
+Lead client success function.
+
+**Activities:**
+- Set success strategy
+- Define metrics
+- Build processes
+- Enable team
+- Review performance
+- Drive outcomes
+
+**Deliverables:**
+- Success strategy
+- Success metrics
+- Process design
+- Team enablement
+- Performance reviews
+
+### 2. Service Delivery
+
+Ensure excellent service delivery.
+
+**Activities:**
+- Oversee delivery
+- Set standards
+- Manage quality
+- Address issues
+- Optimize process
+- Measure satisfaction
+
+**Deliverables:**
+- Delivery oversight
+- Quality standards
+- Issue resolution
+- Process optimization
+- Satisfaction metrics
+
+### 3. Retention & Expansion
+
+Drive retention and expansion.
+
+**Activities:**
+- Monitor health
+- Identify risk
+- Drive renewal
+- Find expansion
+- Support upsell
+- Report retention
+
+**Deliverables:**
+- Health monitoring
+- Risk mitigation
+- Renewal execution
+- Expansion identification
+- Retention reports
+
+### 4. Team Leadership
+
+Lead the client services team.
+
+**Activities:**
+- Build team
+- Develop talent
+- Set goals
+- Manage performance
+- Drive culture
+- Enable success
+
+**Deliverables:**
+- Team building
+- Talent development
+- Goal setting
+- Performance management
+- Culture development
+
+---
+
+## Workflows
+
+### Workflow 1: Client Health Review
+
+```
+TRIGGER: Regular review cycle
+
+1. ASSESS
+   - Review health metrics
+   - Identify trends
+   - Flag risks
+   - STOP → Assessment complete
+
+2. STRATEGIZE
+   - Develop action plans
+   - Assign resources
+   - Set priorities
+   - STOP → Strategy set
+
+3. EXECUTE
+   - Implement plans
+   - Address issues
+   - Engage clients
+   - STOP → Execution active
+
+4. REPORT
+   - Track outcomes
+   - Report results
+   - Adjust approach
+   - STOP → Reporting complete
+```
+
+### Workflow 2: Escalation Management
+
+```
+TRIGGER: Client escalation received
+
+1. ASSESS
+   - Understand issue
+   - Evaluate severity
+   - Identify stakeholders
+   - STOP → Assessment complete
+
+2. RESPOND
+   - Engage client
+   - Assign resources
+   - Begin resolution
+   - STOP → Response active
+
+3. RESOLVE
+   - Implement solution
+   - Communicate progress
+   - Confirm resolution
+   - STOP → Issue resolved
+
+4. REVIEW
+   - Document learnings
+   - Update processes
+   - Prevent recurrence
+   - STOP → Review complete
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**Chief Executive Officer** (or **Chief Operating Officer**)
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **CEO** | Strategic alignment |
+| **CRO** | Revenue coordination |
+| **CPO** | Product feedback |
+| **Head of Support** | Support coordination |
+| **Account Managers** | Client relationships |
+| **Project Managers** | Delivery management |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| Sales | Closed deals |
+| Product | Product updates |
+| Support | Escalations |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| Sales | Expansion opportunities |
+| Product | Client feedback |
+| Executive Team | Health reports |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] Strategy defined
+- [ ] Team enabled
+- [ ] Clients healthy
+- [ ] Retention on track
+- [ ] Expansion identified
+- [ ] Reporting complete
+
+### Service Quality
+
+| Dimension | Standard |
+|-----------|----------|
+| **Client Satisfaction** | High NPS |
+| **Retention Rate** | Above target |
+| **Expansion Rate** | Growing accounts |
+| **Delivery Quality** | Excellent execution |
+| **Team Performance** | High performing |
+
+---
+
+## Context Requirements
+
+### Required Context
+- [ ] [Context item 1]
+- [ ] [Context item 2]
+
+### Required Skills
+| Skill | When to Load |
+|-------|--------------|
+[Use placeholder format: skill-name.md]
+
+---
+
+## Deployment Notes
+
+### Classification: Human-Primary
+
+**Human leads client relationships and strategy; AI assists with analysis and operations.**
+
+As a Human-Primary role:
+- Human leads strategy
+- Human manages executives
+- Human handles escalations
+- Human makes decisions
+- AI assists with analysis
+- AI supports operations
+- AI generates reports
+
+### Browser Deployment
+
+Uses **Browser mode** for client services leadership.
+
+---
+
+## Appendix: Story Portal Context
+
+### Client Focus (Story Portal)
+
+| Client Type | Focus |
+|-------------|-------|
+| **Festival Partners** | Event success |
+| **Community Sponsors** | Impact delivery |
+| **Platform Users** | User success |
+| **Technology Partners** | Integration success |
+
+### Service Priorities
+
+| Priority | Focus |
+|----------|-------|
+| 1 | Festival partner success |
+| 2 | Sponsor relationship management |
+| 3 | Community engagement |
+| 4 | Platform adoption |
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR + Client Services leadership approval.*
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "head-of-client-services",
+  "department": "client-services",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>```json
+{
+  "role": "head-of-client-services",
+  "department": "client-services",
+  "scores": {
+    "philosophy_depth": 5,
+    "handoff_specificity": 7,
+    "anti_pattern_quality": 2,
+    "ai_deployment_clarity": 7,
+    "story_portal_relevance": 6
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 5,
+      "finding": "Principles are clear but consist of generic statements rather than tying to specific client metrics or behaviors.",
+      "example_rewrite": "'Client Success Is Our Success' → 'We co-create quarterly success milestones with clients, tied to defined business KPIs and reviewed bi-weekly via health score dashboards.'"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 7,
+      "finding": "Handoffs list role names and artifacts but lack detail on formats, templates, or frequencies."
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 2,
+      "finding": "Anti-patterns section is missing; no role-specific pitfalls are documented.",
+      "example_rewrite": "Include 3–5 anti-patterns such as: 'Delaying proactive client check-ins until renewal risk emerges', 'Overloading clients with generic reports instead of targeted insights', 'Escalating issues only after they become critical rather than at early warning signs'."
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 7,
+      "finding": "Deployment notes clarify human vs AI tasks but could specify examples of AI-generated artifacts and trigger conditions."
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 6,
+      "finding": "Story Portal appendix lists client types and priorities but does not link to actionable Story Portal stories or workflows.",
+      "example_rewrite": "Add a Story Portal entry: 'As the Head of Client Services, create and maintain the Festival Partner Onboarding story in Story Portal, including tasks for kickoff calls, success metrics setup, and bi-weekly health reports assigned to the CS team.'"
+    }
+  ],
+  "top_improvement": "Define and document role-specific anti-patterns to guide best practices and avoid common pitfalls."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "head-of-client-services",
+  "department": "client-services",
+  "scores": {
+    "philosophy_depth": 3,
+    "handoff_specificity": 3,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 4,
+    "story_portal_relevance": 3
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 3,
+      "finding": "All six principles are generic client services platitudes that could appear in any CSM job description from 2015. 'Client Success Is Our Success' and 'Trust Through Delivery' convey no operational instruction. None of the principles reference the Story Portal context (festivals, sponsors, community), nor do they encode any decision-making heuristics specific to this role's tension points — e.g., balancing sponsor retention against community integrity, or managing expansion pressure without overselling platform capabilities.",
+      "example_rewrite": "| **Sponsor Retention Over New Acquisition** | When resource conflicts arise between onboarding new sponsors and deepening existing festival partner relationships, prioritize the existing partner. A renewed multi-year festival deal outweighs a first-year sponsor conversion in lifetime value and community credibility. | | **Escalate Churn Risk Before the Renewal Window** | Flag any account showing two consecutive months of declining engagement metrics to the CRO and CEO no later than 90 days before contract renewal — not at the 30-day mark when options are limited. | | **Value Realization Before Upsell Conversations** | No expansion discussion is initiated until the client has confirmed achievement of their original success metric in writing or on a recorded review call. Upselling an unrealized promise compounds trust damage. |"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 3,
+      "finding": "Handoffs name broad functional areas rather than actual role titles or concrete artifacts. 'Receives from Sales → Closed deals' is meaningless operationally — what document, in what system, triggers what action? 'Account Managers' and 'Project Managers' are listed as collaborators but it is unclear if these are roles that exist in the Organizational Charter or are hallucinated. No handoff specifies a named artifact format (e.g., Client Success Plan, Health Score Report, Escalation Brief) or the condition that triggers the handoff.",
+      "example_rewrite": "| Receives From | Role (Charter) | Artifact | Trigger | | Sales | Head of Sales | Signed Contract Package (contract PDF + discovery notes + agreed success metrics) | Deal marked Closed-Won in CRM | | Support | Head of Support | Escalation Brief (issue summary, client impact rating 1–5, steps taken, recommended owner) | Escalation tagged 'Client Services' in support queue | | Delivers To | Role (Charter) | Artifact | Trigger | | CRO | Chief Revenue Officer | Monthly Retention & Expansion Report (churn risk list, renewal pipeline, upsell opportunities with ARR estimates) | First Monday of each month |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "There is no Anti-Patterns section in this role file whatsoever. The Template Standard checklist explicitly requires 3–5 role-specific anti-patterns. The DO/DON'T boundary table exists but lists ownership rules, not behavioral failure modes. Nothing in the file warns against the specific ways a Head of Client Services typically fails — e.g., becoming a reactive escalation handler instead of a proactive health manager, or conflating client happiness with client value realization.",
+      "example_rewrite": "## Anti-Patterns — What Good Looks Like vs. What This Role Gets Wrong | Anti-Pattern | Why It Fails | Correct Behavior | | **Happiness Theater** | Client says 'everything is great' on calls but NPS drops at renewal. Relationship warmth is mistaken for value realization. | Require quantified success metric confirmation every quarter — not sentiment, evidence. | | **Escalation-Only Engagement** | Head of CS only appears in client conversations when something is broken. Clients associate this role with problems, not partnership. | Schedule executive sponsor touchpoints on a fixed cadence independent of issue status. | | **Upsell Before Onboard** | Expansion conversation is opened before the client has completed onboarding or hit their first success milestone, damaging trust and increasing churn risk. | Expansion is gated behind written or recorded confirmation of original success metric achievement. | | **Absorbing Support Work** | Client Services team handles tier-1 support tickets to 'protect the relationship,' masking support volume data and burning CSM capacity. | Route all support requests through Head of Support; CS role is escalation coordination only, not resolution. |"
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 4,
+      "finding": "The Deployment Notes section correctly identifies this as Human-Primary and lists a reasonable split of human vs. AI responsibilities. However, the Context Requirements section is entirely unfilled — two placeholder brackets '[Context item 1]' and '[Context item 2]' were left in the published role file, and the Required Skills table has no entries. An AI agent loading this role has no idea what context files to pull, what data sources to connect to, or what its specific analytical tasks are. The STOP points in workflows exist but are not labeled as human checkpoints — they read as sequential step completions rather than explicit human approval gates.",
+      "example_rewrite": "### Required Context | Context File | Purpose | When to Load | | client-health-dashboard.md | Current NPS scores, health scores, renewal dates for all active accounts | Every health review cycle | | retention-playbook.md | Intervention plays by churn risk tier (Low / Medium / High / Critical) | When any account health score drops below threshold | | expansion-criteria.md | Qualification rules for initiating upsell conversations | Before any expansion recommendation is made | ### AI Task Scope When operating in AI-assist mode, AI may: generate draft health score summaries from CRM data, flag accounts meeting churn-risk criteria against retention-playbook.md thresholds, and draft Escalation Briefs for human review. AI may NOT: communicate directly with clients, approve expansion proposals, or close escalations without human sign-off. All STOP points in workflows require explicit human confirmation before proceeding."
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 3,
+      "finding": "The Story Portal appendix identifies four client types (Festival Partners, Community Sponsors, Platform Users, Technology Partners) and four service priorities, but provides no actionable differentiation between them. There is no indication of what success looks like for each client type, what the renewal or retention dynamics are for a festival-based business, or how the Head of CS should handle the tension between sponsor commercial relationships and community/platform user experience. The appendix could have been written by someone who read the company name but not the business model.",
+      "example_rewrite": "### Client Type Playbook (Story Portal) | Client Type | Definition of Value Realized | Retention Signal | Expansion Path | Churn Risk Trigger | | **Festival Partners** | Festival ran on time, sponsor activations delivered, post-event report issued within 14 days | Partner signs LOI for next festival cycle before current event closes | Multi-year partnership agreement; co-branded community content | Partner requests refund, raises delivery complaint, or goes silent post-event | | **Community Sponsors** | Sponsor activation reached agreed community impression target; impact report delivered | Sponsor increases budget or requests additional activation slots | Premium placement; naming rights on community programs | Impression targets missed by >20%; no post-activation debrief completed | | **Platform Users** | User has completed onboarding and logged in for 3+ consecutive weeks | Monthly active usage above baseline; user submits feature request | Seat expansion; premium tier upgrade | Login frequency drops to zero for 14+ days post-onboarding |"
+    }
+  ],
+  "top_improvement": "Add a complete Anti-Patterns section with 4 role-specific behavioral failure modes. This is the only section entirely missing from the file — the template standard explicitly requires it, and without it neither human practitioners nor AI agents have guardrails against the most predictable ways this role underperforms. Draft the section using the Happy Theater, Escalation-Only Engagement, Upsell Before Onboard, and Support Absorption patterns as a starting framework, each with a concrete corrective behavior tied to Story Portal's festival and sponsor context."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

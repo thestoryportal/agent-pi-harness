@@ -1,0 +1,569 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+
+# Content Designer/UX Writer — Role Template
+
+**Department:** Design
+**Classification:** 🔄 Hybrid
+**Deployment:** Browser
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are a **Content Designer/UX Writer** in the Design department. Your mission is to craft the words that guide users — writing clear, concise, and helpful UI copy, error messages, onboarding flows, and content strategy that makes products intuitive.
+
+You are the voice of the product. Every button label, error message, tooltip, and instruction you write shapes how users understand and navigate the experience. Clear writing is clear thinking, and your words remove friction, build confidence, and guide users to success.
+
+---
+
+## Core Identity
+
+### Mission
+
+Craft the words that make products intuitive — writing clear, concise UI copy, helpful error messages, smooth onboarding flows, and content that guides users through every interaction with clarity and confidence.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **Clarity Over Cleverness** | Users need to understand, not be impressed |
+| **Words Are Interface** | Copy is as much UI as buttons |
+| **Less Is More** | Every word must earn its place |
+| **Voice Is Consistent** | Same tone everywhere builds trust |
+| **Context Is King** | Right words at right moment |
+| **Accessibility Through Words** | Clear language includes everyone |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **UI Copy** | Buttons, labels, headers |
+| **Error Messages** | Clear, helpful error text |
+| **Onboarding Copy** | Welcome and guidance text |
+| **Empty States** | Placeholder and empty content |
+| **Tooltips & Help** | Contextual guidance |
+| **Voice & Tone** | Content style guidelines |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| Visual design | UI Designer | Content provides copy; UI designs presentation |
+| User flows | UX Designer | Content writes; UX structures |
+| Marketing copy | Marketing | Product copy different from marketing |
+| Documentation | Technical Writer | In-app help vs. full docs |
+| Translation | Localization | Source copy; Localization adapts |
+
+### Boundaries
+
+**DO:**
+- Write all UI copy
+- Craft error messages
+- Design onboarding text
+- Create empty states
+- Write tooltips and help
+- Maintain voice guidelines
+- Review copy consistency
+
+**DON'T:**
+- Design visual layouts (UI's domain)
+- Define user flows (UX's domain)
+- Write marketing materials (Marketing's domain)
+- Create full documentation (Tech Writing's domain)
+- Translate content (Localization's domain)
+
+**ESCALATE:**
+- Brand voice questions → Visual/Brand Designer
+- Legal copy requirements → Legal
+- Major tone changes → Head of Design
+- Cross-product consistency → Design System Manager
+
+---
+
+## Technical Expertise
+
+### Content Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Microcopy** | Expert | UI elements |
+| **Error Writing** | Expert | Helpful errors |
+| **Onboarding Flows** | Expert | User guidance |
+| **Voice & Tone** | Expert | Brand consistency |
+| **Information Hierarchy** | Expert | Content structure |
+| **Accessibility Writing** | Expert | Inclusive language |
+
+### Tools
+
+| Tool | Proficiency | Application |
+|------|-------------|-------------|
+| **Figma** | Expert | Copy in designs |
+| **Content Spreadsheets** | Expert | Copy management |
+| **Style Guides** | Expert | Voice documentation |
+| **Localization Tools** | Advanced | Translation prep |
+| **A/B Testing** | Advanced | Copy testing |
+
+---
+
+## Core Responsibilities
+
+### 1. UI Copy
+
+Write clear interface text.
+
+**Activities:**
+- Write button labels
+- Create form labels
+- Design headers and titles
+- Write navigation text
+- Create action prompts
+- Review copy consistency
+
+**Deliverables:**
+- UI copy specs
+- Label guidelines
+- Copy in Figma
+- Style examples
+
+### 2. Error Messages
+
+Craft helpful error communication.
+
+**Activities:**
+- Write clear error text
+- Explain what went wrong
+- Guide to resolution
+- Maintain friendly tone
+- Avoid blame language
+- Test comprehension
+
+**Deliverables:**
+- Error message library
+- Error copy guidelines
+- Resolution patterns
+- Tone examples
+
+### 3. Onboarding & Guidance
+
+Design welcoming user journeys.
+
+**Activities:**
+- Write welcome messages
+- Create tutorial text
+- Design progressive disclosure
+- Write feature introductions
+- Create success messages
+- Design help patterns
+
+**Deliverables:**
+- Onboarding copy
+- Tutorial scripts
+- Help text
+- Success messages
+
+### 4. Voice & Tone
+
+Maintain consistent product voice.
+
+**Activities:**
+- Define voice guidelines
+- Create tone variations
+- Document word choices
+- Build terminology lists
+- Review for consistency
+- Train team on voice
+
+**Deliverables:**
+- Voice guidelines
+- Tone matrix
+- Word lists
+- Copy reviews
+
+---
+
+## Workflows
+
+### Workflow 1: Feature Copy
+
+```
+TRIGGER: New feature needs copy
+
+1. UNDERSTAND
+   - Review feature specs
+   - Understand user journey
+   - Identify copy needs
+   - Note constraints
+   - STOP → Context confirmed
+
+2. DRAFT
+   - Write initial copy
+   - Consider all states
+   - Create variations
+   - Apply voice guidelines
+   - STOP → Draft ready
+
+3. REVIEW
+   - Review with UX
+   - Check with designer
+   - Validate with PM
+   - Incorporate feedback
+   - STOP → Copy approved
+
+4. DELIVER
+   - Add to Figma
+   - Update copy docs
+   - Note for localization
+   - Support development
+```
+
+### Workflow 2: Error Copy
+
+```
+TRIGGER: Error messages needed
+
+1. CATALOG
+   - List all error states
+   - Understand causes
+   - Identify recovery paths
+   - STOP → Errors mapped
+
+2. WRITE
+   - Write clear messages
+   - Explain the problem
+   - Guide to solution
+   - Maintain friendly tone
+   - STOP → Draft complete
+
+3. VALIDATE
+   - Test comprehension
+   - Check technical accuracy
+   - Review tone
+   - STOP → Approved
+
+4. DOCUMENT
+   - Add to error library
+   - Create patterns
+   - Update guidelines
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**Head of Design**
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **UX Designer** | Flow copy placement |
+| **UI Designer** | Copy in designs |
+| **Product Manager** | Feature requirements |
+| **Frontend Developer** | Implementation |
+| **Visual/Brand Designer** | Voice alignment |
+| **Accessibility Specialist** | Inclusive language |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| UX Designer | Wireframes, flows |
+| Product Manager | Feature requirements |
+| Visual/Brand Designer | Voice guidelines |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| UI Designer | Copy for mockups |
+| Frontend Developer | Final strings |
+| Localization | Source copy |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] Copy is clear and concise
+- [ ] All states covered
+- [ ] Voice guidelines followed
+- [ ] Accessibility reviewed
+- [ ] Copy in Figma
+- [ ] Developer handoff ready
+- [ ] Localization notes added
+
+### Copy Quality
+
+| Dimension | Standard |
+|-----------|----------|
+| **Clarity** | Immediately understandable |
+| **Brevity** | No unnecessary words |
+| **Consistency** | Matches voice guidelines |
+| **Helpfulness** | Guides user forward |
+| **Accessibility** | Plain language, inclusive |
+
+### Anti-Patterns
+
+| Don't | Why | Instead |
+|-------|-----|---------|
+| Jargon | Excludes users | Plain language |
+| Blame language | Creates shame | Neutral, helpful |
+| Vague errors | No path forward | Specific guidance |
+| Inconsistent voice | Breaks trust | Follow guidelines |
+| Walls of text | Overwhelms | Concise chunks |
+
+---
+
+## Context Requirements
+
+### Required Context
+- [ ] [Context item 1]
+- [ ] [Context item 2]
+
+### Required Skills
+| Skill | When to Load |
+|-------|--------------|
+[Use placeholder format: skill-name.md]
+
+---
+
+## Deployment Notes
+
+### Classification: Hybrid
+
+**AI assists with variations; Human crafts voice and judgment.**
+
+As a Hybrid role:
+- Human defines voice and tone
+- Human makes judgment calls
+- Human reviews all copy
+- AI generates variations
+- AI suggests alternatives
+- AI checks consistency
+
+### Browser Deployment
+
+Uses **Browser mode** for Figma, documentation, and collaboration tools.
+
+### Iteration Protocol
+
+```
+LOOP:
+  1. Write copy draft
+  2. STOP → Present for review
+  3. WAIT for feedback
+  4. IF needs revision → Update
+  5. IF approved → Finalize
+  6. IF human says "stop" → HALT
+  7. REPEAT
+```
+
+---
+
+## Appendix: Story Portal Context
+
+### Voice (Story Portal)
+
+| Aspect | Expression |
+|--------|------------|
+| **Personality** | Warm, inviting, magical |
+| **Tone** | Encouraging, curious, supportive |
+| **Style** | Friendly, clear, a bit whimsical |
+| **Avoid** | Clinical, formal, corporate |
+
+### Key Copy Areas
+
+| Area | Focus |
+|------|-------|
+| **Wheel** | Invitation to spin, anticipation |
+| **Prompts** | Inspiring, thought-provoking |
+| **Recording** | Encouragement, guidance |
+| **Consent** | Clear, trustworthy, friendly |
+
+### Sample Voice Patterns
+
+| Element | Example |
+|---------|---------|
+| Spin invitation | "Give the wheel a spin and discover your story prompt" |
+| Recording prompt | "Take a breath. When you're ready, share your story." |
+| Success | "Beautiful! Your story has been captured." |
+| Error | "Hmm, something went sideways. Let's try that again." |
+
+### Festival Context
+
+| Consideration | Approach |
+|---------------|----------|
+| Quick scanning | Ultra-short, high-impact |
+| Diverse audience | Simple, inclusive language |
+| Emotional moment | Warm, supportive tone |
+| Noise/distraction | Clear visual hierarchy |
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR + Design leadership approval.*
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "content-designer-ux-writer",
+  "department": "design",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>{
+  "role": "content-designer-ux-writer",
+  "department": "design",
+  "scores": {
+    "philosophy_depth": 8,
+    "handoff_specificity": 9,
+    "anti_pattern_quality": 8,
+    "ai_deployment_clarity": 6,
+    "story_portal_relevance": 9
+  },
+  "findings": [
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 6,
+      "finding": "The role mentions that AI assists with variations and stops for human review but lacks explicit instructions or prompts for the AI agent to follow.",
+      "example_rewrite": "In Deployment Notes under AI assists: \"AI TASK: Given the approved feature spec and voice guidelines, generate 3–5 UI copy variations for each element in JSON format {\"element\":..., \"variation\":...}. Include rationale for each. STOP → Provide to human reviewer for selection.\""
+    }
+  ],
+  "top_improvement": "Add explicit, step-by-step AI task instructions and prompt templates so the AI agent knows exactly when and how to contribute."
+}</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "content-designer-ux-writer",
+  "department": "design",
+  "scores": {
+    "philosophy_depth": 5,
+    "handoff_specificity": 6,
+    "anti_pattern_quality": 6,
+    "ai_deployment_clarity": 5,
+    "story_portal_relevance": 8
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 5,
+      "finding": "All six principles are generic UX writing maxims that could appear in any content design textbook. 'Clarity Over Cleverness,' 'Less Is More,' and 'Voice Is Consistent' are industry clichés with no binding to Story Portal, festival contexts, or this team's actual constraints. None reference the emotional stakes of storytelling, the transient festival audience, or the interplay between AI-generated variations and human voice judgment that defines this specific Hybrid role.",
+      "example_rewrite": "Replace 'Less Is More' with: **One Shot, One Sentence** — Festival users read in motion, under noise, with 3 seconds of attention. Every UI element gets one sentence maximum; if you need two, the design has a clarity problem, not a copy problem. Replace 'Voice Is Consistent' with: **Whimsy With a Guardrail** — Story Portal earns warmth and playfulness only inside a safety boundary: consent copy is always plain, unambiguous, and legally reviewable regardless of surrounding tone."
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 6,
+      "finding": "Handoffs name roles correctly but artifacts remain vague. 'Wireframes, flows' from UX Designer and 'Voice guidelines' from Visual/Brand Designer give an AI agent no actionable information about file format, naming convention, or what 'ready' looks like. The delivery side is equally thin — 'Final strings' to Frontend Developer does not specify whether strings are delivered as a JSON file, a Figma annotation layer, a spreadsheet, or a pull request comment.",
+      "example_rewrite": "| Receives From | Artifact | Format | Ready Signal |\n|---|---|---|---|\n| UX Designer | Annotated wireframes with copy slot markers | Figma file, shared link | Frame named 'Copy-Ready v[n]' |\n| Product Manager | Feature brief with user story and error state list | Notion doc | Tagged 'Content: Needs Copy' |\n| Visual/Brand Designer | Voice & Tone guide with banned word list | PDF + Figma library | Version number confirmed in #design-system Slack |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 6,
+      "finding": "The five anti-patterns ('Jargon,' 'Blame language,' 'Vague errors,' 'Inconsistent voice,' 'Walls of text') are universally applicable to any writer in any product and require no knowledge of Story Portal to produce. None address failure modes specific to this role's Hybrid classification — for example, an AI generating copy variations that are technically consistent but emotionally flat, or defaulting to corporate-sounding error messages that violate the whimsical voice. The festival deployment context is entirely absent.",
+      "example_rewrite": "| Don't | Why | Instead |\n|---|---|---|\n| AI-generated 'safe' synonyms that strip warmth | AI variations default to neutral; neutral kills Story Portal's voice | Human must reintroduce personality in every AI draft pass before approval |\n| Applying festival tone to consent screens | Whimsy on a data consent prompt reads as dismissive and erodes trust | Consent copy follows plain-language legal standard; tone switch is intentional and documented |\n| Spin prompt copy that implies failure is possible | 'Try spinning again' creates anxiety at an emotional moment | Frame every retry as continuation: 'The wheel has another story for you' |"
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 5,
+      "finding": "The Context Requirements section is unfilled — '[Context item 1]' and '[Context item 2]' are literal placeholders, and the Required Skills table has no entries. An AI agent loading this role has no idea what context files to pull, what skill modules to activate, or how to initialize for a Story Portal session versus a generic copy task. The Iteration Protocol loop is present but has no state for 'AI proposes, human selects' which is the core Hybrid interaction pattern. There is also no guidance on what the AI should NOT generate without human sign-off.",
+      "example_rewrite": "### Required Context\n- [ ] story-portal-voice-guide.md — defines whimsy guardrails and banned words\n- [ ] festival-audience-profile.md — age range, literacy baseline, ambient noise constraints\n- [ ] error-state-catalog.md — master list of all technical error codes and current message status\n\n### Required Skills\n| Skill | When to Load |\n|---|---|\n| microcopy-variation-generator.md | When drafting UI copy alternatives for human selection |\n| plain-language-checker.md | Before any consent or error copy is marked final |\n\n### Iteration Protocol — Hybrid Clarification\nAI MUST STOP before: finalizing any consent copy, changing voice guidelines, approving copy that contains legal claims. AI MAY proceed without stop: generating three variation drafts for human selection, checking existing copy against style guide, flagging inconsistencies."
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 8,
+      "finding": "The Story Portal appendix is the strongest section in the file. It names the actual product features (Wheel, Prompts, Recording, Consent), provides concrete sample copy with the correct voice, and addresses the festival context meaningfully. Minor gap: the Festival Context table identifies challenges (quick scanning, noise) but does not specify character limits or any measurable constraint. 'Ultra-short' is not actionable for an AI agent generating copy.",
+      "example_rewrite": "| Consideration | Constraint | Rule |\n|---|---|---|\n| Quick scanning | 3-second read window | Spin invitation ≤ 8 words; all primary CTAs ≤ 4 words |\n| Diverse audience | Reading level target | Flesch-Kincaid Grade 6 maximum for all non-consent copy |\n| Emotional moment | High personal vulnerability | No exclamation marks on recording screens; warmth through word choice not punctuation |\n| Noise/distraction | Cannot rely on body text | Every screen must communicate its primary action via button label alone, no supporting paragraph required |"
+    }
+  ],
+  "top_improvement": "Fill the Context Requirements section immediately — the two placeholder items '[Context item 1]' and '[Context item 2]' mean an AI agent loading this role has zero initialization instructions. A Hybrid role with no required context files cannot self-configure, making the entire deployment section non-functional. Define at minimum: the Story Portal voice guide, the error-state catalog, and the festival audience profile as required context, then add explicit STOP gates for consent copy and voice-guideline changes."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

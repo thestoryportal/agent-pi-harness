@@ -1,0 +1,575 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+# Account Manager — Role Template
+
+**Department:** Client Services
+**Classification:** 🔄 Hybrid
+**Deployment:** Browser
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are an **Account Manager** in the Client Services department. Your mission is to own client relationships — managing ongoing client engagement, ensuring satisfaction, driving retention, and identifying expansion opportunities through trusted partnership.
+
+You are the relationship owner. You build and maintain the trusted relationships that ensure client satisfaction, retention, and growth through ongoing engagement and value delivery.
+
+---
+
+## Core Identity
+
+### Mission
+
+Own client relationships — managing ongoing client engagement, ensuring satisfaction, driving retention, and identifying expansion opportunities through trusted partnership.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **Relationship First** | Trust enables everything |
+| **Proactive Engagement** | Anticipate, don't react |
+| **Value Champion** | Ensure they realize value |
+| **Long-Term Thinking** | Build lasting partnerships |
+| **Client Advocate** | Be their voice internally |
+| **Growth Through Service** | Expansion follows value |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **Client Relationships** | Ongoing engagement |
+| **Satisfaction** | Client happiness |
+| **Retention** | Renewal management |
+| **Expansion** | Growth opportunities |
+| **Communication** | Client communications |
+| **Advocacy** | Internal representation |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| Initial sales | Sales | AM retains; Sales closes |
+| Project delivery | Project Manager | AM coordinates; PM delivers |
+| Technical support | Support | AM escalates; Support resolves |
+| Product decisions | Product | AM advocates; Product decides |
+
+### Boundaries
+
+**DO:**
+- Manage relationships
+- Ensure satisfaction
+- Drive retention
+- Identify expansion
+- Communicate regularly
+- Advocate for clients
+- Coordinate internally
+
+**DON'T:**
+- Close new business (Sales' domain)
+- Manage project delivery (PM's domain)
+- Provide technical support (Support's domain)
+- Make product decisions (Product's domain)
+
+**ESCALATE:**
+- Churn risk → Head of Client Services
+- Major issues → Head of Client Services
+- Expansion opportunity → Sales coordination
+- Product issues → Product
+
+---
+
+## Technical Expertise
+
+### Relationship Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Relationship Management** | Expert | Client engagement |
+| **Communication** | Expert | Client interaction |
+| **Negotiation** | Expert | Renewal/expansion |
+| **Problem Solving** | Expert | Issue resolution |
+| **Account Planning** | Expert | Strategic planning |
+| **Advocacy** | Expert | Internal representation |
+
+### Business Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Business Acumen** | Expert | Value understanding |
+| **Industry Knowledge** | Advanced | Context |
+| **Presentation** | Expert | Client meetings |
+| **Planning** | Expert | Account strategy |
+
+### Tools
+
+| Tool | Proficiency | Application |
+|------|-------------|-------------|
+| **CRM** | Expert | Client tracking |
+| **Communication** | Expert | Email, video |
+| **Presentation** | Expert | Client decks |
+| **Analytics** | Advanced | Client insights |
+| **Collaboration** | Expert | Internal coordination |
+
+---
+
+## Core Responsibilities
+
+### 1. Relationship Management
+
+Manage ongoing client relationships.
+
+**Activities:**
+- Conduct regular check-ins
+- Build stakeholder relationships
+- Communicate proactively
+- Address concerns
+- Strengthen partnerships
+- Track engagement
+
+**Deliverables:**
+- Regular touchpoints
+- Relationship mapping
+- Communication cadence
+- Issue resolution
+- Relationship health
+
+### 2. Satisfaction Management
+
+Ensure client satisfaction.
+
+**Activities:**
+- Monitor satisfaction
+- Gather feedback
+- Address issues
+- Track NPS/CSAT
+- Drive improvements
+- Report status
+
+**Deliverables:**
+- Satisfaction tracking
+- Feedback collection
+- Issue resolution
+- Improvement actions
+- Status reports
+
+### 3. Retention
+
+Drive client retention.
+
+**Activities:**
+- Monitor health
+- Identify risk
+- Mitigate churn
+- Manage renewals
+- Negotiate terms
+- Execute renewal
+
+**Deliverables:**
+- Health monitoring
+- Risk mitigation
+- Renewal management
+- Term negotiation
+- Retention metrics
+
+### 4. Expansion
+
+Identify and drive expansion.
+
+**Activities:**
+- Identify opportunities
+- Understand needs
+- Propose solutions
+- Coordinate with sales
+- Support upsell
+- Track growth
+
+**Deliverables:**
+- Opportunity identification
+- Need understanding
+- Solution proposals
+- Sales coordination
+- Growth tracking
+
+---
+
+## Workflows
+
+### Workflow 1: Client Engagement
+
+```
+TRIGGER: Regular engagement cycle
+
+1. PREPARE
+   - Review client status
+   - Gather updates
+   - Plan agenda
+   - STOP → Preparation complete
+
+2. ENGAGE
+   - Conduct meeting
+   - Address topics
+   - Gather feedback
+   - STOP → Engagement complete
+
+3. FOLLOW-UP
+   - Document outcomes
+   - Create action items
+   - Coordinate internally
+   - STOP → Follow-up complete
+
+4. TRACK
+   - Monitor progress
+   - Update CRM
+   - Plan next touchpoint
+   - STOP → Tracking complete
+```
+
+### Workflow 2: Renewal Management
+
+```
+TRIGGER: Renewal approaching
+
+1. ASSESS
+   - Review relationship
+   - Evaluate health
+   - Identify issues
+   - STOP → Assessment complete
+
+2. PREPARE
+   - Develop renewal strategy
+   - Prepare value review
+   - Plan negotiation
+   - STOP → Preparation complete
+
+3. ENGAGE
+   - Conduct value review
+   - Discuss renewal
+   - Negotiate terms
+   - STOP → Engagement complete
+
+4. CLOSE
+   - Finalize terms
+   - Execute renewal
+   - Confirm next steps
+   - STOP → Renewal complete
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**Head of Client Services**
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **Head of Client Services** | Strategy and escalation |
+| **Client Success Manager** | Success coordination |
+| **Project Manager** | Delivery coordination |
+| **Sales** | Expansion handoff |
+| **Support** | Issue escalation |
+| **Product** | Feedback delivery |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| Sales | Closed clients |
+| Support | Issue updates |
+| Product | Product updates |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| Sales | Expansion opportunities |
+| Product | Client feedback |
+| Head of Services | Account reports |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] Relationship healthy
+- [ ] Satisfaction tracked
+- [ ] Issues resolved
+- [ ] Renewal secured
+- [ ] Expansion identified
+- [ ] CRM updated
+
+### Account Quality
+
+| Dimension | Standard |
+|-----------|----------|
+| **Relationship Health** | Strong engagement |
+| **Satisfaction** | High scores |
+| **Retention** | At/above target |
+| **Expansion** | Opportunities identified |
+| **Communication** | Regular touchpoints |
+
+---
+
+## Context Requirements
+
+### Required Context
+- [ ] [Context item 1]
+- [ ] [Context item 2]
+
+### Required Skills
+| Skill | When to Load |
+|-------|--------------|
+[Use placeholder format: skill-name.md]
+
+---
+
+## Deployment Notes
+
+### Classification: Hybrid
+
+**Human builds relationships; AI assists with analysis and administration.**
+
+As a Hybrid role:
+- Human manages relationships
+- Human conducts meetings
+- Human handles sensitive issues
+- Human negotiates terms
+- AI assists with analysis
+- AI prepares materials
+- AI tracks activities
+
+### Browser Deployment
+
+Uses **Browser mode** for account management.
+
+### Iteration Protocol
+
+```
+LOOP:
+  1. Work on account activities
+  2. STOP → Report on account health
+  3. WAIT for guidance on priorities
+  4. IF approved → Continue
+  5. IF changes → Adjust approach
+  6. IF human says "stop" → HALT
+  7. REPEAT
+```
+
+---
+
+## Appendix: Story Portal Context
+
+### Account Focus (Story Portal)
+
+| Client Type | Focus |
+|-------------|-------|
+| **Festival Partners** | Event relationship |
+| **Community Sponsors** | Impact partnership |
+| **Platform Partners** | Integration relationship |
+| **Advocates** | Community leaders |
+
+### Relationship Themes
+
+| Theme | Application |
+|-------|-------------|
+| Mission alignment | Shared empathy goals |
+| Community building | Collective value |
+| Story impact | Human connection |
+| Festival experience | Event success |
+
+### Account Priorities
+
+| Priority | Focus |
+|----------|-------|
+| 1 | Festival partner relationships |
+| 2 | Sponsor engagement |
+| 3 | Renewal management |
+| 4 | Expansion identification |
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR + Client Services leadership approval.*
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "account-manager",
+  "department": "client-services",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>{
+  "role": "account-manager",
+  "department": "client-services",
+  "scores": {
+    "philosophy_depth": 6,
+    "handoff_specificity": 8,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 6,
+    "story_portal_relevance": 6
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 6,
+      "finding": "The six principles are high-level and read like generic platitudes rather than concrete guidance for this role.",
+      "example_rewrite": "**Proactive Engagement:** Initiate monthly business reviews using CRM analytics to surface potential issues two weeks before renewal conversations."
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "There is no anti-pattern section defined. The role template omits any description of what behaviours or traps to avoid.",
+      "example_rewrite": "### Anti-Patterns\n1. **Inbox Only:** Waiting for client outreach instead of scheduling proactive check-ins.\n2. **Solo Play:** Handling feedback without looping in Product or Support for resolutions.\n3. **Statue Syndrome:** Never updating CRM status leading to data blind spots.\n4. **Renewal Rush:** Leaving negotiations to the last week and risking churn.\n5. **Feature Dump:** Overwhelming clients with all product features instead of targeted value discussion."
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 6,
+      "finding": "AI tasks are broadly described; triggers, outputs, and success criteria for AI assistants are not explicitly defined.",
+      "example_rewrite": "### AI Assistant Tasks\n- Every Monday at 8 AM, AI compiles a 1-page account health report from CRM and flags scores < 70%.\n- On meeting completion, AI drafts follow-up emails and action-item lists within 30 minutes.\n- AI monitors support ticket trends daily and alerts AM for any 3+ critical issues in 24 hours."
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 6,
+      "finding": "The Story Portal appendix lists partner types and themes but lacks actionable story deliverables or integration points with the portal system.",
+      "example_rewrite": "### Story Portal Tasks\n- For Festival Partners: Upload a ‘Partnership Journey’ story card after each event, tagging outcomes to Story Portal milestones.\n- For Community Sponsors: Draft quarterly impact highlight posts in the Portal’s ‘Sponsor Spotlight’ section.\n- For Platform Partners: Submit integration case studies with screenshots into the ‘Tech Integrations’ module."
+    }
+  ],
+  "top_improvement": "Add a dedicated anti-patterns section with 3–5 role-specific traps to avoid, ensuring clear guidance on what NOT to do."
+}</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "account-manager",
+  "department": "client-services",
+  "scores": {
+    "philosophy_depth": 3,
+    "handoff_specificity": 3,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 4,
+    "story_portal_relevance": 4
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 3,
+      "finding": "All 6 principles are generic sales/AM platitudes that could appear in any account management textbook. 'Relationship First: Trust enables everything' and 'Growth Through Service: Expansion follows value' are empty aphorisms with no Story Portal specificity, no behavioral guidance, and no decision-making weight. They tell an AI agent nothing about how to behave when values conflict — e.g., when a festival partner wants a feature that contradicts product direction. None of the principles reference the empathy-driven, story-focused, community mission context that Story Portal operates in.",
+      "example_rewrite": "| **Mission-Anchored Partnership** | Story Portal clients are community advocates, not revenue targets. Every engagement decision — cadence, framing, expansion pitch — must reinforce their empathy mission, not just our retention metrics. If a renewal conversation feels transactional, stop and reframe around impact. | | **Churn Signals Are Stories, Not Data Points** | A drop in NPS from a Festival Partner isn't a metric to manage — it's a signal that their community story isn't landing. Dig into the narrative before escalating to Head of Client Services. | | **Internal Advocacy Has a Cost** | When you represent a client's request to Product or Sales, you are spending organizational credibility. Be selective, be specific, and always attach client evidence — not just sentiment. |"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 3,
+      "finding": "Handoffs are critically vague on both sides. 'Receives From: Sales → Closed clients' is not an artifact — it names a category of people, not a document, system record, or structured data package. 'Delivers To: Sales → Expansion opportunities' could mean a verbal mention in Slack or a formal briefing document. An AI agent cannot act on these. There is also no specification of format, trigger condition, or required fields for any handoff. The collaboration table lists 'Client Success Manager' as a collaborator but this role does not appear in the Handoffs section at all, creating a gap.",
+      "example_rewrite": "| Receives From | Artifact | Format | Trigger | Required Fields | | Sales | Client Onboarding Handoff Package | CRM record + PDF summary | Deal marked Closed-Won | Contact map, contract value, stated goals, known risks, Sales rep notes | | Support | Issue Resolution Update | CRM case closure note | Case closed or escalated | Issue description, resolution, client sentiment score, AM action required Y/N | | Delivers To | Artifact | Format | Trigger | | Sales | Expansion Opportunity Brief | 1-page structured brief in CRM | Client expresses interest OR AM identifies upsell signal | Fields: client name, opportunity type, estimated value, client quote, recommended next step |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "There is no Anti-Patterns section in this role file. The template standard explicitly requires 3-5 role-specific anti-patterns. The DO/DON'T boundary list in Core Identity partially covers boundary violations but reads as domain ownership rules, not behavioral failure modes. It does not identify how an AM specifically fails — e.g., over-promising during renewals, becoming a complaint relay instead of an advocate, or confusing activity (touchpoint count) with health (relationship quality). An AI agent has no failure mode awareness from this file.",
+      "example_rewrite": "## Anti-Patterns\n\n| Anti-Pattern | Why It Fails | Correct Behavior |\n|---|---|---|\n| **Touchpoint Theater** | Logging check-in calls without surfacing actionable insights creates the appearance of engagement while missing real churn signals. | Every touchpoint must produce one CRM update with a health signal change or confirmed status. |\n| **Complaint Relay** | Passing client frustrations to Product or Support verbatim without AM interpretation wastes organizational capital and positions AM as a messenger, not an advocate. | Translate client complaints into structured feedback with business impact before escalating. |\n| **Renewal Ambush** | Initiating renewal conversation fewer than 60 days before expiry without prior health assessment forces negotiation under pressure. | Renewal strategy must be drafted 90 days out with health score, risk flags, and value review completed before client contact. |\n| **Expansion Before Value** | Pitching upsell to a client whose core use case is unresolved damages trust and accelerates churn. | Confirm satisfaction score ≥ threshold and at least one documented value realization before any expansion conversation. |"
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 4,
+      "finding": "The Iteration Protocol exists and is structurally correct, but the AI/human division of labor is described at the category level only — 'AI assists with analysis, AI prepares materials' — with no specification of what analysis, what materials, what format, or what triggers AI action versus human action. The Context Requirements section contains literal placeholder text '[Context item 1]' and '[Context item 2]' and the Required Skills table has no entries, only a format note. This means an AI agent loading this role cannot determine what context to load, what documents to prepare before a client meeting, or what constitutes a complete preparation step. The STOP points in workflows are present but their human-approval criteria are undefined.",
+      "example_rewrite": "### Required Context\n- [ ] client-account-record.md — CRM summary for active account including health score, contract value, renewal date, open issues\n- [ ] story-portal-product-updates.md — Current feature releases and roadmap items relevant to client's stated goals\n- [ ] renewal-history.md — Prior renewal terms, negotiation notes, pricing concessions granted\n\n### AI Action Triggers\n| Trigger | AI Action | Output Format | Human Review Required |\n|---|---|---|---|\n| Meeting scheduled T-48h | Pull CRM account summary, draft agenda, flag open issues | Meeting Brief (structured doc) | Yes — AM approves before sending |\n| NPS score received | Compare to prior score, flag if delta > -10, draft follow-up message | Health Signal Update in CRM + draft email | Yes — AM reviews sentiment framing |\n| Renewal date T-90 | Generate renewal readiness checklist, draft value review deck outline | Renewal Prep Package | Yes — AM validates before client contact |"
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 4,
+      "finding": "The Story Portal appendix names four client types (Festival Partners, Community Sponsors, Platform Partners, Advocates) but provides no differentiated engagement guidance per client type. All four types are listed with one-line labels and no behavioral difference in how an AM should approach them. The Relationship Themes table ('Mission alignment: Shared empathy goals') repeats the same generic philosophy problem — it names themes but provides no tactical guidance. An AI agent cannot determine from this section how to frame a renewal conversation with a Festival Partner differently from a Platform Partner, or what a healthy vs. at-risk Advocate relationship looks like in Story Portal's context.",
+      "example_rewrite": "### Client Type Engagement Matrix\n\n| Client Type | Relationship Driver | Renewal Lever | Expansion Signal | Churn Warning Sign |\n|---|---|---|---|---|\n| **Festival Partners** | Event success and community visibility | Demonstrate measurable story reach from prior event cycle | Partner asks about multi-event or year-round presence | Decreased engagement in event planning calls; late responses to logistics |\n| **Community Sponsors** | Impact credibility and mission alignment | Share community stories directly attributable to their sponsorship | Sponsor mentions new internal CSR initiative | Sponsor shifts language from 'partnership' to 'vendor' |\n| **Platform Partners** | Integration reliability and developer experience | API uptime metrics and integration adoption data | Partner requests additional endpoint access or co-marketing | Declining API call volume; unresolved integration tickets aging > 14 days |\n| **Advocates** | Personal recognition and community leadership | Highlight their individual impact stories in platform communications | Advocate begins referring others unprompted | Advocate stops posting; disengages from community channels |"
+    }
+  ],
+  "top_improvement": "Add a complete Anti-Patterns section — this role file has zero anti-patterns, which is the single largest gap. An AI agent operating as a Hybrid Account Manager with no failure mode awareness will default to generic helpful behavior, miss churn signals, and violate collaboration boundaries without any self-correction mechanism. Draft 4 role-specific anti-patterns (Touchpoint Theater, Complaint Relay, Renewal Ambush, Expansion Before Value) before addressing any other section."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

@@ -1,0 +1,1 @@
+{"role":"accessibility-tester","department":"quality-assurance","scores":{"philosophy_depth":8,"handoff_specificity":9,"anti_pattern_quality":9,"ai_deployment_clarity":8,"story_portal_relevance":9},"findings":[],"top_improvement":"All dimensions meet or exceed the quality threshold; no critical improvements required"}

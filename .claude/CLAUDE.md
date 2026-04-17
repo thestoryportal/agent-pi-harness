@@ -1,6 +1,6 @@
 # CLAUDE.md — ArhuGula
 
-Pi-orchestrated Claude Code agent development environment. Four-layer architecture for building AI applications with agents, hooks, and orchestrated workflows.
+Claude Code agent development environment. Four-layer architecture for building AI applications with agents, hooks, and orchestrated workflows.
 
 ## What This Repo Does
 

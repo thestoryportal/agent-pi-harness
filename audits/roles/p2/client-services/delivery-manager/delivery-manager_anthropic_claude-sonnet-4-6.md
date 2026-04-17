@@ -1,0 +1,46 @@
+```json
+{
+  "role": "delivery-manager",
+  "department": "client-services",
+  "scores": {
+    "philosophy_depth": 2,
+    "handoff_specificity": 3,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 4,
+    "story_portal_relevance": 5
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 2,
+      "finding": "All 6 principles are generic management platitudes that could apply to any operations role in any industry. 'Capacity Planning: Right resources at right time' and 'Continuous Improvement: Always getting better' are textbook filler with zero specificity to a Story Portal Delivery Manager. None of the principles reflect the event-driven festival cadence, the partner onboarding pipeline, or the tension between reactive festival spikes and steady-state delivery that makes this role unique.",
+      "example_rewrite": "| **Festival-First Capacity** | Festival go-live dates are immovable. Resource allocation decisions must be made 6+ weeks ahead of festival deployments, not reactively. A PM asking for resources two weeks before a festival launch is already too late — the DM should have pre-allocated. | | **Pipeline Transparency Over Optimism** | Sales forecasts are aspirational; delivery capacity is real. The DM surfaces the gap between what Sales promises and what the team can absorb, before contracts are signed — not after kickoff. | | **PM Autonomy Within Guardrails** | PMs own their projects. The DM sets the rails (standards, processes, resource budgets) and stays out of the cab. Intervening in day-to-day PM decisions is a failure of the DM role, not a sign of diligence. |"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 3,
+      "finding": "Handoff artifacts are named at the level of document categories ('Resource requests', 'Project forecasts', 'Resource allocation') rather than actual artifacts with defined formats or triggers. 'Sales' is listed as a sender but Sales is not confirmed as an existing role in the charter context provided. The handoff table does not specify what format artifacts take, what triggers the handoff, or what the receiving role does with the artifact. 'Portfolio reports' delivered to 'Head of Services' has no cadence, format, or defined content.",
+      "example_rewrite": "| Receives From | Artifact | Format | Trigger | \n|---|---|---|---| \n| Project Manager | Resource Request Form | Standardized PM resource request (role, hours, start date, project code) | New project kickoff or mid-project change | \n| Account Manager | Signed SOW Summary | One-page scope + timeline extract from executed SOW | Contract execution, minimum 8 weeks before project start | \n\n| Delivers To | Artifact | Format | Trigger | \n|---|---|---|---| \n| Project Manager | Resource Allocation Confirmation | Named resource, confirmed availability window, escalation contact | Within 5 business days of Resource Request receipt | \n| Head of Client Services | Weekly Portfolio Health Report | RAG-status dashboard: project name, PM, health, resource risk, open blockers | Every Monday 9am |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "There are no anti-patterns section present in this role file at all. The template standard requires 3-5 role-specific anti-patterns, and this role contains zero. The DON'T list in Boundaries ('Manage individual projects', 'Own client relationships') is a boundary list, not an anti-pattern list. Anti-patterns should describe failure modes the AI or human might actually drift into while trying to do the job well — not just jurisdiction statements.",
+      "example_rewrite": "### Anti-Patterns\n\n| Anti-Pattern | Why It Happens | Why It Fails |\n|---|---|---|\n| **Becoming a Super-PM** | A struggling project pulls the DM into day-to-day decisions because it feels helpful. | Undermines PM authority, sets precedent that PMs can escalate execution problems upward, and leaves the portfolio unmonitored while DM firefights one project. |\n| **Capacity Planning by Gut** | DM allocates resources based on PM relationships and informal conversations rather than a formal demand signal. | Creates invisible resource conflicts that surface at the worst moment — typically two weeks before a festival go-live. |\n| **Treating All Projects Equally** | DM applies uniform review cadence and intervention thresholds to a festival deployment and a small enhancement. | Festival projects have asymmetric consequences; equal treatment means the DM is under-monitoring high-stakes work and over-managing low-risk work. |\n| **Absorbing Staffing Problems Silently** | DM identifies a capacity gap but delays escalating to Head of Client Services while attempting to solve it internally. | Delays compress options. A gap flagged 8 weeks out has solutions. The same gap flagged 2 weeks out has only bad options. |"
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 4,
+      "finding": "The Iteration Protocol exists and the AI/human split is stated, but the protocol is so abstract ('Work on delivery operations', 'Report on portfolio health') that an AI agent loading this role has no actionable entry point. There is no specification of what data or context the AI needs to begin, what templates it should use, what its first output should look like, or how to handle the most common task it will actually perform. The Context Requirements section contains unfilled placeholder text ('[Context item 1]', '[Context item 2]') and skill files list '[Use placeholder format: skill-name.md]' — these are template artifacts that were never completed, which would cause an AI agent to stall immediately on load.",
+      "example_rewrite": "### Context Requirements\n- [ ] Current resource allocation spreadsheet (or equivalent tool export) showing all active projects, assigned resources, and utilization %\n- [ ] Open resource requests from Project Managers (submitted via Resource Request Form)\n- [ ] Festival calendar: next 90-day window of confirmed go-live dates\n- [ ] Partner onboarding pipeline from Account Manager: prospects in contract stage with projected start dates\n\n### Required Skills\n| Skill | When to Load |\n|---|---|\n| capacity-planning.md | Load at start of any resource planning session |\n| portfolio-health-reporting.md | Load when generating weekly portfolio report |\n| festival-delivery-standards.md | Load when reviewing any project with festival go-live in next 60 days |\n\n### AI First Action on Load\nOn role load, immediately ask: 'Please share the current resource allocation view and any open PM resource requests. I will produce a capacity gap summary before taking any other action.'"
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 5,
+      "finding": "The Story Portal appendix correctly identifies the four delivery types (Festival Projects, Onboarding, Integrations, Enhancements) and names festival timing and partner pipeline as capacity factors, which shows some project-specific awareness. However, the content stops at identification and never becomes actionable. The Delivery Priorities table lists four priorities with no thresholds, criteria, or decision rules. There is no guidance on what a festival project resource plan actually looks like differently from an onboarding project, what 'community scale' means in practice for capacity, or how the DM should handle the overlap between festival spikes and onboarding volume.",
+      "example_rewrite": "### Festival vs. Onboarding Capacity Conflict Rule\nWhen a festival go-live date falls within 30 days of a new partner onboarding kickoff, festival resourcing takes priority. The DM must either: (a) delay onboarding kickoff by 2+ weeks, coordinating with Account Manager to reset partner expectations, or (b) source a dedicated onboarding resource who is ring-fenced from festival work. This decision requires Head of Client Services sign-off.\n\n### Capacity Red Lines by Delivery Type\n| Delivery Type | Minimum Lead Time for Resource Request | DM Escalation Trigger |\n|---|---|---|\n| Festival Project | 6 weeks before go-live | Any gap at 4 weeks = immediate escalation |\n| Partner Onboarding | 3 weeks before kickoff | Gap at 2 weeks = escalation |\n| Integration | 2 weeks before start | Gap at 1 week = escalation |\n| Enhancement | 1 week before start | Gap at start = reassign or defer |"
+    }
+  ],
+  "top_improvement": "Complete the Anti-Patterns section from scratch — it is entirely missing and is the single largest quality gap. A Delivery Manager AI agent with no anti-patterns has no failure-mode awareness, meaning it will confidently drift into Super-PM behavior, silent capacity absorption, or equal-treatment fallacies without any internal check. Draft 4 role-specific anti-patterns describing failure modes that emerge specifically from the tension between portfolio oversight and project-level intervention in a festival-driven delivery environment."
+}
+```

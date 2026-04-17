@@ -1,0 +1,46 @@
+```json
+{
+  "role": "fundraising-lead",
+  "department": "finance-investor-relations",
+  "scores": {
+    "philosophy_depth": 4,
+    "handoff_specificity": 3,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 5,
+    "story_portal_relevance": 5
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 4,
+      "finding": "All 6 principles are one-line slogans with no operational meaning. 'Story Over Slides' and 'Relationships First' could appear in any sales or marketing role. None of the principles reference the specific context of early-stage fundraising, pre-seed dynamics, angel vs. VC investor behavior, or the Story Portal product. 'Terms Over Speed' is the only principle with a hint of specificity, but it lacks any explanation of what this means in practice for a $1-3M seed round.",
+      "example_rewrite": "| **Principle** | **Meaning** |\n|---|---|\n| **Story Over Slides** | For a pre-seed round, investors are buying the vision before the metrics exist. Every deck section must answer 'why does this matter to human connection?' before it answers 'what is the TAM?' |\n| **Pipeline Is Probability** | Not all investor conversations are equal. Weight the pipeline by stage (intro / meeting / DD / term sheet) and by fit signal (festival economy thesis, AI interest, impact investing). A 50-person pipeline at intro stage is worth less than 5 at DD. |\n| **Preparation Wins the Room** | Founders should never be surprised in a pitch. Anticipate the top 10 objections for a pre-seed AI audio startup (IP defensibility, adoption curve, unit economics at scale) and have rehearsed answers before every meeting. |"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 3,
+      "finding": "Handoffs name broad categories rather than actual artifacts. 'CFO → Strategy and targets' does not specify what format the strategy arrives in (a memo, a target list spreadsheet, a Notion doc). 'Delivers To CEO → Pitch materials' does not specify which version, in what format, or at what stage gate. 'Legal → Deal terms' is particularly vague — the Fundraising Lead does not draft terms, so what exactly is being passed? The Investor Relations Manager is listed in Works With but does not appear in any handoff row, which is an inconsistency. Referenced roles (Financial Controller, Investor Relations Manager) should be verified against the charter.",
+      "example_rewrite": "| Receives From | Artifact | Format | Trigger |\n|---|---|---|---|\n| CFO | Fundraising strategy brief: target raise amount, investor profile criteria, valuation range, round structure | Written memo, max 2 pages | Round kickoff meeting |\n| Financial Controller | Verified financial model: P&L, runway projection, unit economics, cap table current state | Excel/Google Sheets, locked assumptions tab | Before pitch deck v1 is drafted |\n\n| Delivers To | Artifact | Format | Trigger |\n|---|---|---|---|\n| CEO | Pitch deck v[N] with speaker notes and anticipated Q&A appendix | Google Slides + PDF export | 48hrs before each investor meeting |\n| CFO | Weekly pipeline report: investor name, stage, last contact date, next action, probability score | CRM export + summary email | Every Monday 9am |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "There are no anti-patterns section in this role file at all. The Boundaries section contains DO/DON'T lists, but these describe scope (what the role owns vs. doesn't own), not behavioral failure modes. Anti-patterns should describe how this specific role fails in practice — e.g., over-engineering the deck instead of getting it in front of investors, or managing the pipeline in their head instead of a CRM. None of the generic boundary items qualify as anti-patterns.",
+      "example_rewrite": "### Anti-Patterns to Avoid\n\n| Anti-Pattern | What It Looks Like | Why It Fails |\n|---|---|---|\n| **Deck Perfectionism** | Spending 3 weeks refining slide design before a single investor has seen v1 | Delays market feedback; investors fund traction, not polish |\n| **Vanity Pipeline** | Logging 80 investor contacts in CRM but only 3 have responded to a second email | Creates false confidence; masks a broken outreach message or wrong target list |\n| **Shielding Founders from Objections** | Filtering hard investor questions out of founder prep to avoid anxiety | Founders get blindsided in live meetings; kills deal momentum |\n| **Data Room as Dumping Ground** | Uploading every company document without index, version control, or access tiering | Investors can't find key documents; signals operational immaturity during DD |\n| **Chasing Speed Over Fit** | Prioritizing the fastest yes over the right investor for the stage/thesis | Wrong investor on cap table creates governance problems post-close |"
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 5,
+      "finding": "The Iteration Protocol exists and has a basic loop structure, which is correct for a Hybrid role. However, the Context Requirements section contains unfilled placeholders ('[Context item 1]', '[Context item 2]') and the Required Skills table is empty with a placeholder comment. These are blocking gaps — an AI agent loading this role cannot know what context files to load before starting work. The Hybrid division of labor (human vs. AI) is described at a high level but never operationalized per workflow. Which specific workflow steps does the AI execute autonomously versus hand off immediately?",
+      "example_rewrite": "### Required Context\n- [ ] current-pitch-deck.pdf — latest version of Story Portal investor deck\n- [ ] investor-pipeline.csv — CRM export of all active investor contacts with stage and last contact\n- [ ] financial-model.xlsx — verified by Financial Controller, contains P&L, runway, unit economics\n- [ ] fundraising-strategy-brief.md — CFO memo defining round parameters and investor criteria\n- [ ] data-room-index.md — current state of due diligence folder structure\n\n### Required Skills\n| Skill | When to Load |\n|---|---|\n| pitch-narrative-framework.md | When drafting or revising pitch deck sections |\n| investor-objection-library.md | When preparing founders for meetings |\n| due-diligence-checklist.md | When setting up or responding to DD requests |\n\n### AI vs. Human in Workflows\n| Workflow Step | Executor | Handoff Trigger |\n|---|---|---|\n| Draft pitch deck narrative structure | AI | Human reviews and approves story arc before slide build |\n| Research individual investor thesis/portfolio | AI | Human reviews before outreach is personalized |\n| Build investor outreach email drafts | AI | Human edits and sends |\n| Conduct investor meeting | Human only | AI prepares briefing doc beforehand |"
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 5,
+      "finding": "The Story Portal appendix names the right context (pre-seed, $1-3M, angels/early VCs, festival economy) but provides no actionable specifics. 'Target: TBD (likely $1-3M)' signals the appendix was filled in with estimates rather than real data. 'Engagement data' as a fundraising metric is not defined — what is the actual metric, what is the current number, what is the benchmark? 'Festival partnerships' is listed without naming any actual or target partners. The Key Pitch Elements table names themes but gives no Story Portal-specific language or differentiated framing that an AI agent could actually use when drafting a deck.",
+      "example_rewrite": "### Story Portal Fundraising Context\n\n| Element | Specific Content |\n|---|---|\n| **Core Pitch Thesis** | Story Portal turns live festivals into emotional memory machines. We give attendees AI-generated audio postcards of their experience — shareable, personal, sponsor-integrated. |\n| **Market Entry Point** | Festival economy: 32M US festival attendees annually, $1.8B experiential marketing spend. We enter through B2B2C — festivals pay for the platform, attendees get the product free. |\n| **Traction Proof Points** | [PLACEHOLDER: insert actual numbers — e.g., 'Piloted at [Festival Name], X attendees, Y% opted into audio story, Z sponsors expressed interest'] |\n| **Investor Objection: Why Audio?** | Audio is the only format that works without screen attention in a live festival environment. It's also cheapest to generate at scale with current LLM/TTS stack. |\n| **Fundraising Ask** | $[X]M pre-seed to fund: (1) 3 festival pilots, (2) iOS app v1, (3) first BD hire |\n| **Ideal Investor Profile** | Thesis fit: experiential tech, creator economy, AI applications. Network fit: festival operators, brand/sponsor relationships, consumer app experience |"
+    }
+  ],
+  "top_improvement": "Add a dedicated Anti-Patterns section with 4-5 role-specific failure modes. This role file has zero anti-patterns, which is the single largest gap — it means an AI agent has no behavioral guardrails and a human reviewer has no quality signal for whether the role is being executed correctly. Draft anti-patterns should be derived from real failure modes in early-stage fundraising (deck perfectionism, vanity pipeline, shielding founders from objections) rather than generic 'don't negotiate terms' scope statements that already appear in the Boundaries section."
+}
+```

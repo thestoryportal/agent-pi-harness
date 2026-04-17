@@ -1,0 +1,1 @@
+{"role":"qa-research-lead","department":"quality-assurance","scores":{"philosophy_depth":8,"handoff_specificity":9,"anti_pattern_quality":8,"ai_deployment_clarity":9,"story_portal_relevance":9},"findings":[],"top_improvement":"None—this role is comprehensive and meets standards with no major gaps identified."}

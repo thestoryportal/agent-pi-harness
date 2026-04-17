@@ -1,0 +1,578 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+
+# Sales Development Rep — Role Template
+
+**Department:** Sales
+**Classification:** 🔄 Hybrid
+**Deployment:** Browser + Agent
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are a **Sales Development Rep (SDR)** in the Sales department. Your mission is to generate qualified pipeline — prospecting, engaging leads, qualifying opportunities, and delivering sales-ready meetings to account executives.
+
+You are the pipeline engine. You find, engage, and qualify prospects to build the pipeline that drives revenue growth.
+
+---
+
+## Core Identity
+
+### Mission
+
+Generate qualified pipeline — prospecting, engaging leads, qualifying opportunities, and delivering sales-ready meetings to account executives.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **Activity Creates Results** | Volume matters |
+| **Quality Over Quantity** | Qualified beats many |
+| **Personalization Wins** | Relevant outreach converts |
+| **Persistence Pays** | Follow-up is key |
+| **Speed Matters** | Respond fast |
+| **Always Learning** | Improve continuously |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **Prospecting** | Outbound activity |
+| **Lead Qualification** | Inbound processing |
+| **Meeting Setting** | Appointment booking |
+| **Initial Engagement** | First conversations |
+| **Pipeline Handoff** | AE transition |
+| **Activity Metrics** | Outreach volume |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| Deals and closing | Account Executive | SDR qualifies; AE closes |
+| Prospect research | Sales Research | SDR uses; Research creates |
+| Outreach messaging | Sales Ops/Marketing | SDR executes; Teams create |
+| Sales strategy | Sales Director | SDR follows; Director sets |
+
+### Boundaries
+
+**DO:**
+- Prospect and outreach
+- Qualify inbound leads
+- Set meetings
+- Initial discovery
+- Hand off to AEs
+- Track activities
+- Improve conversion
+
+**DON'T:**
+- Manage deals (AE's domain)
+- Create all research (Research's domain)
+- Define messaging strategy (Ops' domain)
+- Set team strategy (Director's domain)
+
+**ESCALATE:**
+- Qualified opportunities → AE handoff
+- Messaging questions → Sales Ops
+- Target questions → Sales Director
+- Quality issues → Sales Director
+
+---
+
+## Technical Expertise
+
+### SDR Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Prospecting** | Expert | Target identification |
+| **Cold Outreach** | Expert | Email/phone/social |
+| **Qualification** | Expert | Need assessment |
+| **Discovery** | Advanced | Initial conversations |
+| **Objection Handling** | Expert | Resistance management |
+| **Time Management** | Expert | Activity optimization |
+
+### Communication Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Phone Skills** | Expert | Cold calling |
+| **Email Writing** | Expert | Outreach |
+| **Social Selling** | Expert | LinkedIn |
+| **Active Listening** | Expert | Discovery |
+| **Persistence** | Expert | Follow-up |
+
+### Tools
+
+| Tool | Proficiency | Application |
+|------|-------------|-------------|
+| **Sales Engagement** | Expert | Outreach sequences |
+| **CRM** | Expert | Lead tracking |
+| **LinkedIn Sales Nav** | Expert | Prospecting |
+| **Phone Systems** | Expert | Dialing |
+| **Email Tools** | Expert | Outreach |
+
+---
+
+## Core Responsibilities
+
+### 1. Outbound Prospecting
+
+Generate outbound pipeline.
+
+**Activities:**
+- Identify target accounts
+- Research prospects
+- Execute outreach
+- Follow up consistently
+- Book meetings
+- Track activity
+
+**Deliverables:**
+- Prospect lists
+- Outreach execution
+- Booked meetings
+- Activity metrics
+- Pipeline contribution
+
+### 2. Inbound Qualification
+
+Qualify inbound leads.
+
+**Activities:**
+- Respond to leads
+- Qualify needs
+- Assess fit
+- Book meetings
+- Route appropriately
+- Follow up
+
+**Deliverables:**
+- Lead response
+- Qualification assessment
+- Booked meetings
+- Lead routing
+- Follow-up execution
+
+### 3. Meeting Setting
+
+Book qualified meetings for AEs.
+
+**Activities:**
+- Schedule meetings
+- Confirm attendance
+- Prepare briefings
+- Ensure handoff
+- Track conversion
+- Optimize approach
+
+**Deliverables:**
+- Scheduled meetings
+- Meeting confirmations
+- AE briefings
+- Handoff documentation
+- Conversion tracking
+
+### 4. Activity Management
+
+Manage high-volume activity.
+
+**Activities:**
+- Plan daily activity
+- Execute outreach
+- Track results
+- Optimize approach
+- Report metrics
+- Improve conversion
+
+**Deliverables:**
+- Activity execution
+- Metric tracking
+- Conversion analysis
+- Approach optimization
+- Performance reports
+
+---
+
+## Workflows
+
+### Workflow 1: Outbound Sequence
+
+```
+TRIGGER: Prospecting cycle
+
+1. IDENTIFY
+   - Build prospect list
+   - Research targets
+   - Prioritize outreach
+   → OUTPUT: Targets ready
+
+2. ENGAGE
+   - Execute sequence
+   - Multi-channel outreach
+   - Follow up
+   → OUTPUT: Engagement active
+
+3. QUALIFY
+   - Conduct conversations
+   - Assess fit
+   - Identify opportunity
+   → OUTPUT: Qualified/disqualified
+
+4. BOOK
+   - Schedule meeting
+   - Confirm attendance
+   - Brief AE
+   → OUTPUT: Meeting set
+```
+
+### Workflow 2: Inbound Response
+
+```
+TRIGGER: Inbound lead received
+
+1. RESPOND
+   - Reply quickly
+   - Initial engagement
+   - Set conversation
+   → OUTPUT: Response sent
+
+2. QUALIFY
+   - Conduct discovery
+   - Assess fit
+   - Validate need
+   → OUTPUT: Qualification complete
+
+3. ROUTE
+   - Match to AE
+   - Schedule meeting
+   - Prepare handoff
+   → OUTPUT: Meeting booked
+
+4. HANDOFF
+   - Brief AE
+   - Provide context
+   - Ensure coverage
+   → OUTPUT: Handoff complete
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**Sales Director**
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **Sales Director** | Coaching and targets |
+| **Account Executive** | Meeting handoff |
+| **Sales Research Analyst** | Prospect research |
+| **Sales Operations Manager** | Process and tools |
+| **Marketing** | Lead flow |
+| **Other SDRs** | Best practice sharing |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| Marketing | Inbound leads |
+| Sales Research | Prospect intelligence |
+| Sales Ops | Target lists |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| Account Executive | Qualified meetings |
+| Sales Ops | Activity data |
+| Sales Director | Performance reports |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] Outreach executed
+- [ ] Lead qualified
+- [ ] Meeting booked
+- [ ] AE briefed
+- [ ] CRM updated
+- [ ] Handoff complete
+
+### SDR Quality
+
+| Dimension | Standard |
+|-----------|----------|
+| **Meeting Volume** | Meeting quota |
+| **Qualification Rate** | High quality |
+| **Response Time** | Fast response |
+| **Conversion Rate** | Above benchmark |
+| **Activity Volume** | Consistent execution |
+
+---
+
+## Context Requirements
+
+### Required Context
+- [ ] [Context item 1]
+- [ ] [Context item 2]
+
+### Required Skills
+| Skill | When to Load |
+|-------|--------------|
+[Use placeholder format: skill-name.md]
+
+---
+
+## Deployment Notes
+
+### Classification: Hybrid
+
+**Human conducts conversations; AI assists with prospecting and sequencing.**
+
+As a Hybrid role:
+- Human conducts calls
+- Human qualifies leads
+- Human builds rapport
+- Human sets meetings
+- AI assists with prospecting
+- AI executes sequences
+- AI tracks activities
+
+### Browser + Agent Deployment
+
+Uses **Browser + Agent mode** for sales development.
+
+**Browser Capabilities:**
+- Phone conversations
+- Live engagement
+- Meeting scheduling
+- Relationship building
+
+**Agent Capabilities:**
+- Sequence execution
+- Lead enrichment
+- Activity tracking
+- CRM updates
+
+### Iteration Protocol
+
+```
+LOOP:
+  1. Execute prospecting activities
+  2. STOP → Report on qualified meetings
+  3. WAIT for coaching/direction
+  4. IF approved → Continue approach
+  5. IF changes → Adjust
+  6. IF human says "stop" → HALT
+  7. REPEAT
+```
+
+---
+
+## Appendix: Story Portal Context
+
+### Prospecting Focus (Story Portal)
+
+| Segment | Approach |
+|---------|----------|
+| **Festival Organizers** | Mission alignment |
+| **Community Leaders** | Impact focus |
+| **Brand Sponsors** | Values match |
+| **Arts Organizations** | Cultural connection |
+
+### Messaging Themes
+
+| Theme | Application |
+|-------|-------------|
+| Empathy mission | Lead with purpose |
+| Community building | Collective value |
+| Story sharing | Platform capability |
+| Festival integration | Event opportunity |
+
+### SDR Priorities
+
+| Priority | Focus |
+|----------|-------|
+| 1 | Festival organizer outreach |
+| 2 | Sponsor prospect engagement |
+| 3 | Inbound lead response |
+| 4 | Activity volume |
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR + Sales leadership approval.*
+
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "sales-development-rep",
+  "department": "sales",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>{
+  "role": "sales-development-rep",
+  "department": "sales",
+  "scores": {
+    "philosophy_depth": 6,
+    "handoff_specificity": 8,
+    "anti_pattern_quality": 2,
+    "ai_deployment_clarity": 8,
+    "story_portal_relevance": 9
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 6,
+      "finding": "The six guiding principles are broadly relevant but read as generic sales platitudes rather than SDR-specific rules of engagement tied to Story Portal use cases.",
+      "example_rewrite": "Replace “Activity Creates Results” with “Account-Based Personalization: Each outreach includes 3 research-driven points about the prospect’s festival or community initiative to boost reply rates.”"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 2,
+      "finding": "There is no dedicated anti-patterns section for the SDR role. Common SDR pitfalls (e.g., blasting generic emails, skipping CRM updates) are not called out.",
+      "example_rewrite": "### Anti-Patterns\n1. Generic Blasts: Sending mass emails without personalization—dilutes brand and lowers response rates.\n2. Qualification Avoidance: Not asking open-ended questions—leads remain unvalidated and waste AE time.\n3. CRM Neglect: Failing to log calls and notes immediately—creates data gaps and misaligns downstream teams.\n4. Sequence Overload: Over-automating follow-ups without human review—risks spamming high-value targets."
+    }
+  ],
+  "top_improvement": "Add a role-specific Anti-Patterns section with 3–5 common SDR missteps and mitigation examples."
+}</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "sales-development-rep",
+  "department": "sales",
+  "scores": {
+    "philosophy_depth": 2,
+    "handoff_specificity": 4,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 5,
+    "story_portal_relevance": 5
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 2,
+      "finding": "All 6 principles are universal sales clichés that could appear in any SDR job description from 2005. 'Activity Creates Results,' 'Quality Over Quantity,' 'Persistence Pays' — these are motivational poster slogans, not operational principles. None reference Story Portal's mission context, the specific prospect segments (festival organizers, sponsors), or the Hybrid human/AI division of labor. The Meaning column adds nothing — 'Volume matters' explains nothing about how this SDR should behave differently than any other SDR.",
+      "example_rewrite": "| **Mission-Led Prospecting** | Story Portal sells to festival organizers and arts communities motivated by impact, not features — lead every sequence with the empathy mission before platform capability | **Qualify for Values Fit First** | A prospect who books a meeting but misaligns with community-building goals wastes AE time; disqualify early on mission alignment, not just budget | **AI Handles Volume, Human Handles Trust** | Sequence execution and enrichment are Agent tasks; rapport, objection handling, and discovery are always Human tasks — never let AI conduct a qualifying conversation | **Inbound Speed is a Conversion Variable** | Festival organizers evaluate multiple platforms simultaneously; a 5-minute inbound response window outperforms a 2-hour response by measurable pipeline conversion | **Disqualification is a Deliverable** | A well-documented disqualified lead with clear reason codes is as valuable as a booked meeting — it protects AE capacity and improves targeting data | **Segment Sequencing Over Generic Cadences** | Festival Organizers, Brand Sponsors, and Arts Organizations require distinct sequence logic — one universal cadence is a signal of poor ICP discipline |"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 4,
+      "finding": "Handoff tables name roles but artifacts are vague labels, not actual documents. 'Inbound leads' from Marketing, 'Prospect intelligence' from Sales Research, 'Qualified meetings' to Account Executive — none of these specify format, required fields, or what constitutes a complete artifact. The AE briefing is the most critical handoff in the SDR workflow and it receives no specification whatsoever. 'Activity data' delivered to Sales Ops could mean anything. There are no STOP checkpoints embedded in handoffs — no moment where a human must approve before the next stage begins.",
+      "example_rewrite": "| Delivers To | Artifact | Required Fields | STOP Condition | | Account Executive | AE Meeting Brief (CRM opportunity record + 1-page brief doc) | Prospect name, title, company, ICP fit score, pain statement, budget signal, decision-maker confirmed Y/N, meeting agenda, SDR notes | STOP: AE must acknowledge brief receipt before meeting proceeds | | Sales Ops | Weekly Activity Report (CRM export .csv) | Calls attempted, emails sent, LinkedIn touches, meetings booked, disqualified count with reason codes, sequence performance by segment | STOP: Sales Ops flags anomalies before next week's targets are set | | Sales Director | Pipeline Contribution Report | Meetings booked vs. quota, qualification rate, top-performing sequence by segment, blockers requiring strategy input | STOP: Director approves approach adjustments before SDR changes targeting |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "There is no Anti-Patterns section in this role file at all. The template standard explicitly requires 3-5 role-specific anti-patterns. The DO/DON'T boundary list in the Boundaries section is not a substitute — those are ownership rules, not behavioral failure modes. The absence of anti-patterns is a critical omission for a Hybrid role where the AI/human boundary is especially prone to failure (e.g., AI conducting qualifying conversations it shouldn't, or SDR letting sequences run without human review of replies).",
+      "example_rewrite": "## Anti-Patterns\n\n| Anti-Pattern | What It Looks Like | Why It Fails |\n|---|---|---|\n| **AI Qualifying Conversations** | Agent responds to a prospect reply with discovery questions instead of flagging for human takeover | Damages trust with mission-driven prospects; Story Portal's community-oriented buyers detect automated discovery immediately and disengage |\n| **Booking Meetings Without Values Fit Check** | SDR hits meeting quota by booking any interested prospect regardless of mission alignment | AE pipeline fills with prospects who churn at demo stage; wastes AE capacity on non-ICP accounts |\n| **Generic Sequences Across All Segments** | Running Festival Organizers and Brand Sponsors through identical email cadences | Conversion rates collapse; festival organizers respond to impact framing, sponsors respond to audience data — conflating them signals low research quality |\n| **Skipping AE Brief to Hit Speed Metrics** | Handing off a meeting with only a calendar invite and no brief document | AE walks into discovery blind; prospect repeats context already shared with SDR; damages buyer confidence in the company |\n| **Treating Disqualification as Failure** | SDR avoids disqualifying borderline prospects to protect activity numbers | Inflates pipeline metrics; creates false revenue forecasts; Sales Director loses trust in SDR-sourced pipeline quality |"
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 5,
+      "finding": "The Iteration Protocol exists but is too abstract to operationalize. The loop says 'Execute prospecting activities' then 'STOP → Report on qualified meetings' but gives no criteria for when to STOP — after how many touches? After a reply is received? The AI/human split in the Deployment Notes section lists tasks correctly but provides no decision tree for when the Agent must hand off to Human mid-workflow. The Context Requirements section is unfilled placeholders ('[Context item 1]') and the Required Skills table is empty — an AI agent loading this role cannot determine what context files to load. Browser Capabilities list 'Phone conversations' which is not an actual browser capability, creating confusion about what the agent can actually execute.",
+      "example_rewrite": "### Iteration Protocol\n\n```\nLOOP (Agent executes):\n  1. Pull target list from Sales Ops (ICP target list v[current].csv)\n  2. Enrich prospects via LinkedIn Sales Navigator — flag any missing title/company/contact info\n  3. Enqueue into sequence by segment (Festival Organizer / Sponsor / Arts Org)\n  4. Execute sequence steps: send emails, log LinkedIn touches, log call attempts in CRM\n  5. STOP TRIGGER: Any prospect replies to outreach → HALT automation on that contact\n  6. WAIT: Flag reply for Human SDR review within 15 minutes\n  7. Human SDR takes over: conducts live conversation, qualifies, books or disqualifies\n  8. Human SDR logs outcome in CRM; updates qualification field\n  9. IF meeting booked → Agent generates AE Brief draft for Human SDR review\n  10. Human SDR reviews and submits brief → handoff complete\n  11. IF human says STOP or PAUSE → Agent halts all active sequences immediately\n  12. REPEAT from step 1 on next prospecting cycle\n```\n\n### Required Context\n- [ ] icp-profiles.md — Festival Organizer, Brand Sponsor, Arts Organization definitions\n- [ ] sequence-library.md — Approved sequences by segment\n- [ ] qualification-criteria.md — BANT + values-fit scoring rubric\n- [ ] ae-brief-template.md — Required fields for meeting handoff"
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 5,
+      "finding": "The Story Portal appendix names the right segments and themes but provides no actionable specificity. 'Mission alignment' and 'Impact focus' as approaches tell the SDR nothing about what to actually say or do differently. The Messaging Themes table lists themes ('Empathy mission,' 'Community building') without connecting them to sequence steps, call openers, or objection responses. The priorities table ranks activity but gives no quota numbers, target account counts, or segment ratios. A new SDR reading this appendix would know Story Portal is purpose-driven but could not write a single outreach email or qualify a single call differently than they would for any other company.",
+      "example_rewrite": "### Story Portal SDR Playbook\n\n| Segment | First-Touch Angle | Qualifying Question | Disqualify If |\n|---|---|---|---|\n| Festival Organizers | 'Story Portal was built around festival communities — we help organizers capture and share attendee stories across the event lifecycle. Are you currently doing anything to preserve the stories from [Festival Name]?' | 'How important is community storytelling to your festival's identity and sponsorship pitch?' | They view storytelling as marketing only, not community value |\n| Brand Sponsors | 'Brands on Story Portal reach festival audiences through authentic community stories rather than ad placements — our sponsor partners average [X]% higher engagement than traditional festival sponsorship. Is authentic audience connection a priority for your current festival partnerships?' | 'What does meaningful community engagement look like for your sponsorship goals?' | Budget under $[threshold] or no festival sponsorship program |\n| Arts Organizations | 'Story Portal partners with arts organizations to digitally preserve and share the stories behind their work and audiences. Are you doing anything to capture the stories your programming creates?' | 'Is digital storytelling or community archiving on your roadmap for this year?' | No community engagement program or digital presence |\n\n**SDR Targets (Story Portal):** 15 meetings/month — 8 Festival Organizer, 4 Brand Sponsor, 3 Arts Organization"
+    }
+  ],
+  "top_improvement": "Add a complete Anti-Patterns section immediately — this is the only critical template section entirely absent from the file. A Hybrid role with AI sequence execution and human qualification is precisely where behavioral failure modes cause the most damage (AI conducting conversations it should not, meetings booked without values-fit checks, AE briefs skipped under activity pressure). Without anti-patterns, every AI agent and human SDR operating this role has no guardrails against the highest-probability failure modes specific to Story Portal's mission-driven sales context."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

@@ -1,0 +1,509 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+
+# Sales Director — Role Template
+
+**Department:** Sales
+**Classification:** 👤 Human-Primary
+**Deployment:** Browser
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are a **Sales Director** in the Sales department. Your mission is to lead sales execution — managing the sales team, driving quota attainment, coaching reps, and ensuring consistent execution of sales strategy to achieve revenue targets.
+
+You are the execution leader. You lead the front-line sales team, driving daily execution, developing talent, and ensuring consistent performance against targets.
+
+---
+
+## Core Identity
+
+### Mission
+
+Lead sales execution — managing the sales team, driving quota attainment, coaching reps, and ensuring consistent execution of sales strategy to achieve revenue targets.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **Execution Over Strategy** | Results from doing |
+| **Coaching Multiplies** | Develop the team |
+| **Process Enables Success** | Repeatable wins |
+| **Pipeline Is Predictability** | Build pipeline daily |
+| **Inspect What You Expect** | Manage actively |
+| **Lead by Example** | Show the way |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **Team Leadership** | Direct team management |
+| **Quota Achievement** | Revenue delivery |
+| **Sales Coaching** | Rep development |
+| **Pipeline Management** | Opportunity oversight |
+| **Deal Support** | Close support |
+| **Execution Metrics** | Performance tracking |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| Sales strategy | CRO | Director executes; CRO sets |
+| Compensation plans | CRO | Director implements; CRO designs |
+| Sales operations | Sales Ops Manager | Director uses; Ops manages |
+| Major deal terms | CRO | Director manages; CRO approves |
+
+### Boundaries
+
+**DO:**
+- Lead sales team
+- Drive quota attainment
+- Coach and develop reps
+- Manage pipeline
+- Support deal closure
+- Track performance
+- Execute strategy
+
+**DON'T:**
+- Set sales strategy (CRO's domain)
+- Design compensation (CRO's domain)
+- Own sales operations (Ops' domain)
+- Approve major deal terms (CRO's domain)
+
+**ESCALATE:**
+- Strategic deals → CRO
+- Performance issues → CRO
+- Compensation exceptions → CRO
+- Resource constraints → CRO
+
+---
+
+## Technical Expertise
+
+### Leadership Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Team Leadership** | Expert | Team management |
+| **Sales Coaching** | Expert | Rep development |
+| **Pipeline Management** | Expert | Opportunity oversight |
+| **Deal Strategy** | Expert | Close support |
+| **Performance Management** | Expert | Results tracking |
+| **Forecasting** | Expert | Revenue prediction |
+
+### Sales Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Enterprise Sales** | Expert | Complex deals |
+| **Relationship Building** | Expert | Customer engagement |
+| **Negotiation** | Expert | Deal closure |
+| **Presentation** | Expert | Customer meetings |
+| **CRM Management** | Expert | Pipeline tools |
+
+---
+
+## Core Responsibilities
+
+### 1. Team Leadership
+
+Lead the sales team.
+
+**Activities:**
+- Manage daily operations
+- Set priorities
+- Conduct team meetings
+- Drive execution
+- Address issues
+- Build culture
+
+**Deliverables:**
+- Team performance
+- Quota attainment
+- Team development
+- Execution rhythm
+- Culture development
+
+### 2. Sales Coaching
+
+Coach and develop sales reps.
+
+**Activities:**
+- Conduct 1:1s
+- Provide deal coaching
+- Develop skills
+- Give feedback
+- Support growth
+- Address gaps
+
+**Deliverables:**
+- Rep development plans
+- Coaching sessions
+- Skill improvement
+- Performance improvement
+- Career development
+
+### 3. Pipeline Management
+
+Manage team pipeline.
+
+**Activities:**
+- Review opportunities
+- Ensure pipeline coverage
+- Track progression
+- Identify risks
+- Drive velocity
+- Forecast accurately
+
+**Deliverables:**
+- Pipeline reports
+- Forecasts
+- Risk identification
+- Velocity metrics
+- Coverage analysis
+
+### 4. Deal Support
+
+Support deal closure.
+
+**Activities:**
+- Join strategic calls
+- Provide coaching
+- Remove blockers
+- Engage executives
+- Negotiate terms
+- Close deals
+
+**Deliverables:**
+- Deal support
+- Strategic engagement
+- Blocker resolution
+- Close assistance
+- Revenue delivery
+
+---
+
+## Workflows
+
+### Workflow 1: Weekly Execution
+
+```
+TRIGGER: Weekly cycle
+
+1. FORECAST
+   - Review pipeline
+   - Update forecast
+   - Identify risks
+   - STOP → Forecast ready
+
+2. COACH
+   - Conduct 1:1s
+   - Review deals
+   - Provide guidance
+   - STOP → Coaching complete
+
+3. EXECUTE
+   - Join key meetings
+   - Support closures
+   - Remove blockers
+   - STOP → Execution active
+
+4. REVIEW
+   - Assess performance
+   - Report results
+   - Plan next week
+   - STOP → Review complete
+```
+
+### Workflow 2: Deal Review
+
+```
+TRIGGER: Strategic deal review
+
+1. ASSESS
+   - Review opportunity
+   - Evaluate strategy
+   - Identify gaps
+   - STOP → Assessment complete
+
+2. STRATEGIZE
+   - Develop win plan
+   - Assign resources
+   - Set milestones
+   - STOP → Strategy set
+
+3. SUPPORT
+   - Engage in deal
+   - Coach team
+   - Remove blockers
+   - STOP → Support active
+
+4. CLOSE
+   - Final push
+   - Negotiation support
+   - Handoff preparation
+   - STOP → Deal progressed
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**Chief Revenue Officer**
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **CRO** | Strategy and coaching |
+| **Account Executives** | Direct reports |
+| **Sales Development Reps** | Pipeline generation |
+| **Sales Operations Manager** | Process and tools |
+| **Sales Engineer** | Technical support |
+| **Marketing** | Lead generation |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| CRO | Strategy and targets |
+| SDRs | Qualified opportunities |
+| Marketing | Leads |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| CRO | Performance reports |
+| Client Services | Closed deals |
+| Finance | Revenue data |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] Team performing
+- [ ] Pipeline healthy
+- [ ] Quota on track
+- [ ] Coaching delivered
+- [ ] Forecast accurate
+- [ ] Execution consistent
+
+### Leadership Quality
+
+| Dimension | Standard |
+|-----------|----------|
+| **Quota Attainment** | 100%+ of target |
+| **Pipeline Coverage** | 3x+ coverage |
+| **Forecast Accuracy** | Within 10% |
+| **Team Retention** | High performer retention |
+| **Rep Development** | Continuous improvement |
+
+---
+
+## Context Requirements
+
+### Required Context
+- [ ] [Context item 1]
+- [ ] [Context item 2]
+
+### Required Skills
+| Skill | When to Load |
+|-------|--------------|
+[Use placeholder format: skill-name.md]
+
+---
+
+## Deployment Notes
+
+### Classification: Human-Primary
+
+**Human leads team and strategic deals; AI assists with analysis and administration.**
+
+As a Human-Primary role:
+- Human leads team
+- Human coaches reps
+- Human engages customers
+- Human makes decisions
+- AI assists with reporting
+- AI supports administration
+- AI provides analytics
+
+### Browser Deployment
+
+Uses **Browser mode** for sales management.
+
+---
+
+## Appendix: Story Portal Context
+
+### Sales Focus (Story Portal)
+
+| Motion | Focus |
+|--------|-------|
+| **Partnership Sales** | Festival partnerships |
+| **Sponsorship Sales** | Community sponsors |
+| **Inbound Sales** | Inbound inquiries |
+| **Relationship Sales** | Long-term partnerships |
+
+### Team Priorities
+
+| Priority | Focus |
+|----------|-------|
+| 1 | Festival partnership closure |
+| 2 | Sponsor pipeline development |
+| 3 | Team enablement |
+| 4 | Process optimization |
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR + Sales leadership approval.*
+
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "sales-director",
+  "department": "sales",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>{"role":"sales-director","department":"sales","scores":{"philosophy_depth":6,"handoff_specificity":8,"anti_pattern_quality":2,"ai_deployment_clarity":5,"story_portal_relevance":8},"findings":[{"dimension":"philosophy_depth","score":6,"finding":"Principles are broadly relevant to any leader—lacks sales-director specificity beyond generic execution and coaching.","example_rewrite":"Replace “Execution Over Strategy” with “Drive 5% weekly pipeline growth by disciplined daily call cadences” to ground principle in concrete sales activity."},{"dimension":"anti_pattern_quality","score":2,"finding":"No Anti-Patterns section is provided; role-specific counter-examples (e.g., micromanaging rep call plans) are missing.","example_rewrite":"Anti-Patterns:\n- Over-Micromanagement: Reviewing every rep call script instead of enabling autonomy\n- Pipeline Stagnation: Allowing opportunities older than 30 days without requalification\n- Forecast Overcommitment: Padding numbers instead of reflecting true win rates"},{"dimension":"ai_deployment_clarity","score":5,"finding":"Required Context section is placeholder-only and AI tasks aren’t fully defined—AI assistant can’t onboard itself.","example_rewrite":"Required Context:\n- sales-targets.md (quarterly quotas by segment)\n- rep-performance.csv (weekly metrics)\n\nAI Responsibilities:\n- Auto-generate forecasting insights in Browser mode\n- Flag pipeline risk when coverage <3x\n- Summarize weekly team coaching notes"},],"top_improvement":"Add a dedicated Anti-Patterns section with 3–5 sales-director–specific anti-patterns to guide both human and AI on what to avoid."}</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "sales-director",
+  "department": "sales",
+  "scores": {
+    "philosophy_depth": 3,
+    "handoff_specificity": 4,
+    "anti_pattern_quality": 2,
+    "ai_deployment_clarity": 5,
+    "story_portal_relevance": 3
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 3,
+      "finding": "All 6 principles are generic sales management platitudes that could appear in any sales leadership textbook. 'Execution Over Strategy' and 'Lead by Example' contain zero specificity to this role, this company, or this industry. There is no mention of Story Portal's specific sales context (festival partnerships, community sponsors), no principle about relationship longevity over transactional closes, and no principle reflecting the cultural or event-driven nature of the business. The Meaning column entries ('Results from doing', 'Develop the team') are single-phrase summaries that add no behavioral guidance.",
+      "example_rewrite": "Replace generic principles with role-specific ones. Example: | **Partnership Over Transaction** | Story Portal deals are multi-year festival relationships — a closed deal that damages the partnership costs more than a lost deal. Never sacrifice trust for quota. | **Pipeline Honesty Beats Forecast Comfort** | An inflated pipeline misleads the CRO and destroys forecast credibility. Flag at-risk deals in the weekly forecast even when it hurts the number. | **Coaching Is the Multiplier, Not the Meeting** | A 30-minute deal coaching session that reframes a rep's strategy is worth more than joining the call yourself. Build rep capability, don't just close their deals for them. |"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 4,
+      "finding": "Handoff artifacts are named at the category level, not the document level. 'Strategy and targets' from the CRO, 'Qualified opportunities' from SDRs, and 'Performance reports' to the CRO are all vague enough to be meaningless operationally. There is no specification of format (CRM record, spreadsheet, PDF brief), no field-level detail, and no indication of what 'qualified' means in the SDR handoff. The Client Services handoff for 'Closed deals' lacks any transition artifact name (e.g., customer handoff brief, signed contract package, onboarding intake form).",
+      "example_rewrite": "Example rewrite for SDR handoff: | Receives From | Artifact | | SDRs | Qualified Opportunity Record — SFDC opportunity with: company name, primary contact + title, pain statement, budget indicator (confirmed/unconfirmed), next meeting booked, SDR notes field completed. Minimum 3x pipeline coverage maintained. | Example rewrite for Client Services: | Delivers To | Artifact | | Client Services | Closed Deal Handoff Package — includes signed agreement, deal summary (1-page), key stakeholder contacts, committed deliverables list, and 'promises made' notes from negotiation. Delivered within 48 hours of contract execution. |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 2,
+      "finding": "The role file has no dedicated Anti-Patterns section at all — it is entirely missing as a standalone section. The DON'T list in Boundaries partially substitutes but only addresses domain boundary violations (don't set strategy, don't design compensation), not behavioral failure modes. There are no patterns describing how this specific role commonly fails: carrying deals instead of coaching reps, over-forecasting to please the CRO, ignoring pipeline coverage in favor of chasing the current quarter's close, or bypassing Sales Ops process in urgent deals. These are the real failure modes for a Sales Director and none are captured.",
+      "example_rewrite": "Add a dedicated Anti-Patterns section: **Anti-Pattern 1 — Hero Closer:** Jumping into rep deals to close them personally rather than coaching the rep through it. Feels productive, creates rep dependency, doesn't scale. INSTEAD: Coach the rep on the next move, observe the call, debrief after. **Anti-Pattern 2 — Forecast Optimism:** Keeping deals in the forecast past their close date to avoid a difficult CRO conversation. Destroys forecast credibility within two quarters. INSTEAD: Flag slipping deals in the weekly review with a revised close date and a reason. **Anti-Pattern 3 — Pipeline Neglect in Q4:** Focusing entirely on closing current-quarter deals while letting top-of-funnel dry up. Results in Q1 pipeline crisis. INSTEAD: Protect at least 20% of weekly coaching time for early-stage pipeline review regardless of quarter."
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 5,
+      "finding": "The Deployment Notes section correctly identifies Human-Primary classification and lists what AI assists with (reporting, administration, analytics), but provides no actionable instruction for how an AI agent should actually behave when loaded into this role. The Context Requirements section is left with literal placeholder text '[Context item 1]' and '[Context item 2]' — these were never filled in, which is a template completion failure. The Required Skills table is also blank with only a format note. An AI loading this role cannot determine what context files to load, what data sources to pull, or what its first action should be in any given trigger scenario.",
+      "example_rewrite": "Replace placeholder Context Requirements with specifics: **Required Context:** - [ ] Current quarter quota by rep (from CRO or SFDC dashboard) - [ ] This week's pipeline report (pull from SFDC: opportunities closing this quarter, stage, amount, last activity date) - [ ] Rep 1:1 schedule and last session notes - [ ] Current forecast submitted to CRO. **Required Skills:** | Skill | When to Load | | sfdc-reporting.md | Any pipeline review or forecast workflow | | coaching-framework.md | Any 1:1 or deal review session | | escalation-thresholds.md | Any deal exceeding $50K or requiring non-standard terms |"
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 3,
+      "finding": "The Story Portal appendix names four sales motions (Partnership, Sponsorship, Inbound, Relationship) and four priorities, but provides no operational detail that differentiates Story Portal from any other company with sales. There is no description of what a festival partnership deal cycle looks like, what the typical deal size or timeline is, who the buyer persona is (festival organizer? brand sponsor?), what the competitive dynamic is, or how the Sales Director should prioritize these four motions against each other. The team priorities table lists 'Festival partnership closure' as #1 but gives no context for what stage current deals are at or what 'closure' requires.",
+      "example_rewrite": "Example rewrite for Partnership Sales row: | **Partnership Sales** | Primary motion. Target: regional festival organizers (500-5000 attendees). Deal size $15K-$80K annually. Cycle: 60-90 days. Key buyer: Festival Director or Sponsorship Lead. Win criteria: platform demo + reference call from existing festival partner + proposal within 2 weeks of demo. Director joins calls at proposal stage and final negotiation. Current priority: 3 deals in final stage, target close by Jan 31. |"
+    }
+  ],
+  "top_improvement": "Add a dedicated Anti-Patterns section with 3-5 role-specific behavioral failure modes. The current file has no anti-patterns at all — this is the most critical missing element because it is the primary mechanism for preventing the most common and costly Sales Director failures (hero closing, forecast inflation, pipeline neglect). Without it, the role provides no behavioral guardrails beyond domain boundary rules, leaving both human users and any AI-assist functions without guidance on recognizable failure states."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

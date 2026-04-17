@@ -1,0 +1,46 @@
+```json
+{
+  "role": "technology-research-analyst",
+  "department": "research-intelligence",
+  "scores": {
+    "philosophy_depth": 3,
+    "handoff_specificity": 4,
+    "anti_pattern_quality": 2,
+    "ai_deployment_clarity": 6,
+    "story_portal_relevance": 7
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 3,
+      "finding": "All six principles are generic platitudes that could apply to any analyst role in any industry. 'Forward-Looking: Tomorrow's technology today' is a marketing tagline, not an operational principle. 'Evidence-Based: Evaluate, don't assume' applies to every research role ever created. None of the principles describe HOW this analyst specifically navigates the hype cycle, manages source credibility for fast-moving tech domains, or balances depth vs. breadth when the landscape is infinite. There is no principle about avoiding vendor-influenced sources, handling conflicting benchmarks, or time-boxing evaluation depth to stay actionable.",
+      "example_rewrite": "Replace generic entries with role-specific operational stances. Example: **Hype Half-Life Awareness** — Every technology claim carries an expiration date. When evaluating emerging tech, explicitly tag findings with confidence-decay risk: a WebGPU benchmark from 18 months ago is near-worthless; a React ecosystem assessment from 6 months ago may already be stale. Always surface the freshness risk alongside the finding. | **Vendor-Neutral Source Discipline** — Vendor documentation, sponsored benchmarks, and conference talks by framework creators are primary sources for capability facts, not credibility sources for comparative claims. Always triangulate vendor claims against independent post-mortems, Stack Overflow trends, and GitHub issue velocity before including in a recommendation."
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 4,
+      "finding": "Handoffs name roles but fail the artifact specificity test on both sides. 'Receives: Research Director → Research priorities' does not describe the format, cadence, or structure of that input — is it a Notion page, a Slack message, a prioritized backlog ticket? 'Delivers: CTO → Technology intelligence' is vague enough to be meaningless. The evaluation workflow outputs 'Delivered evaluation' with no artifact name. Critically, there are no STOP checkpoints in the handoff table — the template standard explicitly requires them, and they are absent from both workflow diagrams. The collaboration table lists 'Works With: Solutions Architect — Architecture fit' but never specifies what artifact passes between them.",
+      "example_rewrite": "Handoff table should read: | Delivers To | Artifact | Format | Trigger | | CTO | Technology Intelligence Brief | 2-page structured memo: Executive Summary, Signal/Noise Rating (1-5), Strategic Implication, Recommended Action, Confidence Level | On detection of Tier-1 trend shift or upon CTO request | | Engineering Manager | Tool Evaluation Report | Standardized scorecard: criteria weights, per-option scores, trade-off matrix, recommended option with rationale, PoC notes if applicable | Within 5 business days of evaluation request ticket | | Solutions Architect | Architecture Fit Assessment | 1-page compatibility note appended to Evaluation Report: integration complexity, migration risk, dependency conflicts | Concurrent with Engineering delivery |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 2,
+      "finding": "The role file contains no dedicated Anti-Patterns section at all — this is a complete omission against the template standard. The DO/DON'T boundary list in the Boundaries section is not a substitute: 'DON'T make technology decisions' is a boundary statement, not an anti-pattern. Anti-patterns should describe failure modes this specific role actually falls into — such as an analyst who spends three weeks on a deep-dive evaluation when a 2-hour hype-check was all that was needed, or who surfaces 12 emerging technologies per week without prioritization, creating noise fatigue in stakeholders. None of this is present anywhere in the document.",
+      "example_rewrite": "Add a dedicated Anti-Patterns section: **Anti-Pattern 1: The Infinite Evaluation Spiral** — Conducting exhaustive research on a technology before confirming the evaluation question is well-scoped. Symptom: 40-page report delivered when stakeholder needed a 3-bullet go/no-go. Fix: Always confirm required decision depth (Tier 1: directional signal, Tier 2: comparative scorecard, Tier 3: full PoC evaluation) before beginning. | **Anti-Pattern 2: Trend Firehose** — Reporting every detected technology movement as equally significant, flooding stakeholders with noise. Symptom: Weekly radar updates with 15 new entries, none prioritized. Fix: Apply a Significance Filter before reporting — only escalate signals that cross two or more of: adoption velocity change, major vendor backing, direct applicability to current Story Portal tech stack. | **Anti-Pattern 3: Benchmark Laundering** — Citing vendor-published benchmarks as independent evidence in recommendation reports. Symptom: Evaluation report lists AWS performance figures sourced from AWS whitepaper as third-party validation. Fix: All benchmark citations must include source type tag (Vendor / Independent / Community) and must have at least one non-vendor corroborating source for any claim used in a final recommendation."
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 6,
+      "finding": "The Iteration Protocol is present and functional, which is the minimum requirement for AI-Primary classification. The Agent Capabilities table gives the AI a reasonable self-model. However, the role lacks concrete decision rules for autonomous operation: when should the AI escalate mid-task vs. complete and flag? What constitutes a Tier-1 trend shift that triggers immediate CTO escalation vs. a routine radar update? The workflows have no STOP points — the template standard explicitly flags this as a common mistake, and both Workflow 1 and Workflow 2 run from trigger to output with zero human checkpoints. An AI agent loading this role knows what to research but does not know when to pause, which is the higher-stakes question for an autonomous agent.",
+      "example_rewrite": "Insert explicit STOP gates into Workflow 1: 3. ANALYZE — Compare options, assess trade-offs, evaluate risks → OUTPUT: Draft analysis with confidence rating | ⛔ STOP — HUMAN CHECKPOINT: Present draft analysis to Research Director. Confirm: (a) evaluation criteria still match current need, (b) no strategic context has changed since scoping, (c) proceed to report vs. expand research scope. Only continue after explicit approval. | 4. REPORT — Create evaluation report, make recommendations, present findings → OUTPUT: Delivered evaluation. Also add escalation triggers: 'IF during monitoring a technology is detected that would obsolete a current Adopt-ring item on the Story Portal radar → STOP immediately, do not include in routine update → escalate directly to Research Director + CTO with a one-page Strategic Alert memo before next scheduled report.'"
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 7,
+      "finding": "The Story Portal appendix is the strongest section in the document. The Technology Radar with four named rings and actual technology names (React, Vite, Three.js, WebGPU) is specific and actionable. The Research Priorities list gives a concrete ordered backlog. The Technology Questions table maps real product concerns to research methods. Minor weakness: the research focus domains ('Audio Tech: Recording, processing') are slightly thin — they name the domain but not the specific product context that makes it relevant (e.g., why offline-first matters for Story Portal's use case). This context gap means an AI agent knows WHAT to research but not WHY, reducing its ability to self-prioritize when new signals emerge.",
+      "example_rewrite": "Expand domain context column: | Domain | Research Focus | Story Portal Context | | Audio Tech | Recording, processing, compression, streaming | Story Portal captures audio narratives in low-connectivity environments (field recordings, mobile); quality vs. file-size trade-off is the core constraint driving all audio tech evaluation | | Offline-First Patterns | Service workers, sync conflict resolution, local-first architectures | Story Portal must function without reliable connectivity; any technology evaluated for core story capture must pass an offline-capable gate before advancing past Trial ring |"
+    }
+  ],
+  "top_improvement": "Add a dedicated Anti-Patterns section with 3-5 role-specific failure modes. This is a complete omission — no amount of strong philosophy or handoff clarity compensates for an AI-Primary agent that has no guardrails against its most likely failure modes (evaluation scope creep, trend noise flooding, benchmark laundering). This single addition would raise the practical safety and usefulness of the role more than any other change."
+}
+```

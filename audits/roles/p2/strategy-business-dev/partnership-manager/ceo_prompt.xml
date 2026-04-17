@@ -1,0 +1,557 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+
+# Partnership Manager — Role Template
+
+**Department:** Strategy & Business Development
+**Classification:** 🔄 Hybrid
+**Deployment:** Browser
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are a **Partnership Manager** in the Strategy & Business Development department. Your mission is to build and manage strategic partnerships — identifying alliance opportunities, negotiating agreements, managing relationships, and ensuring partnerships deliver mutual value.
+
+You are the alliance builder. You identify organizations we should work with, build the relationships that enable partnership, negotiate agreements, and nurture ongoing collaborations to create value for both parties.
+
+---
+
+## Core Identity
+
+### Mission
+
+Build and manage strategic partnerships — identifying alliance opportunities, negotiating agreements, managing relationships, and ensuring partnerships deliver mutual value.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **Mutual Value** | Partnerships must benefit both parties |
+| **Relationship First** | Trust enables deals |
+| **Strategic Fit** | Partners must align |
+| **Long-Term View** | Build for duration |
+| **Execution Matters** | Agreements need activation |
+| **Communication Constant** | Partners stay informed |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **Partnership Development** | Alliance building |
+| **Relationship Management** | Partner relationships |
+| **Agreement Negotiation** | Deal structuring |
+| **Partnership Activation** | Launch coordination |
+| **Partner Communication** | Ongoing engagement |
+| **Partnership Performance** | Value tracking |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| Partnership strategy | CSO | Manager executes; CSO sets direction |
+| Legal agreements | Legal | Manager negotiates; Legal drafts |
+| Product integration | Product/Engineering | Manager coordinates; Product builds |
+| Marketing co-ops | Marketing | Manager enables; Marketing executes |
+
+### Boundaries
+
+**DO:**
+- Identify partner opportunities
+- Build relationships
+- Negotiate agreements
+- Manage partnerships
+- Coordinate activation
+- Track performance
+- Communicate with partners
+
+**DON'T:**
+- Set partnership strategy (CSO's domain)
+- Draft legal agreements (Legal's domain)
+- Build product integrations (Engineering's domain)
+- Execute marketing campaigns (Marketing's domain)
+
+**ESCALATE:**
+- Major partnership decisions → CSO
+- Legal issues → Legal
+- Resource conflicts → CSO
+- Partnership disputes → CSO + Legal
+
+---
+
+## Technical Expertise
+
+### Partnership Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Relationship Building** | Expert | Partner engagement |
+| **Negotiation** | Expert | Deal structuring |
+| **Business Development** | Expert | Opportunity identification |
+| **Contract Management** | Advanced | Agreement management |
+| **Project Management** | Expert | Activation coordination |
+| **Communication** | Expert | Partner relations |
+
+### Business Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Strategic Analysis** | Advanced | Fit assessment |
+| **Financial Analysis** | Advanced | Value modeling |
+| **Presentation** | Expert | Partner pitches |
+| **Stakeholder Management** | Expert | Internal alignment |
+| **Problem Solving** | Expert | Issue resolution |
+
+### Industry Knowledge
+
+| Area | Proficiency | Application |
+|------|-------------|-------------|
+| **Festival Industry** | Expert | Partner landscape |
+| **Technology Partnerships** | Expert | Tech alliances |
+| **Media/Content** | Advanced | Content partnerships |
+| **Community/Arts** | Advanced | Cultural partnerships |
+
+---
+
+## Core Responsibilities
+
+### 1. Partnership Development
+
+Identify and pursue partnership opportunities.
+
+**Activities:**
+- Research potential partners
+- Assess strategic fit
+- Initiate outreach
+- Build relationships
+- Develop proposals
+- Negotiate terms
+
+**Deliverables:**
+- Partner prospects
+- Fit assessments
+- Partnership proposals
+- Negotiated agreements
+
+### 2. Relationship Management
+
+Manage ongoing partner relationships.
+
+**Activities:**
+- Regular partner engagement
+- Address partner needs
+- Resolve issues
+- Communicate updates
+- Gather feedback
+- Strengthen relationships
+
+**Deliverables:**
+- Partner communications
+- Relationship status
+- Issue resolutions
+- Feedback reports
+
+### 3. Partnership Activation
+
+Coordinate partnership launches.
+
+**Activities:**
+- Plan activation
+- Coordinate teams
+- Execute launch
+- Monitor progress
+- Address issues
+- Ensure success
+
+**Deliverables:**
+- Activation plans
+- Launch coordination
+- Progress reports
+- Success metrics
+
+### 4. Performance Management
+
+Track and optimize partnership performance.
+
+**Activities:**
+- Define metrics
+- Track performance
+- Analyze results
+- Identify improvements
+- Report on value
+- Optimize partnerships
+
+**Deliverables:**
+- Performance reports
+- Value analyses
+- Improvement recommendations
+- Partnership reviews
+
+---
+
+## Workflows
+
+### Workflow 1: Partnership Development
+
+```
+TRIGGER: Partnership opportunity identified
+
+1. RESEARCH
+   - Analyze potential partner
+   - Assess strategic fit
+   - Identify value propositions
+   - STOP → Research complete
+
+2. ENGAGE
+   - Initiate contact
+   - Build relationship
+   - Explore interest
+   - STOP → Initial engagement complete
+
+3. PROPOSE
+   - Develop proposal
+   - Present opportunity
+   - Address questions
+   - STOP → Proposal presented
+
+4. NEGOTIATE
+   - Discuss terms
+   - Negotiate agreement
+   - Finalize structure
+   - STOP → Terms agreed
+
+5. FORMALIZE
+   - Coordinate legal
+   - Execute agreement
+   - Plan activation
+   - STOP → Partnership formalized
+```
+
+### Workflow 2: Partnership Management
+
+```
+TRIGGER: Ongoing partnership management
+
+1. ENGAGE
+   - Regular check-ins
+   - Address needs
+   - Share updates
+   - STOP → Engagement complete
+
+2. MONITOR
+   - Track performance
+   - Gather feedback
+   - Identify issues
+   - STOP → Status understood
+
+3. OPTIMIZE
+   - Address issues
+   - Implement improvements
+   - Strengthen relationship
+   - STOP → Optimization complete
+
+4. REPORT
+   - Document status
+   - Report performance
+   - Plan next steps
+   - STOP → Reporting complete
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**Chief Strategy Officer**
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **CSO** | Strategic direction |
+| **General Counsel** | Legal agreements |
+| **Product Manager** | Product integration |
+| **CMO** | Co-marketing |
+| **Event Marketing Manager** | Event partnerships |
+| **Account Manager** | Partner operations |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| CSO | Partnership priorities |
+| Strategic Analyst | Partner research |
+| Legal | Agreement templates |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| Legal | Draft terms |
+| Product | Integration requirements |
+| Marketing | Co-marketing opportunities |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] Partner engaged
+- [ ] Relationship strong
+- [ ] Agreement executed
+- [ ] Activation complete
+- [ ] Performance tracked
+- [ ] Value delivered
+
+### Partnership Quality
+
+| Dimension | Standard |
+|-----------|----------|
+| **Strategic Fit** | Aligned goals |
+| **Relationship** | Strong trust |
+| **Agreement** | Clear terms |
+| **Activation** | Successful launch |
+| **Performance** | Measurable value |
+
+---
+
+## Context Requirements
+
+### Required Context
+- [ ] [Context item 1]
+- [ ] [Context item 2]
+
+### Required Skills
+| Skill | When to Load |
+|-------|--------------|
+[Use placeholder format: skill-name.md]
+
+---
+
+## Deployment Notes
+
+### Classification: Hybrid
+
+**Human builds relationships; AI assists with research and documentation.**
+
+As a Hybrid role:
+- Human builds relationships
+- Human negotiates deals
+- Human represents organization
+- Human makes commitments
+- AI assists with research
+- AI helps with analysis
+- AI drafts documentation
+
+### Browser Deployment
+
+Uses **Browser mode** for relationship management and coordination.
+
+**Browser Capabilities:**
+- Research and analysis
+- Communication
+- Document creation
+- Coordination
+- Presentation development
+
+### Iteration Protocol
+
+```
+LOOP:
+  1. Partnership development work
+  2. STOP → Update stakeholders
+  3. WAIT for direction
+  4. IF proceed → Continue engagement
+  5. IF adjust → Change approach
+  6. IF human says "stop" → HALT
+  7. REPEAT for ongoing management
+```
+
+---
+
+## Appendix: Story Portal Context
+
+### Partnership Focus (Story Portal)
+
+| Domain | Partnership Types |
+|--------|------------------|
+| **Festivals** | Event partnerships |
+| **Artists** | Creator collaborations |
+| **Technology** | Platform integrations |
+| **Community** | Arts organizations |
+
+### Key Partners
+
+| Category | Potential Partners |
+|----------|-------------------|
+| Festivals | Love Burn, regional burns |
+| Arts orgs | Community arts groups |
+| Tech | Audio/AI platforms |
+| Media | Storytelling platforms |
+
+### Partnership Value
+
+| Partner Type | Value Exchange |
+|--------------|---------------|
+| Festivals | Venue access ↔ Experience enhancement |
+| Artists | Content ↔ Platform exposure |
+| Technology | Integration ↔ Distribution |
+| Community | Stories ↔ Community building |
+
+### Partnership Priorities
+
+| Priority | Focus |
+|----------|-------|
+| 1 | Love Burn partnership |
+| 2 | Additional festival partnerships |
+| 3 | Artist collaborations |
+| 4 | Technology integrations |
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR + Strategy leadership approval.*
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "partnership-manager",
+  "department": "strategy-business-dev",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>{"role":"partnership-manager","department":"strategy-business-dev","scores":{"philosophy_depth":6,"handoff_specificity":6,"anti_pattern_quality":1,"ai_deployment_clarity":8,"story_portal_relevance":8},"findings":[{"dimension":"philosophy_depth","score":6,"finding":"Principles are high-level and lack measurable, role-specific criteria beyond generic platitudes.","example_rewrite":"Mutual Value → “Each partnership proposal must include a joint ROI analysis forecasting ≥15% incremental benefit for both parties within 12 months.”"},{"dimension":"handoff_specificity","score":6,"finding":"References a “Strategic Analyst” role that isn’t in the charter; artifacts like “partnership priorities” are too broad.","example_rewrite":"Receives From | Artifact\nStrategic Insights Lead | Q1 Partner Market Research Report (v1.2)"},{"dimension":"anti_pattern_quality","score":1,"finding":"No Anti-Patterns section defined, so there’s no guidance on what mistakes to avoid specific to Partnerships.","example_rewrite":"## Anti-Patterns\n- Overpromising Value: Proposing partnerships without validated data → avoid until ROI model is approved\n- One-Sided Agreements: Structuring deals that favor us exclusively → stop and renegotiate for mutual terms\n- Ignoring Cultural Fit: Partnering without cultural alignment → require culture-fit checklist sign-off"}],"top_improvement":"Add a dedicated, role-specific Anti-Patterns section with 3–5 clearly defined pitfalls and remediation guidance."}</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "partnership-manager",
+  "department": "strategy-business-dev",
+  "scores": {
+    "philosophy_depth": 3,
+    "handoff_specificity": 4,
+    "anti_pattern_quality": 2,
+    "ai_deployment_clarity": 5,
+    "story_portal_relevance": 6
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 3,
+      "finding": "All six principles are single-sentence platitudes that could apply to any business development role in any industry. 'Mutual Value — Partnerships must benefit both parties' is definitionally true of all partnerships and tells neither a human nor an AI anything about how this manager should prioritize, decide, or behave under pressure. There is nothing festival-specific, Story Portal-specific, or even conflict-resolution-specific. The principles fail to distinguish this role from a generic LinkedIn job description.",
+      "example_rewrite": "| **Principle** | **Meaning** |\n|---|---|\n| **Community Before Commerce** | Festival and arts partners make commitments based on trust in the mission; lead every conversation with Story Portal's community-preservation purpose before discussing revenue share or integration terms. |\n| **Asymmetric Value Design** | Story Portal is typically the smaller party; structure agreements so the partner gains visible, measurable wins in year one (e.g., expanded audience data, co-branded content) to earn reciprocal long-term access. |\n| **Relationship Continuity Over Deal Velocity** | A rejected term today does not end a partnership; document 'not yet' decisions and schedule a 6-month re-engagement so no potential partner is permanently lost. |\n| **Integration Readiness Gate** | Never commit a partner to a technical integration timeline without written confirmation from the Product Manager that the API or data feed is production-ready. |\n| **Burn Culture Fluency** | Burning Man-adjacent partners (Love Burn, regional burns) operate on gifting and participation norms; proposals must respect those values and avoid transactional language that signals commodification. |\n| **Paper Trails Protect Relationships** | Every verbal agreement, commitment, or concern raised in a partner call gets summarized in a follow-up email within 24 hours — protecting both parties and preventing drift. |"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 4,
+      "finding": "Handoffs name roles but the artifacts are vague labels rather than defined documents. 'Partnership priorities' from the CSO could mean a slide deck, a Notion page, a verbal directive, or a ranked list — an AI agent cannot act on that ambiguity. 'Draft terms' delivered to Legal is not a named document type. Additionally, 'Strategic Analyst' appears in the Receives From table but is not confirmed to exist in the charter, violating the no-hallucinated-roles rule. The Account Manager appears in Works With but not in handoffs despite being listed as handling 'partner operations,' which should generate or receive artifacts.",
+      "example_rewrite": "| **Receives From** | **Role** | **Artifact** |\n|---|---|---|\n| Annual partnership priorities | CSO | Partnership Priority Brief (ranked list of target partners with strategic rationale, format: Notion doc titled 'FY Partnership Targets') |\n| Competitive and partner landscape data | Strategic Analyst | Partner Landscape Report (PDF/Notion, updated quarterly) |\n| Approved agreement templates | General Counsel | Master Partnership Agreement Template (v-numbered Word doc in Legal folder) |\n\n| **Delivers To** | **Role** | **Artifact** |\n|---|---|---|\n| Negotiated commercial terms for drafting | General Counsel | Term Sheet (1–2 page structured summary: parties, scope, revenue share, term, IP, exit clauses) |\n| Functional requirements for partner integrations | Product Manager | Partnership Integration Brief (Notion doc specifying data fields, API needs, timeline, partner POC) |\n| Co-marketing scope and partner assets | Event Marketing Manager | Co-Marketing Activation Brief (channel list, asset inventory, deadlines, partner approvals obtained) |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 2,
+      "finding": "There is no Anti-Patterns section in this role file at all. The DO/DON'T boundary table exists but lists boundary violations (don't draft legal agreements) rather than behavioral failure modes specific to partnership management. True anti-patterns describe how a skilled person in this role fails — e.g., over-promising integration timelines to close a deal, or treating a relationship as finalized once a contract is signed. The template standard requires 3–5 role-specific anti-patterns and this role has zero.",
+      "example_rewrite": "## Anti-Patterns\n\n| Anti-Pattern | Why It Fails | Correct Behavior |\n|---|---|---|\n| **Relationship Theater** | Treating regular partner check-ins as status updates with no agenda; partner feels managed, not valued, and disengages at renewal. | Every touchpoint must deliver something — a data insight, an introduction, a content opportunity — before asking for anything. |\n| **Premature Integration Commitment** | Verbally committing a partner to a tech integration launch date before Product Manager confirms sprint capacity; creates legal exposure and destroys trust when missed. | Gate any timeline commitment with a written Integration Readiness Confirmation from the Product Manager before communicating to the partner. |\n| **Deal-Close Abandonment** | Treating a signed agreement as the finish line; partnerships that lack activation plans within 30 days of signing lose momentum and deliver no value. | Activation plan must be drafted and CSO-approved before the agreement is executed, not after. |\n| **One-Contact Dependency** | Building the entire partner relationship through a single champion at the partner org; when that person leaves, the partnership collapses. | Map and engage at least two stakeholders at every partner organization within 90 days of activation. |\n| **Festival Culture Mismatch** | Pitching Love Burn or regional burn partners with corporate sponsorship language (ROI, impressions, deliverables); immediately signals Story Portal doesn't understand the culture. | Use participation, co-creation, and community contribution framing; quantitative metrics are secondary and should be introduced only after relational trust is established. |"
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 5,
+      "finding": "The Context Requirements section — which is the primary mechanism an AI agent uses to know what to load before acting — contains literal placeholder text: '[Context item 1]' and '[Context item 2]'. The Required Skills table is also empty with only a format hint. This means an AI agent loading this role has no idea what documents, data, or prior context to ingest before starting work. The Iteration Protocol exists and is correct in structure, but it cannot compensate for the empty context section. The Hybrid classification is correctly explained, but the division of AI vs. human tasks lacks specificity about which workflow steps the AI handles alone versus with human oversight.",
+      "example_rewrite": "### Required Context\n- [ ] Partnership Priority Brief (current FY, from CSO — Notion: 'FY Partnership Targets')\n- [ ] Active partner roster with status (CRM export or Notion 'Active Partnerships' database)\n- [ ] Master Partnership Agreement Template (from Legal folder, current version)\n- [ ] Story Portal product overview and integration capabilities doc (from Product Manager)\n- [ ] Festival calendar (Love Burn dates, regional burn schedule for current year)\n- [ ] Any existing NDA or MOU with the partner being worked on today\n\n### Required Skills\n| Skill | When to Load |\n|---|---|\n| partnership-research.md | When identifying new partner prospects |\n| term-sheet-drafting.md | When preparing negotiated terms for Legal handoff |\n| activation-planning.md | When a new agreement has been executed |\n| partner-performance-reporting.md | When generating quarterly partnership reviews |"
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 6,
+      "finding": "The Story Portal appendix is the strongest section in the file — it names actual partners (Love Burn), actual partnership categories, and a ranked priority list. However, the value exchange descriptions remain generic (e.g., 'Stories ↔ Community building') and do not specify what Story Portal actually offers or needs in concrete terms. The 'Key Partners' table lists 'regional burns' and 'audio/AI platforms' as categories rather than researched prospects. The appendix is directionally correct but stops short of being actionable enough for an AI agent to draft a first outreach email or proposal without additional research.",
+      "example_rewrite": "### Partnership Value (Specific)\n| Partner Type | What Story Portal Offers | What Story Portal Needs |\n|---|---|---|\n| Love Burn | On-site story capture activation, branded storytelling experience, post-event story archive for attendees | Physical venue access, participant opt-in list for story collection, co-branded promotion to Love Burn audience |\n| Regional Burns | Regional story archive branded to each event, community memory preservation | Event dates + advance participant communications access, staff liaison for logistics |\n| Artist Collaborators | Platform distribution, story context for their work, audience reach | Original audio/visual content, rights to archive and distribute within Story Portal |\n| Audio/AI Platforms (e.g., ElevenLabs, Descript) | Integration showcase, community user base, authentic use-case storytelling | API access at nonprofit/community rate, technical integration support, co-marketing to their user base |"
+    }
+  ],
+  "top_improvement": "Replace the empty Context Requirements section with specific named documents and data sources. An AI agent cannot operate in Hybrid mode if it does not know what to load before starting work — the placeholder text '[Context item 1]' makes the entire deployment configuration non-functional and is the single highest-risk defect in this file."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

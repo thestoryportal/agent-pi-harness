@@ -1,0 +1,1 @@
+{"role":"mobile-developer","department":"engineering","scores":{"philosophy_depth":9,"handoff_specificity":9,"anti_pattern_quality":9,"ai_deployment_clarity":8,"story_portal_relevance":9},"findings":[],"top_improvement":"All dimensions score 8 or above; no critical improvements needed."}

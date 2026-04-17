@@ -1,0 +1,46 @@
+```json
+{
+  "role": "legal-research-analyst",
+  "department": "legal-compliance",
+  "scores": {
+    "philosophy_depth": 3,
+    "handoff_specificity": 4,
+    "anti_pattern_quality": 2,
+    "ai_deployment_clarity": 6,
+    "story_portal_relevance": 5
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 3,
+      "finding": "All six principles are generic legal platitudes that could apply to any research role in any industry. 'Accuracy Is Non-Negotiable' with the explanation 'Legal research must be precise' adds zero specificity — that's a tautology. 'Currency Is Critical' with 'Law changes constantly' is something any paralegal student knows. None of the principles reflect Story Portal's specific context (multi-jurisdictional audio consent, festival liability, UGC licensing), the AI-Primary tension (knowing when AI research is insufficient and must escalate), or the unique challenge of synthesizing conflicting precedents across jurisdictions. There is no principle addressing confidence calibration — a critical need when an AI agent might surface outdated case law or miss circuit splits.",
+      "example_rewrite": "Replace 'Accuracy Is Non-Negotiable' (tautology) with: **'Confidence Must Be Explicit'** — Every research output states its certainty level. A memo on CCPA audio consent must distinguish 'settled law with three circuit confirmations' from 'emerging interpretation with one district court ruling.' AI-sourced research that cannot be verified against a primary source is flagged [UNVERIFIED], never presented as authoritative. Replace 'Currency Is Critical' (obvious) with: **'Jurisdiction Mismatch Is a Silent Risk'** — Story Portal operates across U.S. states with conflicting one-party/two-party consent laws and multiple international jurisdictions. Research defaults to the most restrictive applicable jurisdiction unless General Counsel explicitly authorizes a narrower scope. A California answer is never silently applied to an Illinois question."
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 4,
+      "finding": "Handoffs name roles but fail the artifact specificity test entirely. 'Receives: Research requests from Legal Team' — what format? A Slack message? A structured intake form? A ticket in a system? 'Delivers: Research memos to General Counsel' — what template? What required sections? What confidence/caveat language must be included? The Collaboration table lists 'Contract Manager,' 'Privacy Officer,' and 'IP Manager' as interfaces, but these roles may not exist in the Organizational Charter — the template checklist explicitly warns against hallucinated roles. No handoff specifies a STOP point where human review is required before the artifact moves downstream. The iteration protocol includes a STOP but the handoff table does not connect to it.",
+      "example_rewrite": "Replace the vague 'Delivers To' row for General Counsel with: **Delivers To: General Counsel | Artifact: Legal Research Memo (Template: LRA-001) containing: (1) Research Question as received, (2) Jurisdiction Scope, (3) Primary Sources Cited with verification dates, (4) Confidence Rating [High/Medium/Low/Unverified], (5) Synthesized Finding, (6) Open Questions requiring Counsel judgment. ⛔ STOP: Memo is not forwarded to requesting business unit until General Counsel adds signature block or returns with revision instructions.**"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 2,
+      "finding": "There is no Anti-Patterns section in this role file at all — it is completely absent. The DO/DON'T boundary list exists but is not the same thing. Anti-patterns describe failure modes specific to how THIS role tends to fail in practice, with named consequences. The DON'T list ('Don't make legal decisions,' 'Don't negotiate contracts') describes boundary violations, not operational failure patterns. Missing anti-patterns for an AI-Primary legal research role are a serious gap: this role is at high risk of presenting outdated precedent as current law, conflating jurisdiction-specific rules, over-citing secondary sources, or producing research memos that sound authoritative but contain AI hallucination artifacts. None of these risks are documented.",
+      "example_rewrite": "Add a dedicated Anti-Patterns section with role-specific entries: **Anti-Pattern 1 — The Authoritative Hallucination:** Citing a case that does not exist or misquoting a holding because the AI synthesized plausible-sounding language. Mitigation: Every case citation includes the database retrieval timestamp and a verification flag. **Anti-Pattern 2 — The Single-Jurisdiction Trap:** Answering a Story Portal question about audio recording consent using California law when the user event is in Illinois. Mitigation: Research requests must include jurisdiction scope; if unstated, the analyst defaults to all-jurisdiction analysis and flags the gap. **Anti-Pattern 3 — Secondary Source Laundering:** Building a memo primarily on law review articles or legal blogs rather than primary sources, then presenting conclusions as settled law. Mitigation: Memos must list primary-to-secondary source ratio; memos below 70% primary sources require a caveat block."
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 6,
+      "finding": "The Deployment Notes section correctly identifies the AI-Primary classification and includes an iteration protocol with a STOP point — this is better than many role files. However, the Agent Capabilities table lists capabilities ('Legal database search,' 'Document analysis') without specifying which actual tools or APIs the agent uses to execute them. 'Legal Databases — Westlaw, LexisNexis' appears in the Tools table but is not connected to actual agent actions. An AI agent loading this role does not know: what to do when a database returns zero results, how to handle a research request that spans more than three jurisdictions, what the maximum acceptable research cycle time is before escalating, or how to format confidence levels in output. The workflows lack decision branches for failure states.",
+      "example_rewrite": "Add a failure-state branch to Workflow 1: **2b. RESEARCH FAILURE BRANCH — If primary database search returns fewer than 3 relevant primary sources: (a) Expand search to secondary jurisdictions, (b) Document search terms used and zero-result queries, (c) Flag memo with [INSUFFICIENT PRIMARY SOURCE — COUNSEL REVIEW REQUIRED] header, (d) ⛔ STOP — Do not deliver memo without General Counsel acknowledgment of source limitation. Do not substitute secondary sources without explicit flag.** Also add: Maximum research cycle time before escalation = 4 hours for standard requests, 1 hour for regulatory alerts."
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 5,
+      "finding": "The Story Portal appendix identifies the right legal domains (audio consent, festival liability, content rights, platform compliance) but provides no actionable research guidance. 'Research Priority 1: Privacy law compliance research' tells the agent nothing it doesn't already know from the role definition. The appendix does not name specific regulations to monitor (GDPR Article 9, CCPA Section 1798.100, state wiretapping statutes), does not identify the jurisdictions Story Portal actually operates in, does not specify which research questions are already resolved vs. actively open, and does not connect to any deliverable template or knowledge base entry. A new agent loading this role gains almost no Story Portal-specific context beyond four topic labels.",
+      "example_rewrite": "Replace the generic priority table with: **Active Research Questions (as of v1.0):** (1) Audio Recording Consent — Open Question: Does Story Portal's in-app story recording feature require two-party consent disclosure in IL, MD, PA, WA, and CA? Status: In research. Assign to: Regulatory Alert Workflow. Monitor: State wiretapping statutes, FCC updates. (2) Festival Permit Liability — Open Question: What insurance and liability language is required for Story Portal-sponsored live events in TX and NY? Status: Not started. Trigger: Contract Manager intake. (3) UGC Content Rights — Open Question: Does current Terms of Service adequately license user audio stories for platform archiving and potential commercial use? Status: General Counsel flagged for Q1 review. **Regulations Under Active Monitoring:** GDPR (EU 2016/679), CCPA/CPRA, IL BIPA, state biometric/audio consent statutes."
+    }
+  ],
+  "top_improvement": "Add a dedicated Anti-Patterns section with 3-5 AI-specific failure modes. This role file has zero anti-patterns documented, which is the most dangerous gap: an AI-Primary legal research agent operating without documented failure modes is at high risk of producing authoritative-sounding memos containing hallucinated citations, outdated precedent, or single-jurisdiction analysis silently applied to multi-jurisdiction questions — all without any documented mitigation or detection mechanism. This is not a formatting issue; it is a risk management failure in a legal context where a bad output can cause direct organizational harm."
+}
+```

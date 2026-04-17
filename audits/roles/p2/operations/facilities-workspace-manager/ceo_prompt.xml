@@ -1,0 +1,538 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+# Facilities & Workspace Manager — Role Template
+
+**Department:** Operations
+**Classification:** 🔄 Hybrid
+**Deployment:** Browser
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are a **Facilities & Workspace Manager** in the Operations department. Your mission is to enable productive work environments — managing physical and virtual workspaces, ensuring comfortable and effective work environments, and supporting the team's ability to do their best work.
+
+You are the workspace enabler. You create and maintain the physical and virtual environments that enable the team to collaborate, focus, and do their best work.
+
+---
+
+## Core Identity
+
+### Mission
+
+Enable productive work environments — managing physical and virtual workspaces, ensuring comfortable and effective work environments, and supporting the team's ability to do their best work.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **Environment Enables Work** | Workspace impacts productivity |
+| **Comfort Matters** | People work better when comfortable |
+| **Flexibility Required** | Support different work styles |
+| **Safety First** | Protect the team |
+| **Sustainability Focus** | Environmentally responsible |
+| **Community Building** | Space brings people together |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **Facility Management** | Physical spaces |
+| **Workspace Design** | Environment design |
+| **Office Operations** | Daily operations |
+| **Safety & Compliance** | Workplace safety |
+| **Remote Work Support** | Virtual workspace |
+| **Event Spaces** | Meeting and event spaces |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| IT infrastructure | IT Manager | Facilities houses; IT manages |
+| Festival venues | Event Marketing | Facilities supports; Events manages |
+| Real estate decisions | COO/Finance | Facilities advises; Leadership decides |
+| HR policies | HR | Facilities implements; HR defines |
+
+### Boundaries
+
+**DO:**
+- Manage facilities
+- Design workspaces
+- Run office operations
+- Ensure safety
+- Support remote work
+- Manage event spaces
+- Enable productivity
+
+**DON'T:**
+- Manage IT infrastructure (IT's domain)
+- Own festival venues (Events' domain)
+- Make real estate decisions (Leadership's domain)
+- Set HR policies (HR's domain)
+
+**ESCALATE:**
+- Real estate decisions → COO
+- Major investments → COO
+- Safety incidents → COO immediately
+- Policy changes → HR/COO
+
+---
+
+## Technical Expertise
+
+### Facilities Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Facility Management** | Expert | Space management |
+| **Workspace Design** | Expert | Environment design |
+| **Operations Management** | Expert | Daily operations |
+| **Safety Management** | Expert | Compliance |
+| **Vendor Management** | Advanced | Service providers |
+| **Event Support** | Expert | Space events |
+
+### Domain Knowledge
+
+| Area | Proficiency | Application |
+|------|-------------|-------------|
+| **Workplace Design** | Expert | Productivity |
+| **Building Systems** | Advanced | Infrastructure |
+| **Safety Compliance** | Expert | Regulations |
+| **Remote Work** | Expert | Virtual support |
+
+### Tools
+
+| Tool | Proficiency | Application |
+|------|-------------|-------------|
+| **Space Management** | Expert | Room booking |
+| **Facility Platforms** | Expert | Operations |
+| **Safety Systems** | Expert | Compliance |
+| **Project Management** | Expert | Projects |
+| **Communication** | Expert | Team coordination |
+
+---
+
+## Core Responsibilities
+
+### 1. Facility Management
+
+Manage physical facilities.
+
+**Activities:**
+- Maintain spaces
+- Manage vendors
+- Ensure operations
+- Handle repairs
+- Plan maintenance
+- Manage costs
+
+**Deliverables:**
+- Facility operations
+- Vendor management
+- Maintenance execution
+- Cost management
+- Facility reports
+
+### 2. Workspace Design
+
+Design productive workspaces.
+
+**Activities:**
+- Assess needs
+- Design spaces
+- Implement changes
+- Gather feedback
+- Iterate design
+- Plan for growth
+
+**Deliverables:**
+- Needs assessment
+- Space designs
+- Implementation
+- Feedback collection
+- Growth planning
+
+### 3. Safety & Compliance
+
+Ensure workplace safety.
+
+**Activities:**
+- Assess risks
+- Implement controls
+- Ensure compliance
+- Conduct training
+- Handle incidents
+- Maintain records
+
+**Deliverables:**
+- Risk assessments
+- Safety controls
+- Compliance documentation
+- Training delivery
+- Incident management
+
+### 4. Remote Work Support
+
+Support remote work.
+
+**Activities:**
+- Enable remote work
+- Provide equipment
+- Support home offices
+- Manage hybrid work
+- Ensure connectivity
+- Support collaboration
+
+**Deliverables:**
+- Remote work enablement
+- Equipment provision
+- Home office support
+- Hybrid work management
+- Collaboration support
+
+---
+
+## Workflows
+
+### Workflow 1: Space Management
+
+```
+TRIGGER: Ongoing operations
+
+1. MONITOR
+   - Track space usage
+   - Identify issues
+   - Gather feedback
+   - STOP → Monitoring active
+
+2. MAINTAIN
+   - Address issues
+   - Perform maintenance
+   - Manage vendors
+   - STOP → Maintenance active
+
+3. IMPROVE
+   - Identify improvements
+   - Plan changes
+   - Implement updates
+   - STOP → Improvements active
+
+4. REPORT
+   - Track metrics
+   - Report status
+   - Plan future
+   - STOP → Reporting complete
+```
+
+### Workflow 2: Workspace Project
+
+```
+TRIGGER: Workspace change needed
+
+1. ASSESS
+   - Gather requirements
+   - Evaluate options
+   - Plan project
+   - STOP → Assessment complete
+
+2. DESIGN
+   - Create design
+   - Get approvals
+   - Plan implementation
+   - STOP → Design approved
+
+3. IMPLEMENT
+   - Execute changes
+   - Manage vendors
+   - Coordinate teams
+   - STOP → Implementation complete
+
+4. LAUNCH
+   - Complete space
+   - Onboard team
+   - Gather feedback
+   - STOP → Launch complete
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**Chief Operating Officer**
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **COO** | Strategy and priorities |
+| **IT Manager** | Technology infrastructure |
+| **HR** | Workplace policies |
+| **All Departments** | Space needs |
+| **Vendor Manager** | Vendor coordination |
+| **Event Marketing Manager** | Event spaces |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| All Departments | Space requests |
+| HR | Onboarding needs |
+| Events | Event requirements |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| All Departments | Workspace services |
+| COO | Facility reports |
+| HR | Workspace compliance |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] Spaces operational
+- [ ] Safety ensured
+- [ ] Team supported
+- [ ] Remote enabled
+- [ ] Compliance met
+- [ ] Feedback addressed
+
+### Facility Quality
+
+| Dimension | Standard |
+|-----------|----------|
+| **Functionality** | Spaces work well |
+| **Comfort** | Team satisfaction |
+| **Safety** | No incidents |
+| **Availability** | Space accessible |
+| **Efficiency** | Cost-effective |
+
+---
+
+## Context Requirements
+
+### Required Context
+- [ ] [Context item 1]
+- [ ] [Context item 2]
+
+### Required Skills
+| Skill | When to Load |
+|-------|--------------|
+[Use placeholder format: skill-name.md]
+
+---
+
+## Deployment Notes
+
+### Classification: Hybrid
+
+**Human manages facilities; AI assists with operations and tracking.**
+
+As a Hybrid role:
+- Human manages spaces
+- Human handles vendors
+- Human addresses issues
+- Human ensures safety
+- AI assists with scheduling
+- AI tracks operations
+- AI generates reports
+
+### Browser Deployment
+
+Uses **Browser mode** for facility management.
+
+### Iteration Protocol
+
+```
+LOOP:
+  1. Work on facility activities
+  2. STOP → Report on facility status
+  3. WAIT for guidance on priorities
+  4. IF approved → Continue
+  5. IF changes → Adjust approach
+  6. IF human says "stop" → HALT
+  7. REPEAT
+```
+
+---
+
+## Appendix: Story Portal Context
+
+### Facility Focus (Story Portal)
+
+| Space | Focus |
+|-------|-------|
+| **Office** | Team collaboration |
+| **Festival** | On-site infrastructure |
+| **Remote** | Distributed team |
+| **Events** | Community gatherings |
+
+### Workspace Considerations
+
+| Factor | Application |
+|--------|-------------|
+| Festival season | Event support |
+| Remote-first | Virtual workspace |
+| Community events | Gathering spaces |
+| Collaboration | Meeting spaces |
+
+### Facility Priorities
+
+| Priority | Focus |
+|----------|-------|
+| 1 | Festival infrastructure support |
+| 2 | Team workspace optimization |
+| 3 | Remote work enablement |
+| 4 | Community event spaces |
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR + Operations leadership approval.*
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "facilities-workspace-manager",
+  "department": "operations",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>{"role":"facilities-workspace-manager","department":"operations","scores":{"philosophy_depth":6,"handoff_specificity":6,"anti_pattern_quality":1,"ai_deployment_clarity":6,"story_portal_relevance":6},"findings":[{"dimension":"philosophy_depth","score":6,"finding":"The six principles are relevant but remain high-level and could apply to many roles. They lack actionable specificity for facilities management.","example_rewrite":"| Principle             | Meaning                                                                 |\n|-----------------------|-------------------------------------------------------------------------|\n| Ergonomic First       | Standardize adjustable desks/chairs to reduce physical strain by 30%.    |\n| Zone Optimization     | Allocate collaboration and focus zones based on team usage data weekly.  |"},{"dimension":"handoff_specificity","score":6,"finding":"Uses generic role labels (\"All Departments\") and vague artifacts (\"Workspace services\").","example_rewrite":"| Receives From        | Artifact                       |\n|----------------------|--------------------------------|\n| Product Managers     | Quarterly headcount forecasts   |\n| Marketing Lead       | Event floorplan requests        |\n\n| Delivers To       | Artifact                          |\n|------------------|------------------------------------|\n| Finance          | Monthly facilities expense report  |\n| HR               | Updated ergonomic assessment logs  |"},{"dimension":"anti_pattern_quality","score":1,"finding":"No anti-patterns are listed. The section is missing and provides no role-specific warnings.","example_rewrite":"Anti-Patterns\n- \"One-Size-Fits-All Seating\": Failing to survey ergonomic needs before ordering furniture.\n- \"Reactive Maintenance Only\": Addressing repairs only after failures instead of preventive schedules.\n- \"Ignoring Data Signals\": Overlooking room utilization metrics and doubling underused spaces.\n- \"Vendor Reliance\": Letting a single vendor dictate terms, leading to inflated costs."},{"dimension":"ai_deployment_clarity","score":6,"finding":"AI tasks are described broadly (\"scheduling,\" \"tracking\") but lack concrete data sources, triggers, and workflows.","example_rewrite":"AI Responsibilities\n- Daily: Query SpaceMgmtAPI for room occupancy and update Confluence dashboard.\n- On trigger \"maintenance_request\": Open or update Jira ticket via REST call.\n- Weekly: Generate PDF safety compliance report and email to COO and HR."},{"dimension":"story_portal_relevance","score":6,"finding":"Appendix lists high-level space priorities but not actionable Story Portal epics, user stories, or acceptance criteria.","example_rewrite":"Story Portal Epics\n- Epic: \"Festival Power Infrastructure\"\n  - Story: As a Festival Lead, I need a mapped power distribution plan in Confluence so the vendor can deliver equipment safely.\n  - Acceptance Criteria: Power map uploaded, vendor signoff obtained, backup generators tested."}],"top_improvement":"Add specific, role-relevant anti-patterns to guide Facilities & Workspace Manager behavior"}</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "facilities-workspace-manager",
+  "department": "operations",
+  "scores": {
+    "philosophy_depth": 2,
+    "handoff_specificity": 3,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 4,
+    "story_portal_relevance": 4
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 2,
+      "finding": "All six principles are generic platitudes that could apply to any facilities role at any company anywhere. 'Safety First' and 'Comfort Matters' are industry clichés. None reference Story Portal's specific context: festival infrastructure cycles, a distributed/remote-first team, or community event cadence. There is zero role-specific philosophy — these could be copied from a WeWork brochure.",
+      "example_rewrite": "Replace generic principles with role-specific ones: | **Festival-First Readiness** | Facilities planning runs on the festival calendar — every workspace decision accounts for the surge periods when the team triples in intensity and on-site infrastructure must be pre-staged 30 days out. | **Remote-Parity Standard** | A distributed team member must never experience fewer environmental affordances than an in-office peer — home office stipends, async-friendly room booking, and virtual collaboration tooling are treated as facilities responsibilities, not IT perks. | **Vendor Relationship as Operational Insurance** | Single-vendor dependencies for critical systems (HVAC, AV, cleaning) are treated as risk events — every critical service has a qualified backup vendor on contract before a primary failure occurs. |"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 3,
+      "finding": "Handoff tables name artifacts in the vaguest possible terms: 'Space requests', 'Workspace services', 'Facility reports'. No artifact has a format, template name, or defined field set. 'Vendor Manager' is listed as a collaboration partner but does not appear to be a named role in a standard operations charter — this may be a hallucinated role. Receives/Delivers tables do not specify trigger conditions, frequency, or what 'done' looks like for a handoff.",
+      "example_rewrite": "| Delivers To | Artifact | Format | Trigger | \n|-------------|----------|--------|---------| \n| COO | Monthly Facility Health Report | Standardized PDF dashboard — sections: space utilization %, open maintenance tickets, safety incidents, vendor SLA compliance, budget vs. actuals | First Monday of each month | \n| HR | New Hire Workspace Readiness Checklist | Completed checklist confirming desk assigned, access badge issued, equipment provisioned, emergency exits briefed | 48 hours before employee start date | \n| Event Marketing Manager | Event Space Setup Brief | Room layout diagram, AV configuration, catering logistics, capacity compliance sign-off | 5 business days before each community event |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "There are no anti-patterns section in this role file at all — the template standard requires 3-5 role-specific anti-patterns and none were written. The DO/DON'T boundary list exists but reads as generic scope boundaries, not behavioral failure modes. There is no section titled Anti-Patterns and no examples of how this specific role typically fails in practice.",
+      "example_rewrite": "Add an Anti-Patterns section: **Anti-Pattern 1 — Festival Tunnel Vision:** Treating festival season as the only planning horizon and deferring routine maintenance, vendor contract renewals, and remote-work infrastructure upgrades until 'after the festival' — resulting in cascading failures when the next cycle begins. **Anti-Pattern 2 — Reactive-Only Maintenance:** Waiting for team complaints to surface space problems instead of running proactive utilization audits monthly; the first signal of a broken environment should never be a Slack message from a frustrated employee. **Anti-Pattern 3 — Scope Creep into IT:** Purchasing, configuring, or troubleshooting network hardware, software licenses, or device management because 'it's in the office' — this erodes the IT Manager boundary and creates accountability gaps when systems fail. **Anti-Pattern 4 — Unilateral Space Decisions:** Redesigning or repurposing shared spaces without a documented needs assessment and COO sign-off, even for changes that seem minor — workspace changes affect every department's workflows."
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 4,
+      "finding": "The Iteration Protocol exists and follows the correct LOOP structure, which is good. However, the Required Context section contains literal placeholder text '[Context item 1]' and '[Context item 2]' — this is an unfilled template that would leave an AI agent with no idea what context files to load. Required Skills table is also empty with only a format hint. The AI/human division of labor is stated but vague: 'AI assists with scheduling' and 'AI generates reports' without specifying what scheduling system, what report template, or what triggers an AI action versus a human action.",
+      "example_rewrite": "Replace placeholder Required Context with: | Context | File | When Required | \n|---------|------|---------------| \n| Festival calendar and key dates | festival-calendar-2025.md | Always loaded — all facilities planning references this | \n| Office floor plan and room inventory | office-space-inventory.md | Load when handling space requests or utilization reports | \n| Active vendor contracts and SLA terms | vendor-contracts-summary.md | Load when managing vendors or escalating service failures | \n| Remote work equipment policy | remote-work-policy.md | Load when processing equipment requests or home office support | \nAnd rewrite AI trigger: 'TRIGGER FOR AI ACTION: When a space request is submitted, AI pulls current room availability from space management platform, cross-references festival calendar for conflicts, and drafts a Space Assignment Confirmation for human review before sending.'"
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 4,
+      "finding": "The Story Portal appendix acknowledges the right context categories (festival, remote, community events) but provides no actionable specifics. 'Festival infrastructure support' is Priority 1 but there is no detail about what that means — what infrastructure, what timeline, what vendors, what the failure mode is. The appendix reads as a generic categorization exercise rather than genuine project context. No specific festival names, event cadences, team size, or geographic context is referenced.",
+      "example_rewrite": "Rewrite Facility Priorities with specificity: | Priority | Focus | Concrete Action | Success Metric | \n|----------|-------|-----------------|----------------| \n| 1 | Festival infrastructure support | 30-day pre-festival checklist: confirm on-site power, AV, seating, and vendor access credentials are staged; conduct walkthrough with Event Marketing Manager | Zero day-of infrastructure failures during festival weekend | \n| 2 | Team workspace optimization | Run quarterly utilization audit using room booking data; identify underused spaces and repurpose within 60 days | Office space utilization rate above 70% on peak days | \n| 3 | Remote work enablement | Process all remote equipment requests within 3 business days; conduct semi-annual home office stipend review with HR | Remote team satisfaction score above 8/10 on quarterly pulse | \n| 4 | Community event spaces | Maintain a pre-configured event layout for the main gathering space that can be deployed in under 2 hours for pop-up community events | Event setup completed within 2-hour target 95% of the time |"
+    }
+  ],
+  "top_improvement": "Add a complete Anti-Patterns section with 4 role-specific behavioral failure modes — this section is entirely missing and is a required template component. Without it, neither a human reviewer nor an AI agent has guidance on how this role characteristically fails, making quality control impossible. The current DO/DON'T boundary list does not substitute for anti-patterns, which must describe failure behaviors, not just scope lines."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

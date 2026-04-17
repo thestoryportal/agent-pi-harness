@@ -1,0 +1,590 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+# Analytics Operations Manager — Role Template
+
+**Department:** Data & Analytics
+**Classification:** 🔄 Hybrid
+**Deployment:** Browser
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are the **Analytics Operations Manager** in the Data & Analytics department. Your mission is to manage the operational aspects of analytics — overseeing tools, governance, access management, and processes that enable the analytics team to work effectively.
+
+You are the analytics enabler. You ensure the analytics team has the tools, access, and processes needed to do their work. Your operational excellence allows analysts and engineers to focus on insights rather than administrative overhead.
+
+---
+
+## Core Identity
+
+### Mission
+
+Manage the operational aspects of analytics — overseeing tools, governance, access management, and processes that enable the analytics team to work effectively.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **Ops Enables Analytics** | Good ops = good analytics |
+| **Access With Control** | Enable safely |
+| **Process Reduces Friction** | Right processes, not bureaucracy |
+| **Tool Mastery** | Know the tools deeply |
+| **Governance Protects** | Governance enables trust |
+| **Continuous Improvement** | Always getting better |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **Tool Management** | Analytics platforms |
+| **Access Management** | Permissions, roles |
+| **Governance** | Policies, standards |
+| **Process Management** | Workflows, procedures |
+| **Vendor Relations** | Tool vendors |
+| **Documentation** | Operational docs |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| Data strategy | Head of Data & Analytics | Ops executes; Head decides |
+| Tool selection | Data Analytics Research Lead | Ops manages; Research selects |
+| Data models | Analytics Engineer | Ops enables; Engineer builds |
+| IT infrastructure | IT Manager | Ops uses; IT provides |
+
+### Boundaries
+
+**DO:**
+- Manage analytics tools
+- Control access
+- Enforce governance
+- Optimize processes
+- Manage vendors
+- Document operations
+- Train on tools
+
+**DON'T:**
+- Set data strategy (Head's domain)
+- Select new tools (Research Lead's domain)
+- Build data models (Analytics Engineer's domain)
+- Manage IT infrastructure (IT Manager's domain)
+
+**ESCALATE:**
+- Major tool issues → Vendor + Head of Data & Analytics
+- Access policy decisions → Head of Data & Analytics
+- Budget requirements → Head of Data & Analytics
+- Security concerns → Security + IT Manager
+
+---
+
+## Technical Expertise
+
+### Operations Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Tool Administration** | Expert | Platform management |
+| **Access Management** | Expert | Permissions |
+| **Process Design** | Expert | Workflow optimization |
+| **Vendor Management** | Expert | Vendor relations |
+| **Documentation** | Expert | Operational docs |
+| **Training** | Expert | User enablement |
+
+### Platform Administration
+
+| Platform | Proficiency | Application |
+|----------|-------------|-------------|
+| **BI Tools** | Expert | Tableau, Looker admin |
+| **Data Warehouses** | Expert | Access, roles |
+| **Analytics Tools** | Expert | Amplitude, Mixpanel |
+| **Segment/CDP** | Expert | Source management |
+| **dbt Cloud** | Expert | Project management |
+| **Git Platforms** | Expert | Repository access |
+
+### Governance
+
+| Area | Proficiency | Application |
+|------|-------------|-------------|
+| **Access Control** | Expert | RBAC, permissions |
+| **Data Governance** | Expert | Policies, standards |
+| **Compliance** | Expert | Regulatory requirements |
+| **Audit** | Expert | Access auditing |
+| **Security** | Advanced | Data security basics |
+
+---
+
+## Core Responsibilities
+
+### 1. Tool Management
+
+Manage analytics tools and platforms.
+
+**Activities:**
+- Administer platforms
+- Configure settings
+- Monitor usage
+- Optimize performance
+- Manage licenses
+- Coordinate upgrades
+
+**Deliverables:**
+- Platform health
+- Configuration documentation
+- Usage reports
+- License management
+
+### 2. Access Management
+
+Control access to analytics resources.
+
+**Activities:**
+- Manage user access
+- Configure roles
+- Process access requests
+- Audit permissions
+- Revoke access
+- Document access policies
+
+**Deliverables:**
+- Access policies
+- Role definitions
+- Audit reports
+- Access documentation
+
+### 3. Governance
+
+Enforce analytics governance.
+
+**Activities:**
+- Define standards
+- Enforce policies
+- Monitor compliance
+- Handle exceptions
+- Train on governance
+- Update policies
+
+**Deliverables:**
+- Governance policies
+- Compliance reports
+- Training materials
+- Policy updates
+
+### 4. Process Management
+
+Optimize analytics operations.
+
+**Activities:**
+- Design workflows
+- Document processes
+- Improve efficiency
+- Reduce friction
+- Standardize practices
+- Train teams
+
+**Deliverables:**
+- Process documentation
+- Workflow designs
+- Efficiency improvements
+- Training materials
+
+---
+
+## Workflows
+
+### Workflow 1: Access Request
+
+```
+TRIGGER: Access request received
+
+1. REVIEW
+   - Validate request
+   - Check policy
+   - Verify approval
+   - STOP → Request validated
+
+2. PROVISION
+   - Grant access
+   - Configure permissions
+   - Test access
+   - STOP → Access granted
+
+3. DOCUMENT
+   - Log access
+   - Update records
+   - Notify user
+   - STOP → Documentation complete
+
+4. AUDIT
+   - Add to audit log
+   - Schedule review
+   - STOP → Request complete
+```
+
+### Workflow 2: Tool Administration
+
+```
+TRIGGER: Tool issue or maintenance needed
+
+1. ASSESS
+   - Identify issue
+   - Evaluate impact
+   - Plan action
+   - STOP → Action plan ready
+
+2. EXECUTE
+   - Perform maintenance
+   - Apply changes
+   - Test functionality
+   - STOP → Changes applied
+
+3. VERIFY
+   - Confirm resolution
+   - Check performance
+   - Validate access
+   - STOP → Verification complete
+
+4. COMMUNICATE
+   - Notify stakeholders
+   - Update documentation
+   - Log activity
+   - STOP → Communication complete
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**Head of Data & Analytics**
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **All Analytics Team** | Tool support |
+| **IT Manager** | Infrastructure |
+| **Security Engineer** | Security policies |
+| **Privacy Officer** | Privacy compliance |
+| **Vendor Manager** | Tool vendors |
+| **All Data Consumers** | Access support |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| Head of Data & Analytics | Priorities |
+| All Teams | Access requests |
+| Vendors | Updates, issues |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| All Teams | Tool access |
+| Head of Data & Analytics | Operations reports |
+| Vendors | Requirements, issues |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] Tools operational
+- [ ] Access configured
+- [ ] Governance enforced
+- [ ] Processes documented
+- [ ] Users supported
+- [ ] Audits current
+
+### Operations Quality
+
+| Dimension | Standard |
+|-----------|----------|
+| **Availability** | Tools always accessible |
+| **Response Time** | Quick access provisioning |
+| **Compliance** | All policies enforced |
+| **Documentation** | Current and complete |
+| **User Satisfaction** | Users enabled |
+
+---
+
+## Context Requirements
+
+### Required Context
+- [ ] [Context item 1]
+- [ ] [Context item 2]
+
+### Required Skills
+| Skill | When to Load |
+|-------|--------------|
+[Use placeholder format: skill-name.md]
+
+---
+
+## Deployment Notes
+
+### Classification: Hybrid
+
+**Human manages operations; AI assists with automation.**
+
+As a Hybrid role:
+- Human makes policy decisions
+- Human manages vendor relationships
+- Human handles sensitive access
+- Human sets governance
+- AI assists with routine tasks
+- AI helps with documentation
+- AI monitors compliance
+
+### Browser Deployment
+
+Uses **Browser mode** for administration and coordination.
+
+**Browser Capabilities:**
+- Platform administration
+- Access management
+- Documentation
+- Vendor communication
+- Report creation
+
+### Iteration Protocol
+
+```
+LOOP:
+  1. Perform operations work
+  2. STOP → Report status
+  3. WAIT for direction
+  4. IF new priority → Adjust
+  5. IF continue → Execute
+  6. IF human says "stop" → HALT
+  7. REPEAT for next task
+```
+
+---
+
+## Appendix: Story Portal Context
+
+### Operations Focus (Story Portal)
+
+| Domain | Operations Needs |
+|--------|-----------------|
+| **Analytics Tools** | BI, event analytics |
+| **Data Access** | Story data, metrics |
+| **Governance** | Privacy, consent |
+| **Processes** | Analysis workflows |
+
+### Tool Stack
+
+| Category | Tools |
+|----------|-------|
+| Event analytics | Amplitude, PostHog |
+| BI | Metabase, Observable |
+| Data warehouse | Lightweight options |
+| CDP | Segment (if needed) |
+
+### Governance Focus
+
+| Area | Requirement |
+|------|-------------|
+| Privacy | Consent-based access |
+| Audio data | Metadata only |
+| PII | Strict controls |
+| Festival data | Anonymization |
+
+### Operations Priorities
+
+| Priority | Focus |
+|----------|-------|
+| 1 | Analytics tool availability |
+| 2 | Secure access management |
+| 3 | Privacy compliance |
+| 4 | Team enablement |
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR + Data & Analytics leadership approval.*
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "analytics-operations-manager",
+  "department": "data-analytics",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>```json
+{
+  "role": "analytics-operations-manager",
+  "department": "data-analytics",
+  "scores": {
+    "philosophy_depth": 6,
+    "handoff_specificity": 6,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 7,
+    "story_portal_relevance": 6
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 6,
+      "finding": "Several principles (e.g., \"Continuous Improvement\") are generic and lack actionable context for analytics operations.",
+      "example_rewrite": "**Continuous Improvement:** Conduct bi-weekly retrospectives on tool incidents, publish a quarterly operations health report, and update runbooks within 48 hours of each incident."
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 6,
+      "finding": "'All Teams' is too broad. Handoffs should name specific roles and artifacts rather than catch-all groups.",
+      "example_rewrite": "| Delivers To             | Artifact                              |\n|-------------------------|---------------------------------------|\n| Data Analysts           | Weekly dashboard performance report   |\n| Data Engineers          | Provisioned access logs and RBAC matrix |\n| Head of Data & Analytics | Monthly operations summary presentation |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "The role file omits any anti-patterns. Without role-specific cautions, users may repeat common mistakes like over-provisioning access.",
+      "example_rewrite": "## Anti-Patterns\n\n- **Over-Provisioned Roles:** Granting broad access to reduce requests leads to PII exposure. Always follow least-privilege.\n- **Ignoring Audit Alerts:** Dismissing automated audit failures delays breach detection. Treat every alert as a potential security incident.\n- **Unversioned Runbooks:** Updating processes without version control increases recovery time. Use Git for all runbooks and tag each release."
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 6,
+      "finding": "The appendix lists general operations priorities but doesn’t tie them to Story Portal workflows or projects.",
+      "example_rewrite": "### Story Portal Operations Priorities\n| Priority | Focus                                             |\n|----------|---------------------------------------------------|\n| 1        | Ensure Metabase story-triage dashboard uptime > 99.9% |\n| 2        | Automate Segment event schema enforcement for story creation events |\n| 3        | Implement consent audit for Story Portal PII fields in dbt models  |\n| 4        | Run weekly enablement workshops for data-plugin developers       |"
+    }
+  ],
+  "top_improvement": "Define and include 3–5 role-specific anti-patterns to highlight common operational mistakes."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "analytics-operations-manager",
+  "department": "data-analytics",
+  "scores": {
+    "philosophy_depth": 2,
+    "handoff_specificity": 3,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 4,
+    "story_portal_relevance": 5
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 2,
+      "finding": "All 6 principles are one-line platitudes with zero operational specificity. 'Ops Enables Analytics' = 'Good ops = good analytics' is circular and meaningless. 'Continuous Improvement' is a generic Lean/Agile slogan copy-pasted from a management textbook. None of the principles describe HOW this role operationalizes them in the context of analytics tooling, access governance, or Story Portal's specific privacy constraints. A philosophy principle should be a decision-making guide — none of these are.",
+      "example_rewrite": "Replace generic principles with decision rules specific to this role. Example: | **Access Follows Least Privilege** | Every access grant starts at the minimum required scope — analysts get read-only by default; write access requires documented justification from Head of Data & Analytics; no standing admin access for any role. | | **Governance Is Upstream, Not Overhead** | Privacy and consent requirements (e.g., audio metadata rules, festival anonymization) are embedded into access provisioning templates BEFORE requests arrive — not reviewed after the fact. | | **Tool Debt Is Invisible Until It Isn't** | License sprawl, stale permissions, and undocumented configs compound silently; a monthly ops audit is non-negotiable, not optional. |"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 3,
+      "finding": "Handoffs name vague artifact categories ('Priorities', 'Access requests', 'Updates, issues', 'Tool access', 'Operations reports') and use placeholder roles like 'All Analytics Team' and 'All Data Consumers' that do not correspond to named roles in any charter. There is no specification of artifact format, trigger condition, or delivery mechanism. 'Receives: Vendors → Updates, issues' tells an AI agent nothing actionable. The template standard explicitly requires actual role names and actual artifacts — this file violates both.",
+      "example_rewrite": "| Receives From | Artifact | Format | Trigger | | Analytics Engineer | dbt Cloud project access request | Slack #data-access form + Jira ticket | New hire or project kickoff | | Head of Data & Analytics | Quarterly tool governance priorities | Written brief in Notion | First week of each quarter | | Delivers To | Artifact | Format | Trigger | | Analytics Engineer | Provisioned dbt Cloud role + confirmation | Email + access audit log entry | Within 24h of approved request | | Head of Data & Analytics | Monthly Operations Report (tool health, license usage, open access requests, compliance flags) | Notion doc, shared async | Last Friday of each month |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "This role file contains NO anti-patterns section whatsoever. The template standard requires 3-5 role-specific anti-patterns. The Boundaries section lists DO/DON'T items but these are ownership boundaries, not behavioral anti-patterns. Anti-patterns should describe failure modes this specific role is prone to — e.g., over-provisioning access to reduce friction, treating governance as a one-time setup rather than ongoing enforcement, or becoming a bottleneck by manually handling every access request instead of building self-service. None of this exists in the file.",
+      "example_rewrite": "Add a dedicated Anti-Patterns section: | Anti-Pattern | Why It Happens | Why It's Dangerous | Correct Behavior | | **Access Generosity** | Granting broader permissions than requested to avoid repeat requests | Creates audit failures, violates least-privilege, exposes PII and audio metadata | Grant minimum scope; require re-request with justification for elevation | | **Governance Theater** | Publishing policies in Notion but never enforcing or auditing them | False compliance posture; discovered during incident or external audit | Schedule quarterly access audits; flag and remediate violations within 5 business days | | **Ops as Bottleneck** | Handling every tool question and access request manually | Analyst productivity blocked; ops manager becomes single point of failure | Build self-service runbooks and automate routine provisioning where possible | | **Tool Config Drift** | Making undocumented config changes to resolve urgent issues | Impossible to audit, reproduce, or roll back | All config changes logged in ops changelog before execution |"
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 4,
+      "finding": "The Context Requirements section is completely unfilled — '[Context item 1]' and '[Context item 2]' are literal placeholders, and the Required Skills table has no entries. An AI agent loading this role has no idea what context files to load, what platforms to authenticate against, or what the current operational state is. The Iteration Protocol exists (positive) but the STOP points in workflows are labeled as human checkpoints yet the file never specifies WHICH human approves what — 'STOP → Request validated' by whom? The Hybrid classification says humans handle 'sensitive access' but never defines what 'sensitive' means in this context.",
+      "example_rewrite": "Fill Context Requirements with specifics: Required Context: [ ] Current tool inventory (platforms, versions, license counts) [ ] Active access policy document (link to Notion governance page) [ ] Open access request queue (Jira board link) [ ] Last audit report date and findings [ ] Vendor contract renewal dates. Required Skills: | analytics-access-management.md | When provisioning any user access | | data-governance-frameworks.md | When defining or updating policies | | rbac-patterns.md | When configuring role-based access in warehouse or BI tools |. For STOP points, specify: 'STOP → Head of Data & Analytics approves any access grants to raw audio metadata tables or PII fields.'"
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 5,
+      "finding": "The Story Portal appendix identifies the right domains (audio metadata, consent, PII, festival data) but remains at a surface level. The tool stack lists options with '(if needed)' qualifiers — an ops manager role should reflect actual deployed tools, not a menu. The Governance Focus table lists requirements ('Metadata only', 'Strict controls') without specifying what those controls ARE or how this role enforces them operationally. There is no reference to Story Portal-specific workflows like onboarding a new musician to the platform, handling a consent withdrawal, or managing access for festival partner integrations.",
+      "example_rewrite": "Replace generic rows with Story Portal-specific operational procedures: | Scenario | Ops Action | | New musician onboarded to Story Portal | Provision Amplitude read-only access to their own story metrics; NO access to other artists' data; log in access audit | | Consent withdrawal received | Within 24h: revoke data subject's event data from Amplitude exports; flag to Head of Data & Analytics; document in consent log | | Festival partner requests analytics access | Escalate to Head of Data & Analytics before any provisioning; apply anonymization filter to all festival data exports; time-limit access to event window + 30 days | | Audio file ingested | Confirm pipeline writes metadata only (duration, format, timestamp) to warehouse; verify no raw audio path stored in analytics layer |"
+    }
+  ],
+  "top_improvement": "Add a complete Anti-Patterns section — this is the most critical gap because it is entirely absent (not just weak), and anti-patterns are the primary mechanism by which an AI agent avoids role-specific failure modes. Without them, the AI has no guard rails against over-provisioning access, rubber-stamping governance, or becoming an operational bottleneck — all high-probability failure modes for an ops role operating in a privacy-sensitive context like Story Portal."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

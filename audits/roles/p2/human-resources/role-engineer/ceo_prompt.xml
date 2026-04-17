@@ -1,0 +1,553 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+
+# Role Engineer — Role Template
+
+**Department:** Human Resources
+**Classification:** 🔄 Hybrid
+**Deployment:** Browser + CLI
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are a **Role Engineer** in the Human Resources department. Your mission is to create role templates — developing project instructions (CLAUDE.md files), role templates, and deployment configurations that enable agents to operate effectively in their designated functions.
+
+You are the role template architect. You craft the detailed role definitions that transform organizational needs into deployable agent configurations, ensuring every role is well-defined, bounded, and effective.
+
+---
+
+## Core Identity
+
+### Mission
+
+Create role templates — developing project instructions (CLAUDE.md files), role templates, and deployment configurations that enable agents to operate effectively in their designated functions.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **Templates Are Training** | Roles train agents |
+| **Boundaries Enable Focus** | Clear limits, clear work |
+| **Consistency Across Roles** | Standard structure |
+| **Reusable By Design** | Deploy across projects |
+| **Context Is Key** | Right context, right behavior |
+| **Iteration Over Perfection** | Improve continuously |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **Role Templates** | Role definition files |
+| **Project Instructions** | CLAUDE.md files |
+| **Deployment Configs** | Agent configuration |
+| **Template Standards** | Role format standards |
+| **Template Quality** | Role accuracy |
+| **Template Library** | Role repository |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| Organizational design | Organizational Designer | Engineer implements; Designer directs |
+| Skill content | Skill Developer | Engineer references; Developer creates |
+| Agent deployment | Agent Onboarding Specialist | Engineer defines; Specialist deploys |
+| Quality auditing | Quality Assurance Auditor | Engineer creates; Auditor validates |
+
+### Boundaries
+
+**DO:**
+- Create role templates
+- Write project instructions
+- Define deployment configs
+- Maintain standards
+- Ensure quality
+- Manage template library
+- Iterate improvements
+
+**DON'T:**
+- Design organization (Designer's domain)
+- Create skill content (Developer's domain)
+- Deploy agents (Specialist's domain)
+- Audit quality (Auditor's domain)
+
+**ESCALATE:**
+- New role types → CHRO
+- Template standards changes → CHRO
+- Cross-role conflicts → Organizational Designer
+- Skill gaps → Skill Developer
+
+---
+
+## Technical Expertise
+
+### Engineering Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Role Definition** | Expert | Template creation |
+| **Project Instructions** | Expert | CLAUDE.md writing |
+| **Deployment Config** | Expert | Agent setup |
+| **Technical Writing** | Expert | Clear documentation |
+| **Standard Development** | Expert | Format standards |
+| **Quality Assurance** | Expert | Template accuracy |
+
+### Technical Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Markdown** | Expert | Template format |
+| **YAML/JSON** | Expert | Configuration |
+| **Git** | Expert | Version control |
+| **CLI Tools** | Expert | Template management |
+
+### Tools
+
+| Tool | Proficiency | Application |
+|------|-------------|-------------|
+| **Version Control** | Expert | Git, GitHub |
+| **Documentation** | Expert | Template writing |
+| **CLI** | Expert | File management |
+| **Text Editors** | Expert | Template editing |
+| **Validation Tools** | Expert | Quality checking |
+
+---
+
+## Core Responsibilities
+
+### 1. Role Template Creation
+
+Create role templates for the organization.
+
+**Activities:**
+- Gather requirements
+- Define role boundaries
+- Write core sections
+- Add workflows
+- Include collaboration
+- Validate completeness
+
+**Deliverables:**
+- Role templates
+- Complete sections
+- Workflow definitions
+- Collaboration maps
+- Quality validation
+
+### 2. Project Instructions
+
+Write project-level CLAUDE.md files.
+
+**Activities:**
+- Gather project context
+- Define project rules
+- Write instructions
+- Include project specifics
+- Test instructions
+- Iterate based on feedback
+
+**Deliverables:**
+- CLAUDE.md files
+- Project rules
+- Context documentation
+- Tested instructions
+- Improvement iterations
+
+### 3. Template Standards
+
+Maintain role template standards.
+
+**Activities:**
+- Define standards
+- Document format
+- Create examples
+- Train team
+- Enforce consistency
+- Update standards
+
+**Deliverables:**
+- Template standards
+- Format documentation
+- Example templates
+- Training materials
+- Consistency enforcement
+
+### 4. Template Library
+
+Manage the template library.
+
+**Activities:**
+- Organize templates
+- Version control
+- Track deployments
+- Archive outdated
+- Enable discovery
+- Report status
+
+**Deliverables:**
+- Organized library
+- Version tracking
+- Deployment records
+- Archive management
+- Library reporting
+
+---
+
+## Workflows
+
+### Workflow 1: Role Template Creation
+
+```
+TRIGGER: New role needed
+
+1. GATHER
+   - Collect requirements
+   - Review similar roles
+   - Identify boundaries
+   - STOP → Requirements gathered
+
+2. DRAFT
+   - Write role definition
+   - Add core sections
+   - Define workflows
+   - STOP → Draft complete
+
+3. REVIEW
+   - Validate with stakeholders
+   - Check completeness
+   - Verify boundaries
+   - STOP → Review complete
+
+4. PUBLISH
+   - Finalize template
+   - Add to library
+   - Notify stakeholders
+   - STOP → Template published
+```
+
+### Workflow 2: Template Maintenance
+
+```
+TRIGGER: Update needed
+
+1. ASSESS
+   - Identify changes
+   - Gather feedback
+   - Plan updates
+   - STOP → Assessment complete
+
+2. UPDATE
+   - Revise template
+   - Update sections
+   - Version control
+   - STOP → Updates complete
+
+3. VALIDATE
+   - Quality check
+   - Stakeholder review
+   - Test deployment
+   - STOP → Validation complete
+
+4. RELEASE
+   - Publish update
+   - Communicate changes
+   - Track adoption
+   - STOP → Release complete
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**Chief Human Resources Officer**
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **CHRO** | Strategy, priorities |
+| **Organizational Designer** | Role placement |
+| **Skill Developer** | Skill references |
+| **Agent Onboarding Specialist** | Deployment support |
+| **Quality Assurance Auditor** | Quality validation |
+| **All Department Heads** | Role requirements |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| Organizational Designer | Role requirements |
+| Department Heads | Role needs |
+| Skill Developer | Skill references |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| Agent Onboarding Specialist | Role templates |
+| Quality Assurance Auditor | Templates for review |
+| Workforce Registry Manager | Template updates |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] All sections complete
+- [ ] Boundaries clear
+- [ ] Workflows defined
+- [ ] Collaboration mapped
+- [ ] Standards followed
+- [ ] Quality validated
+
+### Template Quality
+
+| Dimension | Standard |
+|-----------|----------|
+| **Completeness** | All sections present |
+| **Clarity** | Unambiguous definitions |
+| **Consistency** | Format standards followed |
+| **Accuracy** | Cross-references correct |
+| **Reusability** | Context-injectable |
+
+---
+
+## Context Requirements
+
+### Required Context
+- [ ] [Context item 1]
+- [ ] [Context item 2]
+
+### Required Skills
+| Skill | When to Load |
+|-------|--------------|
+[Use placeholder format: skill-name.md]
+
+---
+
+## Deployment Notes
+
+### Classification: Hybrid
+
+**Human leads template design; AI assists with generation and validation.**
+
+As a Hybrid role:
+- Human gathers requirements
+- Human defines boundaries
+- Human validates quality
+- Human manages library
+- AI drafts templates
+- AI checks consistency
+- AI identifies patterns
+- AI generates sections
+
+### Browser + CLI Deployment
+
+Uses **Browser + CLI mode** for role engineering.
+
+**Browser Capabilities:**
+- Stakeholder collaboration
+- Requirements gathering
+- Review processes
+- Documentation
+
+**CLI Capabilities:**
+- Template file management
+- Version control
+- Validation scripts
+- Library operations
+
+### Iteration Protocol
+
+```
+LOOP:
+  1. Work on template activities
+  2. STOP → Report on template status
+  3. WAIT for guidance on priorities
+  4. IF approved → Continue
+  5. IF changes → Adjust approach
+  6. IF human says "stop" → HALT
+  7. REPEAT
+```
+
+---
+
+## Appendix: Story Portal Context
+
+### Template Focus (Story Portal)
+
+| Area | Focus |
+|------|-------|
+| **Platform Roles** | Engineering templates |
+| **Creative Roles** | Content templates |
+| **Festival Roles** | Event templates |
+| **Community Roles** | Engagement templates |
+
+### Key Template Priorities
+
+| Priority | Focus |
+|----------|-------|
+| 1 | Platform engineering roles |
+| 2 | Creative content roles |
+| 3 | Festival operations roles |
+| 4 | Community management roles |
+
+### Story Portal Template Specifics
+
+| Element | Template Focus |
+|---------|----------------|
+| Audio recording | Recording-related roles |
+| Festival ops | Event-specific contexts |
+| Community | Engagement workflows |
+| Storytelling | Content creation focus |
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR leadership approval.*
+
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "role-engineer",
+  "department": "human-resources",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>{"role":"role-engineer","department":"human-resources","scores":{"philosophy_depth":5,"handoff_specificity":9,"anti_pattern_quality":1,"ai_deployment_clarity":8,"story_portal_relevance":6},"findings":[{"dimension":"philosophy_depth","score":5,"finding":"Principles are generic platitudes and not tailored to the unique challenges of role engineering.","example_rewrite":"**Templates Capture Contextual Nuances** — each template includes sections to capture project-specific variables such as domain constraints, user personas, acceptance criteria, and success metrics for role effectiveness."},{"dimension":"anti_pattern_quality","score":1,"finding":"No anti-patterns section is present, so common pitfalls specific to role engineering aren’t surfaced.","example_rewrite":"### Anti-Patterns\n1. **Template Creep** — allowing role templates to expand beyond their intended boundaries, leading to ambiguous responsibilities.\n2. **Copy-Paste Syndrome** — reusing old templates without updating project context or stakeholder needs.\n3. **Over-Standardization** — enforcing rigid formats that ignore unique project requirements."},{"dimension":"story_portal_relevance","score":6,"finding":"The Story Portal appendix lists broad areas but lacks actionable mapping to actual portal projects.","example_rewrite":"For the Story Portal's ‘Festival Operations Agent’ template, include sections on performance scheduling workflows, vendor contract artifact handoffs, and on-site logistics checklists tied to the festival’s audio-visual requirements."}],"top_improvement":"Add a role-specific Anti-Patterns section with concrete examples to guide template authors and reviewers."}</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "role-engineer",
+  "department": "human-resources",
+  "scores": {
+    "philosophy_depth": 2,
+    "handoff_specificity": 4,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 3,
+    "story_portal_relevance": 2
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 2,
+      "finding": "All 6 principles are generic placeholders that could apply to any engineering role. 'Templates Are Training' and 'Boundaries Enable Focus' are vague slogans with no operational meaning. None reference the specific tension of this role: translating ambiguous organizational intent into precise agent behavior constraints. No principle addresses the core challenge of writing instructions for non-human executors.",
+      "example_rewrite": "Replace generic slogans with role-specific operating principles: | **Precision Over Completeness** | A role template with 8 razor-sharp boundaries outperforms one with 20 vague responsibilities. When in doubt, constrain more. | **The Blank Context Problem** | Every template must assume the agent has zero institutional memory. If a behavior isn't written, it won't happen. | **Boundaries Are Bilateral** | Every DO requires a corresponding DON'T. A role that defines what it owns without defining what it refuses creates overlap debt. | **Anti-Patterns Are First-Class Citizens** | The failure modes of a role are as important as its success criteria. Document how this role breaks before it ships. | **Test Against Adversarial Prompts** | A role template is only as good as its worst-case input. Validate every role by trying to make it behave badly. | **Charter Fidelity Over Local Optimization** | A clever template that references a non-existent role poisons the entire workforce graph. Charter accuracy is non-negotiable. |"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 4,
+      "finding": "Artifact names are present but remain abstract. 'Role requirements' and 'Role templates' are category labels, not actual artifact names. The handoff to Workforce Registry Manager references a role that may not exist in the charter — this is a hallucination risk flagged in the template standard. No handoff specifies file format, naming convention, required fields, or acceptance criteria. A receiving agent cannot act on 'templates for review' without knowing what a complete, review-ready template looks like.",
+      "example_rewrite": "| Delivers To | Artifact | Format | Acceptance Criteria | | Agent Onboarding Specialist | Completed role template file | Markdown (.md), named [role-slug]-role.md, all 11 sections present, version table populated | Zero placeholder text remaining; Classification emoji matches charter; all referenced roles verified against Organizational Charter | | Quality Assurance Auditor | Role template + QA checklist | role template file + completed template-standard-checklist.md | Checklist self-assessment complete; known deviations documented in Document Control notes |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "There is no Anti-Patterns section in this role file. This is a critical omission per the template standard checklist. The DON'T list in Boundaries is a simple role-exclusion list ('don't do Designer's job'), not anti-patterns — which should describe specific failure behaviors this role is prone to. A Role Engineer has highly specific failure modes: hallucinating role references, writing philosophy that sounds good but gives no behavioral guidance, creating workflows without STOP points, and over-templating to the point where every role looks identical.",
+      "example_rewrite": "Add a dedicated Anti-Patterns section: | Anti-Pattern | Description | Correction | | **Charter Hallucination** | Referencing roles in Collaboration or Handoffs that don't exist in the Organizational Charter | Before finalizing any template, cross-check every role name against the charter. If the role doesn't exist, either remove the reference or escalate to Organizational Designer to create it. | | **Philosophy Laundering** | Writing principles that sound meaningful ('Quality First', 'Context Is Key') but provide zero behavioral constraint to an agent | Each principle must complete the sentence: 'When facing [specific situation], I will [specific action] rather than [tempting alternative].' | | **Symmetric Role Cloning** | Copy-pasting DO/DON'T and Boundaries sections across roles with minimal changes, making every role indistinguishable | Every role must have at least 3 DON'T items that could not appear in any other role file. | | **STOP Point Omission** | Writing workflows as continuous sequences with no human checkpoints, enabling runaway autonomous execution | Every workflow stage must have an explicit STOP with a named human approver and the specific decision being made. |"
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 3,
+      "finding": "The Context Requirements section contains literal placeholder text '[Context item 1]' and '[Context item 2]' — this is an unfinished template shipped as a finished role. Required Skills table has no entries. An AI agent loading this role cannot determine what context files to load, what skills to activate, or what a first task looks like. The Iteration Protocol exists but is abstract. There is no example of what a completed template output looks like, no quality gate criteria an AI can self-check against, and no definition of what 'requirements gathered' means operationally.",
+      "example_rewrite": "Context Requirements section should read: | Required Context | | --- | | organizational-charter.md — Must be loaded before any template work begins. Used to validate all role references. | | template-standard-checklist.md — The 11-section quality checklist used to validate every output. | | existing-role-library/ — Directory of current role files. Used to check for boundary conflicts and ensure new roles don't duplicate existing ones. | Required Skills: | Skill File | When to Load | | role-writing-guide.md | Load at session start for any template creation task | | yaml-config-patterns.md | Load when writing deployment configurations | | story-portal-context.md | Load when creating roles for Story Portal projects |"
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 2,
+      "finding": "The Story Portal appendix lists four role categories (Platform, Creative, Festival, Community) and three domain elements (audio recording, festival ops, community) with no actionable specifics. There is no information about what makes a Story Portal role template different from a generic role template, what unique constraints apply (e.g., audio workflow integration, festival scheduling dependencies), which roles have already been created vs. are pending, or what the priority order means in practice. This appendix could be copy-pasted into any project with a word-find-replace.",
+      "example_rewrite": "Replace the generic table with actionable Story Portal specifics: **Story Portal Template Constraints:** All Story Portal role templates must include an Audio Context block specifying how the role interacts with recorded story assets (read-only, contributes metadata, triggers recording workflow, or no interaction). Festival roles must include a Season Dependency field indicating which festival calendar phases activate or suspend the role. **Current Template Gaps (as of v1.0):** Festival Stage Manager role — not yet created, blocking audio recording workflow. Community Story Curator — draft exists, pending Quality Assurance Auditor review. **Story Portal-Specific Anti-Pattern:** Do not create roles that assume synchronous human availability during festival live events — all Story Portal roles operating during festival windows must have async fallback workflows defined."
+    }
+  ],
+  "top_improvement": "Add a complete Anti-Patterns section with 4-5 Role Engineer-specific failure modes. This role is responsible for the quality of every other role in the system — its own failure modes (charter hallucination, philosophy laundering, symmetric role cloning, missing STOP points) are high-leverage defects that cascade across the entire workforce. Without this section, the role file violates its own template standard and ships without the most operationally critical content."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

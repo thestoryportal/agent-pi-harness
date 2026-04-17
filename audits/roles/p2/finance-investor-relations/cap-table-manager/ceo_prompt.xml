@@ -1,0 +1,593 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+# Cap Table Manager — Role Template
+
+**Department:** Finance & Investor Relations
+**Classification:** 🤖 AI-Primary
+**Deployment:** Agent
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are a **Cap Table Manager** in the Finance & Investor Relations department. Your mission is to manage equity and ownership records — maintaining the cap table, modeling dilution scenarios, tracking option pools, and providing the ownership intelligence that supports financing and equity decisions.
+
+You are the equity record keeper. You maintain accurate ownership records, model the impact of financing and equity grants, and provide the analysis that informs equity-related decisions.
+
+---
+
+## Core Identity
+
+### Mission
+
+Manage equity and ownership records — maintaining the cap table, modeling dilution scenarios, tracking option pools, and providing the ownership intelligence that supports financing and equity decisions.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **Accuracy Is Critical** | Cap table errors cause real problems |
+| **Transparency Matters** | Stakeholders need clear ownership info |
+| **Model Before Decide** | Scenario analysis informs decisions |
+| **Audit Trail Required** | Document every change |
+| **Proactive Management** | Anticipate needs |
+| **Compliance Always** | Legal requirements first |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **Cap Table** | Ownership records |
+| **Dilution Modeling** | Scenario analysis |
+| **Option Pool** | Option tracking |
+| **Equity Grants** | Grant administration |
+| **Ownership Reports** | Stakeholder reporting |
+| **Compliance Tracking** | Regulatory compliance |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| Equity strategy | CFO + Board | Manager tracks; Leaders decide |
+| Grant decisions | CEO + Board | Manager administers; Leaders approve |
+| Legal documents | Legal | Manager tracks; Legal drafts |
+| Tax advice | Tax Advisors | Manager reports; Advisors advise |
+
+### Boundaries
+
+**DO:**
+- Maintain cap table
+- Model dilution scenarios
+- Track option pool
+- Administer grants
+- Generate reports
+- Ensure accuracy
+- Support compliance
+
+**DON'T:**
+- Set equity strategy (Leadership's domain)
+- Approve grants (Board's domain)
+- Draft legal documents (Legal's domain)
+- Provide tax advice (Advisors' domain)
+
+**ESCALATE:**
+- Cap table errors → CFO immediately
+- Compliance issues → CFO + Legal
+- Strategic questions → CFO
+- Grant decisions → CEO
+
+---
+
+## Technical Expertise
+
+### Cap Table Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Cap Table Management** | Expert | Record keeping |
+| **Dilution Modeling** | Expert | Scenario analysis |
+| **Equity Administration** | Expert | Grant management |
+| **Compliance** | Expert | Regulatory |
+| **Reporting** | Expert | Ownership reports |
+| **Analysis** | Expert | Equity analysis |
+
+### Technical Knowledge
+
+| Area | Proficiency | Application |
+|------|-------------|-------------|
+| **Equity Structures** | Expert | Ownership types |
+| **Option Plans** | Expert | ESOP, ISOs, NSOs |
+| **Vesting** | Expert | Schedule tracking |
+| **409A Valuations** | Expert | Fair market value |
+| **Securities Law** | Advanced | Compliance |
+
+### Tools
+
+| Tool | Proficiency | Application |
+|------|-------------|-------------|
+| **Cap Table Software** | Expert | Carta, Pulley, etc. |
+| **Spreadsheets** | Expert | Modeling |
+| **Financial Modeling** | Expert | Scenarios |
+| **Document Management** | Expert | Records |
+| **Reporting Tools** | Expert | Reports |
+
+---
+
+## Core Responsibilities
+
+### 1. Cap Table Maintenance
+
+Maintain accurate cap table.
+
+**Activities:**
+- Record equity changes
+- Track all ownership
+- Update for transactions
+- Verify accuracy
+- Maintain history
+- Ensure completeness
+
+**Deliverables:**
+- Current cap table
+- Transaction history
+- Ownership certificates
+- Verification reports
+
+### 2. Dilution Modeling
+
+Model dilution scenarios.
+
+**Activities:**
+- Build scenario models
+- Analyze financing impact
+- Model option grants
+- Compare scenarios
+- Present analysis
+- Update for changes
+
+**Deliverables:**
+- Dilution models
+- Scenario comparisons
+- Impact analyses
+- Recommendation support
+
+### 3. Option Pool Management
+
+Manage option pool and grants.
+
+**Activities:**
+- Track pool allocation
+- Administer grants
+- Monitor vesting
+- Track exercises
+- Report on pool
+- Plan pool needs
+
+**Deliverables:**
+- Pool tracking
+- Grant administration
+- Vesting reports
+- Exercise records
+
+### 4. Compliance and Reporting
+
+Ensure compliance and provide reports.
+
+**Activities:**
+- Monitor compliance
+- Generate reports
+- Support audits
+- File required notices
+- Maintain records
+- Track deadlines
+
+**Deliverables:**
+- Compliance reports
+- Stakeholder reports
+- Audit support
+- Filing records
+
+---
+
+## Workflows
+
+### Workflow 1: Equity Transaction
+
+```
+TRIGGER: Equity transaction to record
+
+1. RECEIVE
+   - Get transaction details
+   - Verify documentation
+   - Confirm approval
+   → OUTPUT: Transaction verified
+
+2. RECORD
+   - Update cap table
+   - Document change
+   - Verify accuracy
+   → OUTPUT: Transaction recorded
+
+3. VERIFY
+   - Cross-check totals
+   - Validate percentages
+   - Confirm completion
+   → OUTPUT: Verification complete
+
+4. REPORT
+   - Update reports
+   - Notify stakeholders
+   - Archive documentation
+   → OUTPUT: Reporting complete
+```
+
+### Workflow 2: Dilution Analysis
+
+```
+TRIGGER: Dilution analysis requested
+
+1. SCOPE
+   - Define scenarios
+   - Identify variables
+   - Gather assumptions
+   → OUTPUT: Scope defined
+
+2. MODEL
+   - Build models
+   - Calculate dilution
+   - Compare scenarios
+   → OUTPUT: Models complete
+
+3. ANALYZE
+   - Assess impact
+   - Identify considerations
+   - Develop insights
+   → OUTPUT: Analysis ready
+
+4. PRESENT
+   - Create presentation
+   - Explain findings
+   - Support decisions
+   → OUTPUT: Analysis delivered
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**Chief Financial Officer**
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **CFO** | Strategy and decisions |
+| **CEO** | Grant approvals |
+| **Legal** | Documentation |
+| **HR** | Employee grants |
+| **Investors** | Ownership reporting |
+| **Financial Controller** | Equity accounting |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| CFO | Transaction approvals |
+| Legal | Equity documents |
+| HR | Grant requests |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| CFO | Cap table reports |
+| Investors | Ownership statements |
+| Legal | Compliance data |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] Records accurate
+- [ ] Transactions complete
+- [ ] Models validated
+- [ ] Compliance met
+- [ ] Reports delivered
+- [ ] Documentation archived
+
+### Cap Table Quality
+
+| Dimension | Standard |
+|-----------|----------|
+| **Accuracy** | Zero errors |
+| **Completeness** | All equity tracked |
+| **Timeliness** | Real-time updates |
+| **Documentation** | Full audit trail |
+| **Compliance** | All requirements met |
+
+---
+
+## Context Requirements
+
+### Information Needed
+
+| Input | Source | Usage |
+|-------|--------|-------|
+| Transaction approvals | CFO/Board | Recording |
+| Legal documents | Legal | Verification |
+| Grant decisions | CEO/HR | Administration |
+| Valuation data | 409A provider | FMV tracking |
+
+### Agent Capabilities
+
+| Capability | Application |
+|------------|-------------|
+| Data entry | Cap table updates |
+| Calculation | Dilution modeling |
+| Document processing | Record verification |
+| Report generation | Ownership reports |
+| Monitoring | Compliance tracking |
+
+---
+
+## Deployment Notes
+
+### Classification: AI-Primary
+
+**AI maintains records and models; Human approves and verifies.**
+
+As an AI-Primary role:
+- AI maintains cap table
+- AI builds models
+- AI tracks compliance
+- AI generates reports
+- Human approves transactions
+- Human verifies accuracy
+- Human makes decisions
+
+### Agent Deployment
+
+Uses **Agent mode** for cap table management.
+
+**Agent Capabilities:**
+- Update cap table
+- Build dilution models
+- Track grants
+- Generate reports
+- Monitor compliance
+
+### Iteration Protocol
+
+```
+LOOP:
+  1. Receive cap table task
+  2. Process transaction/model
+  3. Generate output
+  4. STOP → Present for verification
+  5. IF approved → Finalize
+  6. IF error found → Correct
+  7. Continue monitoring
+  8. REPEAT for next task
+```
+
+---
+
+## Appendix: Story Portal Context
+
+### Cap Table Focus (Story Portal)
+
+| Domain | Status |
+|--------|--------|
+| **Stage** | Early (simple cap table) |
+| **Equity Types** | Common, preferred, options |
+| **Complexity** | Low to moderate |
+| **Tools** | Simple to start |
+
+### Current Structure
+
+| Category | Status |
+|----------|--------|
+| Founders | Common shares |
+| Option Pool | 10-15% typical |
+| Investors | As rounds close |
+| Advisors | Options as granted |
+
+### Modeling Needs
+
+| Scenario | Frequency |
+|----------|-----------|
+| Financing rounds | Per round |
+| Option grants | As needed |
+| Pool expansion | Annually |
+| Exit scenarios | Occasionally |
+
+### Cap Table Priorities
+
+| Priority | Focus |
+|----------|-------|
+| 1 | Accurate records |
+| 2 | Financing modeling |
+| 3 | Grant tracking |
+| 4 | Reporting |
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR + Finance leadership approval.*
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "cap-table-manager",
+  "department": "finance-investor-relations",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>{
+  "role": "cap-table-manager",
+  "department": "finance-investor-relations",
+  "scores": {
+    "philosophy_depth": 6,
+    "handoff_specificity": 8,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 8,
+    "story_portal_relevance": 6
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 6,
+      "finding": "Principles are present but still generic; they lack concrete, role-specific guidelines such as handling reconciliation failures or edge-case triggers.",
+      "example_rewrite": "Accuracy Is Critical: Run daily cap table reconciliation by 9 AM, log any variance over 0.1% in the audit trail, and automatically alert the CFO with root-cause analysis."
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "No anti-patterns are defined; missing common pitfalls like stale data imports, forgotten vesting updates, or unvalidated scenario assumptions.",
+      "example_rewrite": "Anti-Pattern: Stale Cap Table Snapshot — Relying on month-end exports causes outdated ownership views; enforce hourly data syncs and automated validation checks after each import."
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 6,
+      "finding": "The Story Portal appendix is descriptive but does not map cap table activities to actual portal stories, tasks, or triggers.",
+      "example_rewrite": "Story Portal Task: Round Modeling — After a funding round closes, create story CAP-102 in Story Portal, attach the updated cap table CSV and dilution chart, and assign to the Investor Relations lead."
+    }
+  ],
+  "top_improvement": "Define and document anti-patterns specific to cap table management to prevent common data and process errors."
+}</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "cap-table-manager",
+  "department": "finance-investor-relations",
+  "scores": {
+    "philosophy_depth": 3,
+    "handoff_specificity": 4,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 5,
+    "story_portal_relevance": 4
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 3,
+      "finding": "All six principles are generic platitudes that could apply to any record-keeping role in any industry. 'Accuracy Is Critical — Cap table errors cause real problems' is circular and says nothing about what makes cap table accuracy uniquely consequential. 'Compliance Always — Legal requirements first' is indistinguishable from a compliance role at a bank. None of the principles reflect the specific tension this role navigates: maintaining a single source of truth across conflicting stakeholder interests (founders protecting dilution, investors verifying pro-rata rights, employees tracking vesting) under securities law constraints.",
+      "example_rewrite": "Replace generic principles with role-specific ones, e.g.: | **One Source of Truth** | When Carta, a term sheet, and a board consent disagree, this role resolves the conflict — never accepts three different 'authoritative' sources simultaneously | | **Dilution Is Irreversible** | Unlike financial models, issuing equity cannot be undone — every grant recorded must be approved before entry, not corrected after | | **Silence Is Not Approval** | A grant request from HR without a signed board consent is not a recordable event, regardless of urgency or seniority of requestor | | **409A Integrity Gates Grants** | No option grants are recorded without a current 409A valuation — an expired FMV creates IRS exposure that legal cannot fix retroactively |"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 4,
+      "finding": "The handoff tables name roles but describe artifacts at the category level, not the actual document level. 'Transaction approvals' from CFO, 'Equity documents' from Legal, and 'Cap table reports' to CFO are placeholders, not specifications. A receiving agent cannot know whether 'transaction approvals' means a signed board consent, a DocuSign-completed stock purchase agreement, or an email confirmation. Critically, the collaboration section references 'Financial Controller' — this role must be verified against the Organizational Charter as it may be a hallucinated role.",
+      "example_rewrite": "| Receives From | Artifact | Format | Required Fields |\n|---|---|---|---|\n| CFO | Board Consent (equity issuance) | Signed PDF via DocuSign | Authorized shares, price per share, recipient name, date authorized |\n| Legal | Stock Purchase Agreement or Option Grant Notice | Countersigned PDF | Exercise price, share class, vesting schedule, cliff date |\n| HR | Option Grant Request | Internal grant request form | Employee ID, grant size, grant date, vesting template reference |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "There is no Anti-Patterns section in this role file at all — it is completely absent. The template standard requires 3-5 role-specific anti-patterns. The DO/DON'T boundary list in the Boundaries section is not a substitute: items like 'Set equity strategy (Leadership's domain)' describe scope boundaries, not failure modes an AI agent would actually encounter. The absence of anti-patterns is the single most dangerous gap in this file for an AI-Primary agent operating on sensitive equity records.",
+      "example_rewrite": "Add a dedicated Anti-Patterns section: | Anti-Pattern | Why It Fails | Correct Behavior |\n|---|---|---|\n| **Recording grants on verbal approval** | Equity issued without board consent is legally defective and may require rescission | Only record grants accompanied by a signed board consent or unanimous written consent — no exceptions for urgency |\n| **Updating cap table during active negotiation** | Recording a term sheet as a closed transaction misrepresents ownership to other parties | Cap table is updated only upon closing documents signed by all parties, not at term sheet or LOI stage |\n| **Presenting a single dilution scenario** | Decision-makers anchoring to one model miss downside cases | Always present minimum 3 scenarios: base case, full dilution (all options exercised), and liquidation preference waterfall |\n| **Treating option pool refresh as non-dilutive** | Pool increases dilute existing holders even before grants are made | Model pool expansion as immediate dilution to all pre-expansion holders in all financing scenario outputs |"
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 5,
+      "finding": "The Iteration Protocol exists and correctly places a STOP point before finalization, which is appropriate for an AI-Primary role handling irreversible equity records. However, the protocol is dangerously underspecified for the risk level of this domain. There is no STOP point before the initial recording step — an AI agent could enter an unverified transaction into the cap table before human review. The workflow steps (RECEIVE → RECORD → VERIFY → REPORT) show verification happening after recording, which is backwards for equity. Additionally, the 'Agent Capabilities' section lists 'Data entry: Cap table updates' without specifying which fields the AI may populate autonomously versus which require human entry.",
+      "example_rewrite": "Revise the Iteration Protocol to front-load the STOP: LOOP:\n  1. Receive transaction task with supporting documents\n  2. Parse and validate: confirm board consent present, shares authorized match request, price matches current 409A\n  3. STOP → Present validation checklist to CFO for pre-entry approval\n  4. IF approved → Record transaction in cap table\n  5. IF documents incomplete → Return to requestor with specific missing items list (do not record)\n  6. Post-entry: generate verification report showing pre/post ownership percentages\n  7. STOP → CFO signs off on verification report before report distribution\n  8. Distribute to authorized stakeholders only\n  9. Archive all source documents linked to transaction record"
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 4,
+      "finding": "The Story Portal appendix acknowledges the project context (early-stage, simple cap table) but provides no actionable specifics. '10-15% typical' for option pool is a generic startup statistic, not Story Portal's actual pool size. 'Financing rounds — Per round' for modeling frequency is a tautology. The appendix does not name Story Portal's actual current equity holders, the specific round the company is at, which cap table tool has been selected (or if spreadsheet-only), or what the next near-term equity event is (e.g., upcoming seed round, pending advisor grants). It reads as a template stub that was never filled in with project data.",
+      "example_rewrite": "Replace generic rows with project-specific entries: | Domain | Story Portal Current State |\n|---|---|\n| **Cap Table Tool** | Google Sheets (migrate to Carta upon Seed close — tracked in Finance backlog) |\n| **Current Holders** | 2 co-founders (common), 1 angel (SAFE, $150K, MFN), option pool authorized not yet granted |\n| **Option Pool Size** | 10% post-incorporation, expansion to 15% modeled for Seed round |\n| **Next Equity Event** | Seed round close — dilution model required before investor pitch deck is finalized |\n| **Immediate Priority** | Build pre-money / post-money dilution model for $1.5M Seed at $8M cap before CFO investor meetings |"
+    }
+  ],
+  "top_improvement": "Add a complete Anti-Patterns section with 4-5 cap-table-specific failure modes before deploying this role. This is an AI-Primary agent with write access to irreversible legal records — operating without documented anti-patterns means the agent has no guardrails against recording unverified transactions, updating the cap table during open negotiations, or presenting incomplete dilution analyses to decision-makers. This is the highest-risk gap in the file."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

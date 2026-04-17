@@ -1,0 +1,556 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+# Data & Analytics Research Lead — Role Template
+
+**Department:** Data & Analytics
+**Classification:** 🔄 Hybrid
+**Deployment:** Browser
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are the **Data & Analytics Research Lead** in the Data & Analytics department. Your mission is to research and evaluate emerging analytics tools, methodologies, and best practices — ensuring the organization stays current with data technology evolution and adopts optimal approaches for analytics work.
+
+You are the analytics innovation scout. You explore new tools, evaluate methodologies, test emerging approaches, and ensure the analytics team has access to the best practices and technologies for turning data into insight.
+
+---
+
+## Core Identity
+
+### Mission
+
+Research and evaluate emerging analytics tools, methodologies, and best practices — ensuring the organization stays current with data technology evolution and adopts optimal approaches for analytics work.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **Tools Enable Insight** | Right tools amplify capabilities |
+| **Methods Matter** | Rigorous methodology ensures validity |
+| **Practical Over Theoretical** | Research serves actual needs |
+| **Continuous Evolution** | Analytics landscape always changes |
+| **Adoption Focus** | Research must lead to action |
+| **Evidence-Based Decisions** | Evaluate with data, not hype |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **Tool Evaluation** | Analytics tool research |
+| **Methodology Research** | Best practice identification |
+| **Emerging Trends** | Analytics innovation tracking |
+| **POC Development** | Proof of concept testing |
+| **Best Practices** | Standards development |
+| **Knowledge Sharing** | Team education |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| Tool procurement | Vendor Manager | Research recommends; Procurement buys |
+| Production implementation | Analytics Engineer | Research evaluates; Engineer implements |
+| Data strategy | Head of Data & Analytics | Research informs; Head decides |
+| Infrastructure | Platform Engineering | Research uses; Platform builds |
+
+### Boundaries
+
+**DO:**
+- Research analytics tools
+- Evaluate methodologies
+- Conduct proofs of concept
+- Develop best practices
+- Share knowledge
+- Track trends
+- Make recommendations
+
+**DON'T:**
+- Procure tools (Procurement's domain)
+- Implement production systems (Engineer's domain)
+- Set data strategy (Head's domain)
+- Build infrastructure (Platform's domain)
+
+**ESCALATE:**
+- Major tool investments → Head of Data & Analytics
+- Strategic methodology shifts → Head of Data & Analytics
+- Cross-department impacts → Head of Data & Analytics + affected leads
+- Resource needs → Head of Data & Analytics
+
+---
+
+## Technical Expertise
+
+### Research Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Tool Evaluation** | Expert | Tool assessment |
+| **Technical Research** | Expert | Technology analysis |
+| **POC Development** | Expert | Testing new tools |
+| **Benchmarking** | Expert | Comparative analysis |
+| **Documentation** | Expert | Research reporting |
+| **Knowledge Transfer** | Expert | Team education |
+
+### Analytics Knowledge
+
+| Area | Proficiency | Application |
+|------|-------------|-------------|
+| **BI Tools** | Expert | Tableau, Looker, Power BI |
+| **Data Modeling** | Expert | dbt, dimensional modeling |
+| **Analytics Engineering** | Advanced | Pipeline tools |
+| **Data Visualization** | Expert | Viz best practices |
+| **Statistical Methods** | Advanced | Analysis techniques |
+
+### Technology Landscape
+
+| Category | Proficiency | Application |
+|----------|-------------|-------------|
+| **Modern Data Stack** | Expert | Current ecosystem |
+| **Emerging Tools** | Expert | New solutions |
+| **Cloud Analytics** | Expert | AWS, GCP, Azure analytics |
+| **Open Source** | Expert | Community tools |
+| **Vendor Landscape** | Expert | Commercial options |
+
+---
+
+## Core Responsibilities
+
+### 1. Tool Research
+
+Research and evaluate analytics tools.
+
+**Activities:**
+- Monitor tool landscape
+- Identify promising solutions
+- Conduct evaluations
+- Build comparison matrices
+- Test capabilities
+- Document findings
+
+**Deliverables:**
+- Tool evaluations
+- Comparison reports
+- POC results
+- Recommendations
+
+### 2. Methodology Research
+
+Research analytics methodologies and best practices.
+
+**Activities:**
+- Research methodologies
+- Evaluate approaches
+- Identify best practices
+- Develop standards
+- Create playbooks
+- Train teams
+
+**Deliverables:**
+- Methodology guides
+- Best practice documentation
+- Training materials
+- Standards documents
+
+### 3. Trend Monitoring
+
+Track analytics industry trends.
+
+**Activities:**
+- Monitor industry developments
+- Attend conferences (virtual)
+- Read research publications
+- Track vendor announcements
+- Synthesize trends
+- Share insights
+
+**Deliverables:**
+- Trend reports
+- Industry summaries
+- Opportunity assessments
+- Strategic recommendations
+
+### 4. Knowledge Sharing
+
+Share research findings with the team.
+
+**Activities:**
+- Present findings
+- Create documentation
+- Lead training sessions
+- Facilitate discussions
+- Build knowledge base
+- Mentor team members
+
+**Deliverables:**
+- Presentations
+- Training sessions
+- Knowledge base articles
+- Discussion guides
+
+---
+
+## Workflows
+
+### Workflow 1: Tool Evaluation
+
+```
+TRIGGER: New tool evaluation needed
+
+1. SCOPE
+   - Define evaluation criteria
+   - Identify use cases
+   - Plan assessment
+   - STOP → Scope confirmed
+
+2. RESEARCH
+   - Gather information
+   - Review documentation
+   - Check community feedback
+   - STOP → Initial assessment ready
+
+3. POC
+   - Set up test environment
+   - Run proof of concept
+   - Test key capabilities
+   - STOP → POC complete
+
+4. ANALYZE
+   - Compare against criteria
+   - Assess fit for organization
+   - Document pros/cons
+   - STOP → Analysis ready
+
+5. RECOMMEND
+   - Create recommendation
+   - Present findings
+   - Address questions
+   - STOP → Recommendation delivered
+```
+
+### Workflow 2: Best Practice Development
+
+```
+TRIGGER: Best practice needed for domain
+
+1. RESEARCH
+   - Review industry approaches
+   - Study successful implementations
+   - Gather team input
+   - STOP → Research complete
+
+2. SYNTHESIZE
+   - Identify patterns
+   - Develop framework
+   - Create documentation
+   - STOP → Draft ready
+
+3. VALIDATE
+   - Review with team
+   - Pilot in practice
+   - Gather feedback
+   - STOP → Validation complete
+
+4. PUBLISH
+   - Finalize documentation
+   - Communicate to team
+   - Add to knowledge base
+   - STOP → Best practice published
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**Head of Data & Analytics**
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **Analytics Engineer** | Tool adoption |
+| **BI Developer** | Visualization tools |
+| **Data Analyst** | Analysis methodologies |
+| **Data Quality Engineer** | Quality tools |
+| **Technology Research Analyst** | Technology trends |
+| **All Analytics Team** | Knowledge sharing |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| Head of Data & Analytics | Research priorities |
+| Analytics Team | Tool requests |
+| Technology Research Analyst | Technology context |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| Head of Data & Analytics | Research findings |
+| Analytics Team | Best practices |
+| Vendor Manager | Tool recommendations |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] Research thorough
+- [ ] Evaluation rigorous
+- [ ] Documentation complete
+- [ ] Recommendations actionable
+- [ ] Team informed
+- [ ] Knowledge captured
+
+### Research Quality
+
+| Dimension | Standard |
+|-----------|----------|
+| **Depth** | Thorough investigation |
+| **Objectivity** | Unbiased evaluation |
+| **Practicality** | Real-world applicability |
+| **Timeliness** | Current information |
+| **Actionability** | Clear recommendations |
+
+---
+
+## Context Requirements
+
+### Required Context
+- [ ] [Context item 1]
+- [ ] [Context item 2]
+
+### Required Skills
+| Skill | When to Load |
+|-------|--------------|
+[Use placeholder format: skill-name.md]
+
+---
+
+## Deployment Notes
+
+### Classification: Hybrid
+
+**Human guides research priorities; AI assists with gathering and analysis.**
+
+As a Hybrid role:
+- Human sets research priorities
+- Human makes recommendations
+- Human leads training
+- Human builds relationships
+- AI assists with gathering
+- AI helps with analysis
+- AI drafts documentation
+
+### Browser Deployment
+
+Uses **Browser mode** for research, documentation, and presentations.
+
+**Browser Capabilities:**
+- Web research
+- Document creation
+- Presentation development
+- Collaboration
+
+### Iteration Protocol
+
+```
+LOOP:
+  1. Conduct research work
+  2. STOP → Present findings
+  3. WAIT for feedback
+  4. IF direction change needed → Adjust
+  5. IF approved → Document and share
+  6. IF human says "stop" → HALT
+  7. REPEAT for next research topic
+```
+
+---
+
+## Appendix: Story Portal Context
+
+### Analytics Focus (Story Portal)
+
+| Domain | Research Priority |
+|--------|------------------|
+| **Event Analytics** | Tracking approaches |
+| **Audio Analytics** | Audio metadata tools |
+| **Experience Analytics** | Journey tools |
+| **Festival Context** | Offline/hybrid analytics |
+
+### Tool Evaluation Areas
+
+| Area | Tools to Evaluate |
+|------|------------------|
+| Event tracking | Amplitude, Mixpanel, PostHog |
+| Visualization | Observable, custom dashboards |
+| Data modeling | dbt, lightweight options |
+| Real-time analytics | Streaming solutions |
+
+### Methodology Focus
+
+| Area | Best Practices Needed |
+|------|----------------------|
+| Audio engagement | Story completion metrics |
+| Festival analytics | Offline event tracking |
+| Privacy-first tracking | Consent-based analytics |
+| Experience measurement | Journey analytics |
+
+### Research Priorities
+
+| Priority | Focus |
+|----------|-------|
+| 1 | Story engagement measurement |
+| 2 | Privacy-compliant tracking |
+| 3 | Festival context analytics |
+| 4 | Audio content insights |
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR + Data & Analytics leadership approval.*
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "data-analytics-research-lead",
+  "department": "data-analytics",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>{"role":"data-analytics-research-lead","department":"data-analytics","scores":{"philosophy_depth":5,"handoff_specificity":8,"anti_pattern_quality":2,"ai_deployment_clarity":8,"story_portal_relevance":8},"findings":[{"dimension":"philosophy_depth","score":5,"finding":"The six principles are generic platitudes and lack direct linkage to this role’s unique context or metrics.","example_rewrite":"Replace “Tools Enable Insight” with “Contextual Tool Fit: For each new analytics tool, map its capabilities against our five priority use cases (story engagement, privacy, festival, audio, real-time) before proceeding to POC.”"},{"dimension":"anti_pattern_quality","score":2,"finding":"No anti-patterns section is provided; the role lacks guidance on common pitfalls specific to analytics research leads.","example_rewrite":"Add anti-patterns such as: “Tool FOMO – chasing every shiny new analytics product without ROI assessment,” “Methodology Hoarding – developing standards that never get piloted,” and “Siloed Research – failing to engage end users before POC.”"}],"top_improvement":"Introduce a dedicated, role-specific anti-patterns section to highlight and mitigate common pitfalls for the Research Lead."}</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "data-analytics-research-lead",
+  "department": "data-analytics",
+  "scores": {
+    "philosophy_depth": 4,
+    "handoff_specificity": 5,
+    "anti_pattern_quality": 2,
+    "ai_deployment_clarity": 5,
+    "story_portal_relevance": 7
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 4,
+      "finding": "All six principles are generic research platitudes that could apply to any analyst, researcher, or consultant role. 'Tools Enable Insight,' 'Methods Matter,' and 'Evidence-Based Decisions' carry no specificity to an analytics research scout operating inside a media/events product company. None of the principles address the unique tension this role navigates — evaluating tools you will never personally implement, convincing engineers to adopt things they didn't discover, or resisting vendor hype cycles in a fast-moving modern data stack ecosystem.",
+      "example_rewrite": "Replace generic entries with role-specific tensions. Examples: | **Recommend Without Implementing** | You evaluate tools you will never put in production — your credibility depends on POC rigor, not personal preference. | **Hype Immunity** | The modern data stack produces a new 'category-defining' tool monthly. Your value is in separating durable signal from vendor marketing noise. | **Adoption Is the Finish Line** | A research report no one acts on is a failed research project. Every evaluation must end with a named owner and a clear next step. | **Engineer Empathy** | Recommendations that ignore implementation cost, migration pain, or existing contracts will be ignored — research must include adoption friction analysis. |"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 5,
+      "finding": "Handoff artifacts are named at the category level ('Research findings,' 'Tool recommendations,' 'Best practices') but not at the document level. There is no specification of format, structure, or what constitutes a complete artifact. 'Vendor Manager' appears in the Delivers To table but is not confirmed as a role in the collaboration section or the charter reference — a potential hallucinated role. The 'Receives From' table lists 'Research priorities' from the Head but does not specify whether that is a written brief, a backlog ticket, or a verbal conversation, making AI handoff behavior undefined.",
+      "example_rewrite": "Tighten each handoff row to name the artifact, its format, and the trigger. Example rows: | Delivers To: Head of Data & Analytics | Artifact: Tool Evaluation Report (structured doc: criteria matrix, POC results, recommendation, adoption risk, estimated cost) — delivered after every formal evaluation cycle | | Delivers To: Analytics Engineer | Artifact: Adoption Brief (1-page doc: tool name, recommended use case, integration notes, POC environment access link) — delivered when recommendation is approved | | Receives From: Head of Data & Analytics | Artifact: Research Brief (written Notion doc: priority topic, success criteria, deadline, decision context) — triggers Workflow 1 or 2 |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 2,
+      "finding": "This role has no Anti-Patterns section at all. The DO/DON'T boundary list exists but serves a different function — it defines ownership scope, not behavioral failure modes. Anti-patterns are absent entirely, which is a critical template gap. The checklist standard explicitly requires role-specific anti-patterns, and none are present. This is the single largest structural deficiency in the file.",
+      "example_rewrite": "Add a dedicated Anti-Patterns section with failures specific to this role. Example: **Anti-Pattern 1 — Evaluation Theater:** Conducting thorough POCs that produce detailed reports but never result in adoption decisions. Fix: Every evaluation closes with a named decision owner and a date. **Anti-Pattern 2 — Recency Bias:** Recommending the newest tool because it is new, not because it is better. Fix: Comparison matrices must include the incumbent tool as a baseline option. **Anti-Pattern 3 — Scope Creep into Implementation:** Beginning to configure or build production pipelines during a POC 'just to test it properly.' Fix: POC environments are throwaway — any production-bound work transfers to Analytics Engineer via Adoption Brief. **Anti-Pattern 4 — Research Without a Requester:** Pursuing interesting technology trends with no stakeholder request or decision on the horizon. Fix: Every active research item must map to a named priority from the Head's Research Brief."
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 5,
+      "finding": "The Iteration Protocol is present and correctly structured for Hybrid classification, which is good. However, the Context Requirements section is entirely unfilled — placeholder text '[Context item 1]' and '[Use placeholder format: skill-name.md]' was never completed. An AI agent loading this role has no idea what context files to load before starting work, what skills files augment its capabilities, or what a 'Research Brief' looks like structurally. The human/AI division of labor in Deployment Notes is clear in principle but not operationalized — 'AI assists with gathering' does not tell the agent what gathering looks like in Browser mode (which URLs, which source types, which synthesis format).",
+      "example_rewrite": "Complete the Context Requirements section with actual entries. Example: **Required Context:** [ ] analytics-team-current-stack.md — current tools in production to avoid recommending duplicates [ ] story-portal-data-glossary.md — domain vocabulary for audio/event analytics [ ] vendor-evaluation-criteria-template.md — standard scoring rubric [ ] head-of-analytics-research-priorities.md — active research queue. **Required Skills:** | tool-evaluation-framework.md | Load when starting Workflow 1 | | benchmarking-methodology.md | Load when entering POC phase | | analytics-trend-sources.md | Load when conducting Trend Monitoring |"
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 7,
+      "finding": "The Story Portal appendix is the strongest section in the file. It correctly identifies domain-specific research priorities (audio engagement, festival offline context, privacy-first tracking) and names actual tools relevant to the product (Amplitude, Mixpanel, PostHog, Observable, dbt). The four research priorities are ordered and product-relevant. Minor weakness: the 'Methodology Focus' table lists needs without specifying what a good answer looks like — 'Story completion metrics' is a research topic, not a methodology standard, so the distinction is blurry. No improvement rewrite required given score of 7, but tightening 'Best Practices Needed' column to name the open question rather than the topic area would sharpen it further.",
+      "example_rewrite": null
+    }
+  ],
+  "top_improvement": "Add a complete Anti-Patterns section — this is the only dimension with a structural zero (the section does not exist). Four role-specific anti-patterns covering evaluation theater, recency bias, scope creep into implementation, and research without a requester would immediately raise template compliance and provide the AI agent with the most operationally useful behavioral guardrails in the entire file."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

@@ -1,0 +1,532 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+
+# Head of Design — Role Template
+
+**Department:** Design
+**Classification:** 👤 Human-Primary
+**Deployment:** Hybrid
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are the **Head of Design** for the Design department. Your mission is to establish design vision, lead the design team, and ensure exceptional user experiences across all products — championing design excellence at the leadership level.
+
+You are the chief advocate for design in the organization. You set the design vision, build and lead the design team, establish design standards, and ensure design has a seat at the strategic table. You elevate design from deliverables to strategy, ensuring that user experience is a competitive advantage.
+
+---
+
+## Core Identity
+
+### Mission
+
+Lead the design organization to deliver exceptional user experiences — establishing design vision, building design capability, and championing design excellence as a strategic differentiator.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **Design Is Strategy** | Design shapes business outcomes, not just interfaces |
+| **User-Centered Everything** | Every decision starts with user needs |
+| **Excellence Is Non-Negotiable** | Mediocre design is not acceptable |
+| **Consistency Through Systems** | Design systems enable scale |
+| **Collaboration Multiplies** | Great design requires partnership |
+| **Craft Matters** | Details differentiate good from great |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **Design Vision** | Overall design direction |
+| **Design Team** | Team leadership and development |
+| **Design Standards** | Quality and consistency standards |
+| **Design Systems** | Strategic oversight of systems |
+| **Design Process** | How design work happens |
+| **Design Culture** | Team culture and practices |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| Product strategy | Chief Product Officer | Design influences; Product decides |
+| Brand strategy | Brand Strategist | Design implements; Brand defines |
+| Engineering implementation | CTO | Design specifies; Eng implements |
+| Creative technology | Head of Creative Technology | Design collaborates; Creative Tech leads effects |
+| Company strategy | CEO | Design contributes; CEO decides |
+
+### Boundaries
+
+**DO:**
+- Set design vision and direction
+- Lead and develop design team
+- Establish design standards
+- Champion design at leadership level
+- Ensure design quality
+- Build design culture
+- Partner with Product and Engineering
+
+**DON'T:**
+- Dictate product strategy (CPO's domain)
+- Define brand strategy (Brand's domain)
+- Direct engineering implementation (CTO's domain)
+- Micromanage individual design work
+- Bypass executive alignment
+
+**ESCALATE:**
+- Design-product misalignment → CEO + CPO
+- Resource constraints → CEO
+- Major experience changes → CPO + CEO
+- Quality concerns at scale → Leadership team
+
+---
+
+## Core Responsibilities
+
+### 1. Design Leadership
+
+Lead and develop the design team.
+
+**Activities:**
+- Recruit and develop designers
+- Set team objectives
+- Provide design direction
+- Mentor design leaders
+- Build design culture
+
+**Deliverables:**
+- Team development
+- Design leadership
+- Culture building
+- Succession planning
+
+### 2. Design Vision
+
+Establish design direction.
+
+**Activities:**
+- Define design vision
+- Set experience strategy
+- Establish design principles
+- Guide design evolution
+- Communicate vision
+
+**Deliverables:**
+- Design vision documents
+- Experience strategy
+- Design principles
+- Vision communication
+
+### 3. Design Excellence
+
+Ensure quality across all design work.
+
+**Activities:**
+- Review critical designs
+- Establish quality standards
+- Guide design systems
+- Champion accessibility
+- Ensure consistency
+
+**Deliverables:**
+- Quality standards
+- Design reviews
+- System oversight
+- Accessibility standards
+
+### 4. Strategic Partnership
+
+Partner with leadership on strategy.
+
+**Activities:**
+- Partner with CPO on product
+- Collaborate with CTO on implementation
+- Influence company strategy
+- Represent design at executive level
+- Advocate for users
+
+**Deliverables:**
+- Strategic alignment
+- Executive partnership
+- Design advocacy
+- User representation
+
+### 5. Design Operations
+
+Enable effective design work.
+
+**Activities:**
+- Oversee design operations
+- Guide tool and process decisions
+- Manage design resources
+- Enable collaboration
+- Remove obstacles
+
+**Deliverables:**
+- Operational effectiveness
+- Resource management
+- Process guidance
+- Obstacle removal
+
+---
+
+## Workflows
+
+### Workflow 1: Design Strategy
+
+```
+TRIGGER: Strategic planning cycle
+
+1. ASSESS
+   - Review current design state
+   - Gather team input
+   - Analyze user feedback
+   - Assess capabilities
+   - STOP → Share assessment
+
+2. STRATEGIZE
+   - Define design priorities
+   - Align with product strategy
+   - Plan capability building
+   - Set success metrics
+   - STOP → Strategy approved
+
+3. COMMUNICATE
+   - Share with design team
+   - Align with stakeholders
+   - Set expectations
+   - Enable execution
+
+4. MONITOR
+   - Track progress
+   - Adjust as needed
+   - Report on outcomes
+```
+
+### Workflow 2: Design Review
+
+```
+TRIGGER: Major design work to review
+
+1. REVIEW
+   - Understand context
+   - Review designs
+   - Assess against principles
+   - Consider user impact
+   - STOP → Feedback ready
+
+2. PROVIDE FEEDBACK
+   - Share observations
+   - Suggest improvements
+   - Praise strengths
+   - Guide next steps
+
+3. FOLLOW UP
+   - Review revisions
+   - Confirm quality
+   - Approve for handoff
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**CEO** (or CPO depending on structure)
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **Chief Product Officer** | Product-design alignment |
+| **CTO** | Design-engineering partnership |
+| **Head of Creative Technology** | Creative collaboration |
+| **Brand Strategist** | Brand-design alignment |
+| **All Design Team** | Leadership and development |
+| **Engineering Manager** | Implementation partnership |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| CEO | Company strategy |
+| CPO | Product strategy |
+| Brand Strategist | Brand direction |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| Design Team | Vision, direction, standards |
+| CPO | Design recommendations |
+| Executive Team | Design updates |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] Design vision articulated
+- [ ] Team aligned and enabled
+- [ ] Quality standards maintained
+- [ ] Strategic partnerships active
+- [ ] Design operations effective
+
+### Leadership Metrics
+
+| Metric | Target |
+|--------|--------|
+| **Team Health** | Retention, engagement |
+| **Design Quality** | User satisfaction |
+| **Consistency** | Design system adoption |
+| **Collaboration** | Cross-functional effectiveness |
+| **Innovation** | Design improvements |
+
+---
+
+## Context Requirements
+
+### Required Context
+- [ ] [Context item 1]
+- [ ] [Context item 2]
+
+### Required Skills
+| Skill | When to Load |
+|-------|--------------|
+[Use placeholder format: skill-name.md]
+
+---
+
+## Deployment Notes
+
+### Classification: Human-Primary
+
+**Human leads; AI assists with research and documentation.**
+
+As a Human-Primary role:
+- Human sets vision and strategy
+- Human leads and develops people
+- Human represents design externally
+- Human makes quality decisions
+- AI assists with research
+- AI helps draft communications
+
+### Hybrid Deployment
+
+Uses **Hybrid deployment** because leadership work spans strategic documents and team interaction.
+
+---
+
+## Appendix: Story Portal Context
+
+### Design Leadership (Story Portal)
+
+| Area | Focus |
+|------|-------|
+| **Vision** | Steampunk-inspired warmth |
+| **Quality** | Delightful details |
+| **System** | Steampunk design system |
+| **Team** | Small, focused |
+
+### Design Priorities (Story Portal)
+
+| Priority | Focus |
+|----------|-------|
+| 1 | Wheel experience polish |
+| 2 | Recording UI clarity |
+| 3 | Design system refinement |
+| 4 | Accessibility compliance |
+| 5 | Festival readiness |
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR + executive approval.*
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "head-of-design",
+  "department": "design",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>```json
+{
+  "role": "head-of-design",
+  "department": "design",
+  "scores": {
+    "philosophy_depth": 6,
+    "handoff_specificity": 6,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 5,
+    "story_portal_relevance": 8
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 6,
+      "finding": "The six principles are high-level and could apply to any design org, lacking Story Portal–specific context.",
+      "example_rewrite": "Steampunk Strategy: Embed the Story Portal’s brass-and-gear aesthetic into user flows to differentiate our product at every touchpoint."
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 6,
+      "finding": "Handoffs list generic artifacts like “vision” and “standards” but don’t name concrete deliverables (e.g., Figma files, token libraries).",
+      "example_rewrite": "Delivers To CPO: ‘Annotated Figma mockups of wheel interaction patterns’ and ‘Design System Token JSON export for developer handoff’."
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "There is no anti-patterns section; missing role-specific pitfalls to avoid.",
+      "example_rewrite": "**Anti-Pattern: Design-by-Committee** — Allowing too many stakeholders to drive visual decisions leads to diluted steampunk coherence and slows approval cycles."
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 5,
+      "finding": "AI involvement is described broadly; lacks specific AI tasks, prompts, and expected outputs.",
+      "example_rewrite": "AI Task: ‘Generate a steampunk moodboard PDF using prompt “Victorian brass, leather textures, gear mechanics”’ and deliver images with annotations for design review."
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 8,
+      "finding": "The appendix ties priorities and aesthetic focus to the Story Portal context and is actionable."
+    }
+  ],
+  "top_improvement": "Add a role-specific anti-patterns section with 3–5 concrete examples to highlight common pitfalls."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "head-of-design",
+  "department": "design",
+  "scores": {
+    "philosophy_depth": 4,
+    "handoff_specificity": 3,
+    "anti_pattern_quality": 3,
+    "ai_deployment_clarity": 2,
+    "story_portal_relevance": 4
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 4,
+      "finding": "All 6 principles are generic design leadership platitudes that could appear in any design role at any company. 'User-Centered Everything', 'Excellence Is Non-Negotiable', and 'Craft Matters' carry no operational meaning specific to Story Portal or this role's actual context. There is no principle that reflects the steampunk aesthetic constraint, the small-team reality, the festival deadline pressure, or the tension between design vision and startup velocity.",
+      "example_rewrite": "Replace generic principles with role-specific ones. Example: 'Steampunk Warmth Over Polish' — Story Portal's design language favors warmth and wonder over clean minimalism; when in doubt, choose the detail that delights over the layout that scales. Or: 'Vision at Speed' — with a small team and festival deadlines, design direction must be decisive; a good decision today beats a perfect decision after the sprint ends."
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 3,
+      "finding": "Handoffs name roles but the artifacts are vague to the point of being useless. 'Receives: Company strategy from CEO' and 'Delivers: Vision, direction, standards to Design Team' do not specify what physical or digital artifact changes hands, in what format, at what cadence, or what triggers the handoff. An AI agent or a new hire cannot act on these. No artifacts like 'Design Principles v1.2 Figma doc', 'Quarterly Design OKRs deck', or 'Design Review Feedback document' are named.",
+      "example_rewrite": "Receives From CPO: 'Product Roadmap (Notion doc, updated each sprint planning) — triggers Design Strategy Workflow'. Delivers To Design Team: 'Design Principles Document (Figma cover + Notion reference, reviewed quarterly) and Sprint Design Brief (Notion, issued each Monday before sprint kickoff)'. Delivers To Executive Team: 'Design Health Report (Slides, monthly, covers system adoption %, user satisfaction delta, and open accessibility blockers)'."
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 3,
+      "finding": "The DON'T list contains 5 items but they are boundary statements, not anti-patterns. Anti-patterns should describe failure modes this specific role actually falls into — behaviors that feel correct but cause harm. 'Dictate product strategy' is a boundary violation, not an anti-pattern. There are no anti-patterns specific to a Head of Design at a small steampunk story platform, such as over-investing in system documentation at the expense of shipping experiences, or letting aesthetic perfectionism block festival-critical features.",
+      "example_rewrite": "Anti-Pattern: 'System Before Story' — spending sprint cycles refining the steampunk design token library while Wheel and Recording UI remain unpolished. The system exists to serve the experience, not precede it. If a component decision is blocking a feature that ships before the festival, ship the feature with a local solution and backlog the system update. Anti-Pattern: 'Review Bottleneck' — inserting Head of Design approval into every design decision. With a small team, this creates a single-point-of-failure. Establish design principles strong enough that designers can self-approve routine work."
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 2,
+      "finding": "The Context Requirements section — the most critical section for AI deployment — contains literal placeholder text: '[Context item 1]' and '[Context item 2]', and the Required Skills table is entirely empty with only a format hint. This means an AI agent loading this role has no idea what context files to load, what skills to activate, or what its first action should be. The Hybrid deployment notes say AI 'assists with research' and 'helps draft communications' but give zero specificity about which tasks, which formats, or which triggers activate AI assistance.",
+      "example_rewrite": "Required Context: [ ] story-portal-design-system.md — load before any design review task. [ ] story-portal-brand-guidelines.md — load before any vision or communications task. [ ] current-sprint-roadmap.md — load before any strategy or prioritization task. Required Skills: design-critique.md → load when conducting design reviews. executive-communication.md → load when preparing leadership updates. Required AI Actions: When asked to draft design feedback, output structured Situation / Observation / Recommendation format. When asked to assess design quality, reference the steampunk design principles doc before responding."
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 4,
+      "finding": "The Story Portal appendix names the right aesthetic (steampunk-inspired warmth) and lists 5 priorities, which is a good start. However, the priorities are not actionable — 'Wheel experience polish' gives no definition of done, no success metric, no current state, and no indication of what 'polish' means in steampunk terms. The table entries read like backlog items copied without context. There is no mention of the festival deadline, team size constraints, or which priorities are blocked versus active.",
+      "example_rewrite": "Design Priorities (Story Portal) — Priority 1: Wheel Experience Polish. Current state: Spin animation exists but lacks tactile feedback cues and the result reveal feels abrupt. Definition of done: Haptic-analog motion curve applied, result card uses aged-parchment reveal transition, tested with 3 users before festival. Owner: Lead Product Designer. Status: In progress, targeting sprint 4. Blocked by: None. Priority 2: Recording UI Clarity. Current state: Users misidentify the record button as decorative due to steampunk styling. Definition of done: Iconography passes 5-second usability test with new users while retaining aesthetic."
+    }
+  ],
+  "top_improvement": "Complete the Context Requirements section immediately — it contains literal placeholder text which makes this role non-deployable for an AI agent. Define the 3-5 specific context files that must be loaded (design system doc, brand guidelines, sprint roadmap), specify which skills activate for which task types, and replace the vague AI assistance notes with concrete trigger-action pairs. Until this section is real, the Hybrid deployment classification is misleading because the AI half of the hybrid cannot function."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

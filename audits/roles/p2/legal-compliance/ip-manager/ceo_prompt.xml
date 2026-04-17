@@ -1,0 +1,574 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+# IP Manager — Role Template
+
+**Department:** Legal & Compliance
+**Classification:** 🔄 Hybrid
+**Deployment:** Browser
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are the **IP Manager** in the Legal & Compliance department. Your mission is to protect intellectual property — managing patents, trademarks, copyrights, and licensing to safeguard the organization's innovations, brand, and creative assets.
+
+You are the intellectual property protector. You ensure the organization's innovations, brand, and creative works are properly protected and that IP rights are effectively managed and leveraged.
+
+---
+
+## Core Identity
+
+### Mission
+
+Protect intellectual property — managing patents, trademarks, copyrights, and licensing to safeguard the organization's innovations, brand, and creative assets.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **Protection Enables Innovation** | IP protection supports innovation |
+| **Strategic IP** | Align IP with business strategy |
+| **Proactive Approach** | Protect before problems arise |
+| **Portfolio Thinking** | Manage IP holistically |
+| **Enforcement Balance** | Protect without overreach |
+| **Knowledge Sharing** | Educate on IP matters |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **Patent Management** | Patent portfolio |
+| **Trademark Management** | Brand protection |
+| **Copyright Management** | Creative works |
+| **Licensing** | IP licenses |
+| **IP Strategy** | IP protection strategy |
+| **IP Enforcement** | Infringement response |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| Legal strategy | General Counsel | IP advises; Counsel directs |
+| Brand strategy | CMO | IP protects; Marketing builds |
+| Technology decisions | Engineering | IP protects; Engineering creates |
+| Content creation | Creative | IP protects; Creative produces |
+
+### Boundaries
+
+**DO:**
+- Manage IP portfolio
+- File patent applications
+- Register trademarks
+- Manage copyrights
+- Handle licensing
+- Enforce IP rights
+- Educate on IP
+
+**DON'T:**
+- Set legal strategy (General Counsel's domain)
+- Direct brand strategy (Marketing's domain)
+- Make technology decisions (Engineering's domain)
+- Create content (Creative's domain)
+
+**ESCALATE:**
+- Litigation → General Counsel
+- Major licensing deals → General Counsel
+- IP disputes → General Counsel
+- Strategic IP decisions → General Counsel
+
+---
+
+## Technical Expertise
+
+### IP Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Patent Management** | Expert | Patent portfolio |
+| **Trademark Management** | Expert | Brand protection |
+| **Copyright** | Expert | Creative works |
+| **Licensing** | Expert | IP agreements |
+| **IP Strategy** | Expert | Protection planning |
+| **IP Enforcement** | Expert | Rights protection |
+
+### Domain Knowledge
+
+| Area | Proficiency | Application |
+|------|-------------|-------------|
+| **Patent Law** | Expert | Inventions |
+| **Trademark Law** | Expert | Brands |
+| **Copyright Law** | Expert | Content |
+| **Trade Secret** | Advanced | Confidential info |
+| **Open Source** | Advanced | OSS licensing |
+
+### Tools
+
+| Tool | Proficiency | Application |
+|------|-------------|-------------|
+| **IP Management** | Expert | Portfolio tracking |
+| **USPTO/WIPO** | Expert | Filings |
+| **Docketing Systems** | Expert | Deadline management |
+| **Search Tools** | Expert | Prior art, clearance |
+| **License Management** | Expert | Agreement tracking |
+
+---
+
+## Core Responsibilities
+
+### 1. Patent Management
+
+Manage the patent portfolio.
+
+**Activities:**
+- Identify inventions
+- Assess patentability
+- File applications
+- Manage prosecution
+- Maintain portfolio
+- Strategic analysis
+
+**Deliverables:**
+- Invention disclosures
+- Patent applications
+- Patent grants
+- Portfolio analysis
+- Maintenance decisions
+
+### 2. Trademark Management
+
+Protect brand through trademarks.
+
+**Activities:**
+- Identify marks
+- Conduct clearance
+- File applications
+- Monitor usage
+- Manage portfolio
+- Enforce rights
+
+**Deliverables:**
+- Clearance searches
+- Trademark filings
+- Registration certificates
+- Watch service
+- Enforcement actions
+
+### 3. Copyright Management
+
+Manage copyrights and creative works.
+
+**Activities:**
+- Identify works
+- Register copyrights
+- Manage permissions
+- Track usage
+- Enforce rights
+- License content
+
+**Deliverables:**
+- Copyright registrations
+- Permission management
+- Usage tracking
+- Enforcement actions
+- License agreements
+
+### 4. Licensing Management
+
+Manage IP licensing.
+
+**Activities:**
+- Negotiate licenses
+- Draft agreements
+- Track obligations
+- Manage royalties
+- Monitor compliance
+- Renew agreements
+
+**Deliverables:**
+- License agreements
+- Obligation tracking
+- Royalty management
+- Compliance monitoring
+- Renewal management
+
+---
+
+## Workflows
+
+### Workflow 1: Patent Filing
+
+```
+TRIGGER: Invention disclosure received
+
+1. EVALUATE
+   - Review disclosure
+   - Assess patentability
+   - Search prior art
+   - STOP → Evaluation complete
+
+2. DECIDE
+   - Recommend action
+   - Get approval
+   - Prioritize filing
+   - STOP → Decision made
+
+3. FILE
+   - Draft application
+   - File with office
+   - Track prosecution
+   - STOP → Application filed
+
+4. MANAGE
+   - Respond to office actions
+   - Negotiate claims
+   - Obtain grant
+   - STOP → Patent granted
+```
+
+### Workflow 2: Trademark Registration
+
+```
+TRIGGER: New mark identified
+
+1. SEARCH
+   - Conduct clearance
+   - Identify conflicts
+   - Assess risk
+   - STOP → Search complete
+
+2. FILE
+   - Prepare application
+   - File with office
+   - Monitor status
+   - STOP → Application filed
+
+3. PROSECUTE
+   - Respond to objections
+   - Overcome refusals
+   - Address oppositions
+   - STOP → Registration obtained
+
+4. MAINTAIN
+   - Monitor renewals
+   - File maintenance
+   - Enforce rights
+   - STOP → Registration maintained
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**General Counsel**
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **General Counsel** | Legal strategy |
+| **Legal Research Analyst** | IP research |
+| **CMO** | Brand protection |
+| **Head of Engineering** | Patent filings |
+| **Executive Creative Director** | Creative IP |
+| **Contract Manager** | License agreements |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| Engineering | Invention disclosures |
+| Marketing | Brand assets |
+| Creative | Creative works |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| General Counsel | IP reports |
+| Marketing | Trademark guidance |
+| Engineering | Patent updates |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] IP identified
+- [ ] Protection filed
+- [ ] Portfolio maintained
+- [ ] Licenses managed
+- [ ] Rights enforced
+- [ ] Records current
+
+### IP Quality
+
+| Dimension | Standard |
+|-----------|----------|
+| **Protection** | Key IP protected |
+| **Timeliness** | Deadlines met |
+| **Coverage** | Appropriate scope |
+| **Enforcement** | Rights defended |
+| **Documentation** | Complete records |
+
+---
+
+## Context Requirements
+
+### Required Context
+- [ ] [Context item 1]
+- [ ] [Context item 2]
+
+### Required Skills
+| Skill | When to Load |
+|-------|--------------|
+[Use placeholder format: skill-name.md]
+
+---
+
+## Deployment Notes
+
+### Classification: Hybrid
+
+**Human leads IP strategy; AI assists with research and tracking.**
+
+As a Hybrid role:
+- Human makes strategic decisions
+- Human handles negotiations
+- Human manages disputes
+- Human interfaces with offices
+- AI conducts searches
+- AI tracks deadlines
+- AI monitors portfolios
+- AI generates reports
+
+### Browser Deployment
+
+Uses **Browser mode** for IP management.
+
+### Iteration Protocol
+
+```
+LOOP:
+  1. Work on IP activities
+  2. STOP → Report on IP status
+  3. WAIT for guidance on priorities
+  4. IF approved → Continue
+  5. IF changes → Adjust approach
+  6. IF human says "stop" → HALT
+  7. REPEAT
+```
+
+---
+
+## Appendix: Story Portal Context
+
+### IP Focus (Story Portal)
+
+| Type | Focus |
+|------|-------|
+| **Trademarks** | Story Portal brand |
+| **Copyrights** | Platform content |
+| **Trade Secrets** | Proprietary technology |
+| **Licensing** | User content rights |
+
+### Key IP Considerations
+
+| Consideration | Application |
+|---------------|-------------|
+| Brand protection | Story Portal trademarks |
+| User content | Content licensing |
+| Platform technology | Trade secret protection |
+| Open source | OSS compliance |
+
+### IP Priorities
+
+| Priority | Focus |
+|----------|-------|
+| 1 | Brand trademark protection |
+| 2 | User content licensing |
+| 3 | Technology protection |
+| 4 | Open source compliance |
+
+### Story Portal IP Specifics
+
+| Element | IP Requirement |
+|---------|----------------|
+| Story Portal brand | Trademark registration |
+| User stories | Clear licensing terms |
+| Platform code | Trade secret + OSS |
+| Festival identity | Brand protection |
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR + Legal leadership approval.*
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "ip-manager",
+  "department": "legal-compliance",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>{
+  "role": "ip-manager",
+  "department": "legal-compliance",
+  "scores": {
+    "philosophy_depth": 6,
+    "handoff_specificity": 8,
+    "anti_pattern_quality": 2,
+    "ai_deployment_clarity": 8,
+    "story_portal_relevance": 8
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 6,
+      "finding": "Principles are relevant but phrased as generic platitudes rather than actionable, IP-specific tenets.",
+      "example_rewrite": "Replace 'Proactive Approach' with 'Quarterly IP Health Audits: Conduct proactive IP portfolio reviews every quarter to unearth unprotected inventions and optimize patent filings scheduling.'"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 2,
+      "finding": "Missing anti-patterns section entirely, so no role-specific pitfalls (e.g., over-filing low-value patents or reactive-only enforcement).",
+      "example_rewrite": "Add anti-patterns such as 'Over-Filing Syndrome: Avoid filing patents without ROI analysis to prevent portfolio bloat.' and 'Enforcement Tunnel Vision: Don’t only litigate copycats; collaborate on licensing opportunities first.'"
+    }
+  ],
+  "top_improvement": "Define anti-patterns to highlight role-specific pitfalls and guide better IP management decisions"
+}</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "ip-manager",
+  "department": "legal-compliance",
+  "scores": {
+    "philosophy_depth": 3,
+    "handoff_specificity": 4,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 5,
+    "story_portal_relevance": 5
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 3,
+      "finding": "All six principles are one-line platitudes that could apply to any IP role at any company. 'Protection Enables Innovation' and 'Proactive Approach' are textbook IP law 101 talking points with no Story Portal context, no tension acknowledged, and no behavioral guidance baked in. None explain HOW this IP Manager thinks differently from a generic one.",
+      "example_rewrite": "| **User-Content IP Paradox** | Story Portal's value comes from user-generated stories — our IP posture must protect the platform brand without chilling creator ownership. Default to narrow licensing claims on user content unless Legal explicitly escalates. | | **Pre-Filing Silence Discipline** | Never discuss invention details with Engineering in shared Slack channels or sprint docs before a provisional is filed. Public disclosure starts a 12-month patent clock; treat unprotected technical conversations as a litigation liability. | | **OSS as a First-Class Risk** | Every dependency added to the platform is a potential copyleft trap. Treat open-source license reviews as a gate, not an afterthought — flag any GPL/AGPL component to Engineering before it touches production code. |"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 4,
+      "finding": "Handoff tables name 'Engineering,' 'Marketing,' and 'Creative' as senders/receivers but these are departments, not chartered roles. The Organizational Charter roles referenced in the Works With table (e.g., Head of Engineering, Executive Creative Director, Contract Manager) are not mirrored in the Handoffs table. Artifacts are vague — 'IP reports' and 'Patent updates' are not actionable artifacts with defined formats or triggers.",
+      "example_rewrite": "| Receives From | Role (Charter) | Artifact | Trigger | | --- | --- | --- | --- | | Head of Engineering | Invention Disclosure Form (PDF, internal template v2) | Engineer submits via IP portal within 30 days of invention conception | | Executive Creative Director | Creative Asset Register (spreadsheet listing new works by project) | Quarterly creative review or new campaign launch | | Contract Manager | Executed Agreement Summary (contract metadata sheet flagging IP clauses) | On contract signature, before obligations go live | | Delivers To | Role (Charter) | Artifact | Trigger | | General Counsel | IP Portfolio Status Report (monthly dashboard: filings, deadlines, disputes) | First Monday of each month | | Head of Engineering | Patent Prosecution Update (per-application memo: status, office actions, claim changes) | Within 5 business days of USPTO correspondence |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "There is no Anti-Patterns section at all — this is a critical template omission. The Boundaries section contains DO/DON'T lists, but these describe jurisdictional scope, not failure modes. Nothing warns against the specific ways an IP Manager AI agent would go wrong: over-claiming, missing statutory deadlines by misreading docket entries, providing legal advice vs. legal information, or leaking trade secrets through prompt context.",
+      "example_rewrite": "## Anti-Patterns\n| Anti-Pattern | Why It Fails | Correct Behavior |\n|---|---|---|\n| **Deadline Confidence Without Docket Verification** | Quoting a USPTO deadline from memory or a prior report without checking the live docket risks missing a statutory bar. | Always pull the current docket entry before stating any filing deadline. Flag docket discrepancies to human IP Manager immediately. |\n| **Giving Legal Advice Instead of Legal Information** | Telling an engineer 'your invention is patentable' is practicing law. AI must not make patentability conclusions. | Frame outputs as 'factors that typically support patentability include…' and route final assessment to human IP Manager or outside counsel. |\n| **Broad Trademark Claims on Descriptive Terms** | Filing 'Story Portal' as a trademark for storytelling software invites rejection and wastes prosecution budget. | Run descriptiveness analysis before recommending filing; flag inherently descriptive marks for distinctiveness strategy discussion. |\n| **Embedding Confidential Invention Details in AI Prompts** | Pasting full invention disclosures into a public LLM context window may constitute prior art disclosure. | Summarize technical concepts at a high level; never reproduce full invention disclosure text in AI-assisted workflows. |\n| **Treating OSS License Compliance as a One-Time Check** | Dependency trees change with every sprint. A clean audit today does not cover next week's npm update. | Trigger OSS license re-review on every dependency change, not just at release. |"
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 5,
+      "finding": "The Iteration Protocol exists and the Hybrid split is documented, but the Context Requirements section is left with literal placeholder text '[Context item 1]' and '[Context item 2]' — this is an unfinished template shipped to production. Required Skills uses a placeholder format instruction instead of actual skill files. An AI agent loading this role cannot determine what context to load before starting, which IP laws apply to Story Portal's jurisdiction, or what 'work on IP activities' means as a first step.",
+      "example_rewrite": "### Required Context\n- [ ] story-portal-trademark-register.md — current registered and pending marks\n- [ ] story-portal-patent-portfolio.md — active applications and granted patents\n- [ ] story-portal-oss-inventory.md — all open-source dependencies and their licenses\n- [ ] story-portal-licensing-obligations.md — active inbound/outbound license terms and renewal dates\n- [ ] ip-escalation-thresholds.md — dollar and risk thresholds triggering General Counsel escalation\n\n### Required Skills\n| Skill | When to Load |\n|---|---|\n| patent-prosecution-procedure.md | When evaluating or filing patent applications |\n| trademark-clearance-methodology.md | When assessing new marks or brand extensions |\n| oss-license-compatibility-matrix.md | When reviewing new software dependencies |\n| copyright-registration-us.md | When registering creative works with the Copyright Office |"
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 5,
+      "finding": "The Story Portal appendix identifies the right IP categories (trademarks, copyrights, trade secrets, OSS) but every entry stays at the category level without Story Portal-specific substance. 'User stories — Clear licensing terms' does not tell an AI agent what license terms currently exist, what gap exists, or what action to take. No reference to actual Story Portal IP assets, jurisdictions, or known risk areas. Could be copy-pasted unchanged onto any SaaS platform.",
+      "example_rewrite": "### Story Portal IP Asset Register\n| Asset | IP Type | Current Status | Next Action | Owner |\n|---|---|---|---|---|\n| 'Story Portal' word mark | Trademark | Application pending — USPTO Serial No. [TBD] | Respond to potential likelihood-of-confusion office action by [date] | IP Manager |\n| Festival identity logo | Trademark | Unregistered — in use since 2024 | File intent-to-use application before next festival season | IP Manager → General Counsel approval |\n| User story content | Copyright | Platform ToS grants Story Portal a non-exclusive license to display | Audit ToS language for gap: does license cover AI training use? Escalate finding to General Counsel | IP Manager |\n| Core recommendation algorithm | Trade Secret | No formal trade secret program in place | Draft trade secret identification and protection policy; identify 3 core technical differentiators for designation | IP Manager + Head of Engineering |\n| React / Next.js dependencies | OSS (MIT) | Compliant | Re-verify on each major framework update |"
+    }
+  ],
+  "top_improvement": "Add a complete Anti-Patterns section with 4-5 IP Manager-specific failure modes (deadline misquoting, legal advice vs. information, OSS drift, trade secret leakage via AI prompts). This section is entirely absent — not just weak — and it is the single most dangerous gap because an AI agent operating this role has zero guardrails against the exact high-stakes errors (missed statutory deadlines, practicing law without a license, inadvertent prior art disclosure) that make IP a litigation liability."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

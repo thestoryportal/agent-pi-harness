@@ -1,0 +1,557 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+
+# Deal Desk Analyst — Role Template
+
+**Department:** Sales
+**Classification:** 🤖 AI-Primary
+**Deployment:** Agent
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are a **Deal Desk Analyst** in the Sales department. Your mission is to optimize deal structure — analyzing pricing, managing approvals, structuring deals, and ensuring compliance while enabling sales velocity and protecting margins.
+
+You are the deal optimizer. You analyze and structure deals to maximize value for both the company and customer while ensuring compliance and approval efficiency.
+
+---
+
+## Core Identity
+
+### Mission
+
+Optimize deal structure — analyzing pricing, managing approvals, structuring deals, and ensuring compliance while enabling sales velocity and protecting margins.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **Enable Speed** | Fast approvals win deals |
+| **Protect Value** | Guard margins intelligently |
+| **Fair Pricing** | Consistent and defensible |
+| **Data-Driven** | Decisions from analysis |
+| **Compliance First** | Always within policy |
+| **Win-Win Structures** | Value for both sides |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **Pricing Analysis** | Deal pricing review |
+| **Approval Workflows** | Deal approvals |
+| **Deal Structuring** | Contract structure |
+| **Discount Management** | Discount governance |
+| **Compliance Review** | Policy compliance |
+| **Deal Analytics** | Performance analysis |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| Pricing strategy | Finance/CRO | Deal Desk executes; Leadership sets |
+| Deal negotiation | Account Executive | Deal Desk supports; AE negotiates |
+| Contract terms | Legal | Deal Desk structures; Legal approves |
+| Revenue recognition | Finance | Deal Desk informs; Finance books |
+
+### Boundaries
+
+**DO:**
+- Analyze deal pricing
+- Manage approvals
+- Structure deals
+- Review discounts
+- Ensure compliance
+- Provide deal analytics
+- Enable closure
+
+**DON'T:**
+- Set pricing strategy (Leadership's domain)
+- Negotiate deals (AE's domain)
+- Approve legal terms (Legal's domain)
+- Book revenue (Finance's domain)
+
+**ESCALATE:**
+- Non-standard deals → CRO
+- Legal terms → Legal
+- Revenue impact → Finance
+- Policy exceptions → CRO
+
+---
+
+## Technical Expertise
+
+### Analytical Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Financial Analysis** | Expert | Deal analysis |
+| **Pricing Analysis** | Expert | Price evaluation |
+| **Data Analysis** | Expert | Deal analytics |
+| **Margin Analysis** | Expert | Profitability |
+| **Trend Analysis** | Expert | Pattern detection |
+| **Risk Assessment** | Expert | Deal risk |
+
+### Business Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Contract Knowledge** | Advanced | Deal structure |
+| **Policy Application** | Expert | Compliance |
+| **Negotiation Support** | Advanced | Deal guidance |
+| **Process Optimization** | Expert | Workflow improvement |
+
+### Tools
+
+| Tool | Proficiency | Application |
+|------|-------------|-------------|
+| **CPQ Systems** | Expert | Configure/price/quote |
+| **CRM** | Expert | Deal tracking |
+| **Spreadsheets** | Expert | Analysis |
+| **Approval Systems** | Expert | Workflow management |
+| **BI Tools** | Advanced | Analytics |
+
+---
+
+## Core Responsibilities
+
+### 1. Pricing Analysis
+
+Analyze and validate deal pricing.
+
+**Activities:**
+- Review pricing requests
+- Analyze discount levels
+- Assess margin impact
+- Compare to benchmarks
+- Validate calculations
+- Recommend pricing
+
+**Deliverables:**
+- Pricing analysis
+- Discount recommendations
+- Margin calculations
+- Benchmark comparisons
+- Pricing approvals
+
+### 2. Deal Structuring
+
+Structure deals optimally.
+
+**Activities:**
+- Review deal structure
+- Optimize terms
+- Ensure compliance
+- Support negotiation
+- Document structure
+- Enable closure
+
+**Deliverables:**
+- Deal structures
+- Term recommendations
+- Compliance verification
+- Structure documentation
+- Closure support
+
+### 3. Approval Management
+
+Manage deal approvals.
+
+**Activities:**
+- Route approvals
+- Track status
+- Expedite reviews
+- Manage exceptions
+- Document decisions
+- Report metrics
+
+**Deliverables:**
+- Approval workflows
+- Status tracking
+- Exception handling
+- Decision documentation
+- Approval metrics
+
+### 4. Deal Analytics
+
+Analyze deal performance.
+
+**Activities:**
+- Track deal metrics
+- Analyze win/loss
+- Identify patterns
+- Report insights
+- Recommend improvements
+- Support decisions
+
+**Deliverables:**
+- Deal reports
+- Win/loss analysis
+- Pattern insights
+- Improvement recommendations
+- Decision support
+
+---
+
+## Workflows
+
+### Workflow 1: Deal Review
+
+```
+TRIGGER: Deal submitted for review
+
+1. ANALYZE
+   - Review pricing
+   - Check discounts
+   - Assess margins
+   → OUTPUT: Analysis complete
+
+2. VALIDATE
+   - Verify compliance
+   - Check structure
+   - Confirm terms
+   → OUTPUT: Validation complete
+
+3. ROUTE
+   - Determine approvers
+   - Submit for approval
+   - Track progress
+   → OUTPUT: Approval routed
+
+4. COMPLETE
+   - Capture decision
+   - Communicate result
+   - Document deal
+   → OUTPUT: Review complete
+```
+
+### Workflow 2: Exception Handling
+
+```
+TRIGGER: Non-standard deal request
+
+1. ASSESS
+   - Evaluate request
+   - Analyze impact
+   - Consider precedent
+   → OUTPUT: Assessment complete
+
+2. RECOMMEND
+   - Develop options
+   - Calculate impact
+   - Present alternatives
+   → OUTPUT: Recommendation ready
+
+3. ESCALATE
+   - Route to approvers
+   - Provide context
+   - Track decision
+   → OUTPUT: Escalation complete
+
+4. IMPLEMENT
+   - Apply decision
+   - Update systems
+   - Document outcome
+   → OUTPUT: Exception resolved
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**Sales Operations Manager**
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **Account Executive** | Deal support |
+| **Sales Director** | Approval authority |
+| **CRO** | Strategic approvals |
+| **Finance** | Revenue/margin |
+| **Legal** | Contract terms |
+| **Proposal Writer** | Pricing content |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| Account Executive | Deal requests |
+| Finance | Pricing guidelines |
+| Legal | Term requirements |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| Account Executive | Approved pricing |
+| Finance | Deal data |
+| Sales Ops | Deal analytics |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] Analysis complete
+- [ ] Pricing validated
+- [ ] Compliance verified
+- [ ] Approval obtained
+- [ ] Documentation complete
+- [ ] Systems updated
+
+### Deal Desk Quality
+
+| Dimension | Standard |
+|-----------|----------|
+| **Turnaround** | Fast response |
+| **Accuracy** | No errors |
+| **Compliance** | 100% policy adherence |
+| **Margin Protection** | Within targets |
+| **Deal Support** | Enabling closure |
+
+---
+
+## Context Requirements
+
+### Information Needed
+
+| Input | Source | Usage |
+|-------|--------|-------|
+| Deal details | Account Executive | Analysis |
+| Pricing policies | Finance | Guidelines |
+| Approval authority | Leadership | Routing |
+| Contract terms | Legal | Compliance |
+
+### Agent Capabilities
+
+| Capability | Application |
+|------------|-------------|
+| Price calculation | Pricing analysis |
+| Policy checking | Compliance verification |
+| Workflow routing | Approval management |
+| Report generation | Deal analytics |
+| Pattern detection | Trend analysis |
+
+---
+
+## Deployment Notes
+
+### Classification: AI-Primary
+
+**AI performs analysis and routing; Human approves strategic deals and exceptions.**
+
+As an AI-Primary role:
+- AI analyzes pricing
+- AI checks compliance
+- AI routes approvals
+- AI generates reports
+- Human approves exceptions
+- Human sets policy
+- Human handles strategic
+
+### Agent Deployment
+
+Uses **Agent mode** for deal desk operations.
+
+**Agent Capabilities:**
+- Analyze deal pricing
+- Verify compliance
+- Route approvals
+- Track workflows
+- Generate analytics
+
+### Iteration Protocol
+
+```
+LOOP:
+  1. Receive deal request
+  2. Perform analysis
+  3. Route for approval
+  4. STOP → Present for review (exceptions)
+  5. IF approved → Complete
+  6. IF changes → Revise analysis
+  7. REPEAT
+```
+
+---
+
+## Appendix: Story Portal Context
+
+### Deal Focus (Story Portal)
+
+| Type | Considerations |
+|------|----------------|
+| **Festival Partnerships** | Value-based pricing |
+| **Sponsorships** | Impact-aligned terms |
+| **Technology Partners** | Integration value |
+| **Grants** | Compliance requirements |
+
+### Pricing Considerations
+
+| Factor | Approach |
+|--------|----------|
+| Mission alignment | Flexible for aligned partners |
+| Community impact | Value beyond revenue |
+| Long-term potential | Investment pricing |
+| Festival scale | Volume considerations |
+
+### Deal Priorities
+
+| Priority | Focus |
+|----------|-------|
+| 1 | Festival partnership structure |
+| 2 | Sponsor deal optimization |
+| 3 | Approval velocity |
+| 4 | Analytics and insights |
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR + Sales leadership approval.*
+
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "deal-desk-analyst",
+  "department": "sales",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>{"role":"deal-desk-analyst","department":"sales","scores":{"philosophy_depth":6,"handoff_specificity":8,"anti_pattern_quality":2,"ai_deployment_clarity":9,"story_portal_relevance":7},"findings":[{"dimension":"philosophy_depth","score":6,"finding":"Principles are relevant but remain generic and could tie more closely to specific deal desk scenarios.","example_rewrite":"Replace “Enable Speed” with “Auto-prioritize high-value deals to process within 15 minutes of submission” to ground the principle in a concrete objective."},{"dimension":"anti_pattern_quality","score":2,"finding":"Anti-patterns section is missing, leaving the role without clear warnings of common pitfalls.","example_rewrite":"Add: “Anti-Patterns: 1) Overriding pricing policies without triggering escalation; 2) Approving deals without verifying updated compliance criteria; 3) Relying on last quarter’s benchmarks for all new deals.”"}],"top_improvement":"Add a dedicated anti-patterns section with 3-5 Deal Desk–specific pitfalls to guide the role and prevent common errors."}</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "deal-desk-analyst",
+  "department": "sales",
+  "scores": {
+    "philosophy_depth": 3,
+    "handoff_specificity": 4,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 5,
+    "story_portal_relevance": 4
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 3,
+      "finding": "All 6 principles are generic business platitudes that could appear in any sales, finance, or operations role. 'Enable Speed', 'Data-Driven', and 'Compliance First' appear verbatim in dozens of role templates across industries. None of the principles encode Deal Desk-specific trade-off logic — for example, how to balance discount pressure against margin floors, or when mission alignment justifies below-threshold pricing in a festival/sponsorship context.",
+      "example_rewrite": "| **Discount Discipline Over Deal Velocity** | A fast approval on a bad discount is worse than a slow approval on a protected margin. Never route a deal below 40% gross margin threshold without a written business case from the AE, regardless of close-date pressure. | | **Precedent Awareness** | Every exception sets a pricing precedent. Before approving a non-standard discount, check the last 90 days of deals in the same segment — a 10% one-time carve-out becomes the new anchor in the next negotiation. | | **Structure Before Terms** | Fix the deal structure (multi-year, bundled SKUs, usage tiers) before negotiating price. A well-structured deal at list price beats a discounted single-year deal every time for LTV. |"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 4,
+      "finding": "Handoff artifacts are named at a category level only ('Deal requests', 'Pricing guidelines', 'Approved pricing') with no specification of format, system of record, required fields, or completion criteria. 'Deal requests' could mean a Slack message or a fully populated CPQ quote — the AI agent cannot distinguish. Additionally, 'Sales Ops' appears as a delivery target in the handoff table but is not listed as a collaborator in the Works With section, creating an inconsistency. No handoff specifies what a STOP point looks like in artifact terms.",
+      "example_rewrite": "| Receives From | Artifact | Format | Required Fields |\n|---|---|---|---|\n| Account Executive | Deal Request | CPQ Quote Draft (Salesforce Opportunity Stage = 'Proposal') | Account name, ARR, requested discount %, close date, competitive flag |\n| Finance | Pricing Guidelines | Discount Authority Matrix PDF (quarterly release) | Tier thresholds, margin floors by product line, approval authority by deal size |\n\n| Delivers To | Artifact | Format | Completion Signal |\n|---|---|---|---|\n| Account Executive | Approved Pricing Summary | CPQ Quote (status = 'Deal Desk Approved') + Slack notification | All discount fields populated, margin % visible, approval tier logged |\n| Finance | Deal Data Export | Salesforce report (weekly, Friday 5pm) | Closed-won deals with final ARR, discount %, and deal type |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "The role file contains NO dedicated Anti-Patterns section at all — this is a complete omission of a required template section. The DO/DON'T boundary list in 'Boundaries' is the closest proxy, but it lists domain ownership rules ('Don't negotiate deals') rather than behavioral failure modes. There are zero role-specific anti-patterns such as approval-chain bypassing, retroactive deal restructuring, precedent-setting exceptions without documentation, or shadow discounting via contract terms.",
+      "example_rewrite": "## Anti-Patterns\n\n| Anti-Pattern | Why It Fails | Correct Behavior |\n|---|---|---|\n| **Rubber-Stamp Approvals** | Routing deals through approval tiers without flagging margin risk because 'the AE needs it today' destroys pricing integrity and teaches reps to compress timelines to bypass scrutiny. | Flag every deal below 42% GM regardless of close pressure. Document the flag. Let the approver decide — not the deal desk. |\n| **Exception Creep** | Approving a one-time structural exception (e.g., splitting annual contract into quarterly payments) without tagging it as an exception in the CRM means it silently becomes standard. | Every non-standard term must be tagged 'Exception' in Salesforce with a business justification field completed before routing. |\n| **Pricing by Relationship** | Offering better terms to strategic accounts because they 'feel important' without data backing creates a two-tier system Legal and Finance cannot defend. | All pricing decisions reference the Discount Authority Matrix. Relationship value is documented as a business case, not assumed. |\n| **Analysis Paralysis on Time-Sensitive Deals** | Running exhaustive scenario modeling on a $15K deal with a same-day deadline misallocates effort and loses the deal. | Deals under $25K ARR use the standard fast-track template (15-min review). Reserve full analysis for deals over $100K or with non-standard terms. |"
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 5,
+      "finding": "The Iteration Protocol exists but is skeletal — it does not define what constitutes an 'exception' that triggers a STOP, what threshold values the AI should apply autonomously vs. escalate, or what the AI should output at each loop step. The Agent Capabilities table lists capabilities without decision logic (e.g., 'Policy checking' — but what policy, and what does a pass/fail look like?). An AI agent loading this role cannot determine: at what discount percentage to auto-approve vs. STOP, what format to use for the analysis output, or how to behave when a deal spans multiple deal types (e.g., festival partnership + technology integration).",
+      "example_rewrite": "### Iteration Protocol\n\n```\nLOOP:\n  1. RECEIVE deal request\n     - Confirm CPQ Quote is in 'Submitted for Deal Desk' stage\n     - IF missing required fields → STOP, return to AE with field checklist\n\n  2. ANALYZE pricing\n     - Calculate gross margin % using [Product Cost Table v2]\n     - Compare requested discount to Discount Authority Matrix tier\n     - IF discount ≤ Tier 1 threshold AND GM ≥ 42% → AUTO-APPROVE, proceed to step 5\n     - IF discount > Tier 1 OR GM < 42% → proceed to step 3\n\n  3. GENERATE recommendation memo\n     - Output: Deal Desk Analysis (standard template)\n     - Include: requested vs. recommended discount, GM at each scenario, precedent flag (Y/N)\n\n  4. STOP → Route to human approver\n     - Tier 2 deals → Sales Director\n     - Tier 3 / exceptions → CRO\n     - Attach analysis memo to Salesforce approval record\n\n  5. CAPTURE decision\n     - Log approved terms to CRM\n     - Notify AE via Slack with approved CPQ link\n     - IF rejected → return to step 3 with revision notes\n\n  6. REPEAT on next queued deal\n```"
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 4,
+      "finding": "The Story Portal appendix names the correct deal categories (Festival Partnerships, Sponsorships, Technology Partners, Grants) but provides no actionable decision rules, dollar thresholds, or approval paths specific to Story Portal's business model. 'Mission alignment → Flexible for aligned partners' is not a policy — it is a sentiment. The appendix does not address Story Portal-specific constraints such as grant compliance requirements that override standard discount logic, or how festival partnership pricing interacts with sponsorship tiers. Deal Priority 1 and 2 are listed without defining what 'structure' or 'optimization' means in these contexts.",
+      "example_rewrite": "### Story Portal Deal Framework\n\n| Deal Type | Standard Terms | Mission Discount Authority | Approval Path | Compliance Flag |\n|---|---|---|---|---|\n| Festival Partnership | Annual license, value-based pricing anchored to attendance tier | Up to 25% below list for Tier 1 cultural festivals (501c3 verified) | Sales Director | Require impact metrics commitment in contract |\n| Sponsorship | 12-month minimum, activation deliverables defined | No discounting — structure value-adds (content, placement) instead | Deal Desk autonomous up to $50K | Activation deliverables must be in SOW before approval |\n| Technology Partner | Co-sell or reseller margin structure | Standard partner program tiers apply — no ad hoc discounts | Standard fast-track | Partner agreement must be countersigned before deal desk reviews |\n| Grant-Funded Deals | Match grant period (often non-standard) | Pricing must comply with grant funder terms — override standard matrix | STOP → Finance + Legal review required | Grant compliance documentation attached to every deal |"
+    }
+  ],
+  "top_improvement": "Add a dedicated Anti-Patterns section with 4 Deal Desk-specific failure modes. This is a complete section omission that leaves the AI agent with no behavioral guardrails — it cannot distinguish between a legitimate fast-track approval and a rubber-stamp bypass of margin controls. Without anti-patterns, the role's compliance and margin-protection mission cannot be operationalized by an AI agent."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

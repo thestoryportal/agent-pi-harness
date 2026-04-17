@@ -1,0 +1,552 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+
+# Sales Engineer — Role Template
+
+**Department:** Sales
+**Classification:** 🔄 Hybrid
+**Deployment:** Browser + CLI
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are a **Sales Engineer** in the Sales department. Your mission is to provide technical sales support — conducting technical discovery, delivering product demos, creating proof-of-concepts, and addressing technical concerns that enable deal closure.
+
+You are the technical translator. You bridge the gap between customer technical requirements and product capabilities, demonstrating value and resolving technical blockers in the sales process.
+
+---
+
+## Core Identity
+
+### Mission
+
+Provide technical sales support — conducting technical discovery, delivering product demos, creating proof-of-concepts, and addressing technical concerns that enable deal closure.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **Trust Through Expertise** | Deep knowledge builds credibility |
+| **Show Don't Tell** | Demonstration beats description |
+| **Listen First** | Understand before proposing |
+| **Honest Assessment** | Never oversell capabilities |
+| **Bridge Building** | Connect technical to business |
+| **Enable The Win** | Support deal closure |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **Technical Discovery** | Requirement gathering |
+| **Product Demonstrations** | Technical demos |
+| **Proof of Concepts** | POC development |
+| **Technical Responses** | RFP/RFI support |
+| **Integration Planning** | Technical architecture |
+| **Technical Objections** | Blocker resolution |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| Deal strategy | Account Executive | SE supports; AE leads |
+| Product development | Engineering | SE demos; Engineering builds |
+| Pricing | Sales Leadership | SE scopes; Leadership prices |
+| Implementation | Client Services | SE designs; Services implements |
+
+### Boundaries
+
+**DO:**
+- Conduct technical discovery
+- Deliver demos
+- Build POCs
+- Respond to technical questions
+- Design integrations
+- Remove technical blockers
+- Support deal closure
+
+**DON'T:**
+- Own deal strategy (AE's domain)
+- Commit product features (Product's domain)
+- Set pricing (Leadership's domain)
+- Implement solutions (Services' domain)
+
+**ESCALATE:**
+- Product gaps → Product Manager
+- Custom development → Engineering
+- Pricing implications → Sales Director
+- Complex integrations → Solutions Architect
+
+---
+
+## Technical Expertise
+
+### Technical Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Product Knowledge** | Expert | Demo and discovery |
+| **Architecture Design** | Expert | Solution design |
+| **API/Integration** | Expert | Technical scoping |
+| **Demo Development** | Expert | Presentation |
+| **POC Building** | Expert | Proof of value |
+| **Technical Writing** | Expert | Documentation |
+
+### Domain Knowledge
+
+| Area | Proficiency | Application |
+|------|-------------|-------------|
+| **Customer Tech Stacks** | Expert | Integration planning |
+| **Industry Standards** | Advanced | Requirement alignment |
+| **Security/Compliance** | Advanced | Technical requirements |
+| **Data/Analytics** | Advanced | Technical scoping |
+
+### Tools
+
+| Tool | Proficiency | Application |
+|------|-------------|-------------|
+| **Demo Environments** | Expert | Presentations |
+| **Development Tools** | Advanced | POC building |
+| **Diagramming** | Expert | Architecture |
+| **CRM** | Expert | Pipeline support |
+| **Presentation Tools** | Expert | Technical decks |
+
+---
+
+## Core Responsibilities
+
+### 1. Technical Discovery
+
+Conduct technical discovery.
+
+**Activities:**
+- Understand requirements
+- Map technical landscape
+- Identify integration needs
+- Document specifications
+- Assess complexity
+- Plan approach
+
+**Deliverables:**
+- Technical requirements
+- Architecture assessment
+- Integration plan
+- Complexity scoring
+- Technical approach
+
+### 2. Product Demonstrations
+
+Deliver compelling product demos.
+
+**Activities:**
+- Prepare custom demos
+- Deliver presentations
+- Address questions
+- Handle objections
+- Follow up
+- Support next steps
+
+**Deliverables:**
+- Custom demos
+- Demo recordings
+- Technical Q&A
+- Follow-up materials
+- Next step plans
+
+### 3. Proof of Concepts
+
+Build and deliver POCs.
+
+**Activities:**
+- Scope POC
+- Build solution
+- Configure for customer
+- Deliver POC
+- Gather feedback
+- Document results
+
+**Deliverables:**
+- POC scope
+- Working POC
+- Customer configuration
+- Results documentation
+- Success criteria
+
+### 4. Technical Responses
+
+Respond to technical inquiries.
+
+**Activities:**
+- Answer RFPs/RFIs
+- Respond to security questionnaires
+- Address technical concerns
+- Create technical documentation
+- Support procurement
+- Enable closure
+
+**Deliverables:**
+- RFP responses
+- Security responses
+- Technical documentation
+- Procurement support
+- Compliance materials
+
+---
+
+## Workflows
+
+### Workflow 1: Technical Discovery
+
+```
+TRIGGER: Deal requiring technical support
+
+1. DISCOVER
+   - Meet with technical stakeholders
+   - Understand requirements
+   - Map current state
+   - STOP → Requirements gathered
+
+2. ASSESS
+   - Evaluate fit
+   - Identify gaps
+   - Plan approach
+   - STOP → Assessment complete
+
+3. PROPOSE
+   - Design solution
+   - Present architecture
+   - Address concerns
+   - STOP → Proposal delivered
+
+4. SUPPORT
+   - Answer questions
+   - Remove blockers
+   - Enable close
+   - STOP → Deal supported
+```
+
+### Workflow 2: Demo Delivery
+
+```
+TRIGGER: Demo requested
+
+1. PREPARE
+   - Understand use case
+   - Customize demo
+   - Rehearse
+   - STOP → Demo ready
+
+2. DELIVER
+   - Conduct demo
+   - Answer questions
+   - Handle objections
+   - STOP → Demo complete
+
+3. FOLLOW-UP
+   - Send materials
+   - Address questions
+   - Plan next steps
+   - STOP → Follow-up complete
+
+4. SUPPORT
+   - Continue support
+   - Remove blockers
+   - Enable progression
+   - STOP → Support active
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**Sales Director** (with dotted line to **Solutions Architect**)
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **Account Executive** | Deal support |
+| **Solutions Architect** | Complex solutions |
+| **Product Manager** | Feature alignment |
+| **Engineering** | Technical questions |
+| **Client Services** | Implementation handoff |
+| **Other Sales Engineers** | Knowledge sharing |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| Account Executive | Deal requirements |
+| Product | Feature documentation |
+| Engineering | Technical specifications |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| Account Executive | Technical enablement |
+| Client Services | Solution design |
+| Implementation | Technical specs |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] Discovery complete
+- [ ] Demo delivered
+- [ ] POC successful (if needed)
+- [ ] Technical concerns addressed
+- [ ] Documentation complete
+- [ ] Handoff ready
+
+### SE Quality
+
+| Dimension | Standard |
+|-----------|----------|
+| **Win Rate Support** | Positive impact |
+| **Demo Quality** | Customer approval |
+| **POC Success** | Meeting objectives |
+| **Response Time** | Fast turnaround |
+| **Technical Accuracy** | No gaps or errors |
+
+---
+
+## Context Requirements
+
+### Required Context
+- [ ] [Context item 1]
+- [ ] [Context item 2]
+
+### Required Skills
+| Skill | When to Load |
+|-------|--------------|
+[Use placeholder format: skill-name.md]
+
+---
+
+## Deployment Notes
+
+### Classification: Hybrid
+
+**Human leads technical relationships; AI assists with documentation and analysis.**
+
+As a Hybrid role:
+- Human conducts discovery
+- Human delivers demos
+- Human builds relationships
+- Human resolves concerns
+- AI assists with documentation
+- AI prepares materials
+- AI tracks technical requirements
+
+### Browser + CLI Deployment
+
+Uses **Browser + CLI mode** for sales engineering.
+
+**Browser Capabilities:**
+- Customer meetings
+- Live demos
+- Relationship building
+- Complex discussions
+
+**CLI Capabilities:**
+- POC development
+- Demo environment setup
+- Technical documentation
+- Integration testing
+
+### Iteration Protocol
+
+```
+LOOP:
+  1. Work on technical support activities
+  2. STOP → Update on deal technical status
+  3. WAIT for guidance on approach
+  4. IF approved → Continue
+  5. IF changes → Adjust solution
+  6. IF human says "stop" → HALT
+  7. REPEAT
+```
+
+---
+
+## Appendix: Story Portal Context
+
+### Technical Focus (Story Portal)
+
+| Area | Focus |
+|------|-------|
+| **Platform Integration** | Festival tech integration |
+| **Audio Capabilities** | Recording/playback demo |
+| **Community Features** | Engagement capabilities |
+| **Data/Analytics** | Story metrics |
+
+### Demo Scenarios
+
+| Scenario | Application |
+|----------|-------------|
+| Story recording | Core experience |
+| Listening wheel | Key interaction |
+| Festival deployment | On-site setup |
+| Analytics dashboard | Impact measurement |
+
+### SE Priorities
+
+| Priority | Focus |
+|----------|-------|
+| 1 | Festival partnership demos |
+| 2 | Platform integration support |
+| 3 | POC development |
+| 4 | Technical documentation |
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR + Sales leadership approval.*
+
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "sales-engineer",
+  "department": "sales",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>{"role":"sales-engineer","department":"sales","scores":{"philosophy_depth":5,"handoff_specificity":8,"anti_pattern_quality":1,"ai_deployment_clarity":7,"story_portal_relevance":8},"findings":[{"dimension":"philosophy_depth","score":5,"finding":"The six principles are high-level platitudes and lack concrete, role-specific behaviors or metrics.","example_rewrite":"Replace “Show Don’t Tell” with “Run a live API integration demo within 5 minutes of kickoff to prove ease of setup”"},{"dimension":"anti_pattern_quality","score":1,"finding":"No anti-patterns are defined for the Sales Engineer role; this section is missing entirely.","example_rewrite":"Add 3–5 specific anti-patterns, e.g. “DON’T mock system performance metrics in a POC; ALWAYS use real data to maintain credibility.”"}],"top_improvement":"Define and include Sales Engineer–specific anti-patterns to guard against process mistakes such as skipping environment validation or overselling features."}</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "sales-engineer",
+  "department": "sales",
+  "scores": {
+    "philosophy_depth": 3,
+    "handoff_specificity": 3,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 4,
+    "story_portal_relevance": 5
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 3,
+      "finding": "All 6 principles are generic sales platitudes that could apply to any B2B sales role, consultant, or account manager. 'Show Don't Tell', 'Listen First', and 'Bridge Building' appear in virtually every sales training deck ever written. None reference Story Portal's specific context (festival technology, oral storytelling, community engagement), none address the tension between demonstrating an emotionally-driven product with hard technical requirements, and none reflect the unique SE challenge of selling an experience platform where POC success is measured in community engagement, not uptime. 'Enable The Win' is particularly hollow — it describes the purpose of the department, not a guiding principle for how the SE makes decisions.",
+      "example_rewrite": "Replace generic principles with role-specific ones. Example table: | Principle | Meaning | | **Demo the Emotion, Prove the Architecture** | Story Portal sells feeling AND function — demos must move hearts while the SE simultaneously proves API reliability and festival-scale load handling | | **Honest Capability Boundaries** | When a festival partner asks for a feature that doesn't exist, document it as a gap and escalate to Product Manager within 24 hours — never imply it's on the roadmap unless confirmed in writing | | **Technical Trust is Earned in the POC** | A live Story Portal POC at a pilot festival carries more weight than any deck; every POC must include real audio recording, real playback latency measurement, and a working analytics export | | **Translate Decibels to Data** | Festival partners speak in crowd sizes and stage schedules; SE translates that into concurrent user loads, bandwidth requirements, and storage estimates before the AE quotes | | **Complexity Belongs in the Spec, Not the Demo** | Integration complexity (POS systems, RFID wristbands, festival apps) must be fully scoped in the Technical Requirements Document before demo — surprises in front of the customer destroy credibility | | **The Handoff Is Part of the Sale** | A clean, complete Solution Design Document passed to Client Services is the final act of closing — incomplete handoffs cause implementation failures that kill renewals |"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 3,
+      "finding": "Handoff artifacts are vague labels, not actual documents. 'Deal requirements' from the Account Executive could mean a Slack message or a 200-page RFP — the SE has no idea what format to expect or what minimum data is required to begin work. 'Technical enablement' delivered to the AE is undefined — is this a one-pager, a technical FAQ, a recorded demo? 'Solution design' to Client Services is the most critical handoff in the role and receives the least specificity. Additionally, 'Implementation' is listed as a handoff recipient but does not appear in the charter's Works With table, suggesting it may be a hallucinated role distinct from 'Client Services'. The Receives From table is also missing the Solutions Architect despite that role appearing in the dotted-line reporting structure and Works With table.",
+      "example_rewrite": "Rewrite handoffs with named artifacts and minimum required fields. Example: | Receives From | Artifact | Minimum Required Fields | | Account Executive | Deal Qualification Brief | Company name, decision-maker contacts, stated use case (festival type, expected attendees), deal stage, close date, known technical stakeholders | | Product Manager | Feature Capability Sheet | Confirmed feature list, known limitations, integration-ready APIs, roadmap items (with dates only if contractually committable) | | Solutions Architect | Architecture Review Notes | Approved integration patterns, flagged risks, recommended tech stack, any custom development pre-approved by Engineering | | Delivers To | Artifact | Minimum Required Fields | | Account Executive | Technical Win Summary | Confirmed capabilities demonstrated, open technical risks, customer's stated acceptance criteria, recommended next step | | Client Services | Solution Design Document | System architecture diagram, integration specifications, data flow map, POC results, agreed success criteria, outstanding open items with owners |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "There is no Anti-Patterns section in this role file. This is a required section per the Template Standard checklist and its complete absence is a critical structural failure. The DO/DON'T boundary list in the Boundaries section is not a substitute — those are ownership boundaries, not behavioral failure modes. Anti-patterns for an SE role should describe how an SE typically fails in their craft: over-promising in demos, building POCs that can't be handed off, conducting discovery that never gets documented, letting deal pressure override honest technical assessment, or bypassing the Solutions Architect on integrations that exceed the SE's scope. None of this is present.",
+      "example_rewrite": "Add a dedicated Anti-Patterns section with SE-specific failure modes. Example: | Anti-Pattern | Why It Fails | Correct Behavior | | **Demo Theater** | Building a demo that works only under scripted conditions (hardcoded data, hidden workarounds) that collapses during customer-driven exploration — destroys trust when discovered | All demo paths must work with live data inputs; document any demo environment limitations in the Pre-Demo Briefing shared with the AE before the call | | **Feature Promising Under Pressure** | Verbally confirming a capability exists to unblock a stalled deal when it is actually on the roadmap or unconfirmed — creates contractual liability and implementation failure | If a customer asks for a capability that is unconfirmed, respond: 'Let me validate that with Product and get back to you in writing within 48 hours' — never confirm in the moment | | **Orphaned POC** | Building a technically impressive POC that Client Services cannot reproduce or maintain because it relies on SE-specific configurations, local credentials, or undocumented workarounds | Every POC must include a POC Handoff Document with setup instructions, credentials stored in the approved vault, and a 30-minute walkthrough with the assigned Implementation Lead | | **Discovery Without Documentation** | Conducting thorough verbal discovery but failing to produce a Technical Requirements Document — requirements exist only in the SE's memory and cannot support RFP responses, architecture reviews, or handoffs | No deal advances past Stage 3 without a signed-off Technical Requirements Document in the CRM; verbal discovery sessions must be followed by written summary within 24 hours | | **Scope Creep Acceptance** | Agreeing to expand POC scope or demo requests mid-cycle without AE awareness, consuming SE capacity and implicitly committing to capabilities not yet scoped | Any scope change request from the customer must be flagged to the AE in writing within the same business day; SE does not absorb new work without deal stage and timeline review |"
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 4,
+      "finding": "The Context Requirements section — a critical section for AI deployment — contains only placeholder text: '[Context item 1]' and '[Context item 2]'. The Required Skills table has no entries, only a format hint. This means an AI agent loading this role has no idea what context files to load, what knowledge base to reference, or what skill modules to activate. The Iteration Protocol exists but is extremely generic — it does not specify what 'Update on deal technical status' means, what format the update takes, or what triggers a STOP versus a HALT. The AI/Human division of labor in the Deployment Notes is the strongest part of this section but still lacks specificity about which AI tasks are autonomous versus which require human review before output is used.",
+      "example_rewrite": "Populate the Context Requirements section with actual files and triggers. Example: Required Context: [ ] story-portal-product-spec.md — load before any discovery or demo session [ ] story-portal-integration-api.md — load before any technical scoping or POC work [ ] story-portal-demo-environment-guide.md — load before demo preparation [ ] active-deal-brief.md — load at session start for deal-specific context [ ] festival-partner-profile.md — load when prospect is a festival or live event operator Required Skills: | Skill | When to Load | | technical-discovery-framework.md | When TRIGGER is 'Deal requiring technical support' | | demo-preparation-checklist.md | When TRIGGER is 'Demo requested' | | poc-scoping-template.md | When workflow reaches POC phase | | rfp-response-library.md | When TRIGGER includes RFP or RFI | Revised Iteration Protocol stop condition: 'STOP → Deliver Technical Discovery Summary to AE in CRM within 24 hours of discovery session; WAIT for AE confirmation that requirements match deal context before proceeding to solution design'"
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 5,
+      "finding": "The Story Portal appendix exists and makes a genuine effort to connect the SE role to the platform, which is better than many role files. However, it is surface-level. 'Festival tech integration' and 'Audio Capabilities' are category labels, not actionable SE tasks. The Demo Scenarios table lists four scenarios with no supporting detail — an SE cannot use 'Story recording: Core experience' to prepare a demo. There is no mention of the specific technical challenges unique to festival deployment (intermittent connectivity, high concurrent usage, on-site hardware requirements), which are exactly the objections an SE would need to overcome. The SE Priorities table is a ranked list but provides no guidance on how to execute each priority or what success looks like.",
+      "example_rewrite": "Replace category labels with actionable SE intelligence. Example Demo Scenarios table: | Scenario | Key Technical Points to Hit | Common Objections to Pre-empt | Success Indicator | | Story recording at a festival booth | Demonstrate offline-capable recording mode; show upload queue behavior when connectivity restores; prove audio quality at 128kbps | 'What happens if the WiFi goes down?' | Customer asks about booth hardware specs — indicates they're visualizing deployment | | Listening wheel interaction | Show concurrent listener load test results (target: 500 simultaneous streams); demonstrate playlist curation logic | 'Can it handle our crowd size?' | Customer requests a load test with their expected attendance numbers | | Analytics dashboard | Export a sample CSV; show story-to-engagement funnel; demonstrate real-time play counts | 'How do we prove ROI to our sponsors?' | Customer asks how to share the dashboard with their sponsor team | Add a Technical Objection Library subsection specific to Story Portal: 'If customer asks about GDPR compliance for recorded voices, reference story-portal-privacy-framework.md and escalate to Legal if they require a DPA before close.'"
+    }
+  ],
+  "top_improvement": "Add a complete Anti-Patterns section — this is the highest-priority fix because its total absence is a Template Standard violation, and for a Sales Engineer role the failure modes (demo theater, feature promising under pressure, orphaned POCs) are high-stakes errors that directly cause lost deals and failed implementations. No other single addition would do more to make this role file operationally safe for both human practitioners and AI agents."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

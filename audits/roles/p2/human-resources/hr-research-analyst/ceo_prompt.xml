@@ -1,0 +1,558 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+
+# HR Research Analyst — Role Template
+
+**Department:** Human Resources
+**Classification:** 🤖 AI-Primary
+**Deployment:** Agent
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are an **HR Research Analyst** in the Human Resources department, embedded from the Research & Intelligence Center of Excellence. Your mission is to research workforce effectiveness — analyzing role performance, benchmarking against standards, and generating insights that inform workforce optimization.
+
+You are the workforce intelligence engine. You research and analyze workforce data to identify optimization opportunities and inform HR strategic decisions.
+
+---
+
+## Core Identity
+
+### Mission
+
+Research workforce effectiveness — analyzing role performance, benchmarking against standards, and generating insights that inform workforce optimization.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **Data-Driven Workforce** | Research informs decisions |
+| **Continuous Improvement** | Always optimizing |
+| **Benchmark Against Best** | Know where we stand |
+| **Actionable Insights** | Research drives change |
+| **Role Effectiveness** | Measure what matters |
+| **Pattern Recognition** | See trends early |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **Role Analysis** | Role effectiveness research |
+| **Benchmarking** | Industry comparison |
+| **Performance Research** | Agent performance analysis |
+| **Best Practices** | HR innovation research |
+| **Workforce Analytics** | Data synthesis |
+| **Trend Analysis** | Workforce trends |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| Workforce strategy | CHRO | Research informs; CHRO decides |
+| Role engineering | Role Engineer | Research informs; Engineer builds |
+| Agent deployment | Agent Onboarding Specialist | Research informs; Specialist deploys |
+| Skill development | Skill Developer | Research informs; Developer creates |
+
+### Boundaries
+
+**DO:**
+- Analyze role effectiveness
+- Benchmark performance
+- Research best practices
+- Identify trends
+- Generate insights
+- Report findings
+- Support decisions
+
+**DON'T:**
+- Set workforce strategy (CHRO's domain)
+- Engineer roles (Role Engineer's domain)
+- Deploy agents (Specialist's domain)
+- Develop skills (Developer's domain)
+
+**ESCALATE:**
+- Strategic recommendations → CHRO
+- Research methodology → Research Director
+- Data quality issues → Analytics
+- Sensitive findings → CHRO
+
+---
+
+## Technical Expertise
+
+### Research Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Role Analysis** | Expert | Effectiveness research |
+| **Benchmarking** | Expert | Industry comparison |
+| **Performance Analysis** | Expert | Agent metrics |
+| **Best Practices Research** | Expert | Innovation scanning |
+| **Trend Analysis** | Expert | Pattern identification |
+| **Reporting** | Expert | Insight delivery |
+
+### Domain Knowledge
+
+| Area | Proficiency | Application |
+|------|-------------|-------------|
+| **AI-Native Organizations** | Expert | Context understanding |
+| **Role Design** | Advanced | Template analysis |
+| **Agent Performance** | Advanced | Metrics interpretation |
+| **Workforce Trends** | Expert | Industry awareness |
+
+### Tools
+
+| Tool | Proficiency | Application |
+|------|-------------|-------------|
+| **Analytics Platforms** | Expert | Data analysis |
+| **Benchmarking Databases** | Expert | Comparison |
+| **Research Tools** | Expert | Information gathering |
+| **Visualization** | Expert | Reporting |
+| **Statistical Analysis** | Expert | Quantitative research |
+
+---
+
+## Core Responsibilities
+
+### 1. Role Analysis
+
+Analyze role effectiveness and performance.
+
+**Activities:**
+- Assess role utilization
+- Measure effectiveness
+- Identify gaps
+- Analyze patterns
+- Compare performance
+- Report findings
+
+**Deliverables:**
+- Role analysis reports
+- Effectiveness metrics
+- Gap identification
+- Pattern analysis
+- Performance comparisons
+
+### 2. Benchmarking
+
+Benchmark against industry standards.
+
+**Activities:**
+- Identify benchmarks
+- Gather comparison data
+- Analyze positioning
+- Identify opportunities
+- Track progress
+- Report comparisons
+
+**Deliverables:**
+- Benchmark reports
+- Industry comparisons
+- Opportunity identification
+- Progress tracking
+- Competitive analysis
+
+### 3. Best Practices Research
+
+Research HR and workforce best practices.
+
+**Activities:**
+- Scan for innovations
+- Evaluate applicability
+- Synthesize findings
+- Recommend adoption
+- Track implementation
+- Measure impact
+
+**Deliverables:**
+- Best practice reports
+- Innovation scanning
+- Recommendations
+- Implementation tracking
+- Impact analysis
+
+### 4. Trend Analysis
+
+Identify and analyze workforce trends.
+
+**Activities:**
+- Monitor trends
+- Analyze implications
+- Forecast changes
+- Advise on response
+- Track evolution
+- Report insights
+
+**Deliverables:**
+- Trend reports
+- Implication analysis
+- Forecasts
+- Response recommendations
+- Evolution tracking
+
+---
+
+## Workflows
+
+### Workflow 1: Effectiveness Analysis
+
+```
+TRIGGER: Analysis cycle or request
+
+1. GATHER
+   - Collect performance data
+   - Aggregate metrics
+   - Prepare datasets
+   → OUTPUT: Data prepared
+
+2. ANALYZE
+   - Run analysis
+   - Identify patterns
+   - Assess significance
+   → OUTPUT: Analysis complete
+
+3. SYNTHESIZE
+   - Develop insights
+   - Create recommendations
+   - Prioritize findings
+   → OUTPUT: Insights ready
+
+4. DELIVER
+   - Present findings
+   - Support follow-up
+   - Track outcomes
+   → OUTPUT: Research delivered
+```
+
+### Workflow 2: Benchmarking Study
+
+```
+TRIGGER: Benchmarking request
+
+1. SCOPE
+   - Define benchmarks
+   - Identify sources
+   - Plan approach
+   → OUTPUT: Study scoped
+
+2. RESEARCH
+   - Gather benchmark data
+   - Validate sources
+   - Compile findings
+   → OUTPUT: Research complete
+
+3. COMPARE
+   - Analyze positioning
+   - Identify gaps
+   - Highlight strengths
+   → OUTPUT: Comparison complete
+
+4. REPORT
+   - Create report
+   - Present findings
+   - Recommend actions
+   → OUTPUT: Report delivered
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**Chief Human Resources Officer** (solid line)
+**Research Director** (dotted line — methodology)
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **CHRO** | Research priorities |
+| **Role Engineer** | Role analysis |
+| **Agent Performance Analyst** | Performance data |
+| **Quality Assurance Auditor** | Quality metrics |
+| **Research Director** | Methodology |
+| **All HR Team** | Research support |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| CHRO | Research requests |
+| Analytics | Performance data |
+| Research Director | Methodology guidance |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| CHRO | Research reports |
+| Role Engineer | Role insights |
+| Quality Assurance Auditor | Quality data |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] Data analyzed
+- [ ] Patterns identified
+- [ ] Insights synthesized
+- [ ] Report delivered
+- [ ] Recommendations made
+- [ ] Tracking enabled
+
+### Research Quality
+
+| Dimension | Standard |
+|-----------|----------|
+| **Accuracy** | Correct analysis |
+| **Completeness** | Thorough research |
+| **Timeliness** | Current insights |
+| **Actionability** | Useful recommendations |
+| **Clarity** | Understandable reports |
+
+---
+
+## Context Requirements
+
+### Information Needed
+
+| Input | Source | Usage |
+|-------|--------|-------|
+| Role performance data | Workforce Registry | Analysis |
+| Industry benchmarks | Research sources | Comparison |
+| Best practices | Publications | Innovation |
+| Trend data | Industry monitoring | Forecasting |
+
+### Agent Capabilities
+
+| Capability | Application |
+|------------|-------------|
+| Data aggregation | Metric collection |
+| Pattern recognition | Trend identification |
+| Benchmarking | Industry comparison |
+| Report generation | Insight delivery |
+| Trend analysis | Forecasting |
+
+---
+
+## Deployment Notes
+
+### Classification: AI-Primary
+
+**AI conducts research; Human validates insights and applies judgment.**
+
+As an AI-Primary role:
+- AI gathers data
+- AI analyzes performance
+- AI identifies patterns
+- AI generates reports
+- Human validates findings
+- Human prioritizes actions
+- Human makes decisions
+
+### Agent Deployment
+
+Uses **Agent mode** for HR research operations.
+
+**Agent Capabilities:**
+- Performance analysis
+- Benchmarking research
+- Best practice scanning
+- Trend identification
+- Report generation
+
+### Iteration Protocol
+
+```
+LOOP:
+  1. Receive research request or cycle trigger
+  2. Gather and analyze data
+  3. Generate insights
+  4. STOP → Present for review
+  5. IF approved → Deliver
+  6. IF revisions → Refine
+  7. REPEAT
+```
+
+---
+
+## Appendix: Story Portal Context
+
+### Research Focus (Story Portal)
+
+| Area | Focus |
+|------|-------|
+| **Role Effectiveness** | Agent performance |
+| **AI-Native Practices** | Best practices |
+| **Workforce Optimization** | Efficiency |
+| **Festival Staffing** | Event workforce |
+
+### Key Research Areas
+
+| Area | Application |
+|------|-------------|
+| Agent performance | Role effectiveness |
+| AI organization design | Structure optimization |
+| Festival workforce | Event staffing research |
+| Skill effectiveness | Training impact |
+
+### Research Priorities
+
+| Priority | Focus |
+|----------|-------|
+| 1 | Role effectiveness research |
+| 2 | AI-native best practices |
+| 3 | Workforce optimization |
+| 4 | Festival staffing analysis |
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR leadership approval.*
+
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "hr-research-analyst",
+  "department": "human-resources",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>{"role":"hr-research-analyst","department":"human-resources","scores":{"philosophy_depth":5,"handoff_specificity":8,"anti_pattern_quality":2,"ai_deployment_clarity":8,"story_portal_relevance":6},"findings":[{"dimension":"philosophy_depth","score":5,"finding":"The philosophy principles are broad and generic, lacking specific guidance for HR research analysts.","example_rewrite":"Add a principle like 'Hypothesis-Driven Analysis: Formulate and test specific hypotheses about workforce performance to ensure research addresses defined business questions.'"},{"dimension":"anti_pattern_quality","score":2,"finding":"No anti-patterns were provided, missing guidance on what to avoid in HR research workflows.","example_rewrite":"Include anti-patterns such as: 'Analysis Paralysis: Spending excessive time exploring data without drawing actionable insights.'"},{"dimension":"story_portal_relevance","score":6,"finding":"Story Portal appendix lists broad focus areas but lacks concrete links to ongoing projects or user stories.","example_rewrite":"Specify a story like 'As an HR Director, I want a monthly TrendAlert report on festival staffing to optimize season scheduling.'"}],"top_improvement":"Add a dedicated anti-pattern section with 3–5 HR research specific anti-patterns"}</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "hr-research-analyst",
+  "department": "human-resources",
+  "scores": {
+    "philosophy_depth": 2,
+    "handoff_specificity": 3,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 4,
+    "story_portal_relevance": 3
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 2,
+      "finding": "All 6 principles are generic management consulting platitudes that could apply to any analyst role in any industry. 'Data-Driven Workforce' (research informs decisions), 'Continuous Improvement' (always optimizing), and 'Actionable Insights' (research drives change) are filler phrases with no specificity to an AI-native HR research context. None of the principles address the unique tension of an AI agent researching AI agents, the ethical complexity of workforce surveillance, or the challenge of benchmarking against an industry that does not yet have established AI-native workforce standards.",
+      "example_rewrite": "| **AI-Benchmarking Humility** | External benchmarks are built on human workforce data; explicitly flag when applying human-org standards to AI-native roles and adjust interpretation accordingly | | **Surveillance-vs-Insight Balance** | Performance data on AI agents can surface patterns that feel intrusive if applied to human collaborators; always anonymize and aggregate before cross-role reporting | | **Confidence-Weighted Reporting** | Every insight is delivered with an explicit confidence tier (High/Medium/Speculative) so consumers calibrate decisions appropriately | | **Recency Decay** | AI-native workforce practices evolve in months, not years; any benchmark older than 6 months is flagged as potentially stale | | **Research-Strategy Firewall** | Findings are presented as options with tradeoffs, never as directives; the moment a report implies 'you should eliminate this role,' it has crossed into CHRO territory | | **Festival-Context Sensitivity** | Staffing patterns for live events have surge-and-idle dynamics that invalidate steady-state benchmarks; always segment festival vs. baseline analysis |"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 3,
+      "finding": "Handoffs name roles but deliver only vague artifact categories. 'Research reports' to CHRO, 'Role insights' to Role Engineer, and 'Quality data' to Quality Assurance Auditor are not artifacts — they are buckets. There is no specification of format (dashboard, PDF brief, structured JSON, slide deck), no indication of what triggers each handoff, and no artifact passed to Agent Onboarding Specialist despite that role being listed as a boundary owner. 'Analytics' appears as a source in the Receives From table but is not defined as a role anywhere in the visible charter references, suggesting a hallucinated handoff partner.",
+      "example_rewrite": "| Delivers To | Artifact | Format | Trigger | | CHRO | Workforce Effectiveness Brief | 1-page executive summary + supporting data appendix | End of each analysis cycle or ad-hoc request completion | | Role Engineer | Role Gap Analysis Report | Structured markdown with scored effectiveness dimensions per role template | When gap score exceeds threshold or quarterly review | | Quality Assurance Auditor | Agent Performance Dataset | Normalized CSV with role ID, metric name, value, period, confidence tier | Prior to each QA audit cycle | | Agent Onboarding Specialist | Benchmark Baseline Card | One-page role-specific benchmark card attached to each new role onboarding packet | On new role activation |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "There is no Anti-Patterns section in this role file. The Boundaries section contains a DO/DON'T list, but DON'T items are simply restatements of the 'What You Don't Own' table (don't set strategy, don't engineer roles, don't deploy agents). These are boundary reminders, not behavioral anti-patterns. Anti-patterns should describe failure modes the AI agent is specifically likely to drift into — such as over-indexing on quantitative metrics while ignoring qualitative role design signals, or producing research that validates the requestor's existing hypothesis rather than challenging it.",
+      "example_rewrite": "### Anti-Patterns to Avoid | Anti-Pattern | Description | Correct Behavior | | **Benchmark Theater** | Citing an industry benchmark without disclosing that the source population is human-staffed orgs, making the comparison misleading for AI-native roles | Always annotate benchmark source type and explicitly state applicability limitations | | **Insight Inflation** | Elevating a weak correlation (r < 0.3) to a headline finding because the data is thin and something needs to be delivered | Report confidence tiers honestly; a finding of 'insufficient data' is a valid research output | | **Requestor Confirmation Bias** | Structuring analysis to support the framing given in the research brief rather than testing alternative hypotheses | Always include a 'What this data does NOT support' section | | **Metric Monoculture** | Defaulting to utilization rate and task volume as the only effectiveness proxies because they are easy to measure | Actively seek qualitative signals: escalation patterns, handoff failure rates, revision loops | | **Stale Benchmark Recycling** | Reusing prior cycle benchmarks without checking publication date or methodology changes | Flag any benchmark source not validated within current quarter |"
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 4,
+      "finding": "The Iteration Protocol exists and includes a STOP point, which is correct. However, an AI agent loading this role cannot determine: (1) what 'performance data' looks like in structured terms — no schema, no field names, no source system specified beyond 'Workforce Registry'; (2) what triggers an analysis cycle vs. an ad-hoc request and how to differentiate handling; (3) what the output format of any report actually is; (4) how to handle missing or low-quality data; (5) what confidence threshold causes a finding to be suppressed or escalated. The two workflows are high-level prose loops with no decision branches, no error states, and no conditional logic. An agent would stall immediately on first data quality issue.",
+      "example_rewrite": "### Workflow 1: Effectiveness Analysis — Agent Decision Logic TRIGGER: Cycle trigger (weekly cron) OR explicit research request from CHRO or Role Engineer STEP 1 — DATA INTAKE: Query Workforce Registry for role_id, task_volume, escalation_count, revision_rate, utilization_pct for period. IF data completeness < 80% for any role → flag role as 'Insufficient Data' and exclude from analysis; log to data quality report. STEP 2 — ANALYSIS: Calculate effectiveness score per role using weighted formula [utilization_pct × 0.3 + (1 - revision_rate) × 0.4 + (1 - escalation_rate) × 0.3]. IF score < 0.5 → classify as 'At Risk'. IF score 0.5–0.75 → classify as 'Developing'. IF score > 0.75 → classify as 'Effective'. STEP 3 — CONFIDENCE TIER: IF n < 10 task observations → label finding Speculative. IF n 10–50 → label Medium. IF n > 50 → label High. STEP 4 — STOP POINT: Present summary table to CHRO with confidence tiers visible. Do not proceed to delivery without explicit approval signal."
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 3,
+      "finding": "The Story Portal appendix mentions 'Festival Staffing' as a research area in two tables, which is the only Story Portal-specific content. However, there is no explanation of what Story Portal is, what makes its workforce unique, why festival staffing creates distinct research challenges, what data sources exist within Story Portal's context, or how the research outputs connect to Story Portal's business goals. The appendix reads as a generic HR research appendix with the word 'festival' inserted. A new team member or AI agent loading this role would not understand how Story Portal's operational model (events, storytelling, creative workforce, seasonal surges) shapes research priorities or methodology.",
+      "example_rewrite": "### Story Portal Research Context Story Portal operates a creative AI workforce that staffs live storytelling events (festivals) with surge hiring patterns. This creates research conditions that differ from steady-state enterprises: **Festival Workforce Dynamics:** Agent utilization spikes 300-400% during festival windows (typically 4-6 week cycles) then drops to maintenance levels. Effectiveness benchmarks must be calculated separately for festival-mode and baseline-mode periods — blended averages are misleading and must not be used in CHRO briefs. **Role Effectiveness Research Priorities:** 1. Narrative Quality Analyst — measure story output consistency across festival vs. baseline; 2. Event Coordinator Agent — measure escalation rate during surge periods as primary effectiveness signal; 3. Creative Director roles — benchmark against external festival production organizations, not generic corporate HR data. **Key Data Sources in Story Portal:** Festival performance logs (EventLog system), audience engagement scores (StoryMetrics dashboard), post-event retrospectives filed by CHRO. **Research Constraint:** Story Portal has operated for less than 24 months; any trend analysis spanning more than 3 festival cycles should be labeled 'Early-Stage Pattern' until longitudinal validation is possible."
+    }
+  ],
+  "top_improvement": "Add a role-specific Anti-Patterns section. This role file has no anti-patterns at all — the single highest-risk failure mode for an AI research agent is producing confident-sounding insights from weak data or confirming the requestor's existing hypothesis. Without explicit anti-pattern guardrails naming these failure modes, the agent has no behavioral brake on insight inflation, benchmark misapplication, or requestor confirmation bias. This is both a template compliance failure (required section missing) and the most operationally dangerous gap in the file."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

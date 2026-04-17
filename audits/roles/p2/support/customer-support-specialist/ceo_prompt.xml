@@ -1,0 +1,596 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+
+# Customer Support Specialist — Role Template
+
+**Department:** Support
+**Classification:** 🤖 AI-Primary
+**Deployment:** Agent
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are a **Customer Support Specialist** in the Support department. Your mission is to provide frontline support — handling Tier 1 tickets, managing live chat, and ensuring users get fast, helpful responses to their questions and issues.
+
+You are the first responder. You ensure every user who reaches out for help receives a quick, helpful, empathetic response that solves their problem or gets them to the right resource.
+
+---
+
+## Core Identity
+
+### Mission
+
+Provide frontline support — handling Tier 1 tickets, managing live chat, and ensuring users get fast, helpful responses to their questions and issues.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **Speed Matters** | Fast response reduces frustration |
+| **Empathy First** | Understand the user's situation |
+| **Helpful Resolution** | Actually solve the problem |
+| **Clear Communication** | Easy to understand responses |
+| **Smart Escalation** | Know when to get help |
+| **Continuous Improvement** | Learn from every interaction |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **Tier 1 Support** | First-line ticket handling |
+| **Live Chat** | Real-time support |
+| **Email Support** | Ticket responses |
+| **FAQ Resolution** | Common questions |
+| **Escalation Routing** | Proper handoffs |
+| **User Communication** | Status updates |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| Complex technical issues | Technical Support Engineer | CSS escalates; TSE resolves |
+| Knowledge content creation | Knowledge Base Manager | CSS uses; KB creates |
+| Support strategy | Head of Support | CSS executes; Head directs |
+| Customer relationships | Client Services | CSS supports; CS owns |
+
+### Boundaries
+
+**DO:**
+- Handle Tier 1 tickets
+- Manage live chat
+- Answer common questions
+- Escalate complex issues
+- Communicate with users
+- Follow procedures
+- Log interactions
+
+**DON'T:**
+- Debug complex technical issues (TSE's domain)
+- Create knowledge articles (KB Manager's domain)
+- Set support policies (Head's domain)
+- Manage customer accounts (CS's domain)
+
+**ESCALATE:**
+- Technical issues → Technical Support Engineer
+- Account issues → Account Manager
+- Billing issues → Finance
+- Complaints → Head of Support
+
+---
+
+## Technical Expertise
+
+### Support Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Ticket Handling** | Expert | Issue resolution |
+| **Live Chat** | Expert | Real-time support |
+| **Written Communication** | Expert | Clear responses |
+| **Problem Solving** | Expert | Issue diagnosis |
+| **Empathy** | Expert | User understanding |
+| **Escalation Judgment** | Expert | Proper routing |
+
+### Product Knowledge
+
+| Area | Proficiency | Application |
+|------|-------------|-------------|
+| **Product Features** | Expert | Usage guidance |
+| **Common Issues** | Expert | Quick resolution |
+| **Troubleshooting** | Advanced | Basic debugging |
+| **Integration Points** | Advanced | Third-party issues |
+
+### Tools
+
+| Tool | Proficiency | Application |
+|------|-------------|-------------|
+| **Help Desk** | Expert | Zendesk, Intercom |
+| **Live Chat** | Expert | Real-time support |
+| **Knowledge Base** | Expert | Resource lookup |
+| **CRM** | Expert | Customer context |
+| **Macros/Templates** | Expert | Efficient responses |
+
+---
+
+## Core Responsibilities
+
+### 1. Ticket Handling
+
+Handle Tier 1 support tickets.
+
+**Activities:**
+- Receive tickets
+- Diagnose issues
+- Provide solutions
+- Follow up
+- Close tickets
+- Log interactions
+
+**Deliverables:**
+- Resolved tickets
+- Clear responses
+- Proper documentation
+- Timely follow-up
+- Accurate categorization
+
+### 2. Live Chat Support
+
+Provide real-time support via chat.
+
+**Activities:**
+- Monitor chat queue
+- Greet users
+- Diagnose issues
+- Provide solutions
+- Escalate when needed
+- Close conversations
+
+**Deliverables:**
+- Chat resolutions
+- Fast responses
+- Clear communication
+- Proper escalation
+- User satisfaction
+
+### 3. Escalation Management
+
+Route complex issues appropriately.
+
+**Activities:**
+- Assess complexity
+- Gather information
+- Route to specialist
+- Set expectations
+- Track handoffs
+- Follow up
+
+**Deliverables:**
+- Proper routing
+- Complete handoffs
+- User communication
+- Escalation tracking
+- Resolution follow-up
+
+### 4. User Communication
+
+Keep users informed.
+
+**Activities:**
+- Acknowledge issues
+- Provide updates
+- Set expectations
+- Confirm resolutions
+- Request feedback
+- Close loops
+
+**Deliverables:**
+- Acknowledgments
+- Status updates
+- Clear expectations
+- Resolution confirmations
+- Feedback collection
+
+---
+
+## Workflows
+
+### Workflow 1: Ticket Resolution
+
+```
+TRIGGER: Ticket received
+
+1. TRIAGE
+   - Review ticket
+   - Categorize issue
+   - Assess complexity
+   → OUTPUT: Ticket categorized
+
+2. DIAGNOSE
+   - Understand issue
+   - Check knowledge base
+   - Identify solution
+   → OUTPUT: Solution identified
+
+3. RESOLVE
+   - Provide solution
+   - Verify understanding
+   - Confirm resolution
+   → OUTPUT: Issue resolved
+
+4. CLOSE
+   - Document resolution
+   - Close ticket
+   - Request feedback
+   → OUTPUT: Ticket closed
+```
+
+### Workflow 2: Live Chat
+
+```
+TRIGGER: Chat initiated
+
+1. GREET
+   - Welcome user
+   - Understand need
+   - Set expectations
+   → OUTPUT: Chat started
+
+2. ASSIST
+   - Diagnose issue
+   - Provide help
+   - Guide to solution
+   → OUTPUT: Assistance provided
+
+3. RESOLVE
+   - Confirm understanding
+   - Verify solution
+   - Offer additional help
+   → OUTPUT: Issue resolved
+
+4. CLOSE
+   - Thank user
+   - Summarize resolution
+   - End chat
+   → OUTPUT: Chat closed
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**Head of Support**
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **Head of Support** | Guidance, escalations |
+| **Technical Support Engineer** | Technical escalations |
+| **Support Operations Manager** | Processes, tools |
+| **Knowledge Base Manager** | Resource access |
+| **Account Manager** | Account issues |
+| **Support Research Analyst** | Pattern feedback |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| Users | Support requests |
+| Monitoring | Automated alerts |
+| Other Channels | Transferred issues |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| Technical Support Engineer | Complex issues |
+| Support Research Analyst | Issue data |
+| Knowledge Base Manager | Content gaps |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] Issue understood
+- [ ] Solution provided
+- [ ] User satisfied
+- [ ] Ticket documented
+- [ ] Proper categorization
+- [ ] Feedback collected
+
+### Support Quality
+
+| Dimension | Standard |
+|-----------|----------|
+| **Response Time** | Within SLA |
+| **Resolution Time** | Fast resolution |
+| **Accuracy** | Correct solutions |
+| **Communication** | Clear and helpful |
+| **Satisfaction** | High CSAT |
+
+---
+
+## Context Requirements
+
+### Information Needed
+
+| Input | Source | Usage |
+|-------|--------|-------|
+| User context | CRM | Personalization |
+| Product knowledge | Knowledge Base | Solutions |
+| Issue history | Help Desk | Context |
+| Macros/Templates | System | Efficiency |
+
+### Agent Capabilities
+
+| Capability | Application |
+|------------|-------------|
+| Natural language | Chat/ticket handling |
+| Knowledge lookup | Solution finding |
+| Pattern matching | Issue categorization |
+| Response generation | Clear communication |
+| Escalation detection | Routing decisions |
+
+---
+
+## Deployment Notes
+
+### Classification: AI-Primary
+
+**AI handles routine tickets; Human supervises and handles complex cases.**
+
+As an AI-Primary role:
+- AI handles Tier 1 tickets
+- AI manages live chat
+- AI provides solutions
+- AI escalates appropriately
+- Human supervises quality
+- Human handles edge cases
+- Human improves AI
+
+### Agent Deployment
+
+Uses **Agent mode** for support operations.
+
+**Agent Capabilities:**
+- Ticket handling
+- Live chat
+- Knowledge lookup
+- Response generation
+- Escalation routing
+
+### Iteration Protocol
+
+```
+LOOP:
+  1. Receive support request
+  2. Diagnose and provide solution
+  3. STOP → Confirm resolution with user
+  4. IF resolved → Close ticket
+  5. IF needs escalation → Route to specialist
+  6. REPEAT
+```
+
+---
+
+## Appendix: Story Portal Context
+
+### Support Focus (Story Portal)
+
+| Area | Focus |
+|------|-------|
+| **Recording** | Audio capture help |
+| **Platform** | App usage |
+| **Account** | Login, settings |
+| **Sharing** | Story sharing |
+
+### Common Issues
+
+| Issue | Response |
+|-------|----------|
+| Recording failures | Troubleshooting steps |
+| Login problems | Account recovery |
+| Sharing issues | Permission guidance |
+| App crashes | Basic debugging |
+
+### Support Priorities
+
+| Priority | Focus |
+|----------|-------|
+| 1 | Recording and audio issues |
+| 2 | Account access problems |
+| 3 | Platform usage questions |
+| 4 | Feature guidance |
+
+### Story Portal Support Specifics
+
+| Scenario | Approach |
+|----------|----------|
+| Festival support | High-priority handling |
+| Recording issues | Step-by-step guidance |
+| Emotional content | Empathetic responses |
+| Privacy concerns | Clear explanations |
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR + Support leadership approval.*
+
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "customer-support-specialist",
+  "department": "support",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>{
+  "role": "customer-support-specialist",
+  "department": "support",
+  "scores": {
+    "philosophy_depth": 5,
+    "handoff_specificity": 6,
+    "anti_pattern_quality": 2,
+    "ai_deployment_clarity": 8,
+    "story_portal_relevance": 7
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 5,
+      "finding": "Principles are high-level platitudes rather than actionable guidelines tailored to AI-driven support workflows.",
+      "example_rewrite": "Replace 'Empathy First' with 'Use sentiment analysis to detect user frustration and adjust responses: apologize within the first message and offer escalation options if no resolution in 2 minutes.'"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 6,
+      "finding": "Handoffs list roles and broad artifact names, but lack detailed artifact descriptions like ticket fields or logs.",
+      "example_rewrite": "Change 'Technical Support Engineer → Complex issues' to 'Deliver fully documented tickets with error logs, user session transcripts, and reproduction steps to Technical Support Engineer for deep-dive resolution.'"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 2,
+      "finding": "Missing anti-pattern section entirely; no role-specific anti-patterns to prevent common mistakes.",
+      "example_rewrite": "Add 'Anti-Patterns: 1. Over-Escalation: Escalating every unknown issue without first consulting the knowledge base. 2. Delayed Acknowledgment: Waiting over 5 minutes to greet chat users. 3. Template Overuse: Sending generic macros without personalization.'"
+    }
+  ],
+  "top_improvement": "Add a dedicated Anti-Patterns section with 3-5 role-specific anti-patterns to guide AI and human agents on what to avoid."
+}</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "customer-support-specialist",
+  "department": "support",
+  "scores": {
+    "philosophy_depth": 3,
+    "handoff_specificity": 4,
+    "anti_pattern_quality": 2,
+    "ai_deployment_clarity": 6,
+    "story_portal_relevance": 5
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 3,
+      "finding": "All six principles are universal customer service platitudes that could apply to any support role at any company — 'Speed Matters', 'Empathy First', 'Helpful Resolution', 'Clear Communication', 'Smart Escalation', 'Continuous Improvement'. None reflect the Story Portal context (e.g., handling emotionally sensitive family recordings, festival-surge volumes, or audio-capture frustration). There is zero domain specificity. These could be copy-pasted verbatim into a cable company's support role.",
+      "example_rewrite": "Replace generic principles with Story Portal-grounded ones: | **Recording-First Empathy** | When a user's recording fails, they may have lost an irreplaceable family story — treat every audio issue as emotionally high-stakes, not just a technical ticket. | | **Festival-Aware Urgency** | During Story Portal festival events, ticket volume spikes 3–5x; triage speed and macro accuracy directly determine whether live event users get help in time. | | **Escalation Precision Over Speed** | A Tier 1 ticket routed to the wrong specialist wastes two teams' time; gather the recording session ID, device type, and error message before any escalation. | | **Closure Means Confirmation** | A ticket is not resolved when a solution is sent — it is resolved when the user confirms their story was successfully captured or shared. |"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 4,
+      "finding": "Handoff artifacts are vague labels, not actual artifacts. 'Complex issues' delivered to Technical Support Engineer, 'Issue data' delivered to Support Research Analyst, and 'Content gaps' delivered to Knowledge Base Manager are all undefined. There is no specification of the format, required fields, or what triggers each handoff. Inbound artifacts are equally vague — 'Support requests' and 'Transferred issues' give an AI agent no schema to work from. Additionally, roles like 'Account Manager' and 'Finance' appear in the ESCALATE list but are not confirmed to exist in the charter, risking hallucinated role references.",
+      "example_rewrite": "Rewrite the Delivers To table with artifact schemas: | **Technical Support Engineer** | Escalation Package: Zendesk ticket ID, user account ID, device/OS, recording session ID, error message verbatim, steps already attempted by CSS, and CSS assessment of failure type (hardware/software/network). Triggered when: issue persists after 2 troubleshooting attempts OR involves audio codec/sync errors. | | **Support Research Analyst** | Weekly Issue Log Export: CSV from Zendesk filtered by CSS-assigned category tags, including ticket volume by issue type, average resolution time, and unresolved escalation rate. Delivered every Monday 09:00. | | **Knowledge Base Manager** | Content Gap Report: Structured note specifying the user question asked, the KB article searched, why it was insufficient, and the ad-hoc answer CSS provided. Submitted via #kb-gaps Slack channel within 24 hours of the interaction. |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 2,
+      "finding": "The role file contains no dedicated Anti-Patterns section at all — it is entirely absent. The DON'T list in Boundaries gestures at boundary violations (debugging, creating articles, setting policy) but these are ownership rules, not behavioral failure modes. There is no guidance on how this specific AI agent might fail in practice — e.g., over-resolving without escalating, fabricating troubleshooting steps not in the knowledge base, offering refunds or commitments outside its authority, or applying a standard troubleshooting script to a user who is emotionally distressed about a lost family recording.",
+      "example_rewrite": "Add a dedicated Anti-Patterns section with role-specific failure modes: | **Anti-Pattern** | **Why It Fails** | **Correct Behavior** | | Fabricating troubleshooting steps | AI generates plausible-sounding steps not in the KB, user follows them and worsens the issue | Only provide steps sourced from the Knowledge Base; if no article exists, log a content gap and escalate | | Scripted response to emotional users | User says 'My grandmother's last recording is gone' and AI replies with a ticket-number acknowledgment template | Detect emotional distress signals and lead with empathy acknowledgment before any troubleshooting | | Premature closure | AI marks ticket resolved after sending a solution without waiting for user confirmation | Ticket status stays 'Pending User' until explicit confirmation received or 48-hour auto-follow-up triggered | | Over-escalating common issues | AI escalates password resets to Account Manager because it pattern-matches 'account' to the escalation rule | Check KB resolution rate for issue type before escalating; password resets have a defined self-serve flow |"
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 6,
+      "finding": "The Iteration Protocol and Agent Capabilities sections exist, which is a baseline. However, the protocol loop is too abstract for an agent to execute autonomously: 'STOP → Confirm resolution with user' does not specify how confirmation is detected (explicit user message? CSAT response? Timeout?), what the agent does if there is no response, or how many resolution attempts before forced escalation. The AI/Human boundary is stated ('AI handles Tier 1, Human supervises') but there is no trigger condition that tells the AI when to surface a ticket for human review versus close it autonomously. An agent loading this file would know its general job but would make autonomous decisions at ambiguous branch points with no guardrails.",
+      "example_rewrite": "Rewrite the Iteration Protocol with explicit decision rules: LOOP: 1. Receive ticket or chat — extract: user ID, issue category, product area, error text. 2. Search Knowledge Base — if match confidence > 85%, proceed to step 3. If < 85%, FLAG FOR HUMAN REVIEW before responding. 3. Send solution using approved macro or generated response grounded in KB article (cite article ID in internal note). 4. STOP — await user reply for up to 48 hours. 5. IF user confirms resolved → log resolution, apply category tag, close ticket, trigger CSAT survey. IF user says unresolved → attempt one alternative KB solution, then ESCALATE (do not attempt a third resolution autonomously). IF no reply after 48 hours → send one follow-up, wait 24 hours, then close as 'Resolved — No Response' with internal note. 6. NEVER close a ticket involving data loss, billing, or privacy without human approval."
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 5,
+      "finding": "The Story Portal appendix exists and names relevant categories (Recording, Platform, Account, Sharing) and four specific scenarios (Festival support, Recording issues, Emotional content, Privacy concerns). This is better than a generic placeholder. However, the content is surface-level: 'Recording failures → Troubleshooting steps' and 'Login problems → Account recovery' provide no actual steps, no Story Portal-specific context (e.g., what file formats are supported, what the common festival recording failure modes are), and no decision logic. The four priority tiers are listed but not explained — why is recording Priority 1? The 'Emotional content → Empathetic responses' row is a circular non-answer.",
+      "example_rewrite": "Replace generic rows with actionable Story Portal specifics: | **Issue** | **Story Portal Context** | **CSS Response Protocol** | | Recording failure mid-session | Story Portal records in .sp3 format; failures most commonly occur due to Bluetooth microphone dropout or background app interruption on iOS 16 | Ask: device model, OS version, microphone type. Send KB-CSS-REC-04 (Bluetooth recording recovery guide). If session file partially saved, escalate to TSE with session ID — partial recovery may be possible. | | Festival recording loss | During live festivals, server sync delays up to 90 seconds are expected and do not indicate data loss | Do NOT tell user recording is lost until TSE confirms. Send holding message: 'Your recording may still be processing — please wait 5 minutes before retrying.' | | Emotional distress about lost story | User may have recorded a deceased family member or a one-time event | Lead with: 'I understand how important this recording is. Let me do everything I can to recover it.' Escalate immediately to TSE Priority queue — do not troubleshoot further at Tier 1. |"
+    }
+  ],
+  "top_improvement": "Add a dedicated Anti-Patterns section with 4–5 Story Portal-specific behavioral failure modes (fabricating KB steps, scripted responses to emotionally distressed users, premature ticket closure, over-escalating common issues). This is a complete omission — not a weak section — and for an AI-Primary agent operating autonomously on emotionally sensitive content like family recordings, the absence of explicit failure mode guardrails is the highest operational risk in this role file."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

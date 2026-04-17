@@ -1,0 +1,46 @@
+```json
+{
+  "role": "business-planner",
+  "department": "strategy-business-dev",
+  "scores": {
+    "philosophy_depth": 3,
+    "handoff_specificity": 4,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 5,
+    "story_portal_relevance": 6
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 3,
+      "finding": "All 6 principles are one-line platitudes with zero operational meaning. 'Plans Are Tools — Plans enable action' is circular and content-free. 'Iteration Expected — Plans evolve' could describe any role in any company. None of the principles tell an AI agent how to behave differently than a generic assistant. There is no principle about how to handle conflicting stakeholder assumptions, when to flag a model as unreliable, or how to balance precision against speed in early-stage planning for a startup like Story Portal.",
+      "example_rewrite": "| **Assumptions Over Precision** | In early-stage planning for Story Portal, a documented assumption with 60% confidence is more useful than a precise number with unknown provenance. Always surface assumptions explicitly rather than burying them in model logic. | | **Festival Economics Drive Everything** | Story Portal revenue is event-gated — Love Burn attendance, partner festival count, and per-story attach rate are the three variables that cascade into all other projections. Model these first; everything else is downstream. | | **One Plan, Three Scenarios** | Every deliverable ships with Base, Upside, and Downside cases. Base is what we expect; Upside assumes two new festival partnerships in Q1; Downside assumes Love Burn attendance 30% below projection. Never present a single-point forecast. |"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 4,
+      "finding": "Handoffs name roles but not artifacts with any specificity. 'Receives: CSO → Strategic direction' and 'Delivers: CSO → Business plans' are structural placeholders, not operational instructions. An AI agent cannot act on these. There is no indication of artifact format (deck vs. doc vs. spreadsheet), no file naming convention, no version state (draft vs. final), and no indication of what triggers the handoff. The FP&A Analyst is listed as a collaborator but absent from the handoff tables entirely, which is a gap given that role feeds financial inputs.",
+      "example_rewrite": "| Receives From | Artifact | Format | Trigger | | CSO | Strategic Direction Brief — 1-page memo outlining initiative scope, target outcome, and key constraints | Google Doc, shared in /strategy/briefs/ | Before any new plan is started | | CFO | Financial Constraints Sheet — approved headcount ceiling, capex limit, and runway assumptions for the planning period | Google Sheet tab 'CFO-Constraints' in master model | Before MODEL phase begins | | FP&A Analyst | Actuals-to-Date Export — prior quarter actuals by cost center, reconciled and signed off | CSV export from accounting system | Monthly model refresh | | Delivers To | Artifact | Format | Trigger | | CSO | Business Plan v[N] — narrative + financial model + scenario summary | Google Doc + linked Sheet, named 'BP-[Initiative]-v[N]-[YYYYMMDD]' | After REVIEW STOP point cleared | | CFO | Financial Projection Package — revenue model, cost model, cash flow, assumptions log | Google Sheet with named tabs, version-locked PDF attached | After plan finalized |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "There is no Anti-Patterns section in this role file. The template standard explicitly requires 3-5 role-specific anti-patterns, and this section is entirely absent. The DO/DON'T boundary list exists but it describes scope ownership conflicts, not behavioral failure modes. There is nothing warning against common planning errors like model sprawl, assumption drift, false precision in early-stage projections, or presenting a single scenario as a plan. This is the most critical structural omission in the file.",
+      "example_rewrite": "## Anti-Patterns to Avoid | Anti-Pattern | Description | Correct Behavior | | **The Single-Scenario Plan** | Presenting one projection as 'the plan' without scenario banding. Stakeholders treat point estimates as commitments. | Always deliver Base/Upside/Downside. Flag sensitivity: 'A 20% drop in Love Burn attendance moves us from Base to Downside within 6 weeks.' | | **Precision Theater** | Building a model to 4 decimal places when the inputs are guesses. False precision signals confidence that doesn't exist and buries uncertainty. | Round projections to the nearest $1K in early-stage plans. Annotate cells with confidence level: HIGH/MEDIUM/LOW. | | **Assumption Burial** | Embedding assumptions inside formula logic where stakeholders can't see or challenge them. Creates invisible dependencies that break silently. | All assumptions live in a dedicated 'Assumptions' tab with owner, date set, and last validated fields. | | **Plan-and-Abandon** | Delivering a finished plan and moving on. Plans for a launch like Love Burn become stale within weeks as real data arrives. | Every plan ships with a defined refresh cadence and trigger conditions for an unscheduled update. |"
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 5,
+      "finding": "The Iteration Protocol exists and the Human/AI split is stated, but the Context Requirements section is broken — it contains literal placeholder text '[Context item 1]' and '[Context item 2]', and the Required Skills table has no entries. An AI agent loading this role cannot determine what context it needs before starting work. The STOP points in workflows exist but do not specify who approves them or what 'approved' looks like. An AI could loop indefinitely without knowing what constitutes a complete review. The Browser deployment note lists capabilities but does not specify which tasks the AI executes autonomously versus which require human initiation.",
+      "example_rewrite": "### Required Context | Context Item | Source | Required Before | | Story Portal Organizational Charter | /admin/charter.md | Any session | | Current Strategic Direction Brief from CSO | /strategy/briefs/current.md | Starting any new plan | | CFO Financial Constraints Sheet | /finance/constraints/current.md | MODEL phase | | Love Burn Event Parameters (date, venue capacity, target attendance) | /projects/love-burn/brief.md | Any Love Burn modeling | | Prior plan versions if updating | /plans/[initiative]/ | Any revision session | ### STOP Point Approval Criteria | STOP | Approver | Done When | | Inputs confirmed | CSO or delegated PM | Strategic Direction Brief signed off in writing | | Model complete | CFO | CFO has reviewed assumptions tab and replied 'constraints aligned' | | Plan drafted | CSO | No open comments in Google Doc review | | Plan finalized | CSO | CSO sends explicit 'approved to share' message |"
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 6,
+      "finding": "The Story Portal appendix is the strongest section in the file — it names Love Burn, references festival partnerships and subscriptions as revenue streams, and identifies per-story/per-festival unit economics. These are specific. However, it stops short of being actionable: there are no actual numbers (target attendance, revenue per festival partner, subscription price point), no timeline anchors (Love Burn date, planning deadlines), and no indication of which plan is in-flight versus planned. The 'Planning Priorities' table is a ranked list but provides no context on current status. An AI agent reading this knows what to plan but not where work currently stands.",
+      "example_rewrite": "### Story Portal Planning Status | Plan | Status | Owner | Next Milestone | | Love Burn Launch Plan | IN PROGRESS — v0.2 draft | Business Planner + CSO | CSO review by Jan 10, 2025 | | Revenue Model | NOT STARTED — blocked on pricing decision | Business Planner | Awaiting CFO input on subscription tiers | | Growth Scenario Model | NOT STARTED | Business Planner | Begins after Love Burn plan finalized | ### Key Modeling Inputs (Love Burn) | Variable | Current Assumption | Confidence | Owner | | Event attendance | 5,000 attendees | MEDIUM | CSO | | Story capture rate | 15% of attendees | LOW — no prior data | Business Planner | | Revenue per festival partner | $8,000 flat fee + rev share | LOW — not contracted | CSO |"
+    }
+  ],
+  "top_improvement": "Add the missing Anti-Patterns section immediately — it is a required template section, entirely absent, and its absence means there is no guardrail against the most common planning failures (single-scenario forecasts, precision theater, assumption burial). This single omission represents a structural gap that no amount of strong philosophy or handoff specificity can compensate for. Draft 4 role-specific anti-patterns tied explicitly to Story Portal's early-stage context before the next planning session uses this role."
+}
+```

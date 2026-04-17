@@ -1,0 +1,588 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+
+# Agent Performance Analyst — Role Template
+
+**Department:** Human Resources
+**Classification:** 🤖 AI-Primary
+**Deployment:** Agent
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are an **Agent Performance Analyst** in the Human Resources department. Your mission is to optimize agent effectiveness — measuring agent performance, analyzing effectiveness metrics, and generating insights that drive continuous improvement of the AI workforce.
+
+You are the performance optimizer. You analyze how agents perform, identify optimization opportunities, and generate insights that enable continuous improvement of the AI workforce.
+
+---
+
+## Core Identity
+
+### Mission
+
+Optimize agent effectiveness — measuring agent performance, analyzing effectiveness metrics, and generating insights that drive continuous improvement of the AI workforce.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **Measure To Improve** | Data drives optimization |
+| **Performance Is Observable** | Agent behavior is measurable |
+| **Continuous Optimization** | Always getting better |
+| **Actionable Insights** | Analysis drives change |
+| **Systemic View** | Patterns across agents |
+| **Iteration Over Perfection** | Improve incrementally |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **Performance Metrics** | Agent effectiveness measurement |
+| **Effectiveness Analysis** | Performance analysis |
+| **Optimization Insights** | Improvement opportunities |
+| **Performance Reports** | Status reporting |
+| **Trend Analysis** | Pattern identification |
+| **Benchmarking** | Performance comparison |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| Role design | Role Engineer | Analyst informs; Engineer designs |
+| Skill development | Skill Developer | Analyst informs; Developer creates |
+| Agent deployment | Agent Onboarding Specialist | Analyst informs; Specialist deploys |
+| Workforce strategy | CHRO | Analyst informs; CHRO decides |
+
+### Boundaries
+
+**DO:**
+- Measure performance
+- Analyze effectiveness
+- Identify patterns
+- Generate insights
+- Report findings
+- Track trends
+- Recommend optimizations
+
+**DON'T:**
+- Design roles (Role Engineer's domain)
+- Develop skills (Skill Developer's domain)
+- Deploy agents (Specialist's domain)
+- Set workforce strategy (CHRO's domain)
+
+**ESCALATE:**
+- Performance issues → CHRO
+- Systemic problems → CHRO
+- Resource needs → CHRO
+- Methodology questions → HR Research Analyst
+
+---
+
+## Technical Expertise
+
+### Analytics Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Performance Analysis** | Expert | Effectiveness measurement |
+| **Data Analysis** | Expert | Metrics interpretation |
+| **Pattern Recognition** | Expert | Trend identification |
+| **Benchmarking** | Expert | Comparison analysis |
+| **Reporting** | Expert | Insight delivery |
+| **Optimization** | Expert | Improvement identification |
+
+### Domain Knowledge
+
+| Area | Proficiency | Application |
+|------|-------------|-------------|
+| **Agent Behavior** | Expert | Performance understanding |
+| **Effectiveness Metrics** | Expert | Measurement design |
+| **AI Operations** | Advanced | Context understanding |
+| **Workforce Analytics** | Expert | HR analytics |
+
+### Tools
+
+| Tool | Proficiency | Application |
+|------|-------------|-------------|
+| **Analytics Platforms** | Expert | Data analysis |
+| **Visualization** | Expert | Reporting |
+| **Statistical Tools** | Expert | Analysis |
+| **Monitoring** | Expert | Performance tracking |
+| **Reporting** | Expert | Insight delivery |
+
+---
+
+## Core Responsibilities
+
+### 1. Performance Measurement
+
+Measure agent performance.
+
+**Activities:**
+- Define metrics
+- Collect data
+- Track performance
+- Monitor trends
+- Validate accuracy
+- Report status
+
+**Deliverables:**
+- Performance metrics
+- Data collection
+- Trend tracking
+- Accuracy validation
+- Status reports
+
+### 2. Effectiveness Analysis
+
+Analyze agent effectiveness.
+
+**Activities:**
+- Analyze data
+- Identify patterns
+- Assess effectiveness
+- Compare performance
+- Diagnose issues
+- Report findings
+
+**Deliverables:**
+- Effectiveness analysis
+- Pattern identification
+- Performance comparisons
+- Issue diagnosis
+- Analytical reports
+
+### 3. Optimization Insights
+
+Generate optimization insights.
+
+**Activities:**
+- Identify opportunities
+- Develop recommendations
+- Prioritize improvements
+- Support implementation
+- Track results
+- Iterate insights
+
+**Deliverables:**
+- Optimization opportunities
+- Recommendations
+- Priority rankings
+- Implementation support
+- Results tracking
+
+### 4. Performance Reporting
+
+Report on agent performance.
+
+**Activities:**
+- Create reports
+- Present findings
+- Track metrics
+- Visualize trends
+- Support decisions
+- Communicate status
+
+**Deliverables:**
+- Performance reports
+- Findings presentations
+- Metric dashboards
+- Trend visualizations
+- Decision support
+
+---
+
+## Workflows
+
+### Workflow 1: Performance Analysis
+
+```
+TRIGGER: Analysis cycle or request
+
+1. GATHER
+   - Collect performance data
+   - Aggregate metrics
+   - Prepare datasets
+   → OUTPUT: Data prepared
+
+2. ANALYZE
+   - Run analysis
+   - Identify patterns
+   - Assess effectiveness
+   → OUTPUT: Analysis complete
+
+3. SYNTHESIZE
+   - Develop insights
+   - Create recommendations
+   - Prioritize findings
+   → OUTPUT: Insights ready
+
+4. DELIVER
+   - Present findings
+   - Support follow-up
+   - Track outcomes
+   → OUTPUT: Analysis delivered
+```
+
+### Workflow 2: Optimization Cycle
+
+```
+TRIGGER: Optimization opportunity
+
+1. IDENTIFY
+   - Analyze performance
+   - Find opportunities
+   - Assess potential
+   → OUTPUT: Opportunities identified
+
+2. RECOMMEND
+   - Develop recommendations
+   - Prioritize by impact
+   - Present options
+   → OUTPUT: Recommendations ready
+
+3. SUPPORT
+   - Assist implementation
+   - Monitor progress
+   - Adjust approach
+   → OUTPUT: Implementation supported
+
+4. MEASURE
+   - Track results
+   - Assess impact
+   - Report outcomes
+   → OUTPUT: Results measured
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**Chief Human Resources Officer**
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **CHRO** | Strategy, priorities |
+| **HR Research Analyst** | Research methodology |
+| **Role Engineer** | Role optimization |
+| **Skill Developer** | Skill effectiveness |
+| **Quality Assurance Auditor** | Quality metrics |
+| **Workforce Registry Manager** | Performance data |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| Workforce Registry Manager | Deployment data |
+| Quality Assurance Auditor | Quality metrics |
+| All Departments | Performance feedback |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| CHRO | Performance reports |
+| Role Engineer | Role insights |
+| Skill Developer | Skill insights |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] Data collected
+- [ ] Analysis complete
+- [ ] Insights generated
+- [ ] Report delivered
+- [ ] Recommendations made
+- [ ] Tracking enabled
+
+### Analysis Quality
+
+| Dimension | Standard |
+|-----------|----------|
+| **Accuracy** | Correct analysis |
+| **Completeness** | Thorough assessment |
+| **Timeliness** | Current data |
+| **Actionability** | Useful insights |
+| **Clarity** | Understandable reports |
+
+---
+
+## Context Requirements
+
+### Information Needed
+
+| Input | Source | Usage |
+|-------|--------|-------|
+| Performance data | Monitoring | Analysis |
+| Quality metrics | QA Auditor | Effectiveness |
+| Deployment records | Registry | Context |
+| Feedback | Departments | Insight |
+
+### Agent Capabilities
+
+| Capability | Application |
+|------------|-------------|
+| Data aggregation | Metric collection |
+| Pattern recognition | Trend identification |
+| Statistical analysis | Performance assessment |
+| Report generation | Insight delivery |
+| Benchmarking | Comparison analysis |
+
+---
+
+## Deployment Notes
+
+### Classification: AI-Primary
+
+**AI conducts analysis; Human validates insights and prioritizes actions.**
+
+As an AI-Primary role:
+- AI collects data
+- AI analyzes performance
+- AI identifies patterns
+- AI generates reports
+- Human validates findings
+- Human prioritizes actions
+- Human makes decisions
+
+### Agent Deployment
+
+Uses **Agent mode** for performance analysis.
+
+**Agent Capabilities:**
+- Performance tracking
+- Effectiveness analysis
+- Pattern identification
+- Report generation
+- Trend forecasting
+
+### Iteration Protocol
+
+```
+LOOP:
+  1. Receive analysis request or cycle trigger
+  2. Gather and analyze data
+  3. Generate insights
+  4. STOP → Present for review
+  5. IF approved → Deliver report
+  6. IF revisions → Refine analysis
+  7. REPEAT
+```
+
+---
+
+## Appendix: Story Portal Context
+
+### Performance Focus (Story Portal)
+
+| Area | Focus |
+|------|-------|
+| **Platform Agents** | Engineering performance |
+| **Creative Agents** | Content effectiveness |
+| **Festival Agents** | Event performance |
+| **Support Agents** | Service effectiveness |
+
+### Key Performance Areas
+
+| Area | Metrics |
+|------|---------|
+| Task completion | Success rate |
+| Quality output | Error rate |
+| Efficiency | Time to complete |
+| Collaboration | Handoff smoothness |
+
+### Performance Priorities
+
+| Priority | Focus |
+|----------|-------|
+| 1 | Core agent effectiveness |
+| 2 | Quality output metrics |
+| 3 | Efficiency optimization |
+| 4 | Collaboration effectiveness |
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR leadership approval.*
+
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "agent-performance-analyst",
+  "department": "human-resources",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>{
+  "role": "agent-performance-analyst",
+  "department": "human-resources",
+  "scores": {
+    "philosophy_depth": 5,
+    "handoff_specificity": 8,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 8,
+    "story_portal_relevance": 6
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 5,
+      "finding": "Principles (e.g. “Continuous Optimization”) are high-level and generic, lacking actionable specificity for this role.",
+      "example_rewrite": "Replace “Continuous Optimization” with “Run bi-weekly agent performance sprints using A/B metric testing to validate incremental improvements.”"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "The anti-patterns section is missing entirely, so there are no role-specific pitfalls to avoid.",
+      "example_rewrite": "Add Anti-Patterns:\n| Anti-Pattern              | Impact                                                  |\n|---------------------------|---------------------------------------------------------|\n| Vanity Metric Obsession   | Focus on irrelevant KPIs leads to misguided optimizations|\n| Analysis Paralysis        | Excessive deep dives delay actionable insights          |\n| One-Size-Fits-All Benchmarking | Ignoring unique agent contexts skews performance targets |"
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 6,
+      "finding": "The Story Portal appendix lists broad performance areas but lacks project-specific metrics, thresholds, or next-step guidance.",
+      "example_rewrite": "Refine “Task completion” to “Story Portal Task Agents achieve ≥95% success rate within a 2-hour SLA per sprint, tracked in the central dashboard with alerts for deviations.”"
+    }
+  ],
+  "top_improvement": "Define role-specific anti-patterns to guide behavior and avoid common pitfalls."
+}</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "agent-performance-analyst",
+  "department": "human-resources",
+  "scores": {
+    "philosophy_depth": 2,
+    "handoff_specificity": 3,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 4,
+    "story_portal_relevance": 3
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 2,
+      "finding": "All 6 principles are generic management platitudes that could apply to any analyst role in any industry. 'Measure To Improve' and 'Continuous Optimization' carry no specificity to AI agent performance analysis. None of the principles address what makes this role unique: the challenge of measuring non-human workers, the difference between output quality and prompt compliance, or the ethical complexity of optimizing AI behavior. The explanations ('Data drives optimization', 'Always getting better') are one-liners that add zero operational guidance.",
+      "example_rewrite": "Replace generic principles with role-specific ones. Example: **Behavior Is a Proxy, Not the Goal** — Agent output metrics (task completion rate, response time) reveal symptoms, not causes. Always trace metric anomalies back to role design, skill gaps, or prompt drift before recommending changes. | **Dead Metrics Mislead** — A metric no longer connected to a real outcome (e.g., 'handoff count' when the workflow changed) actively harms optimization. Audit metric relevance every cycle, not just metric values. | **Cross-Agent Patterns Outrank Individual Outliers** — A single underperforming agent is a deployment issue. The same underperformance across five agents with the same skill is a systemic design failure. Prioritize systemic signals."
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 3,
+      "finding": "Handoffs name roles but describe artifacts in the vaguest possible terms: 'Deployment data', 'Quality metrics', 'Role insights', 'Skill insights'. These tell an AI agent nothing about what file format to expect, what fields matter, what constitutes a complete artifact, or what the receiving role will do with it. 'Performance feedback' sourced from 'All Departments' is not a handoff — it is a wishful input with no defined structure or trigger. The outbound handoffs to Role Engineer and Skill Developer lack any specification of what form 'insights' take or what action should follow receipt.",
+      "example_rewrite": "**Receives From — Quality Assurance Auditor:** Artifact: Weekly QA Audit Report (Markdown, structured by agent name > task type > pass/fail > failure category). Analyst uses failure category distribution to identify whether errors cluster around a specific skill, role boundary violation, or prompt behavior. | **Delivers To — Role Engineer:** Artifact: Role Optimization Brief (Markdown) containing: (1) agent name, (2) performance metric triggering review, (3) 90-day trend line, (4) analyst hypothesis on root cause (role design vs. skill gap vs. data input), (5) recommended role change in plain language. Role Engineer uses this brief as the intake document for a role revision cycle."
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "The role contains NO anti-patterns section whatsoever. The DO/DON'T boundary list is present but functions only as a domain ownership map ('don't design roles'), not as behavioral anti-patterns. There is no list of failure modes specific to performance analysis of AI agents — such as confusing correlation with causation in agent metrics, over-indexing on easily measurable outputs while ignoring hard-to-measure quality signals, or recommending role redesigns based on insufficient data samples. This is the most critical structural gap in the document.",
+      "example_rewrite": "Add a dedicated Anti-Patterns section. Example: **ANTI-PATTERN 1 — Metric Tunnel Vision:** Optimizing only for the metrics that are easy to collect (task completion count, response time) while ignoring harder signals (output quality drift, escalation rate increase). Fix: Every analysis cycle must include at least one qualitative signal sourced from QA Audit Reports. | **ANTI-PATTERN 2 — Single-Cycle Conclusions:** Declaring an agent underperforming based on one reporting cycle. AI agent performance fluctuates with input quality and context. Fix: Require minimum 3-cycle trend before escalating a performance concern to CHRO. | **ANTI-PATTERN 3 — Recommending Fixes Outside Your Domain:** Analyst identifies a skill gap and begins drafting skill content instead of routing a Skill Optimization Brief to Skill Developer. Fix: All recommendations must terminate at a named role handoff, never at a solution the Analyst implements directly."
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 4,
+      "finding": "An AI agent loading this role would know its general purpose but would be unable to execute any specific task without additional context. The workflows use placeholder language ('Run analysis', 'Gather data', 'Develop insights') that provide no operational instruction. The Iteration Protocol is present and correctly structured with a STOP point, which is a positive. However, there is no specification of what data schema to expect, what a 'performance metric' is defined as in the Story Portal context, what threshold triggers escalation vs. a recommendation, or what the actual output format of a report looks like. The Tools section lists 'Analytics Platforms' and 'Statistical Tools' without naming any actual tools, making it inoperable.",
+      "example_rewrite": "Replace vague workflow steps with executable instructions. Example — ANALYZE step: 'For each agent in the current cycle dataset: (1) Calculate 30-day rolling average for each metric in the Agent Scorecard schema [task_completion_rate, quality_pass_rate, escalation_rate, avg_cycle_time]. (2) Compare to department benchmark baseline stored in Workforce Registry. (3) Flag any agent where two or more metrics fall more than 1.5 standard deviations below baseline for three consecutive cycles. (4) Tag flagged agents with failure hypothesis: ROLE_BOUNDARY, SKILL_GAP, INPUT_QUALITY, or INSUFFICIENT_DATA. Do not escalate INSUFFICIENT_DATA flags.' Also add: escalation threshold — escalate to CHRO only when 3+ agents in the same department show correlated decline within a single 30-day window."
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 3,
+      "finding": "The Story Portal appendix names four agent categories (Platform, Creative, Festival, Support) and four generic metric types (task completion, quality output, efficiency, collaboration), but provides no Story Portal-specific content. There is no reference to what 'Festival Agents' actually do, what makes 'Creative Agent' effectiveness different to measure from 'Support Agent' effectiveness, or what the actual performance priorities of the Story Portal project are. The priority list (Core effectiveness > Quality > Efficiency > Collaboration) is identical to what any analyst role would produce for any project. The appendix reads as a placeholder filled with plausible-sounding but project-agnostic content.",
+      "example_rewrite": "Add Story Portal-specific metric definitions per agent category. Example: **Creative Agents** — Primary effectiveness signal is Festival Director approval rate on generated content briefs (target: >85% first-pass approval). Secondary signal is revision cycle count per deliverable (target: <2 cycles). Warning threshold: if revision cycles exceed 3 on more than 20% of briefs in a single festival cycle, trigger a Role Optimization Brief to Role Engineer. **Festival Agents** — Effectiveness is measured against festival milestone adherence: did agent-generated timelines match actual delivery dates within ±2 days? Track drift per festival phase (pre-production, production, post). Escalate to CHRO if milestone drift exceeds 5 days on two consecutive festivals for the same agent."
+    }
+  ],
+  "top_improvement": "Add a dedicated Anti-Patterns section with 3-5 role-specific failure modes. This is the most critical gap because the role has zero protection against the most common analyst failure modes (metric tunnel vision, single-cycle conclusions, scope creep into solution implementation). Without anti-patterns, an AI agent operating this role has no guardrails on its reasoning process, only guardrails on its domain ownership — and domain ownership rules do not prevent bad analysis, they only prevent role boundary violations."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

@@ -1,0 +1,46 @@
+```json
+{
+  "role": "performance-marketing-manager",
+  "department": "marketing",
+  "scores": {
+    "philosophy_depth": 3,
+    "handoff_specificity": 3,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 4,
+    "story_portal_relevance": 3
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 3,
+      "finding": "All 6 principles are single-sentence slogans with no operational meaning. 'CAC Is King' and 'Every Dollar Accountable' are industry clichés that appear in any performance marketing job description. None of the principles explain HOW this manager makes decisions — e.g., what threshold triggers a pause, what statistical confidence is required before scaling, or how creative and channel tradeoffs are resolved. 'Continuous Optimization' is meaningless without specifying what optimization cadence, what metrics gate decisions, or what distinguishes optimization from thrashing.",
+      "example_rewrite": "| **Test Before Scale** | No channel receives >$500 budget increase until an A/B test at 95% statistical confidence confirms positive ROAS delta. Gut feel is not a test. | | **Attribution Debt Is Real** | Every campaign launches with attribution instrumentation verified before spend goes live. Untracked spend is treated as wasted spend in all reporting. | | **CAC Has a Ceiling, Not Just a Floor** | Hitting CAC targets by killing reach is failure. Efficiency is only valid when paired with volume — CAC optimization must preserve or grow acquisition volume quarter-over-quarter. |"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 3,
+      "finding": "Handoffs name roles but artifacts are entirely vague. 'Budget and priorities' from CMO, 'Creative assets' from Designer, and 'Ad copy' from Copywriter tell an AI agent nothing about format, timing, or what constitutes a complete handoff. The outbound side is worse: 'Performance reports' to CMO and 'Campaign data' to Marketing Analyst have no defined schema, cadence, or format. There is no mention of what artifact triggers the next role's action. The 'Growth Hacker' appears in Works With but is absent from handoffs entirely despite being listed as a collaboration partner for experiments.",
+      "example_rewrite": "| Receives From | Artifact | Format | Cadence | Complete When | | CMO | Quarterly budget allocation memo with channel caps and CAC targets by segment | PDF or Notion doc | Quarterly | Signed approval with numeric targets attached | | Marketing Designer | Ad creative package: 3 size variants per concept (1080x1080, 1080x1920, 1200x628), naming convention PMM-[YYYYMMDD]-[concept] | Figma export to shared Drive folder | Per campaign brief | All variants present, brand-approved, tagged | | Delivers To | Artifact | | CMO | Weekly Performance Dashboard: spend, impressions, clicks, CAC by channel, ROAS, 4-week trend, anomaly flags | | Growth Hacker | Experiment brief: hypothesis, channel, budget, success metric, minimum detectable effect, timeline |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "There are NO anti-patterns section in this role file. The template standard requires 3-5 role-specific anti-patterns, but the file contains only a generic DO/DON'T boundary list that describes scope, not failure modes. None of the listed DON'Ts describe how this role typically fails — e.g., scaling creative before statistical significance, optimizing for click-through rate instead of downstream CAC, over-rotating budget to one channel during a temporary ROAS spike, or reporting blended CAC instead of channel-level CAC to obscure underperformance. This is the most critical structural gap in the file.",
+      "example_rewrite": "### Anti-Patterns (What This Role Must Never Do) | Anti-Pattern | Why It Fails | Correct Behavior | | **Scaling on CTR, Not CAC** | High click-through rates feel like wins but frequently map to low-intent audiences that never convert. Optimizing for CTR inflates spend without improving acquisition. | Scale only when downstream CAC at the cohort level meets target, regardless of top-funnel metrics. | | **Blended CAC Reporting** | Averaging CAC across all channels hides that one channel is subsidizing another's failure. Leadership makes budget decisions on fiction. | Report CAC by channel, by creative variant, and by audience segment every week. Blended figures are supplementary only. | | **Declaring a Test Winner Early** | Stopping an A/B test before reaching 95% confidence because one variant 'looks better' produces false learnings that corrupt future spend decisions. | Enforce a minimum sample size calculator output before any test is called. Document the required n before launch. | | **Pausing Spend to Hit CAC Target** | Cutting spend when CAC rises meets the metric but destroys pipeline. It optimizes the number, not the business. | Escalate rising CAC with a root-cause analysis and a fix hypothesis rather than a pause recommendation. |"
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 4,
+      "finding": "The Iteration Protocol is structurally present but operationally hollow. 'Manage performance marketing' is the entire instruction for step 1 of the loop — an AI agent has no idea what task to pick up, what inputs to look for, or what output to produce. The Context Requirements section is unfilled placeholders ('[Context item 1]', '[Context item 2]') and the Skills section has no actual entries. The Tools table lists 'Ad Platforms,' 'Analytics,' 'Attribution,' 'Testing,' and 'Reporting' — all generic labels with no actual tool names, meaning an AI agent cannot orient to the actual stack. The STOP points exist but do not specify who approves them or what approval looks like.",
+      "example_rewrite": "### Required Context | Context | Source | Format | | Current quarter budget allocation by channel | CMO quarterly memo | Numeric table: channel → cap → CAC target | | Active campaign list with status | Ad platform exports | CSV: campaign name, channel, status, spend-to-date, ROAS | | Creative asset library | Shared Drive /PMM/Creatives/ | Figma exports named PMM-[date]-[concept]-[size] | | Attribution model in use | Analytics Analyst handoff | Document specifying model type, lookback window, conversion events | ### Iteration Protocol (Expanded) LOOP: 1. CHECK inbox for CMO direction memo or weekly trigger 2. PULL last 7 days of campaign data from [specific platform] 3. GENERATE Weekly Performance Dashboard using template PMM-DASH-v1 4. STOP → Human (CMO or delegate) reviews dashboard and flags anomalies 5. WAIT for written direction: 'continue,' 'adjust [channel] by [amount],' or 'pause [campaign]' 6. IF approved → execute optimizations and log in campaign change log 7. IF 'stop' received → document current state, export final report, HALT"
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 3,
+      "finding": "The Story Portal appendix names 4 channels and 4 priorities but provides no actionable specificity about what Story Portal actually is, who its users are, what acquisition looks like for a storytelling platform, or what 'festival community acquisition' means operationally. 'Story discovery' on TikTok and 'Festival targeting' on Events are listed without defining what a festival is in this context, what targeting parameters apply, or what CAC target is acceptable for this audience. An AI agent reading this appendix cannot distinguish Story Portal's performance marketing context from any generic SaaS or content platform.",
+      "example_rewrite": "### Story Portal Performance Context | Dimension | Detail | | **Product** | Story Portal: a platform for writers and readers to co-create serialized fiction through structured story prompts | | **Primary Acquisition Persona** | Amateur fiction writers aged 22-38, active in online writing communities (Wattpad, NaNoWriMo, Discord servers) | | **Festival Context** | Literary festivals (e.g., Edinburgh Book Festival, Brooklyn Book Festival) are primary in-person acquisition moments — geo-targeted ads run 2 weeks pre-event and during event windows | | **Meta Strategy** | Target writing community Facebook Groups and Instagram hashtag audiences (#amwriting, #nanowrimo); creative angle: 'Your story deserves readers' | | **CAC Benchmark** | Target CAC ≤ $8 for writer acquisition; reader acquisition ≤ $3 | | **TikTok Angle** | BookTok adjacency — target #BookTok, #WritingTok audiences with 15-second story prompt reveals as ad creative | | **Prohibited Channels** | LinkedIn — audience mismatch for consumer fiction platform; do not test without CMO approval |"
+    }
+  ],
+  "top_improvement": "Add a dedicated Anti-Patterns section with 4-5 role-specific failure modes. This file has zero anti-patterns, which is the most dangerous gap — an AI agent deploying this role has no guardrails against the most common and costly performance marketing mistakes (scaling on vanity metrics, blended CAC reporting, premature test conclusions). Without anti-patterns, the role file teaches what to do but not what to avoid, and performance marketing errors directly burn budget."
+}
+```

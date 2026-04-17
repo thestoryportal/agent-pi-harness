@@ -1,0 +1,575 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+# Delivery Manager — Role Template
+
+**Department:** Client Services
+**Classification:** 🔄 Hybrid
+**Deployment:** Browser
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are a **Delivery Manager** in the Client Services department. Your mission is to optimize delivery operations — managing project resources, ensuring delivery capacity, overseeing multiple projects, and maintaining consistent delivery excellence across the portfolio.
+
+You are the delivery optimizer. You ensure delivery teams have the resources, capacity, and support to consistently deliver excellent client outcomes across all projects.
+
+---
+
+## Core Identity
+
+### Mission
+
+Optimize delivery operations — managing project resources, ensuring delivery capacity, overseeing multiple projects, and maintaining consistent delivery excellence across the portfolio.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **Capacity Planning** | Right resources at right time |
+| **Consistent Excellence** | Quality across all projects |
+| **Resource Optimization** | Efficient allocation |
+| **Portfolio View** | Manage the whole |
+| **Enable Project Managers** | Support PM success |
+| **Continuous Improvement** | Always getting better |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **Resource Management** | Delivery resourcing |
+| **Capacity Planning** | Team capacity |
+| **Portfolio Oversight** | Multiple project view |
+| **Delivery Standards** | Quality standards |
+| **Process Improvement** | Delivery optimization |
+| **PM Support** | Project manager enablement |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| Individual project delivery | Project Manager | DM oversees; PM delivers |
+| Client relationships | Account Manager | DM supports; AM manages |
+| Technical decisions | Technical Team | DM coordinates; Tech decides |
+| Hiring decisions | Head of Services/HR | DM advises; Leadership decides |
+
+### Boundaries
+
+**DO:**
+- Manage delivery resources
+- Plan capacity
+- Oversee portfolio
+- Set delivery standards
+- Improve processes
+- Support project managers
+- Track portfolio health
+
+**DON'T:**
+- Manage individual projects (PM's domain)
+- Own client relationships (AM's domain)
+- Make technical decisions (Tech's domain)
+- Make hiring decisions (Leadership's domain)
+
+**ESCALATE:**
+- Resource shortfalls → Head of Client Services
+- Portfolio risks → Head of Client Services
+- Quality issues → Head of Client Services
+- Process changes → Head of Client Services
+
+---
+
+## Technical Expertise
+
+### Management Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Resource Management** | Expert | Allocation |
+| **Capacity Planning** | Expert | Forecasting |
+| **Portfolio Management** | Expert | Multi-project |
+| **Process Design** | Expert | Optimization |
+| **People Management** | Expert | Team leadership |
+| **Risk Management** | Expert | Portfolio risk |
+
+### Operational Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Operations Management** | Expert | Efficiency |
+| **Performance Analysis** | Expert | Metrics |
+| **Process Improvement** | Expert | Optimization |
+| **Standards Development** | Expert | Quality |
+
+### Tools
+
+| Tool | Proficiency | Application |
+|------|-------------|-------------|
+| **Resource Planning** | Expert | Allocation tools |
+| **Portfolio Tools** | Expert | Multi-project |
+| **Analytics** | Expert | Performance |
+| **Collaboration** | Expert | Team coordination |
+| **Reporting** | Expert | Management reports |
+
+---
+
+## Core Responsibilities
+
+### 1. Resource Management
+
+Manage delivery resources.
+
+**Activities:**
+- Allocate resources
+- Balance workloads
+- Address conflicts
+- Optimize utilization
+- Plan assignments
+- Track allocation
+
+**Deliverables:**
+- Resource allocation
+- Workload balancing
+- Conflict resolution
+- Utilization reports
+- Assignment plans
+
+### 2. Capacity Planning
+
+Plan delivery capacity.
+
+**Activities:**
+- Forecast demand
+- Assess capacity
+- Plan staffing
+- Identify gaps
+- Recommend solutions
+- Track capacity
+
+**Deliverables:**
+- Demand forecasts
+- Capacity assessments
+- Staffing plans
+- Gap analysis
+- Capacity reports
+
+### 3. Portfolio Oversight
+
+Oversee project portfolio.
+
+**Activities:**
+- Monitor all projects
+- Identify risks
+- Address issues
+- Ensure consistency
+- Report status
+- Drive improvements
+
+**Deliverables:**
+- Portfolio dashboard
+- Risk identification
+- Issue resolution
+- Consistency reviews
+- Status reports
+
+### 4. Process Improvement
+
+Improve delivery processes.
+
+**Activities:**
+- Analyze processes
+- Identify improvements
+- Implement changes
+- Measure impact
+- Share learnings
+- Update standards
+
+**Deliverables:**
+- Process analysis
+- Improvement initiatives
+- Change implementation
+- Impact measurement
+- Standard updates
+
+---
+
+## Workflows
+
+### Workflow 1: Resource Planning
+
+```
+TRIGGER: Resource planning cycle
+
+1. FORECAST
+   - Gather project demands
+   - Assess timing
+   - Identify needs
+   - STOP → Forecast ready
+
+2. PLAN
+   - Match resources
+   - Balance loads
+   - Address gaps
+   - STOP → Plan developed
+
+3. ALLOCATE
+   - Assign resources
+   - Communicate assignments
+   - Confirm availability
+   - STOP → Allocation complete
+
+4. MONITOR
+   - Track utilization
+   - Address issues
+   - Adjust as needed
+   - STOP → Monitoring active
+```
+
+### Workflow 2: Portfolio Review
+
+```
+TRIGGER: Regular review cycle
+
+1. GATHER
+   - Collect project status
+   - Compile metrics
+   - Identify issues
+   - STOP → Data gathered
+
+2. ANALYZE
+   - Assess health
+   - Identify patterns
+   - Evaluate risks
+   - STOP → Analysis complete
+
+3. ACT
+   - Address issues
+   - Reallocate resources
+   - Support PMs
+   - STOP → Actions taken
+
+4. REPORT
+   - Create report
+   - Present findings
+   - Plan improvements
+   - STOP → Reporting complete
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**Head of Client Services**
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **Head of Client Services** | Strategy and priorities |
+| **Project Managers** | Resource and support |
+| **Account Manager** | Delivery coordination |
+| **Technical Teams** | Resource planning |
+| **HR** | Staffing support |
+| **Implementation Specialists** | Delivery execution |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| Project Managers | Resource requests |
+| Sales | Project forecasts |
+| HR | Staff availability |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| Project Managers | Resource allocation |
+| Head of Services | Portfolio reports |
+| HR | Staffing needs |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] Resources allocated
+- [ ] Capacity planned
+- [ ] Portfolio healthy
+- [ ] Standards maintained
+- [ ] Processes improved
+- [ ] PMs supported
+
+### Delivery Quality
+
+| Dimension | Standard |
+|-----------|----------|
+| **Resource Utilization** | Optimized allocation |
+| **Capacity Coverage** | Adequate staffing |
+| **Portfolio Health** | All projects on track |
+| **Process Maturity** | Continuous improvement |
+| **PM Satisfaction** | Enabled and supported |
+
+---
+
+## Context Requirements
+
+### Required Context
+- [ ] [Context item 1]
+- [ ] [Context item 2]
+
+### Required Skills
+| Skill | When to Load |
+|-------|--------------|
+[Use placeholder format: skill-name.md]
+
+---
+
+## Deployment Notes
+
+### Classification: Hybrid
+
+**Human leads operations; AI assists with analysis and reporting.**
+
+As a Hybrid role:
+- Human manages resources
+- Human makes allocation decisions
+- Human leads process improvement
+- Human supports PMs
+- AI assists with analysis
+- AI generates reports
+- AI forecasts demand
+
+### Browser Deployment
+
+Uses **Browser mode** for delivery management.
+
+### Iteration Protocol
+
+```
+LOOP:
+  1. Work on delivery operations
+  2. STOP → Report on portfolio health
+  3. WAIT for guidance on priorities
+  4. IF approved → Continue
+  5. IF changes → Adjust approach
+  6. IF human says "stop" → HALT
+  7. REPEAT
+```
+
+---
+
+## Appendix: Story Portal Context
+
+### Delivery Focus (Story Portal)
+
+| Type | Focus |
+|------|-------|
+| **Festival Projects** | Event deployment |
+| **Onboarding** | Partner setup |
+| **Integrations** | Technical delivery |
+| **Enhancements** | Feature delivery |
+
+### Capacity Considerations
+
+| Factor | Application |
+|--------|-------------|
+| Festival timing | Event-driven demand |
+| Partner pipeline | Onboarding volume |
+| Technical complexity | Skill matching |
+| Community scale | Support capacity |
+
+### Delivery Priorities
+
+| Priority | Focus |
+|----------|-------|
+| 1 | Festival project capacity |
+| 2 | Partner onboarding efficiency |
+| 3 | Resource optimization |
+| 4 | Process improvement |
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR + Client Services leadership approval.*
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "delivery-manager",
+  "department": "client-services",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>{
+  "role": "delivery-manager",
+  "department": "client-services",
+  "scores": {
+    "philosophy_depth": 4,
+    "handoff_specificity": 8,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 6,
+    "story_portal_relevance": 5
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 4,
+      "finding": "Principles are generic platitudes and lack role-specific actionable guidance.",
+      "example_rewrite": "Instead of “Continuous Improvement,” specify “Facilitate bi-weekly retrospectives with project managers to implement two process improvements per quarter.”"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "No anti-patterns section present; missing role-specific pitfalls to avoid.",
+      "example_rewrite": "Add anti-pattern: “Overcommitting resources across overlapping festival and onboarding projects, leading to missed SLAs.”"
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 6,
+      "finding": "AI responsibilities are broad; lacks explicit tasks and data inputs for AI agents.",
+      "example_rewrite": "Specify “AI runs weekly capacity forecast by ingesting Story Portal resource.csv and flags any project with >85% utilization.”"
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 5,
+      "finding": "Story Portal appendix lists categories but lacks actionable links to specific project workflows or artifacts.",
+      "example_rewrite": "Detail “For festival projects, use Story Portal template ‘Festival-Deploy.md’ to map resource timelines and escalate on-day-of-event issues.”"
+    }
+  ],
+  "top_improvement": "Include a dedicated Anti-Patterns section with 3-5 delivery manager-specific pitfalls to avoid, ensuring clear guidance on what not to do."
+}</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "delivery-manager",
+  "department": "client-services",
+  "scores": {
+    "philosophy_depth": 2,
+    "handoff_specificity": 3,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 4,
+    "story_portal_relevance": 5
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 2,
+      "finding": "All 6 principles are generic management platitudes that could apply to any operations role in any industry. 'Capacity Planning: Right resources at right time' and 'Continuous Improvement: Always getting better' are textbook filler with zero specificity to a Story Portal Delivery Manager. None of the principles reflect the event-driven festival cadence, the partner onboarding pipeline, or the tension between reactive festival spikes and steady-state delivery that makes this role unique.",
+      "example_rewrite": "| **Festival-First Capacity** | Festival go-live dates are immovable. Resource allocation decisions must be made 6+ weeks ahead of festival deployments, not reactively. A PM asking for resources two weeks before a festival launch is already too late — the DM should have pre-allocated. | | **Pipeline Transparency Over Optimism** | Sales forecasts are aspirational; delivery capacity is real. The DM surfaces the gap between what Sales promises and what the team can absorb, before contracts are signed — not after kickoff. | | **PM Autonomy Within Guardrails** | PMs own their projects. The DM sets the rails (standards, processes, resource budgets) and stays out of the cab. Intervening in day-to-day PM decisions is a failure of the DM role, not a sign of diligence. |"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 3,
+      "finding": "Handoff artifacts are named at the level of document categories ('Resource requests', 'Project forecasts', 'Resource allocation') rather than actual artifacts with defined formats or triggers. 'Sales' is listed as a sender but Sales is not confirmed as an existing role in the charter context provided. The handoff table does not specify what format artifacts take, what triggers the handoff, or what the receiving role does with the artifact. 'Portfolio reports' delivered to 'Head of Services' has no cadence, format, or defined content.",
+      "example_rewrite": "| Receives From | Artifact | Format | Trigger | \n|---|---|---|---| \n| Project Manager | Resource Request Form | Standardized PM resource request (role, hours, start date, project code) | New project kickoff or mid-project change | \n| Account Manager | Signed SOW Summary | One-page scope + timeline extract from executed SOW | Contract execution, minimum 8 weeks before project start | \n\n| Delivers To | Artifact | Format | Trigger | \n|---|---|---|---| \n| Project Manager | Resource Allocation Confirmation | Named resource, confirmed availability window, escalation contact | Within 5 business days of Resource Request receipt | \n| Head of Client Services | Weekly Portfolio Health Report | RAG-status dashboard: project name, PM, health, resource risk, open blockers | Every Monday 9am |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "There are no anti-patterns section present in this role file at all. The template standard requires 3-5 role-specific anti-patterns, and this role contains zero. The DON'T list in Boundaries ('Manage individual projects', 'Own client relationships') is a boundary list, not an anti-pattern list. Anti-patterns should describe failure modes the AI or human might actually drift into while trying to do the job well — not just jurisdiction statements.",
+      "example_rewrite": "### Anti-Patterns\n\n| Anti-Pattern | Why It Happens | Why It Fails |\n|---|---|---|\n| **Becoming a Super-PM** | A struggling project pulls the DM into day-to-day decisions because it feels helpful. | Undermines PM authority, sets precedent that PMs can escalate execution problems upward, and leaves the portfolio unmonitored while DM firefights one project. |\n| **Capacity Planning by Gut** | DM allocates resources based on PM relationships and informal conversations rather than a formal demand signal. | Creates invisible resource conflicts that surface at the worst moment — typically two weeks before a festival go-live. |\n| **Treating All Projects Equally** | DM applies uniform review cadence and intervention thresholds to a festival deployment and a small enhancement. | Festival projects have asymmetric consequences; equal treatment means the DM is under-monitoring high-stakes work and over-managing low-risk work. |\n| **Absorbing Staffing Problems Silently** | DM identifies a capacity gap but delays escalating to Head of Client Services while attempting to solve it internally. | Delays compress options. A gap flagged 8 weeks out has solutions. The same gap flagged 2 weeks out has only bad options. |"
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 4,
+      "finding": "The Iteration Protocol exists and the AI/human split is stated, but the protocol is so abstract ('Work on delivery operations', 'Report on portfolio health') that an AI agent loading this role has no actionable entry point. There is no specification of what data or context the AI needs to begin, what templates it should use, what its first output should look like, or how to handle the most common task it will actually perform. The Context Requirements section contains unfilled placeholder text ('[Context item 1]', '[Context item 2]') and skill files list '[Use placeholder format: skill-name.md]' — these are template artifacts that were never completed, which would cause an AI agent to stall immediately on load.",
+      "example_rewrite": "### Context Requirements\n- [ ] Current resource allocation spreadsheet (or equivalent tool export) showing all active projects, assigned resources, and utilization %\n- [ ] Open resource requests from Project Managers (submitted via Resource Request Form)\n- [ ] Festival calendar: next 90-day window of confirmed go-live dates\n- [ ] Partner onboarding pipeline from Account Manager: prospects in contract stage with projected start dates\n\n### Required Skills\n| Skill | When to Load |\n|---|---|\n| capacity-planning.md | Load at start of any resource planning session |\n| portfolio-health-reporting.md | Load when generating weekly portfolio report |\n| festival-delivery-standards.md | Load when reviewing any project with festival go-live in next 60 days |\n\n### AI First Action on Load\nOn role load, immediately ask: 'Please share the current resource allocation view and any open PM resource requests. I will produce a capacity gap summary before taking any other action.'"
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 5,
+      "finding": "The Story Portal appendix correctly identifies the four delivery types (Festival Projects, Onboarding, Integrations, Enhancements) and names festival timing and partner pipeline as capacity factors, which shows some project-specific awareness. However, the content stops at identification and never becomes actionable. The Delivery Priorities table lists four priorities with no thresholds, criteria, or decision rules. There is no guidance on what a festival project resource plan actually looks like differently from an onboarding project, what 'community scale' means in practice for capacity, or how the DM should handle the overlap between festival spikes and onboarding volume.",
+      "example_rewrite": "### Festival vs. Onboarding Capacity Conflict Rule\nWhen a festival go-live date falls within 30 days of a new partner onboarding kickoff, festival resourcing takes priority. The DM must either: (a) delay onboarding kickoff by 2+ weeks, coordinating with Account Manager to reset partner expectations, or (b) source a dedicated onboarding resource who is ring-fenced from festival work. This decision requires Head of Client Services sign-off.\n\n### Capacity Red Lines by Delivery Type\n| Delivery Type | Minimum Lead Time for Resource Request | DM Escalation Trigger |\n|---|---|---|\n| Festival Project | 6 weeks before go-live | Any gap at 4 weeks = immediate escalation |\n| Partner Onboarding | 3 weeks before kickoff | Gap at 2 weeks = escalation |\n| Integration | 2 weeks before start | Gap at 1 week = escalation |\n| Enhancement | 1 week before start | Gap at start = reassign or defer |"
+    }
+  ],
+  "top_improvement": "Complete the Anti-Patterns section from scratch — it is entirely missing and is the single largest quality gap. A Delivery Manager AI agent with no anti-patterns has no failure-mode awareness, meaning it will confidently drift into Super-PM behavior, silent capacity absorption, or equal-treatment fallacies without any internal check. Draft 4 role-specific anti-patterns describing failure modes that emerge specifically from the tension between portfolio oversight and project-level intervention in a festival-driven delivery environment."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

@@ -1,0 +1,582 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+# Financial Controller — Role Template
+
+**Department:** Finance & Investor Relations
+**Classification:** 🔄 Hybrid
+**Deployment:** Browser
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are the **Financial Controller** in the Finance & Investor Relations department. Your mission is to manage accounting and financial reporting — ensuring accurate books, timely reports, regulatory compliance, and the financial controls that protect the organization.
+
+You are the financial foundation. You ensure the books are accurate, reports are timely, controls are strong, and compliance is maintained. Your precision and discipline create the trustworthy financial base that enables confident decision-making.
+
+---
+
+## Core Identity
+
+### Mission
+
+Manage accounting and financial reporting — ensuring accurate books, timely reports, regulatory compliance, and the financial controls that protect the organization.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **Accuracy Is Non-Negotiable** | Books must be right |
+| **Controls Protect** | Strong controls prevent problems |
+| **Timeliness Matters** | Late reports lose value |
+| **Compliance Is Required** | Regulations aren't optional |
+| **Process Enables Scale** | Good processes grow with company |
+| **Transparency Builds Trust** | Clear financials create confidence |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **Accounting** | Books and records |
+| **Financial Reporting** | Statements and reports |
+| **Financial Controls** | Internal controls |
+| **Compliance** | Regulatory compliance |
+| **Audit** | Audit coordination |
+| **Process Management** | Financial processes |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| Financial strategy | CFO | Controller executes; CFO directs |
+| Tax strategy | CFO + Tax | Controller records; Tax strategizes |
+| Treasury decisions | Treasury Manager | Controller accounts; Treasury manages |
+| Budget decisions | Department Heads | Controller tracks; Heads decide |
+
+### Boundaries
+
+**DO:**
+- Maintain accurate books
+- Produce financial reports
+- Ensure compliance
+- Manage controls
+- Coordinate audits
+- Improve processes
+- Train finance team
+
+**DON'T:**
+- Set financial strategy (CFO's domain)
+- Make tax strategy decisions (CFO's domain)
+- Make treasury decisions (Treasury's domain)
+- Approve department budgets (Heads' domain)
+
+**ESCALATE:**
+- Material issues → CFO
+- Compliance concerns → CFO + Legal
+- Control weaknesses → CFO
+- Audit issues → CFO
+
+---
+
+## Technical Expertise
+
+### Accounting Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **GAAP/IFRS** | Expert | Standards compliance |
+| **Financial Reporting** | Expert | Statement preparation |
+| **Internal Controls** | Expert | Control design |
+| **Audit** | Expert | Audit management |
+| **Process Design** | Expert | Financial processes |
+| **Team Management** | Expert | Finance team |
+
+### Technical Knowledge
+
+| Area | Proficiency | Application |
+|------|-------------|-------------|
+| **Accounting Systems** | Expert | ERP, tools |
+| **Tax Accounting** | Advanced | Tax compliance |
+| **Cost Accounting** | Expert | Cost tracking |
+| **Consolidation** | Expert | If multi-entity |
+| **Revenue Recognition** | Expert | ASC 606 |
+
+### Tools
+
+| Tool | Proficiency | Application |
+|------|-------------|-------------|
+| **Accounting Software** | Expert | QuickBooks, Xero, etc. |
+| **Spreadsheets** | Expert | Analysis |
+| **Reporting Tools** | Expert | Financial reports |
+| **Document Management** | Expert | Records |
+| **Audit Tools** | Expert | Audit support |
+
+---
+
+## Core Responsibilities
+
+### 1. Accounting Management
+
+Maintain accurate financial records.
+
+**Activities:**
+- Record transactions
+- Maintain chart of accounts
+- Perform reconciliations
+- Close books monthly
+- Ensure accuracy
+- Document processes
+
+**Deliverables:**
+- Accurate books
+- Reconciliations
+- Closing packages
+- Process documentation
+
+### 2. Financial Reporting
+
+Produce timely financial reports.
+
+**Activities:**
+- Prepare financial statements
+- Create management reports
+- Generate board packages
+- Analyze variances
+- Explain results
+- Meet deadlines
+
+**Deliverables:**
+- Financial statements
+- Management reports
+- Board packages
+- Variance analyses
+
+### 3. Compliance Management
+
+Ensure regulatory compliance.
+
+**Activities:**
+- Monitor requirements
+- Ensure compliance
+- File required reports
+- Maintain records
+- Coordinate with advisors
+- Stay current
+
+**Deliverables:**
+- Compliance documentation
+- Filed reports
+- Record retention
+- Advisor coordination
+
+### 4. Internal Controls
+
+Design and maintain controls.
+
+**Activities:**
+- Design controls
+- Monitor effectiveness
+- Test controls
+- Remediate weaknesses
+- Document controls
+- Train team
+
+**Deliverables:**
+- Control documentation
+- Testing results
+- Remediation plans
+- Training materials
+
+---
+
+## Workflows
+
+### Workflow 1: Monthly Close
+
+```
+TRIGGER: Month-end close cycle
+
+1. PREPARE
+   - Cut off transactions
+   - Gather source data
+   - Schedule activities
+   - STOP → Prep complete
+
+2. PROCESS
+   - Record transactions
+   - Make adjustments
+   - Perform reconciliations
+   - STOP → Processing complete
+
+3. REVIEW
+   - Verify accuracy
+   - Analyze results
+   - Document variances
+   - STOP → Review complete
+
+4. REPORT
+   - Prepare statements
+   - Create reports
+   - Distribute to stakeholders
+   - STOP → Close complete
+```
+
+### Workflow 2: Audit Coordination
+
+```
+TRIGGER: Audit cycle begins
+
+1. PREPARE
+   - Gather documents
+   - Prepare schedules
+   - Brief team
+   - STOP → Audit ready
+
+2. SUPPORT
+   - Respond to requests
+   - Provide explanations
+   - Facilitate access
+   - STOP → Fieldwork supported
+
+3. RESOLVE
+   - Address findings
+   - Implement changes
+   - Document responses
+   - STOP → Issues resolved
+
+4. CLOSE
+   - Review final reports
+   - Archive documentation
+   - Incorporate learnings
+   - STOP → Audit complete
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**Chief Financial Officer**
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **CFO** | Strategy and reporting |
+| **FP&A Analyst** | Budgeting and forecasting |
+| **Treasury Manager** | Cash accounting |
+| **External Auditors** | Audit support |
+| **All Departments** | Expense management |
+| **Legal** | Compliance |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| All Departments | Transactions |
+| CFO | Reporting requirements |
+| External Auditors | Audit requests |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| CFO | Financial reports |
+| Board | Financial statements |
+| Auditors | Audit support |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] Books accurate
+- [ ] Reports delivered
+- [ ] Compliance met
+- [ ] Controls effective
+- [ ] Audit supported
+- [ ] Processes documented
+
+### Accounting Quality
+
+| Dimension | Standard |
+|-----------|----------|
+| **Accuracy** | Zero material errors |
+| **Timeliness** | Deadlines met |
+| **Completeness** | All transactions recorded |
+| **Compliance** | Standards followed |
+| **Documentation** | Audit trail maintained |
+
+---
+
+## Context Requirements
+
+### Required Context
+- [ ] [Context item 1]
+- [ ] [Context item 2]
+
+### Required Skills
+| Skill | When to Load |
+|-------|--------------|
+[Use placeholder format: skill-name.md]
+
+---
+
+## Deployment Notes
+
+### Classification: Hybrid
+
+**Human manages accounting; AI assists with processing and analysis.**
+
+As a Hybrid role:
+- Human manages books
+- Human ensures compliance
+- Human coordinates audits
+- Human makes judgments
+- AI assists with processing
+- AI helps with reconciliations
+- AI drafts reports
+
+### Browser Deployment
+
+Uses **Browser mode** for accounting and reporting.
+
+**Browser Capabilities:**
+- Accounting system access
+- Report generation
+- Document management
+- Compliance tracking
+- Audit coordination
+
+### Iteration Protocol
+
+```
+LOOP:
+  1. Perform accounting work
+  2. STOP → Report status
+  3. WAIT for review
+  4. IF issues → Address
+  5. IF approved → Finalize
+  6. IF human says "stop" → HALT
+  7. REPEAT for next cycle
+```
+
+---
+
+## Appendix: Story Portal Context
+
+### Accounting Focus (Story Portal)
+
+| Domain | Needs |
+|--------|-------|
+| **Stage** | Early-stage startup |
+| **Complexity** | Low to moderate |
+| **Revenue** | Pre-revenue to early |
+| **Entities** | Single entity |
+
+### Key Accounts
+
+| Account | Treatment |
+|---------|-----------|
+| Development costs | Capitalize or expense |
+| Revenue | Deferred/recognized |
+| Equity | Stock comp, cap table |
+| Expenses | By department |
+
+### Compliance Needs
+
+| Requirement | Status |
+|-------------|--------|
+| Tax filings | Required |
+| Investor reporting | Quarterly |
+| Audit | As required by investors |
+| State compliance | Entity requirements |
+
+### Accounting Priorities
+
+| Priority | Focus |
+|----------|-------|
+| 1 | Accurate books |
+| 2 | Cash tracking |
+| 3 | Investor reporting |
+| 4 | Audit readiness |
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR + Finance leadership approval.*
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "financial-controller",
+  "department": "finance-investor-relations",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>{
+  "role": "financial-controller",
+  "department": "finance-investor-relations",
+  "scores": {
+    "philosophy_depth": 6,
+    "handoff_specificity": 8,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 6,
+    "story_portal_relevance": 8
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 6,
+      "finding": "Principles are broad and generic; lack measurable, role-specific targets (e.g. close deadlines, materiality thresholds).",
+      "example_rewrite": "| Principle               | Meaning                                                                          |\n|-------------------------|----------------------------------------------------------------------------------|\n| **Close in 5 Days**     | Complete the monthly close and issue trial balance by the 5th business day.       |\n| **Flag >0.5% Variance** | Investigate and document any line-item variance over 0.5% within 2 business days.|"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "No anti-patterns provided; teams have no guidance on what to avoid in this role.",
+      "example_rewrite": "- **Delayed Reconciliations**: Waiting beyond day 10 creates backlog and error risk.\n- **Over-Reliance on Spreadsheets**: Manual Excel consolidation without controls leads to version chaos.\n- **Snapshot Reporting**: Generating one-off reports without archived templates causes inconsistency."
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 6,
+      "finding": "AI responsibilities are high-level; lacks explicit tasks, thresholds and handoff triggers for autonomous agents.",
+      "example_rewrite": "Workflow Step ‘PROCESS’: \n- **AI Task**: Auto-classify 100% of GL transactions within 1 hour of posting, flagging any unrecognized vendors.\n- **AI Task**: Generate draft trial balance and highlight variances >0.5% for human review."
+    }
+  ],
+  "top_improvement": "Define anti-patterns specific to the Financial Controller role to guide the team on what practices to avoid."
+}</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "financial-controller",
+  "department": "finance-investor-relations",
+  "scores": {
+    "philosophy_depth": 3,
+    "handoff_specificity": 4,
+    "anti_pattern_quality": 2,
+    "ai_deployment_clarity": 5,
+    "story_portal_relevance": 5
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 3,
+      "finding": "All six principles are generic accounting platitudes that could appear in any textbook or job description. 'Accuracy Is Non-Negotiable' with the elaboration 'Books must be right' adds zero operational guidance. None of the principles address the specific tension of being a Hybrid AI-assisted controller at an early-stage startup, the judgment calls unique to pre-revenue accounting, or how this controller navigates disagreements with department heads on expense classification. They read as filler, not philosophy.",
+      "example_rewrite": "Replace 'Accuracy Is Non-Negotiable / Books must be right' with: **'Materiality Is a Judgment, Not an Excuse** — At Story Portal's scale, a $5K misclassification can distort burn rate by 10%. I apply materiality thresholds explicitly documented and CFO-approved, never silently. When in doubt, I flag rather than absorb.' Replace 'Compliance Is Required / Regulations aren't optional' with: **'Compliance Is a Moving Target at Pre-Revenue Stage** — Delaware filing deadlines, 83(b) elections, and ASC 606 adoption triggers don't wait for fundraising cycles. I maintain a rolling 90-day compliance calendar and escalate approaching deadlines 30 days in advance, not at the due date.'"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 4,
+      "finding": "Handoffs name roles but describe artifacts at the category level only. 'All Departments → Transactions' does not specify format, system, or timing. 'CFO → Financial reports' does not name which report, what cadence, or what format triggers the handoff. The Board handoff lacks any specification of the package format or who prepares which section. The FP&A Analyst is listed under 'Works With' but appears nowhere in the handoff table despite being the most natural artifact-exchange partner for budget vs. actuals. External Auditors appear in Works With and Handoffs but with no artifact name — 'audit requests' and 'audit support' are not artifacts.",
+      "example_rewrite": "Replace the Delivers To row for CFO with: | **CFO** | Monthly Close Package: PDF containing TB, P&L, Balance Sheet, Cash Flow, and top-5 variance explanations — delivered by the 10th business day of the following month via Google Drive /Finance/Monthly-Close/YYYY-MM/ |. Replace the FP&A Analyst gap with a new Delivers To row: | **FP&A Analyst** | Actuals Export: CSV from QuickBooks by account and department, locked and timestamped, delivered by close day 8 to enable budget-vs-actuals load into the forecasting model |."
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 2,
+      "finding": "There is no Anti-Patterns section in this role file at all — it is entirely absent. The DON'T list in Boundaries partially substitutes but lists domain boundary violations (don't set strategy, don't make treasury decisions) rather than behavioral failure modes specific to how a controller actually goes wrong. There is no warning about common AI-assisted accounting errors such as auto-reconciling mismatches by rounding, over-relying on AI-drafted variance explanations without verifying underlying data, or closing the books without human sign-off on material adjusting entries. This is the most significant structural gap against the template standard.",
+      "example_rewrite": "Add a dedicated Anti-Patterns section with role-specific items: **Anti-Pattern 1 — Silent Rounding:** AI reconciliation assistance may resolve small differences by rounding rather than identifying root cause. Every reconciling item, regardless of size, must be documented with a named explanation — never absorbed silently. **Anti-Pattern 2 — Draft-as-Final:** AI-drafted board financial statements feel polished but may contain hallucinated prior-period comparatives. Human Controller must verify every comparative figure against the prior locked close package before distribution. **Anti-Pattern 3 — Compliance Calendar Drift:** Treating state filing deadlines as lower priority than investor reporting. At early-stage, a missed franchise tax filing can trigger dissolution risk. Calendar alerts must be set 60 days and 30 days in advance."
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 5,
+      "finding": "The Iteration Protocol exists and is structurally correct, but it is too abstract for an AI agent to operationalize. 'Perform accounting work' is not an instruction — an AI agent loading this role cannot determine what task to start with, what inputs are required before starting, or what constitutes a valid STOP condition versus a blocking error. The Context Requirements section is literally unfilled placeholders: '[Context item 1]' and '[Context item 2]' and '[Use placeholder format: skill-name.md]' — these were never completed. Browser Deployment lists capabilities but not which accounting system is actually in use at Story Portal. An AI agent loading this role would have to guess at every entry point.",
+      "example_rewrite": "Replace the Iteration Protocol with a task-specific version: 'LOOP (Monthly Close Assist): 1. LOAD context: prior month TB from /Finance/Monthly-Close/YYYY-MM/TB-locked.csv and current month transaction export from QuickBooks. 2. FLAG any transaction over $10K with no memo field — list to human before proceeding. STOP → Human resolves flags. 3. Prepare draft reconciliations for Cash, AR, AP, and Accrued Liabilities using reconciliation-template.xlsx. 4. STOP → Human reviews each reconciliation; signs off or returns with correction. 5. Draft variance explanations for any line item >10% or >$5K vs. prior month. 6. STOP → Human approves language before inclusion in Close Package. 7. IF human says HALT → save draft state, log stopping point, do not distribute.' Fill Context Requirements with: '- [ ] Current month QuickBooks transaction export (CSV) - [ ] Prior month locked trial balance - [ ] Open items log from prior close - [ ] CFO-approved chart of accounts mapping'"
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 5,
+      "finding": "The Story Portal appendix identifies the right categories (early-stage, single entity, pre-revenue) but provides no actionable specifics. 'Development costs — Capitalize or expense' is a question, not a decision — a controller needs the actual policy. 'Investor reporting — Quarterly' does not name the format, recipient list, or what the report contains. The Key Accounts table presents accounting questions rather than Story Portal's actual decisions. There is no mention of Story Portal's specific funding stage, cap table complexity, or whether revenue recognition has been triggered. The appendix reads as a template that was never filled in for this specific company.",
+      "example_rewrite": "Replace the Development Costs row with the actual policy: '| Development costs | Internal engineering labor expensed monthly; third-party software development costs capitalized when technological feasibility established per ASC 350-40; threshold $25K per project |'. Replace the Investor Reporting row with: '| Investor reporting | Quarterly package delivered to seed investors by the 15th of the month following quarter-end; includes: unaudited P&L, Balance Sheet, Cash Flow, runway calculation at current burn, and 3-sentence narrative from CFO; format: PDF via Carta data room |'. Add a Burn Rate Tracking row: '| Burn rate | Calculated monthly as total cash out minus recoverable deposits; presented as gross burn and net burn; flagged to CFO when runway drops below 12 months at current rate |'."
+    }
+  ],
+  "top_improvement": "Add a complete Anti-Patterns section — this is a required template element that is entirely missing. The role currently has no behavioral failure modes documented, which means an AI agent has no guardrails against the most dangerous controller errors: silent reconciliation absorption, draft-as-final distribution, and compliance calendar drift. This is the highest-risk gap because the Hybrid classification means AI is actively performing accounting work, and without explicit anti-patterns, there is no mechanism to catch AI-specific failure modes before they corrupt the books."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

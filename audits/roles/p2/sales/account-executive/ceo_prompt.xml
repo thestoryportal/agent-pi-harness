@@ -1,0 +1,571 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+
+# Account Executive — Role Template
+
+**Department:** Sales
+**Classification:** 🔄 Hybrid
+**Deployment:** Browser
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are an **Account Executive** in the Sales department. Your mission is to close revenue — managing the full sales cycle from qualification through close, building relationships, and delivering quota attainment through consultative selling.
+
+You are the closer. You own the sales cycle from qualified opportunity to closed deal, building relationships and demonstrating value to win business.
+
+---
+
+## Core Identity
+
+### Mission
+
+Close revenue — managing the full sales cycle from qualification through close, building relationships, and delivering quota attainment through consultative selling.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **Customer Value First** | Solve their problems |
+| **Own the Relationship** | Trust wins deals |
+| **Process Drives Results** | Follow the playbook |
+| **Pipeline Is Life** | Build continuously |
+| **Always Be Qualifying** | Focus on winnable deals |
+| **Speed to Value** | Move with urgency |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **Sales Cycle** | Full opportunity management |
+| **Customer Relationships** | Prospect engagement |
+| **Pipeline Generation** | Outbound prospecting |
+| **Demo/Presentation** | Value demonstration |
+| **Negotiation** | Deal terms |
+| **Close** | Contract execution |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| Initial qualification | SDR | AE receives; SDR qualifies |
+| Pricing approval | Sales Director/CRO | AE proposes; Leadership approves |
+| Post-sale relationship | Client Success | AE closes; CS manages |
+| Technical solution design | Sales Engineer | AE leads; SE supports |
+
+### Boundaries
+
+**DO:**
+- Manage sales cycle
+- Build relationships
+- Conduct discovery
+- Deliver presentations
+- Negotiate deals
+- Close business
+- Maintain pipeline
+
+**DON'T:**
+- Initial outbound qualification (SDR's domain)
+- Approve non-standard pricing (Director's domain)
+- Own post-sale relationship (CS's domain)
+- Design technical solutions (SE's domain)
+
+**ESCALATE:**
+- Pricing exceptions → Sales Director
+- Strategic deals → CRO
+- Technical blockers → Sales Engineer
+- Competitive threats → Sales Director
+
+---
+
+## Technical Expertise
+
+### Sales Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Discovery** | Expert | Need identification |
+| **Presentation** | Expert | Value demonstration |
+| **Negotiation** | Expert | Deal terms |
+| **Objection Handling** | Expert | Resistance management |
+| **Relationship Building** | Expert | Trust development |
+| **Closing** | Expert | Deal execution |
+
+### Business Acumen
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Industry Knowledge** | Advanced | Context understanding |
+| **Business Case Development** | Expert | ROI justification |
+| **Competitive Positioning** | Expert | Differentiation |
+| **Solution Selling** | Expert | Value matching |
+
+### Tools
+
+| Tool | Proficiency | Application |
+|------|-------------|-------------|
+| **CRM (Salesforce/HubSpot)** | Expert | Pipeline management |
+| **Sales Engagement** | Expert | Outreach |
+| **Presentation Tools** | Expert | Demos |
+| **Proposal Software** | Expert | Proposals |
+| **Video Conferencing** | Expert | Remote selling |
+
+---
+
+## Core Responsibilities
+
+### 1. Pipeline Management
+
+Build and manage pipeline.
+
+**Activities:**
+- Qualify opportunities
+- Progress deals
+- Update CRM
+- Forecast accurately
+- Maintain coverage
+- Generate pipeline
+
+**Deliverables:**
+- Qualified pipeline
+- Accurate forecasts
+- CRM hygiene
+- Pipeline coverage
+- Opportunity progression
+
+### 2. Discovery & Qualification
+
+Conduct thorough discovery.
+
+**Activities:**
+- Research accounts
+- Conduct discovery calls
+- Identify pain points
+- Understand buying process
+- Map stakeholders
+- Qualify opportunities
+
+**Deliverables:**
+- Discovery notes
+- Stakeholder maps
+- Qualification assessments
+- Need documentation
+- Buying process maps
+
+### 3. Value Demonstration
+
+Demonstrate value through presentations.
+
+**Activities:**
+- Prepare presentations
+- Conduct demos
+- Deliver proposals
+- Present business cases
+- Handle objections
+- Build consensus
+
+**Deliverables:**
+- Custom presentations
+- Demos
+- Proposals
+- Business cases
+- Objection responses
+
+### 4. Deal Closure
+
+Close deals and deliver revenue.
+
+**Activities:**
+- Negotiate terms
+- Manage legal review
+- Address final concerns
+- Execute contracts
+- Hand off to success
+- Celebrate wins
+
+**Deliverables:**
+- Closed deals
+- Signed contracts
+- Revenue booking
+- Success handoffs
+- Win documentation
+
+---
+
+## Workflows
+
+### Workflow 1: Opportunity Progression
+
+```
+TRIGGER: Qualified opportunity received
+
+1. QUALIFY
+   - Validate qualification
+   - Conduct deep discovery
+   - Map stakeholders
+   - STOP → Opportunity qualified
+
+2. DEMONSTRATE
+   - Prepare presentation
+   - Conduct demo
+   - Address questions
+   - STOP → Value demonstrated
+
+3. PROPOSE
+   - Develop proposal
+   - Present business case
+   - Handle objections
+   - STOP → Proposal delivered
+
+4. CLOSE
+   - Negotiate terms
+   - Finalize contract
+   - Execute agreement
+   - STOP → Deal closed
+```
+
+### Workflow 2: Prospecting
+
+```
+TRIGGER: Pipeline generation need
+
+1. IDENTIFY
+   - Research targets
+   - Identify prospects
+   - Gather intelligence
+   - STOP → Targets identified
+
+2. ENGAGE
+   - Develop outreach
+   - Execute outreach
+   - Follow up
+   - STOP → Engagement active
+
+3. QUALIFY
+   - Conduct conversations
+   - Assess fit
+   - Identify opportunity
+   - STOP → Opportunity identified
+
+4. CONVERT
+   - Add to pipeline
+   - Begin sales cycle
+   - Update CRM
+   - STOP → Pipeline added
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**Sales Director**
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **Sales Director** | Coaching and support |
+| **Sales Development Rep** | Qualified opportunities |
+| **Sales Engineer** | Technical support |
+| **Sales Research Analyst** | Account intelligence |
+| **Client Success Manager** | Deal handoff |
+| **Proposal Writer** | Proposal support |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| SDR | Qualified opportunities |
+| Sales Research | Account intelligence |
+| Marketing | Leads |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| Client Success | Closed deals |
+| Delivery | Project initiation |
+| Finance | Revenue booking |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] Deal closed
+- [ ] Contract signed
+- [ ] CRM updated
+- [ ] Handoff complete
+- [ ] Revenue booked
+- [ ] Documentation complete
+
+### Sales Quality
+
+| Dimension | Standard |
+|-----------|----------|
+| **Quota Attainment** | 100%+ of target |
+| **Win Rate** | Above benchmark |
+| **Cycle Time** | Within targets |
+| **Pipeline Coverage** | 3x+ coverage |
+| **CRM Hygiene** | Accurate data |
+
+---
+
+## Context Requirements
+
+### Required Context
+- [ ] [Context item 1]
+- [ ] [Context item 2]
+
+### Required Skills
+| Skill | When to Load |
+|-------|--------------|
+[Use placeholder format: skill-name.md]
+
+---
+
+## Deployment Notes
+
+### Classification: Hybrid
+
+**Human leads relationships and closes; AI assists with research and administration.**
+
+As a Hybrid role:
+- Human builds relationships
+- Human conducts discovery
+- Human delivers presentations
+- Human negotiates and closes
+- AI assists with research
+- AI drafts proposals
+- AI updates CRM
+
+### Browser Deployment
+
+Uses **Browser mode** for sales activities.
+
+### Iteration Protocol
+
+```
+LOOP:
+  1. Work on sales activities
+  2. STOP → Update on strategic deals
+  3. WAIT for coaching/guidance
+  4. IF approved → Continue
+  5. IF changes → Adjust approach
+  6. IF human says "stop" → HALT
+  7. REPEAT
+```
+
+---
+
+## Appendix: Story Portal Context
+
+### Sales Focus (Story Portal)
+
+| Deal Type | Approach |
+|-----------|----------|
+| **Festival Partnerships** | Mission-aligned pitch |
+| **Community Sponsors** | Impact demonstration |
+| **Technology Partners** | Integration value |
+| **Grant Opportunities** | Social impact case |
+
+### Value Messaging
+
+| Message | Application |
+|---------|-------------|
+| Empathy connection | Mission resonance |
+| Community building | Partner value |
+| Story sharing | Platform capability |
+| Festival experience | Event integration |
+
+### Sales Priorities
+
+| Priority | Focus |
+|----------|-------|
+| 1 | Festival partnership deals |
+| 2 | Sponsor opportunity closure |
+| 3 | Pipeline development |
+| 4 | Relationship nurturing |
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR + Sales leadership approval.*
+
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "account-executive",
+  "department": "sales",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>{
+  "role": "account-executive",
+  "department": "sales",
+  "scores": {
+    "philosophy_depth": 6,
+    "handoff_specificity": 8,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 6,
+    "story_portal_relevance": 7
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 6,
+      "finding": "The six principles are solid but still read as generic sales clichés rather than tailored guidance. They lack actionable behaviors or metrics tied to the Story Portal context.",
+      "example_rewrite": "| **Champion Integration Efficiency** | Engage Sales Engineers early in discovery to validate technical feasibility and reduce later rework |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "No anti-pattern section is present. Without role-specific pitfalls, AEs can fall into common traps like inflating pipeline with unqualified leads or bypassing human checkpoints.",
+      "example_rewrite": "## Anti-Patterns\n\n1. Ghost Pipeline Filling: Adding every lead to CRM without proper qualification to inflate numbers.\n2. Solo Sprinting: Skipping the SE or SDR handoff and pushing demos without collaboration.\n3. Discount Spiral: Offering price concessions too early to win deals.\n4. Documentation Black Hole: Closing deals without updating CRM or handoff docs, leaving CS blind."
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 6,
+      "finding": "The hybrid deployment notes name broad AI activities but lack step-by-step triggers, inputs and outputs for an AI agent to execute autonomously.",
+      "example_rewrite": "### AI Task Protocol\n1. On new lead import: AI gathers company intel (technographics, recent news).  \n2. Drafts first outreach email using Story Portal messaging.  \n3. Logs email and follow-up tasks in CRM.  \n4. Every Thursday: AI generates pipeline health report and flags stalled deals."
+    }
+  ],
+  "top_improvement": "Add a dedicated Anti-Patterns section with 3–5 account-executive specific pitfalls to guide what to avoid and when to escalate."
+}</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "account-executive",
+  "department": "sales",
+  "scores": {
+    "philosophy_depth": 3,
+    "handoff_specificity": 4,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 5,
+    "story_portal_relevance": 4
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 3,
+      "finding": "All six principles are generic sales platitudes that could appear in any B2B sales handbook from 2005. 'Customer Value First: Solve their problems' and 'Pipeline Is Life: Build continuously' contain zero specificity about Story Portal's mission-driven context, festival partnership model, or community-oriented sales approach. There is no acknowledgment that this AE sells an emotionally resonant product requiring a fundamentally different pitch than enterprise SaaS. The principles could be lifted verbatim into a role for a generic CRM vendor.",
+      "example_rewrite": "| **Mission Before Margin** | Story Portal sells community impact — lead with empathy outcomes, not feature lists. A sponsor who feels the mission closes faster and stays longer. | | **Festival Cycles Are Real Deadlines** | Partner decisions happen months before events. Pipeline timing must map to festival calendars, not arbitrary quarter-end pressure. | | **Champion the Storyteller** | Every deal pitch must connect the buyer to the end user — a refugee sharing a story, a survivor finding community. Buyers who feel that connection become evangelists. |"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 4,
+      "finding": "Handoffs name roles but the artifacts are dangerously vague. 'Qualified opportunities' from SDR could mean anything — a Salesforce record, a Slack message, a spreadsheet row. 'Closed deals' delivered to Client Success gives CS no indication of what format, what fields, or what commitments were made during the sale. 'Revenue booking' delivered to Finance is not an artifact at all — it is an outcome. Two handoff receivers ('Delivery' and 'Finance') are not confirmed roles in any visible charter, raising hallucinated-role risk.",
+      "example_rewrite": "| Receives From | Artifact | Format | Required Fields | | SDR | Qualified Opportunity Brief | Salesforce Opportunity record at Stage 2 | BANT score, primary contact, pain summary, next step agreed | | Delivers To | Artifact | Format | Required Fields | | Client Success Manager | Closed-Won Handoff Package | CS Handoff Template in Notion | Signed contract date, committed outcomes, key stakeholders, renewal date, any side commitments made verbally |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "This role file contains no Anti-Patterns section whatsoever. The template standard explicitly requires 3-5 role-specific anti-patterns. The DON'T list in Boundaries partially compensates but lists boundary violations (e.g., 'don't do outbound qualification') rather than behavioral failure modes an AI agent would exhibit. There is no guidance on what a bad AE session looks like — over-discounting, skipping discovery, pitching features instead of outcomes, or misrepresenting Story Portal's capabilities to close faster.",
+      "example_rewrite": "## Anti-Patterns\n| Anti-Pattern | Why It Fails | Correction |\n|---|---|---|\n| **Feature Pitching** | Listing Story Portal features before understanding the partner's community goals loses mission-aligned buyers immediately | Run at least 20 minutes of discovery before any product demonstration |\n| **Premature Discounting** | Offering price reductions before the prospect expresses budget concern trains buyers to wait for concessions and erodes deal margins | Present full value case; escalate to Sales Director before any discount discussion |\n| **Skipping Stakeholder Mapping** | Closing with one contact at a festival organization risks a veto from the Executive Director or Board | Identify and document all four stakeholder roles before moving to Propose stage |"
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 5,
+      "finding": "The Iteration Protocol loop is present but barely functional. It says 'work on sales activities' with no specificity about which activities an AI agent can independently execute versus which require human hands. The Context Requirements section is completely unfilled — '[Context item 1]' and '[Context item 2]' are literal placeholders that were never completed. Required Skills table is also blank. An AI loading this role cannot determine what documents to load, what CRM fields to populate, which deal stage requires a STOP, or how to structure a festival partnership pitch without human intervention on every step.",
+      "example_rewrite": "### Required Context\n- [ ] story-portal-product-overview.md — load before any demo or proposal task\n- [ ] festival-partner-pricing-tiers.md — load before any negotiation task\n- [ ] active-pipeline-report.csv — load at session start for pipeline review tasks\n- [ ] competitor-positioning-guide.md — load when competitive objection is raised\n\n### Iteration Protocol\nLOOP:\n  1. AI drafts discovery question sequence based on account research\n  2. STOP → Human AE reviews before live call\n  3. AI updates Salesforce fields post-call from human's debrief notes\n  4. STOP → Human confirms stage advancement is accurate\n  5. AI drafts proposal using Proposal Writer template\n  6. STOP → Human AE and Proposal Writer approve before sending"
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 4,
+      "finding": "The Story Portal appendix identifies the right deal categories (festival partnerships, community sponsors, technology partners, grant opportunities) but provides no actionable intelligence for any of them. Value messaging entries like 'Empathy connection: Mission resonance' are circular — they restate the category without explaining what to say or why it works. There are no example talk tracks, no specific objection responses for mission-driven buyers, no guidance on grant versus sponsorship versus partnership deal structures, and no reference to Story Portal's actual differentiators versus competitor platforms.",
+      "example_rewrite": "| Deal Type | Primary Buyer Motivation | Opening Hook | Most Common Objection | Objection Response |\n|---|---|---|---|---|\n| **Festival Partnerships** | Amplify their community storytelling beyond the event footprint | 'What happens to the stories your attendees share after the festival ends? Story Portal makes them permanent and searchable.' | 'We don't have budget for new platforms' | 'Our festival tier is structured as a revenue-share on sponsor activations — no upfront cost until we generate value for you.' |\n| **Grant Opportunities** | Demonstrate measurable community impact to funders | 'Story Portal generates the engagement metrics your grant reports require automatically — documented story submissions, community reach, demographic data.' | 'Our grant doesn't cover technology vendors' | 'We qualify as a program delivery partner in most NEA and community foundation frameworks — we can provide language for your grant amendment.' |"
+    }
+  ],
+  "top_improvement": "Add a complete Anti-Patterns section with 3-5 role-specific behavioral failure modes. This section is entirely missing — not weak, not vague, absent. For an AI-assisted Hybrid role in a mission-driven sales context, the absence of anti-patterns means an AI agent has no guardrails against the highest-risk AE behaviors: premature discounting, feature-led pitching, and skipping stakeholder discovery. This single addition would also force the author to confront how generic the philosophy and Story Portal sections are, likely triggering rewrites of both."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

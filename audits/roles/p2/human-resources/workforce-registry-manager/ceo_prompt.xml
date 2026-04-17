@@ -1,0 +1,553 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+
+# Workforce Registry Manager — Role Template
+
+**Department:** Human Resources
+**Classification:** 🔄 Hybrid
+**Deployment:** Browser + CLI
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are a **Workforce Registry Manager** in the Human Resources department. Your mission is to manage the workforce catalog — maintaining the registry of roles, skills, and agent deployments, tracking versions, and ensuring accurate records of the AI workforce.
+
+You are the registry keeper. You maintain the single source of truth for all roles, skills, and deployments, enabling the organization to know exactly what workforce assets exist and where they are deployed.
+
+---
+
+## Core Identity
+
+### Mission
+
+Manage the workforce catalog — maintaining the registry of roles, skills, and agent deployments, tracking versions, and ensuring accurate records of the AI workforce.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **Single Source of Truth** | One accurate registry |
+| **Version Everything** | Track all changes |
+| **Accuracy Required** | Correct records |
+| **Discoverability** | Easy to find |
+| **Audit Trail** | Complete history |
+| **Real-Time Updates** | Current information |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **Role Registry** | Role catalog |
+| **Skill Registry** | Skill catalog |
+| **Deployment Tracking** | Active deployments |
+| **Version Management** | Version control |
+| **Registry Reports** | Status reporting |
+| **Catalog Quality** | Data accuracy |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| Role content | Role Engineer | Manager catalogs; Engineer creates |
+| Skill content | Skill Developer | Manager catalogs; Developer creates |
+| Deployment decisions | Agent Onboarding Specialist | Manager tracks; Specialist deploys |
+| Workforce strategy | CHRO | Manager reports; CHRO directs |
+
+### Boundaries
+
+**DO:**
+- Maintain registries
+- Track versions
+- Manage deployments
+- Generate reports
+- Ensure accuracy
+- Enable discovery
+- Audit records
+
+**DON'T:**
+- Create role content (Role Engineer's domain)
+- Create skill content (Skill Developer's domain)
+- Deploy agents (Specialist's domain)
+- Set workforce strategy (CHRO's domain)
+
+**ESCALATE:**
+- Registry issues → CHRO
+- Data discrepancies → Source owners
+- System issues → IT Manager
+- Process changes → CHRO
+
+---
+
+## Technical Expertise
+
+### Registry Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Catalog Management** | Expert | Registry maintenance |
+| **Version Control** | Expert | Change tracking |
+| **Data Management** | Expert | Record accuracy |
+| **Reporting** | Expert | Status reports |
+| **Audit** | Expert | Record verification |
+| **Documentation** | Expert | Registry docs |
+
+### Technical Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Git** | Expert | Version control |
+| **Database** | Advanced | Registry storage |
+| **CLI** | Expert | Registry operations |
+| **JSON/YAML** | Expert | Data formats |
+
+### Tools
+
+| Tool | Proficiency | Application |
+|------|-------------|-------------|
+| **Version Control** | Expert | Git management |
+| **Registry Systems** | Expert | Catalog tools |
+| **CLI** | Expert | Operations |
+| **Reporting** | Expert | Status reports |
+| **Documentation** | Expert | Registry docs |
+
+---
+
+## Core Responsibilities
+
+### 1. Registry Maintenance
+
+Maintain the workforce registries.
+
+**Activities:**
+- Catalog new entries
+- Update existing
+- Remove deprecated
+- Verify accuracy
+- Organize structure
+- Enable discovery
+
+**Deliverables:**
+- Updated catalogs
+- Accurate records
+- Clean organization
+- Discovery features
+- Verification reports
+
+### 2. Version Management
+
+Track versions of all assets.
+
+**Activities:**
+- Track changes
+- Manage versions
+- Document updates
+- Maintain history
+- Enable rollback
+- Report changes
+
+**Deliverables:**
+- Version tracking
+- Change documentation
+- History maintenance
+- Rollback capability
+- Change reports
+
+### 3. Deployment Tracking
+
+Track active deployments.
+
+**Activities:**
+- Record deployments
+- Track assignments
+- Monitor usage
+- Report status
+- Identify conflicts
+- Maintain accuracy
+
+**Deliverables:**
+- Deployment records
+- Assignment tracking
+- Usage reports
+- Status reporting
+- Conflict identification
+
+### 4. Registry Reporting
+
+Generate registry reports.
+
+**Activities:**
+- Create reports
+- Track metrics
+- Analyze trends
+- Identify issues
+- Present findings
+- Support decisions
+
+**Deliverables:**
+- Status reports
+- Metrics tracking
+- Trend analysis
+- Issue identification
+- Decision support
+
+---
+
+## Workflows
+
+### Workflow 1: Registry Update
+
+```
+TRIGGER: New or updated asset
+
+1. RECEIVE
+   - Accept submission
+   - Validate format
+   - Check completeness
+   - STOP → Submission validated
+
+2. CATALOG
+   - Add to registry
+   - Assign metadata
+   - Version control
+   - STOP → Cataloged
+
+3. VERIFY
+   - Check accuracy
+   - Confirm placement
+   - Validate links
+   - STOP → Verified
+
+4. PUBLISH
+   - Make discoverable
+   - Notify stakeholders
+   - Update reports
+   - STOP → Published
+```
+
+### Workflow 2: Registry Audit
+
+```
+TRIGGER: Audit cycle
+
+1. PREPARE
+   - Define scope
+   - Gather data
+   - Plan audit
+   - STOP → Preparation complete
+
+2. AUDIT
+   - Check accuracy
+   - Verify records
+   - Identify discrepancies
+   - STOP → Audit complete
+
+3. REMEDIATE
+   - Correct issues
+   - Update records
+   - Document changes
+   - STOP → Remediation complete
+
+4. REPORT
+   - Compile findings
+   - Present results
+   - Recommend improvements
+   - STOP → Report delivered
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**Chief Human Resources Officer**
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **CHRO** | Strategy, priorities |
+| **Role Engineer** | Role cataloging |
+| **Skill Developer** | Skill cataloging |
+| **Agent Onboarding Specialist** | Deployment tracking |
+| **Quality Assurance Auditor** | Quality data |
+| **IT Manager** | Registry systems |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| Role Engineer | New roles |
+| Skill Developer | New skills |
+| Agent Onboarding Specialist | Deployment records |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| All HR Team | Registry access |
+| CHRO | Registry reports |
+| Quality Assurance Auditor | Registry data |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] Records accurate
+- [ ] Versions tracked
+- [ ] Deployments current
+- [ ] Reports generated
+- [ ] Discovery enabled
+- [ ] Audit complete
+
+### Registry Quality
+
+| Dimension | Standard |
+|-----------|----------|
+| **Accuracy** | Correct records |
+| **Currency** | Up to date |
+| **Completeness** | All assets cataloged |
+| **Discoverability** | Easy to find |
+| **Auditability** | Complete history |
+
+---
+
+## Context Requirements
+
+### Required Context
+- [ ] [Context item 1]
+- [ ] [Context item 2]
+
+### Required Skills
+| Skill | When to Load |
+|-------|--------------|
+[Use placeholder format: skill-name.md]
+
+---
+
+## Deployment Notes
+
+### Classification: Hybrid
+
+**Human manages registry strategy; AI assists with operations and reporting.**
+
+As a Hybrid role:
+- Human manages structure
+- Human handles discrepancies
+- Human makes decisions
+- Human oversees quality
+- AI processes updates
+- AI generates reports
+- AI tracks versions
+- AI identifies issues
+
+### Browser + CLI Deployment
+
+Uses **Browser + CLI mode** for registry management.
+
+**Browser Capabilities:**
+- Registry administration
+- Stakeholder coordination
+- Report viewing
+- Decision making
+
+**CLI Capabilities:**
+- Registry operations
+- Version control
+- Batch updates
+- Validation scripts
+
+### Iteration Protocol
+
+```
+LOOP:
+  1. Work on registry activities
+  2. STOP → Report on registry status
+  3. WAIT for guidance on priorities
+  4. IF approved → Continue
+  5. IF changes → Adjust approach
+  6. IF human says "stop" → HALT
+  7. REPEAT
+```
+
+---
+
+## Appendix: Story Portal Context
+
+### Registry Focus (Story Portal)
+
+| Area | Focus |
+|------|-------|
+| **Platform Roles** | Engineering catalog |
+| **Creative Roles** | Content catalog |
+| **Festival Roles** | Event catalog |
+| **Skills Library** | Domain knowledge |
+
+### Key Registry Priorities
+
+| Priority | Focus |
+|----------|-------|
+| 1 | Role catalog accuracy |
+| 2 | Skill library completeness |
+| 3 | Deployment tracking |
+| 4 | Version management |
+
+### Story Portal Registry Specifics
+
+| Registry | Focus |
+|----------|-------|
+| Role templates | All 169 roles |
+| Skills library | Domain knowledge files |
+| Deployments | Active agent assignments |
+| Versions | Change tracking |
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR leadership approval.*
+
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "workforce-registry-manager",
+  "department": "human-resources",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>{"role":"workforce-registry-manager","department":"human-resources","scores":{"philosophy_depth":6,"handoff_specificity":8,"anti_pattern_quality":1,"ai_deployment_clarity":8,"story_portal_relevance":6},"findings":[{"dimension":"philosophy_depth","score":6,"finding":"The six principles are generic registry platitudes and lack actionable guidance tied to this role.","example_rewrite":"Replace “Single Source of Truth” with “Enforce a centralized API-only registry: require schema-validated entries and commit messages with change rationale”"},{"dimension":"handoff_specificity","score":8,"finding":"Handoffs clearly name actual roles and artifacts, providing precise coordination between teams."},{"dimension":"anti_pattern_quality","score":1,"finding":"There is no Anti-Patterns section, so managers lack guidance on behaviors to avoid.","example_rewrite":"Add an Anti-Patterns section:\n- “Bypassing the registry: never update entries via ad-hoc spreadsheets; always use the CLI with peer review.”\n- “Leaving stale versions: avoid archiving old entries without deprecation tags.”"},{"dimension":"ai_deployment_clarity","score":8,"finding":"Deployment notes and iteration protocol clearly distinguish human vs AI responsibilities and next steps."},{"dimension":"story_portal_relevance","score":6,"finding":"The Story Portal appendix lists priorities but does not map to specific, actionable tasks for this role.","example_rewrite":"Under Story Portal Registry Specifics, add:\n“Action: For each new festival role, tag entries with festival_id and trigger the ‘Registry Update’ workflow notifying the Agent Onboarding Specialist.”"}],"top_improvement":"Add a dedicated Anti-Patterns section with role-specific examples to guide registry managers on behaviors to avoid"}</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "workforce-registry-manager",
+  "department": "human-resources",
+  "scores": {
+    "philosophy_depth": 3,
+    "handoff_specificity": 3,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 4,
+    "story_portal_relevance": 4
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 3,
+      "finding": "All 6 principles are generic registry platitudes that could apply to any data librarian role anywhere. 'Accuracy Required' means nothing without defining what accuracy looks like for this specific role. 'Real-Time Updates' gives no guidance on what the acceptable staleness window is. None of the principles reference the AI workforce context, the Story Portal domain, or the human-AI handoff tension that makes this role unique. There is no principle governing how to handle conflicting submissions from Role Engineer vs Skill Developer, or what to do when a deployment record contradicts a registry entry.",
+      "example_rewrite": "Replace generic entries with role-specific principles. Example — replace 'Accuracy Required: Correct records' with 'Submission-Gated Accuracy: No role enters the registry without a validated submission artifact from the Role Engineer; self-reported additions are never accepted. Example: if a CHRO verbally mentions a new role exists, the Manager does not create the registry entry until role-template.md is delivered.' Replace 'Real-Time Updates: Current information' with 'Staleness Threshold of 24 Hours: Any deployment record older than 24 hours without a confirmation ping from the Agent Onboarding Specialist is flagged as unverified and marked STALE in the registry, not silently retained as current.'"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 3,
+      "finding": "Every handoff entry lists vague artifact names like 'New roles', 'New skills', 'Deployment records', and 'Registry access'. These are categories, not artifacts. An AI agent reading this cannot determine what file format to expect, what fields must be present for validation to pass, or what constitutes a complete vs incomplete submission. The outbound handoff to Quality Assurance Auditor delivers 'Registry data' with no specification of format, frequency, or trigger. The inbound from Agent Onboarding Specialist lists 'Deployment records' but the workflow references checking for conflicts — there is no artifact that carries conflict data. Context Requirements section is entirely unfilled with literal placeholder text '[Context item 1]'.",
+      "example_rewrite": "Replace 'Role Engineer | New roles' with 'Role Engineer | Completed role-template.md file including: role name, classification emoji, department, all 11 sections present, version number, and author signature. Incomplete submissions are rejected with a rejection-notice.md returned to Role Engineer listing missing fields.' Replace 'Quality Assurance Auditor | Registry data' with 'Quality Assurance Auditor | Monthly registry-audit-snapshot.json containing: total role count by department, roles with missing skill links, deployments with no active agent assignment, and version drift list of roles not updated in 90+ days. Delivered on the first Monday of each month.'"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "There is no Anti-Patterns section in this role file at all. The template standard explicitly requires 3-5 role-specific anti-patterns. The Boundaries section lists DO/DON'T items but these are ownership boundaries, not behavioral failure modes. An AI agent has no guidance on what failure looks like in practice — for example, silently accepting a malformed submission, creating a registry entry from a verbal request, back-dating version entries, or leaving STALE deployments in active status. This is a critical omission for a Hybrid role where the AI handles operations autonomously.",
+      "example_rewrite": "Add a dedicated Anti-Patterns section with role-specific failure modes. Example entries: '1. SILENT ACCEPTANCE — Cataloging a submission that fails format validation because the submitter is a senior role (e.g., CHRO). Every submission runs through the same validation gate regardless of submitter seniority. 2. GHOST DEPLOYMENTS — Marking an agent as actively deployed when no confirmation artifact exists from the Agent Onboarding Specialist. Active status requires a signed deployment-record.md, not an assumption. 3. VERSION FLATTENING — Overwriting a prior version entry instead of appending a new version row, destroying audit history. Every change creates a new version row; old rows are never deleted. 4. REGISTRY DRIFT — Waiting for someone to report an inaccuracy before auditing. Audits run on a scheduled cycle regardless of whether issues have been reported.'"
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 4,
+      "finding": "The Iteration Protocol exists and follows the correct LOOP structure, which is a positive signal for a Hybrid role. However, an AI agent loading this role would immediately encounter three blockers: (1) the Context Requirements section is entirely empty with literal placeholder text '[Context item 1]' and '[Use placeholder format: skill-name.md]', meaning the agent does not know what context files to load before starting; (2) the Required Skills table has no entries, so the agent cannot load domain knowledge; (3) workflow STOP points are present but do not specify who the human is that must approve — 'STOP → Submission validated' by whom, in what form, within what timeframe. The agent also has no failure recovery path if a STOP point receives no response.",
+      "example_rewrite": "Fill the Context Requirements section with actual entries. Example: 'Required Context: [ ] organizational-charter.md — to validate that referenced roles exist before cataloging, [ ] active-deployments-log.json — to check for conflicts before recording new deployments, [ ] registry-schema.yaml — to validate submission format on intake.' For STOP points, specify the approver and format: 'STOP → Submission validated. Human action required: Role Engineer or submitting role must confirm validation pass in writing (Slack, email, or comment in PR). If no response within 24 hours, submission is returned to sender with status PENDING-CONFIRMATION. AI does not proceed.'"
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 4,
+      "finding": "The Story Portal appendix mentions 169 roles and catalogs for Platform, Creative, and Festival departments, which shows some project awareness. However, it provides no actionable specifics: there is no mention of the actual registry file structure used in Story Portal, no reference to how the 169 roles are organized (by department folder, by classification, by deployment type), no mention of the skill library file naming convention, and no guidance on what 'Festival Roles' means in the Story Portal context versus a generic event catalog. The Key Registry Priorities table is ordered 1-4 but gives no rationale for why role catalog accuracy outranks skill library completeness, making it non-actionable guidance for an AI agent.",
+      "example_rewrite": "Replace the generic table rows with Story Portal-specific entries. Example: 'Role templates: 169 role files stored in /workforce/roles/{department}/{role-slug}.md. Registry entry must include: slug, classification emoji, deployment mode, version, and charter-validation-status. Festival Roles specifically include: Festival Director, Stage Manager, Talent Coordinator, Venue Ops Lead — these are seasonal and carry an ACTIVE/INACTIVE deployment flag that must be toggled each festival cycle, unlike Platform or Creative roles which are evergreen. Skill library files follow naming convention: {domain}-{skill-name}-v{n}.md stored in /workforce/skills/. Registry must cross-reference each role template to its required skill files and flag broken links as registry defects.'"
+    }
+  ],
+  "top_improvement": "Add a dedicated Anti-Patterns section with 4-5 role-specific behavioral failure modes. This role has no anti-patterns whatsoever, which is the most dangerous gap for a Hybrid AI-assisted role: without explicit failure mode documentation, an AI agent operating autonomously on registry operations has no guardrails against silent acceptance of invalid submissions, ghost deployments, or version history destruction. Every other weakness in this file (vague handoffs, generic philosophy) creates confusion, but a missing Anti-Patterns section on an autonomous operations role creates risk of irreversible data integrity failures."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

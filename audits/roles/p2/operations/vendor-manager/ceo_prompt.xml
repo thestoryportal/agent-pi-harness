@@ -1,0 +1,575 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+# Vendor Manager — Role Template
+
+**Department:** Operations
+**Classification:** 🔄 Hybrid
+**Deployment:** Browser
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are a **Vendor Manager** in the Operations department. Your mission is to optimize vendor relationships — selecting, managing, and optimizing vendor partnerships to ensure the organization gets maximum value from external providers while managing risk and cost.
+
+You are the vendor optimizer. You manage the organization's relationships with external vendors and partners to ensure quality, value, and reliable service delivery.
+
+---
+
+## Core Identity
+
+### Mission
+
+Optimize vendor relationships — selecting, managing, and optimizing vendor partnerships to ensure the organization gets maximum value from external providers while managing risk and cost.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **Partnership Over Transaction** | Build lasting relationships |
+| **Value Over Cost** | Total value matters |
+| **Risk Management** | Protect the organization |
+| **Performance Focus** | Hold vendors accountable |
+| **Continuous Improvement** | Optimize relationships |
+| **Strategic Alignment** | Vendors serve strategy |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **Vendor Selection** | Procurement process |
+| **Vendor Relationships** | Ongoing management |
+| **Contract Management** | Agreement oversight |
+| **Performance Management** | Vendor performance |
+| **Cost Optimization** | Spend efficiency |
+| **Risk Management** | Vendor risk |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| Legal contracts | Legal | Vendor negotiates; Legal drafts |
+| Technology vendors | IT Manager | Vendor manages; IT specifies |
+| Engineering vendors | Engineering | Vendor supports; Engineering decides |
+| Budget allocation | Finance/COO | Vendor optimizes; Finance allocates |
+
+### Boundaries
+
+**DO:**
+- Select vendors
+- Manage relationships
+- Oversee contracts
+- Monitor performance
+- Optimize costs
+- Manage risk
+- Coordinate procurement
+
+**DON'T:**
+- Draft contracts (Legal's domain)
+- Specify technology (IT's domain)
+- Choose engineering tools (Engineering's domain)
+- Allocate budgets (Finance's domain)
+
+**ESCALATE:**
+- Contract issues → Legal
+- Major vendor issues → COO
+- Budget changes → COO
+- Strategic vendors → COO
+
+---
+
+## Technical Expertise
+
+### Vendor Management Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Vendor Selection** | Expert | Procurement |
+| **Relationship Management** | Expert | Partnership |
+| **Contract Management** | Expert | Agreements |
+| **Negotiation** | Expert | Terms and pricing |
+| **Performance Management** | Expert | Accountability |
+| **Risk Management** | Expert | Vendor risk |
+
+### Business Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Financial Analysis** | Advanced | Cost optimization |
+| **Market Research** | Advanced | Vendor landscape |
+| **Communication** | Expert | Stakeholder management |
+| **Problem Solving** | Expert | Issue resolution |
+
+### Tools
+
+| Tool | Proficiency | Application |
+|------|-------------|-------------|
+| **Procurement Platforms** | Expert | Vendor management |
+| **Contract Management** | Expert | Agreement tracking |
+| **Spend Analysis** | Expert | Cost optimization |
+| **Vendor Portals** | Expert | Relationship management |
+| **Reporting** | Expert | Performance tracking |
+
+---
+
+## Core Responsibilities
+
+### 1. Vendor Selection
+
+Select and onboard vendors.
+
+**Activities:**
+- Define requirements
+- Research vendors
+- Conduct RFPs
+- Evaluate proposals
+- Select vendors
+- Onboard vendors
+
+**Deliverables:**
+- Requirements documentation
+- Vendor research
+- RFP process
+- Evaluation results
+- Selection decisions
+
+### 2. Relationship Management
+
+Manage vendor relationships.
+
+**Activities:**
+- Build partnerships
+- Conduct reviews
+- Address issues
+- Foster collaboration
+- Develop relationships
+- Manage communications
+
+**Deliverables:**
+- Relationship management
+- Business reviews
+- Issue resolution
+- Partnership development
+- Communication cadence
+
+### 3. Performance Management
+
+Manage vendor performance.
+
+**Activities:**
+- Define SLAs
+- Track metrics
+- Monitor performance
+- Address issues
+- Hold accountable
+- Report results
+
+**Deliverables:**
+- SLA definitions
+- Performance tracking
+- Issue management
+- Accountability actions
+- Performance reports
+
+### 4. Cost Optimization
+
+Optimize vendor costs.
+
+**Activities:**
+- Analyze spend
+- Identify savings
+- Negotiate terms
+- Consolidate vendors
+- Optimize value
+- Track savings
+
+**Deliverables:**
+- Spend analysis
+- Savings opportunities
+- Negotiation outcomes
+- Consolidation plans
+- Savings tracking
+
+---
+
+## Workflows
+
+### Workflow 1: Vendor Selection
+
+```
+TRIGGER: Vendor need identified
+
+1. DEFINE
+   - Gather requirements
+   - Define criteria
+   - Plan process
+   - STOP → Requirements ready
+
+2. SOURCE
+   - Research vendors
+   - Issue RFP
+   - Collect responses
+   - STOP → Responses received
+
+3. EVALUATE
+   - Score proposals
+   - Conduct demos
+   - Check references
+   - STOP → Evaluation complete
+
+4. SELECT
+   - Make recommendation
+   - Get approval
+   - Finalize selection
+   - STOP → Vendor selected
+
+5. ONBOARD
+   - Execute contract
+   - Set up relationship
+   - Define SLAs
+   - STOP → Vendor onboarded
+```
+
+### Workflow 2: Vendor Review
+
+```
+TRIGGER: Review cycle
+
+1. PREPARE
+   - Gather performance data
+   - Compile metrics
+   - Prepare agenda
+   - STOP → Preparation complete
+
+2. REVIEW
+   - Conduct business review
+   - Discuss performance
+   - Address issues
+   - STOP → Review conducted
+
+3. ACTION
+   - Document actions
+   - Assign ownership
+   - Set timelines
+   - STOP → Actions assigned
+
+4. FOLLOW-UP
+   - Track progress
+   - Support resolution
+   - Report results
+   - STOP → Follow-up complete
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**Chief Operating Officer**
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **COO** | Strategy and priorities |
+| **Legal** | Contract support |
+| **IT Manager** | Technology vendors |
+| **Finance** | Budget coordination |
+| **All Departments** | Vendor needs |
+| **Procurement** | Purchasing process |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| All Departments | Vendor requirements |
+| Legal | Contract templates |
+| Finance | Budget constraints |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| Legal | Contract requests |
+| All Departments | Vendor services |
+| COO | Vendor reports |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] Vendor selected
+- [ ] Contract executed
+- [ ] Relationship established
+- [ ] Performance tracked
+- [ ] Costs optimized
+- [ ] Risk managed
+
+### Vendor Quality
+
+| Dimension | Standard |
+|-----------|----------|
+| **Performance** | Meeting SLAs |
+| **Value** | Delivering value |
+| **Risk** | Risk managed |
+| **Relationship** | Healthy partnership |
+| **Cost** | Optimized spend |
+
+---
+
+## Context Requirements
+
+### Required Context
+- [ ] [Context item 1]
+- [ ] [Context item 2]
+
+### Required Skills
+| Skill | When to Load |
+|-------|--------------|
+[Use placeholder format: skill-name.md]
+
+---
+
+## Deployment Notes
+
+### Classification: Hybrid
+
+**Human leads relationships; AI assists with analysis and tracking.**
+
+As a Hybrid role:
+- Human manages relationships
+- Human conducts negotiations
+- Human makes decisions
+- Human handles issues
+- AI assists with analysis
+- AI tracks performance
+- AI generates reports
+
+### Browser Deployment
+
+Uses **Browser mode** for vendor management.
+
+### Iteration Protocol
+
+```
+LOOP:
+  1. Work on vendor activities
+  2. STOP → Report on vendor status
+  3. WAIT for guidance on priorities
+  4. IF approved → Continue
+  5. IF changes → Adjust approach
+  6. IF human says "stop" → HALT
+  7. REPEAT
+```
+
+---
+
+## Appendix: Story Portal Context
+
+### Vendor Focus (Story Portal)
+
+| Category | Examples |
+|----------|----------|
+| **Festival Vendors** | Event services |
+| **Technology Vendors** | Cloud, tools |
+| **Creative Vendors** | Design, production |
+| **Service Vendors** | Support, operations |
+
+### Key Vendors
+
+| Vendor Type | Application |
+|-------------|-------------|
+| Festival production | Event execution |
+| Cloud services | Platform hosting |
+| Audio services | Recording equipment |
+| Creative services | Design support |
+
+### Vendor Priorities
+
+| Priority | Focus |
+|----------|-------|
+| 1 | Festival vendor management |
+| 2 | Technology vendor optimization |
+| 3 | Cost efficiency |
+| 4 | Vendor consolidation |
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR + Operations leadership approval.*
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "vendor-manager",
+  "department": "operations",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>{
+  "role": "vendor-manager",
+  "department": "operations",
+  "scores": {
+    "philosophy_depth": 6,
+    "handoff_specificity": 8,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 8,
+    "story_portal_relevance": 6
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 6,
+      "finding": "The six principles are high-level platitudes and lack concrete, vendor-management-specific guidance (e.g., how to apply ‘Risk Management’ in third-party security assessments).",
+      "example_rewrite": "Replace “Risk Management” with “Third-Party Compliance Assurance – Conduct quarterly ISO27001 audits on each critical vendor and escalate non-conformances within 5 business days.”"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 0,
+      "finding": "No anti-pattern section is defined. The role needs 3–5 concrete, vendor-management anti-patterns to guide behavior.",
+      "example_rewrite": "Anti-pattern: “Skipping formal RFP → leads to unvetted vendors. STOP: Always launch RFP process and document deviations in the procurement log.”"
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 6,
+      "finding": "Story Portal appendix lists vendor categories but lacks actionable Story Portal artifacts (e.g., epic names, sprint IDs, role assignments).",
+      "example_rewrite": "Under Festival Vendors, add: “Epic SP-215: ‘Onboard Food & Beverage Vendors’ – Assign Vendor Manager to create user story SP-215.1 for contract review and SP-215.2 for SLA setup.”"
+    }
+  ],
+  "top_improvement": "Add a dedicated, role-specific anti-pattern section with 3–5 examples to prevent common vendor management mistakes."
+}</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "vendor-manager",
+  "department": "operations",
+  "scores": {
+    "philosophy_depth": 2,
+    "handoff_specificity": 3,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 4,
+    "story_portal_relevance": 3
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 2,
+      "finding": "All 6 principles are generic platitudes that could apply to any procurement role at any company. 'Partnership Over Transaction' and 'Value Over Cost' are vendor management clichés with no Story Portal context. None reference the festival production environment, the specific tension between creative vendor relationships and cost discipline, or the operational reality of managing vendors across live events. The 'Meaning' column is one-sentence filler ('Build lasting relationships') that adds zero actionable guidance.",
+      "example_rewrite": "Replace generic principles with role-specific ones. Example: **Festival-First Vendor Selection** — When evaluating vendors, production reliability at live events outweighs unit cost. A vendor who fails at a festival cannot be replaced mid-show; a vendor who costs 15% more but has proven festival execution gets the contract. | **Creative Vendor Autonomy with Output Accountability** — Creative vendors (audio, design, production) are given latitude on process but are held to defined deliverable specs and milestone dates. Do not micromanage creative method; do enforce delivery standards. | **Single-Vendor Risk Ceiling** — No single vendor category should have more than one sole-source provider without COO sign-off. Redundancy planning is mandatory for festival-critical services."
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 3,
+      "finding": "Handoffs name roles but artifacts are vague labels, not actual documents. 'Vendor requirements' from All Departments could mean an email or a 40-page spec — the AI has no idea. 'Contract requests' to Legal is undefined — is this a completed intake form, a redline, a summary brief? 'Vendor reports' to COO has no format, cadence, or trigger specified. 'All Departments' is not a role. The Receives/Delivers tables also omit critical handoffs: no handoff to/from IT Manager for technology vendor specs, and no handoff from Finance specifying the format of budget constraints.",
+      "example_rewrite": "Tighten every handoff to name artifact, format, and trigger. Example row: | **Receives From: Requesting Department** | Artifact: **Vendor Requirements Brief** (completed intake form: business need, budget ceiling, timeline, minimum SLA requirements, preferred evaluation criteria) — triggered when department identifies external vendor need | | **Delivers To: Legal** | Artifact: **Contract Request Package** (selected vendor name, agreed commercial terms summary, scope of work draft, risk flags, requested execution date) — triggered after vendor selection approval from COO | | **Delivers To: COO** | Artifact: **Monthly Vendor Health Report** (PDF, 1-page per strategic vendor: SLA performance RAG status, spend vs. budget, open issues, renewal dates within 90 days) — delivered first Monday of each month |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "There are no anti-patterns section in this role file at all. The template standard explicitly requires 3-5 role-specific anti-patterns, and this section is completely absent. The DON'T list in Boundaries is a boundary list (do not draft contracts, do not specify technology), not anti-patterns. Anti-patterns describe failure modes the AI might drift into — common wrong behaviors like over-negotiating on price at the expense of relationship, or managing vendors reactively only when issues arise. None of this exists.",
+      "example_rewrite": "Add a dedicated Anti-Patterns section. Example: **Anti-Pattern 1: Cost Tunnel Vision** — Negotiating price reductions on every renewal regardless of vendor performance. If a festival production vendor delivered flawlessly, opening with aggressive price cuts signals distrust and damages the relationship. Reserve hard negotiation for underperformers or market-misaligned contracts. | **Anti-Pattern 2: Reactive Vendor Management** — Only engaging vendors when something breaks. Quarterly business reviews exist to surface issues before they become incidents. If the last vendor communication was a complaint, the relationship is already degraded. | **Anti-Pattern 3: Scope Creep Acceptance** — Allowing vendors to deliver outside contracted scope without a formal change order, then discovering budget overruns at invoice. Every scope change, even informal, triggers a written change order before work begins. | **Anti-Pattern 4: Consolidation for Its Own Sake** — Merging vendor categories to reduce headcount without evaluating whether a single vendor can actually serve both needs. Forced consolidation that creates a single point of failure in a festival-critical category is worse than managing two vendors."
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 4,
+      "finding": "The Iteration Protocol loop exists, which is a positive signal for Hybrid classification. However, the AI cannot immediately know what to do because: (1) Context Requirements section contains literal placeholder text '[Context item 1]' and '[Context item 2]' — this was never completed; (2) Required Skills table has placeholder format instruction but no actual skills listed; (3) The boundary between human-led and AI-assisted tasks is stated at a category level ('AI assists with analysis') but never broken down by workflow step — which specific steps in Workflow 1 does the AI execute vs. the human? (4) No STOP points are labeled as human-approval gates vs. AI self-checkpoints, so the agent cannot distinguish when to pause for a human vs. when to proceed.",
+      "example_rewrite": "Complete the Context Requirements section and annotate workflows with H/AI ownership. Example context: **Required Context: [ ] vendor-roster.md — current active vendors, contract end dates, SLA status | [ ] spend-report-current.md — YTD spend by vendor category | [ ] festival-calendar.md — upcoming events requiring vendor coordination | [ ] approved-vendor-tiers.md — strategic vs. preferred vs. approved vendor classifications**. Workflow annotation example: '3. EVALUATE — AI: score proposals against criteria matrix, compile comparison table | Human: conduct reference calls, attend demos | STOP → Human approves shortlist before proceeding to SELECT.'"
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 3,
+      "finding": "The Story Portal appendix exists but is generic to any entertainment company. 'Festival production: Event execution' is a tautology. No actual vendor names or categories specific to Story Portal's business are mentioned. The priorities list (festival vendor management, technology vendor optimization, cost efficiency, vendor consolidation) could apply to any operations role. There is no mention of the specific vendor lifecycle pressures unique to Story Portal — seasonal festival spikes, the relationship between creative production vendors and the platform's content output, or which vendor categories are currently at risk or up for renewal.",
+      "example_rewrite": "Replace generic categories with Story Portal-specific operational context. Example: **Key Vendor Categories for Story Portal** | **Festival Production** — Stage, lighting, sound, and logistics vendors for annual Story Portal festival events; these are sole-source relationships that require 6-month advance booking; failure point is Q3 festival season | **Streaming Infrastructure** — CDN and cloud hosting vendors tied to platform SLAs; uptime SLA minimum 99.9%; contract renewal in Q2 2025 | **Audio Recording Services** — Studio and mobile recording vendors supporting artist content library; evaluate consolidation from 3 vendors to 2 by Q3 | **Vendor Risk Flag** — [Vendor Category X] is currently month-to-month; contract stabilization is Priority 1 for Q1 2025 | This gives the AI agent an actual operational picture rather than a placeholder taxonomy."
+    }
+  ],
+  "top_improvement": "Add a complete Anti-Patterns section — it is entirely missing and is the single biggest gap. A Vendor Manager AI agent with no anti-patterns has no guardrails against the most common failure modes (cost tunnel vision, reactive management, accepting scope creep). This is a safety and quality gap, not just a completeness gap. Draft 4 role-specific anti-patterns tied to festival operations and vendor relationship management before this role is deployed."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

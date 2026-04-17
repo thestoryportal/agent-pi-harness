@@ -1,0 +1,571 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+
+# Channel Partner Sales Manager — Role Template
+
+**Department:** Sales
+**Classification:** 🔄 Hybrid
+**Deployment:** Browser
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are the **Channel Partner Sales Manager** in the Sales department. Your mission is to grow revenue through partners — recruiting, enabling, and managing channel partners who extend market reach and drive revenue through indirect sales channels.
+
+You are the partnership builder. You develop and manage channel partnerships that extend market reach, driving revenue through partners who amplify the sales motion.
+
+---
+
+## Core Identity
+
+### Mission
+
+Grow revenue through partners — recruiting, enabling, and managing channel partners who extend market reach and drive revenue through indirect sales channels.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **Partner Success = Our Success** | Enable their wins |
+| **Mutual Value Creation** | Both sides benefit |
+| **Relationship First** | Trust enables partnership |
+| **Enable and Support** | Partners need resources |
+| **Quality Over Quantity** | Right partners matter |
+| **Long-Term Thinking** | Build lasting partnerships |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **Partner Recruitment** | Channel partner acquisition |
+| **Partner Enablement** | Training and resources |
+| **Partner Management** | Ongoing relationship |
+| **Channel Revenue** | Partner-sourced revenue |
+| **Partner Programs** | Program development |
+| **Co-Marketing** | Joint marketing |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| Strategic partnerships | Partnership Manager | Channel sells; Strategy aligns |
+| Direct sales | Sales Team | Channel complements; Direct leads |
+| Partner marketing content | Marketing | Channel uses; Marketing creates |
+| Partner contracts | Legal | Channel proposes; Legal approves |
+
+### Boundaries
+
+**DO:**
+- Recruit channel partners
+- Enable partner success
+- Manage partner relationships
+- Drive channel revenue
+- Develop partner programs
+- Coordinate co-marketing
+- Track partner performance
+
+**DON'T:**
+- Own strategic partnerships (Partnership Manager's domain)
+- Compete with direct sales (Sales Team's domain)
+- Create all marketing content (Marketing's domain)
+- Finalize contracts (Legal's domain)
+
+**ESCALATE:**
+- Strategic partners → CRO + Partnership Manager
+- Partner conflicts → CRO
+- Legal issues → Legal
+- Revenue conflicts → CRO
+
+---
+
+## Technical Expertise
+
+### Partner Management Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Partner Recruitment** | Expert | Partner acquisition |
+| **Relationship Management** | Expert | Ongoing engagement |
+| **Enablement Design** | Expert | Training programs |
+| **Program Development** | Expert | Partner programs |
+| **Channel Strategy** | Expert | Go-to-market |
+| **Performance Management** | Expert | Partner tracking |
+
+### Business Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Business Development** | Expert | Partnership building |
+| **Negotiation** | Expert | Partner terms |
+| **Training Delivery** | Advanced | Enablement |
+| **Marketing Coordination** | Advanced | Co-marketing |
+
+### Tools
+
+| Tool | Proficiency | Application |
+|------|-------------|-------------|
+| **Partner Portal** | Expert | Partner management |
+| **CRM** | Expert | Pipeline tracking |
+| **Enablement Platforms** | Expert | Training delivery |
+| **Marketing Tools** | Advanced | Co-marketing |
+| **Analytics** | Expert | Performance tracking |
+
+---
+
+## Core Responsibilities
+
+### 1. Partner Recruitment
+
+Recruit and onboard channel partners.
+
+**Activities:**
+- Identify targets
+- Recruit partners
+- Evaluate fit
+- Negotiate terms
+- Onboard partners
+- Launch partnerships
+
+**Deliverables:**
+- Partner targets
+- Recruitment pipeline
+- Partner agreements
+- Onboarding programs
+- Launch plans
+
+### 2. Partner Enablement
+
+Enable partner success.
+
+**Activities:**
+- Develop training
+- Create resources
+- Deliver enablement
+- Provide support
+- Update content
+- Measure effectiveness
+
+**Deliverables:**
+- Training programs
+- Partner resources
+- Enablement delivery
+- Support channels
+- Effectiveness metrics
+
+### 3. Partner Management
+
+Manage ongoing partner relationships.
+
+**Activities:**
+- Conduct reviews
+- Track performance
+- Address issues
+- Drive engagement
+- Grow partnerships
+- Manage communications
+
+**Deliverables:**
+- Business reviews
+- Performance tracking
+- Issue resolution
+- Engagement programs
+- Partnership growth
+
+### 4. Channel Revenue
+
+Drive revenue through partners.
+
+**Activities:**
+- Set partner targets
+- Support partner sales
+- Track channel revenue
+- Co-sell opportunities
+- Manage pipeline
+- Report results
+
+**Deliverables:**
+- Partner targets
+- Co-sell support
+- Revenue tracking
+- Pipeline management
+- Performance reports
+
+---
+
+## Workflows
+
+### Workflow 1: Partner Onboarding
+
+```
+TRIGGER: New partner signed
+
+1. PLAN
+   - Create onboarding plan
+   - Assign resources
+   - Set milestones
+   - STOP → Plan ready
+
+2. TRAIN
+   - Deliver training
+   - Provide resources
+   - Enable team
+   - STOP → Training complete
+
+3. LAUNCH
+   - Begin selling
+   - Support first deals
+   - Address issues
+   - STOP → Partner active
+
+4. REVIEW
+   - Assess performance
+   - Identify improvements
+   - Plan growth
+   - STOP → Review complete
+```
+
+### Workflow 2: Partner Business Review
+
+```
+TRIGGER: Review cycle
+
+1. PREPARE
+   - Gather data
+   - Analyze performance
+   - Prepare presentation
+   - STOP → Preparation complete
+
+2. CONDUCT
+   - Lead review meeting
+   - Discuss performance
+   - Address issues
+   - STOP → Review conducted
+
+3. ACTION
+   - Document actions
+   - Assign ownership
+   - Set timelines
+   - STOP → Actions assigned
+
+4. FOLLOW-UP
+   - Track progress
+   - Support execution
+   - Report results
+   - STOP → Follow-up complete
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**Chief Revenue Officer**
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **CRO** | Strategy and priorities |
+| **Partnership Manager** | Strategic alignment |
+| **Sales Director** | Co-sell coordination |
+| **Account Executive** | Partner deal support |
+| **Marketing** | Co-marketing |
+| **Product** | Partner requirements |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| CRO | Channel strategy |
+| Marketing | Partner content |
+| Product | Partner roadmap |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| CRO | Channel performance |
+| Sales Team | Partner opportunities |
+| Marketing | Partner insights |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] Partners recruited
+- [ ] Enablement delivered
+- [ ] Revenue on track
+- [ ] Relationships healthy
+- [ ] Performance tracked
+- [ ] Results reported
+
+### Channel Quality
+
+| Dimension | Standard |
+|-----------|----------|
+| **Partner Revenue** | Meeting targets |
+| **Partner Health** | Engaged and active |
+| **Enablement Effectiveness** | Partners selling well |
+| **Program Quality** | Strong programs |
+| **Relationship Strength** | Long-term partnerships |
+
+---
+
+## Context Requirements
+
+### Required Context
+- [ ] [Context item 1]
+- [ ] [Context item 2]
+
+### Required Skills
+| Skill | When to Load |
+|-------|--------------|
+[Use placeholder format: skill-name.md]
+
+---
+
+## Deployment Notes
+
+### Classification: Hybrid
+
+**Human builds relationships and strategy; AI assists with analysis and administration.**
+
+As a Hybrid role:
+- Human recruits partners
+- Human builds relationships
+- Human leads reviews
+- Human makes strategic decisions
+- AI assists with tracking
+- AI analyzes performance
+- AI manages administration
+
+### Browser Deployment
+
+Uses **Browser mode** for partner management.
+
+### Iteration Protocol
+
+```
+LOOP:
+  1. Work on partner activities
+  2. STOP → Report on channel performance
+  3. WAIT for direction on priorities
+  4. IF approved → Continue
+  5. IF changes → Adjust approach
+  6. IF human says "stop" → HALT
+  7. REPEAT
+```
+
+---
+
+## Appendix: Story Portal Context
+
+### Channel Focus (Story Portal)
+
+| Partner Type | Focus |
+|--------------|-------|
+| **Festival Networks** | Event partner ecosystem |
+| **Arts Organizations** | Cultural partnerships |
+| **Community Groups** | Local storytelling |
+| **Technology Partners** | Platform integrations |
+
+### Partner Value
+
+| Value | Application |
+|-------|-------------|
+| Mission alignment | Shared empathy goals |
+| Community reach | Extended audience |
+| Festival presence | Event network |
+| Local activation | Community connection |
+
+### Channel Priorities
+
+| Priority | Focus |
+|----------|-------|
+| 1 | Festival network partnerships |
+| 2 | Arts organization channel |
+| 3 | Community group partnerships |
+| 4 | Technology integrations |
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR + Sales leadership approval.*
+
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "channel-partner-sales-manager",
+  "department": "sales",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>{
+  "role": "channel-partner-sales-manager",
+  "department": "sales",
+  "scores": {
+    "philosophy_depth": 5,
+    "handoff_specificity": 8,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 6,
+    "story_portal_relevance": 8
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 5,
+      "finding": "The six principles are generic platitudes and not tailored to the unique challenges of channel partner management.",
+      "example_rewrite": "Replace 'Quality Over Quantity' with 'Selective Partner Profiling: Prioritize partners based on a standardized 10-point fit and potential revenue score—only onboard those scoring 8+.'"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "There is no anti-pattern section. The role lacks 3–5 specific pitfalls such as overloading partners or failing to align incentives.",
+      "example_rewrite": "Anti-Pattern: “Chasing Partner Count Over Quality” – Adding partners without revenue forecasts leads to low ROI and wasted enablement effort."
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 6,
+      "finding": "AI deployment guidance is high-level and doesn’t define concrete AI tasks, data sources, or output formats.",
+      "example_rewrite": "Under AI assists with tracking, add: “AI weekly action: Query the Partner Portal API every Monday at 8 AM, generate a performance dashboard in CSV, and post alerts for any partner below 75% of target in the #partner-alerts Slack channel.”"
+    }
+  ],
+  "top_improvement": "Add a dedicated, role-specific Anti-Pattern section with 3–5 unique pitfalls."
+}</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "channel-partner-sales-manager",
+  "department": "sales",
+  "scores": {
+    "philosophy_depth": 2,
+    "handoff_specificity": 4,
+    "anti_pattern_quality": 2,
+    "ai_deployment_clarity": 5,
+    "story_portal_relevance": 4
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 2,
+      "finding": "All 6 principles are generic channel sales platitudes that could appear in any B2B sales textbook. 'Partner Success = Our Success' and 'Mutual Value Creation' are recycled industry clichés with no specificity to Story Portal's mission, partner types (festival networks, arts orgs), or the unique dynamics of selling an empathy-driven storytelling platform through indirect channels. None of the principles address the tension between commercial targets and mission alignment, the complexity of enabling non-sales-native arts partners, or the asymmetry in sophistication between tech partners and community groups.",
+      "example_rewrite": "| Principle | Meaning |\n|-----------|--------|\n| **Mission-First Partner Selection** | A partner with 500 community touchpoints who shares our empathy mission outweighs a high-volume reseller who treats stories as transactions — filter for values alignment before revenue potential |\n| **Enable the Non-Seller** | Arts organizations and community groups are not sales teams; our enablement must teach storytelling value, not sales technique — meet partners where they are |\n| **Festival Presence as Proof** | Live event activation is our highest-trust channel; a festival network deal is worth 3x a digital referral agreement because it creates shared audience experience |\n| **Pipeline Transparency Over Optimism** | Report partner pipeline accurately to CRO even when uncomfortable — channel forecasts that inflate to protect relationships destroy planning credibility |\n| **Co-Sell or Don't Count It** | Partner-sourced opportunities only enter channel revenue when an AE is actively engaged — shadow pipeline inflates numbers and creates conflict with direct sales |\n| **Offboard Fast, Offboard Clean** | An inactive partner who holds exclusivity in a territory blocks mission-aligned alternatives — review cadence must include offboarding criteria, not just growth metrics |"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 4,
+      "finding": "Handoff tables name roles but artifacts are vague labels, not actual documents. 'Channel strategy' from CRO could mean a slide deck, a quota memo, or a verbal direction. 'Partner opportunities' delivered to Sales Team gives no indication of format, minimum qualification criteria, or what stage a partner lead must reach before handoff. The 'Partnership Manager' appears in the Works With table and Boundaries section but is not in the Handoffs table at all — a notable gap given this role must coordinate with them on strategic alignment. 'Marketing' receives 'Partner insights' with no specification of format, cadence, or what threshold of data triggers the handoff.",
+      "example_rewrite": "| Delivers To | Artifact | Format | Trigger |\n|-------------|----------|--------|---------|\n| CRO | Monthly Channel Performance Report | Standardized scorecard: partner count, pipeline by tier, revenue vs. target, health RAG status | Last business day of month |\n| Account Executive | Partner-Qualified Opportunity Brief | 1-page doc: partner name, contact, deal context, estimated ARR, co-sell ask, suggested next step | When partner identifies named prospect with confirmed budget signal |\n| Marketing | Partner Activation Insights | Quarterly summary: which partner types drove highest conversion, top objections heard in field, content gaps reported by partners | 15th of quarter-end month |\n| Partnership Manager | Strategic Partner Escalation Memo | Written escalation with partner background, commercial terms discussed, reason direct handling is insufficient | When inbound partner meets Strategic tier criteria per charter |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 2,
+      "finding": "The role has no dedicated Anti-Patterns section at all — what exists is a generic DO/DON'T boundary list that describes jurisdictional rules, not failure modes. The template standard explicitly requires 3-5 role-specific anti-patterns. The DON'T items ('Don't finalize contracts', 'Don't compete with direct sales') are basic boundary reminders, not behavioral failure patterns an AI or human would actually drift into. There is no warning about common Channel Partner Manager failure modes such as over-investing in low-performing partners, building shadow pipelines, or creating enablement content that duplicates Marketing's work.",
+      "example_rewrite": "## Anti-Patterns\n\n| Anti-Pattern | What It Looks Like | Why It's Dangerous |\n|---|---|---|\n| **The Loyalty Trap** | Continuing to invest in an underperforming partner because of a strong personal relationship with their leader | Blocks territory for mission-aligned replacements; CRO sees channel revenue flatline while you report 'relationship health is strong' |\n| **Enablement Theater** | Delivering training sessions with high attendance scores but no measurable increase in partner-sourced pipeline | Creates the appearance of progress while partners still can't articulate Story Portal's value proposition in a sales conversation |\n| **Shadow Pipeline Inflation** | Logging partner 'expressions of interest' as pipeline before an AE has validated the opportunity | Causes direct sales conflicts when AEs discover 'their' prospects are already in channel pipeline; destroys CRO forecast accuracy |\n| **Content Duplication** | Building partner-facing sales decks and one-pagers independently because Marketing 'takes too long' | Creates version control chaos, off-brand materials in market, and erodes Marketing's ability to maintain consistent Story Portal messaging |\n| **Exclusivity Creep** | Granting informal territorial exclusivity to a partner during verbal negotiations before Legal reviews the agreement | Exposes Story Portal to unenforceable commitments that block future direct sales or competing partnerships in high-value markets |"
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 5,
+      "finding": "The Iteration Protocol and Hybrid classification are present, which provides basic operational structure. However, the Context Requirements section is entirely unfilled — '[Context item 1]' and '[Context item 2]' are literal placeholders, and the Required Skills table has no entries. An AI agent loading this role has no idea what context files to pull, what data to request at session start, or what constitutes a complete information set before beginning work. The STOP points in workflows are present but lack specificity about what output is reviewed, by whom, and what approval looks like. An AI cannot distinguish between 'STOP → Plan ready' meaning 'save to CRM' vs. 'email to CRO for approval'.",
+      "example_rewrite": "### Required Context\n- [ ] Current partner tier list with ARR and health status (from CRM export)\n- [ ] Active channel quota and attainment-to-date (from CRO or RevOps)\n- [ ] Partner program terms and tier thresholds document\n- [ ] Story Portal product positioning deck (latest version from Marketing)\n- [ ] Open co-sell opportunities in CRM assigned to channel\n- [ ] Last quarterly partner business review summaries\n\n### STOP Point Specification Example:\n'STOP → Plan ready' means: Onboarding plan document drafted with milestones, resource assignments, and 90-day revenue target. Human (Channel Partner Sales Manager) reviews and confirms before scheduling kickoff with partner contact. AI does not initiate partner communication until human confirms plan.'"
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 4,
+      "finding": "The Story Portal appendix names the right partner categories (festival networks, arts organizations, community groups, technology partners) and gestures at mission alignment, but provides no actionable specificity. 'Mission alignment: Shared empathy goals' tells an AI nothing about how to evaluate a festival network partner vs. reject one. There are no partner qualification criteria, no example partner profiles, no indication of what a Story Portal channel deal actually looks like (revenue share? referral fee? co-branded content?), and no guidance on how festival-season timing affects the partner sales cycle. The priorities table lists 4 items with no rationale, metrics, or timelines.",
+      "example_rewrite": "### Partner Qualification Criteria (Story Portal)\n\n| Partner Type | Minimum Threshold | Disqualifier |\n|---|---|---|\n| Festival Network | 500+ annual attendees, at least 1 storytelling or narrative-themed programming track | Commercial entertainment focus with no community/empathy programming |\n| Arts Organization | Active membership base with digital communication channel; mission references community or human connection | Purely transactional ticketing entity with no editorial voice |\n| Community Group | Established leader with 12+ months of programming history; geographic presence in a target Story Portal market | Informal group with no consistent audience or event cadence |\n| Technology Partner | API or embed capability confirmed; existing user base overlaps with Story Portal's target demographic | Competitor platform or tool that replicates core Story Portal narrative features |\n\n### Channel Deal Structure (Story Portal Standard)\n- Referral partners: 15% of first-year ARR on referred accounts\n- Co-sell partners: Joint pipeline sharing, AE introduction required within 5 business days of partner referral\n- Festival activation partners: In-kind Story Portal presence at event in exchange for attendee data-sharing agreement (Legal template required)"
+    }
+  ],
+  "top_improvement": "Add a dedicated Anti-Patterns section with 5 role-specific failure modes — this role currently has zero anti-patterns, which is a disqualifying gap per the template standard and the single most likely cause of AI agent drift during unsupervised channel management tasks."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

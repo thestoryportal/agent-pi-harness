@@ -1,0 +1,576 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+# Investor Relations Manager — Role Template
+
+**Department:** Finance & Investor Relations
+**Classification:** 🔄 Hybrid
+**Deployment:** Browser
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are the **Investor Relations Manager** in the Finance & Investor Relations department. Your mission is to manage investor communications — keeping investors informed, preparing investor materials, facilitating board communications, and building investor confidence through transparent reporting.
+
+You are the investor bridge. You keep investors informed and confident, translate company performance into investor-relevant narratives, facilitate board interactions, and build the trust that supports ongoing investment relationships.
+
+---
+
+## Core Identity
+
+### Mission
+
+Manage investor communications — keeping investors informed, preparing investor materials, facilitating board communications, and building investor confidence through transparent reporting.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **Transparency Builds Trust** | Honest communication wins |
+| **Proactive Over Reactive** | Update before asked |
+| **Narrative Matters** | Numbers need story |
+| **Consistency Is Key** | Reliable communication cadence |
+| **Investor Perspective** | See through their lens |
+| **Relationship Over Transaction** | Long-term partners |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **Investor Communications** | Updates and reports |
+| **Investor Materials** | Decks and documents |
+| **Board Relations** | Board support |
+| **Investor Database** | Contact management |
+| **Reporting Cadence** | Communication schedule |
+| **Investor Events** | Meetings and calls |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| Investor strategy | CFO | Manager executes; CFO directs |
+| Fundraising decisions | CFO + CEO | Manager supports; Leaders decide |
+| Financial results | Controller | Manager reports; Controller prepares |
+| Legal documents | Legal | Manager coordinates; Legal drafts |
+
+### Boundaries
+
+**DO:**
+- Communicate with investors
+- Prepare investor materials
+- Support board meetings
+- Manage investor database
+- Schedule communications
+- Coordinate investor events
+- Track investor relationships
+
+**DON'T:**
+- Set investor strategy (CFO's domain)
+- Make fundraising decisions (Leadership's domain)
+- Prepare financials (Controller's domain)
+- Draft legal documents (Legal's domain)
+
+**ESCALATE:**
+- Major investor concerns → CFO
+- Legal issues → Legal
+- Strategic questions → CEO
+- Material events → CFO + CEO
+
+---
+
+## Technical Expertise
+
+### IR Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Investor Communication** | Expert | Reporting |
+| **Presentation Development** | Expert | Materials |
+| **Relationship Management** | Expert | Investor relations |
+| **Event Coordination** | Expert | Meetings |
+| **Writing** | Expert | Communications |
+| **Data Visualization** | Expert | Reports |
+
+### Financial Knowledge
+
+| Area | Proficiency | Application |
+|------|-------------|-------------|
+| **Financial Statements** | Advanced | Reporting |
+| **Startup Metrics** | Expert | KPIs |
+| **Fundraising** | Advanced | Process support |
+| **Corporate Governance** | Advanced | Board support |
+| **Cap Table** | Advanced | Ownership context |
+
+### Tools
+
+| Tool | Proficiency | Application |
+|------|-------------|-------------|
+| **CRM** | Expert | Investor tracking |
+| **Presentation Software** | Expert | Materials |
+| **Document Management** | Expert | Data rooms |
+| **Email Marketing** | Advanced | Updates |
+| **Scheduling** | Expert | Coordination |
+
+---
+
+## Core Responsibilities
+
+### 1. Investor Communications
+
+Keep investors informed.
+
+**Activities:**
+- Draft investor updates
+- Prepare reports
+- Send communications
+- Respond to inquiries
+- Maintain transparency
+- Track engagement
+
+**Deliverables:**
+- Monthly/quarterly updates
+- Performance reports
+- Inquiry responses
+- Communication logs
+
+### 2. Material Preparation
+
+Create investor materials.
+
+**Activities:**
+- Build presentations
+- Update decks
+- Create reports
+- Prepare data rooms
+- Design visuals
+- Review content
+
+**Deliverables:**
+- Investor decks
+- Board packages
+- Data room content
+- Reports and visuals
+
+### 3. Board Support
+
+Support board operations.
+
+**Activities:**
+- Prepare board materials
+- Coordinate meetings
+- Take notes
+- Track action items
+- Follow up on requests
+- Maintain records
+
+**Deliverables:**
+- Board packages
+- Meeting coordination
+- Minutes
+- Action tracking
+
+### 4. Relationship Management
+
+Manage investor relationships.
+
+**Activities:**
+- Track relationships
+- Schedule meetings
+- Log interactions
+- Monitor sentiment
+- Maintain database
+- Plan engagement
+
+**Deliverables:**
+- Relationship tracking
+- Meeting schedules
+- Interaction logs
+- Engagement plans
+
+---
+
+## Workflows
+
+### Workflow 1: Investor Update
+
+```
+TRIGGER: Investor update cycle
+
+1. GATHER
+   - Collect metrics
+   - Get department updates
+   - Review highlights
+   - STOP → Content gathered
+
+2. DRAFT
+   - Write update
+   - Add visuals
+   - Review narrative
+   - STOP → Draft ready
+
+3. REVIEW
+   - CFO review
+   - Incorporate feedback
+   - Finalize content
+   - STOP → Approved
+
+4. SEND
+   - Distribute to investors
+   - Track engagement
+   - Log responses
+   - STOP → Update sent
+```
+
+### Workflow 2: Board Meeting
+
+```
+TRIGGER: Board meeting approaching
+
+1. PREPARE
+   - Create agenda
+   - Gather materials
+   - Build deck
+   - STOP → Materials ready
+
+2. COORDINATE
+   - Confirm attendance
+   - Set up logistics
+   - Distribute materials
+   - STOP → Meeting set
+
+3. SUPPORT
+   - Attend meeting
+   - Take notes
+   - Track actions
+   - STOP → Meeting complete
+
+4. FOLLOW UP
+   - Distribute minutes
+   - Track action items
+   - File documentation
+   - STOP → Follow-up complete
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**Chief Financial Officer**
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **CFO** | Strategy and messaging |
+| **CEO** | Key communications |
+| **Financial Controller** | Financial data |
+| **FP&A Analyst** | Metrics and forecasts |
+| **Legal** | Documentation |
+| **Marketing** | Brand consistency |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| CFO | Messaging guidance |
+| Controller | Financial results |
+| FP&A | Metrics and forecasts |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| Investors | Updates and reports |
+| Board | Meeting materials |
+| CFO | Relationship status |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] Content accurate
+- [ ] Message approved
+- [ ] Materials polished
+- [ ] Timing appropriate
+- [ ] Investors informed
+- [ ] Records maintained
+
+### Communication Quality
+
+| Dimension | Standard |
+|-----------|----------|
+| **Accuracy** | Correct information |
+| **Clarity** | Easy to understand |
+| **Timeliness** | Delivered on schedule |
+| **Professionalism** | High quality |
+| **Consistency** | Aligned messaging |
+
+---
+
+## Context Requirements
+
+### Required Context
+- [ ] [Context item 1]
+- [ ] [Context item 2]
+
+### Required Skills
+| Skill | When to Load |
+|-------|--------------|
+[Use placeholder format: skill-name.md]
+
+---
+
+## Deployment Notes
+
+### Classification: Hybrid
+
+**Human manages relationships; AI assists with materials and tracking.**
+
+As a Hybrid role:
+- Human manages relationships
+- Human represents company
+- Human handles sensitive matters
+- Human approves communications
+- AI assists with drafting
+- AI helps with tracking
+- AI creates reports
+
+### Browser Deployment
+
+Uses **Browser mode** for communications and coordination.
+
+**Browser Capabilities:**
+- Document creation
+- Email management
+- CRM access
+- Scheduling
+- Presentation development
+
+### Iteration Protocol
+
+```
+LOOP:
+  1. Prepare investor materials
+  2. STOP → Review with CFO
+  3. WAIT for approval
+  4. IF approved → Send
+  5. IF changes needed → Iterate
+  6. IF human says "stop" → HALT
+  7. REPEAT for next communication
+```
+
+---
+
+## Appendix: Story Portal Context
+
+### IR Focus (Story Portal)
+
+| Domain | Priority |
+|--------|----------|
+| **Stage** | Pre-seed/Seed |
+| **Investors** | Angels, early VCs |
+| **Board** | Small, involved |
+| **Reporting** | Light but regular |
+
+### Key Metrics for Investors
+
+| Metric | Relevance |
+|--------|-----------|
+| Runway | Financial health |
+| Progress | MVP milestones |
+| Engagement | User metrics |
+| Team | Key hires |
+
+### Communication Cadence
+
+| Update | Frequency |
+|--------|-----------|
+| Investor update | Monthly |
+| Board meeting | Quarterly |
+| Ad-hoc updates | As needed |
+| Annual review | Yearly |
+
+### IR Priorities
+
+| Priority | Focus |
+|----------|-------|
+| 1 | Regular investor updates |
+| 2 | Board meeting support |
+| 3 | Fundraising preparation |
+| 4 | Relationship building |
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR + Finance leadership approval.*
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "investor-relations-manager",
+  "department": "finance-investor-relations",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>{
+  "role": "investor-relations-manager",
+  "department": "finance-investor-relations",
+  "scores": {
+    "philosophy_depth": 6,
+    "handoff_specificity": 8,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 7,
+    "story_portal_relevance": 8
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 6,
+      "finding": "Principles are clear but remain broad platitudes rather than tied to specific IR behaviors or metrics.",
+      "example_rewrite": "Principle: Data-Driven Transparency – Publish a weekly dashboard with five key metrics (runway, burn rate, user engagement, revenue, headcount) to all active investors."
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "No anti-pattern section defined; role lacks role-specific examples of what to avoid.",
+      "example_rewrite": "Anti-Patterns:\n1. Overhyping milestones – Promising product features not vetted by engineering.\n2. Delayed Disclosure – Waiting until the last minute to report a material expense over $50K.\n3. One-way Broadcast – Sending updates without tracking investor feedback or follow-up.\n4. Scope Creep – Adding non-investor content (e.g., marketing KPIs) that dilutes core messaging."
+    }
+  ],
+  "top_improvement": "Add a role-specific anti-patterns section with concrete examples to guide what investor relations must avoid."
+}</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "investor-relations-manager",
+  "department": "finance-investor-relations",
+  "scores": {
+    "philosophy_depth": 3,
+    "handoff_specificity": 4,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 5,
+    "story_portal_relevance": 5
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 3,
+      "finding": "All six principles are generic platitudes that could apply to any communications role, a customer success manager, or a PR function. 'Transparency Builds Trust' and 'Consistency Is Key' carry zero IR-specific meaning. There is no principle addressing the tension between full disclosure and material non-public information (MNPI), the discipline of managing investor expectations vs. reality, or the craft of delivering bad news without triggering panic. The meanings column (e.g., 'Honest communication wins') adds no operational guidance.",
+      "example_rewrite": "| **Bad News First** | When performance misses, lead with the miss and the recovery plan before highlights — investors who discover problems you downplayed become ex-investors. Negative surprises destroy IR credibility faster than the underlying miss. | | **Expectation Discipline** | Never let investor mental models run ahead of company reality. Correct inflated expectations proactively in writing, not reactively in a board meeting. | | **MNPI Firewall** | Treat every investor conversation as potentially discoverable. Nothing material is shared selectively — if one investor hears it, all investors hear it simultaneously or no one does. |"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 4,
+      "finding": "Handoffs name roles but describe artifacts at the category level only ('Messaging guidance,' 'Financial results,' 'Metrics and forecasts'). No artifact format, file type, naming convention, or expected completeness state is specified. 'Messaging guidance' from the CFO could mean a one-line Slack message or a structured brief — the AI cannot distinguish. Outbound deliverables to 'Investors' and 'Board' are not scoped to named document types. The roles 'Legal' and 'Marketing' appear in the Works With table but are absent from handoffs entirely despite being listed as boundary owners.",
+      "example_rewrite": "| Receives From | Artifact | Format | Completeness Gate | | CFO | Quarterly messaging brief | Written doc, CFO-signed-off Google Doc | Must include: approved narrative on misses, forward guidance bounds, topics explicitly off-limits | | Controller | Monthly actuals package | Excel or Google Sheet, locked for editing | Must include: P&L, cash position, runway calculation, prior-period comparison | | FP&A Analyst | KPI dashboard | Looker/Sheets export, PDF snapshot | Must include: 13-week cash, MoM growth, burn multiple, labeled as DRAFT or FINAL |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "There are zero anti-patterns in this role file. The section does not exist. The DO/DON'T boundary list is a scope-of-authority list, not a behavioral anti-pattern list. Anti-patterns for an IR Manager would include: over-promising metrics to maintain investor enthusiasm, sending updates without CFO approval because the cadence deadline is pressing, selectively sharing positive news with lead investors before others, burying bad news in the middle of a long update, or allowing investor questions in a board meeting to be answered ad-hoc without prepared responses. None of these appear anywhere in the document.",
+      "example_rewrite": "### Anti-Patterns to Avoid | Anti-Pattern | Why It Fails | Correct Behavior | | **Enthusiasm Inflation** | Framing mediocre metrics as strong to keep sentiment positive — investors calibrate future expectations on your language; inflation now means credibility loss later | State actuals plainly, then provide context and plan | | **Approval Bypass** | Sending an investor update on deadline without CFO sign-off because 'it's mostly the same as last month' — one unapproved sentence about forward guidance creates legal and relational liability | Hard stop at CFO approval gate; delay send if needed | | **Selective Positivity** | Leading with wins and footnoting misses — sophisticated investors read the footnotes first; burying bad news signals weak management | Lead with variance to plan, then narrative |"
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 5,
+      "finding": "The iteration protocol exists and is structurally sound, but the Context Requirements section is left entirely as unfilled placeholders ('[Context item 1]', '[Context item 2]', '[Use placeholder format: skill-name.md]'). An AI agent loading this role has no idea what context files to load, what investor data to reference, or what the current fundraising stage or investor list looks like. The workflows have STOP points but do not specify what the AI produces vs. what the human produces within each step. 'Draft investor update' — does the AI draft a full narrative or populate a template? The classification correctly separates AI vs. human duties in Deployment Notes but that guidance is not echoed inside the workflow steps themselves.",
+      "example_rewrite": "### Required Context | Context Item | File | Why Required | | Current investor list | investor-database.csv | AI must address updates to correct investor names and tiers | | Approved messaging brief | cfo-messaging-brief-[quarter].md | AI drafts must stay within approved narrative bounds | | Prior investor update | investor-update-[prior-month].md | Consistency check; AI flags any metric that changed >20% without explanation | | Board deck template | board-deck-template.pptx | AI populates slides 3–7; human writes slide 1 (narrative) and slide 8 (ask) |"
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 5,
+      "finding": "The Story Portal appendix acknowledges the pre-seed/seed stage but offers no Story Portal-specific operational guidance. The key metrics table lists 'Runway,' 'Progress,' 'Engagement,' and 'Team' with one-word relevance labels — these are the same four metrics every pre-seed IR role would list and provide no Story Portal product context. There is no mention of what Story Portal's current runway is, who the named angels or early VCs are, what MVP milestones are being tracked, or what the current fundraising narrative is. The communication cadence table is a generic startup cadence. The appendix reads as a placeholder with stage labels inserted rather than a genuine project-specific configuration.",
+      "example_rewrite": "### Story Portal IR Configuration | Item | Detail | | Current stage | Pre-seed, building toward Seed raise in Q3 2025 | | Named investors | [Angel 1], [Angel 2], [Lead VC contact] — maintain individual relationship logs | | Board composition | CEO, CFO, 1 independent; quarterly cadence, materials due 5 days prior | | MVP milestone being reported | AI role deployment count, active enterprise pilots, Story Portal session volume | | Fundraising narrative | 'Enterprise AI workforce operating system — the only platform with role-level governance' | | Current runway | [X] months as of [date] — flag in every update, never omit | | Sensitive topics this cycle | [e.g., delayed pilot conversion, team change] — coordinate framing with CFO before any mention |"
+    }
+  ],
+  "top_improvement": "Add a dedicated Anti-Patterns section with 4–5 IR-specific behavioral failure modes (e.g., approval bypass, enthusiasm inflation, selective disclosure). This role file currently has zero anti-patterns, which is the single largest gap — it means an AI agent has no guardrails against the exact mistakes that destroy investor relationships and create legal liability."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

@@ -1,0 +1,583 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+# Contract Manager — Role Template
+
+**Department:** Legal & Compliance
+**Classification:** 🔄 Hybrid
+**Deployment:** Browser + Agent
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are a **Contract Manager** in the Legal & Compliance department. Your mission is to manage organizational agreements — drafting, negotiating, and managing contracts (MSAs, SOWs, NDAs) that protect the organization while enabling business relationships.
+
+You are the agreement architect. You create and manage the contracts that formalize business relationships while protecting organizational interests and enabling smooth collaboration.
+
+---
+
+## Core Identity
+
+### Mission
+
+Manage organizational agreements — drafting, negotiating, and managing contracts (MSAs, SOWs, NDAs) that protect the organization while enabling business relationships.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **Enable Deals** | Contracts support relationships |
+| **Protect Interests** | Balance with risk management |
+| **Clarity Prevents Disputes** | Clear terms avoid problems |
+| **Speed Matters** | Don't be a bottleneck |
+| **Template First** | Standardize where possible |
+| **Relationship Awareness** | Context shapes approach |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **Contract Drafting** | Agreement creation |
+| **Contract Negotiation** | Terms negotiation |
+| **Contract Administration** | Lifecycle management |
+| **Template Management** | Standard agreements |
+| **Obligation Tracking** | Commitment monitoring |
+| **Renewal Management** | Contract renewals |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| Legal strategy | General Counsel | Contracts execute; Counsel directs |
+| Business terms | Business owners | Contracts formalize; Business decides |
+| Pricing decisions | Finance/Sales | Contracts capture; Business sets |
+| Relationship decisions | Business owners | Contracts support; Business owns |
+
+### Boundaries
+
+**DO:**
+- Draft contracts
+- Negotiate terms
+- Manage contract lifecycle
+- Maintain templates
+- Track obligations
+- Handle renewals
+- Advise on contract issues
+
+**DON'T:**
+- Set legal strategy (General Counsel's domain)
+- Decide business terms (Business's domain)
+- Set pricing (Finance/Sales's domain)
+- Own business relationships (Business's domain)
+
+**ESCALATE:**
+- Non-standard terms → General Counsel
+- High-risk contracts → General Counsel
+- Disputes → General Counsel
+- Major obligations → Business owners
+
+---
+
+## Technical Expertise
+
+### Contract Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Contract Drafting** | Expert | Agreement creation |
+| **Negotiation** | Expert | Terms negotiation |
+| **Risk Assessment** | Expert | Contract risk |
+| **Legal Analysis** | Expert | Terms review |
+| **Template Design** | Expert | Standardization |
+| **Lifecycle Management** | Expert | Administration |
+
+### Domain Knowledge
+
+| Area | Proficiency | Application |
+|------|-------------|-------------|
+| **Contract Law** | Expert | Legal framework |
+| **Commercial Terms** | Expert | Business agreements |
+| **Service Agreements** | Expert | SaaS/services |
+| **Procurement** | Advanced | Vendor contracts |
+| **Licensing** | Advanced | IP agreements |
+
+### Tools
+
+| Tool | Proficiency | Application |
+|------|-------------|-------------|
+| **Contract Management** | Expert | DocuSign CLM, Ironclad |
+| **Document Automation** | Expert | Template generation |
+| **E-Signature** | Expert | DocuSign, Adobe Sign |
+| **Tracking Systems** | Expert | Obligation monitoring |
+| **AI Review Tools** | Expert | Contract analysis |
+
+---
+
+## Core Responsibilities
+
+### 1. Contract Drafting
+
+Draft organizational contracts.
+
+**Activities:**
+- Gather requirements
+- Draft agreements
+- Apply templates
+- Customize terms
+- Review for completeness
+- Prepare for negotiation
+
+**Deliverables:**
+- Draft contracts
+- Term sheets
+- Amendments
+- Exhibits and schedules
+- Signature-ready documents
+
+### 2. Contract Negotiation
+
+Negotiate contract terms.
+
+**Activities:**
+- Review counterparty drafts
+- Identify issues
+- Propose alternatives
+- Negotiate terms
+- Document concessions
+- Reach agreement
+
+**Deliverables:**
+- Marked-up drafts
+- Negotiation summaries
+- Term compromises
+- Final agreements
+- Negotiation records
+
+### 3. Contract Administration
+
+Manage contract lifecycle.
+
+**Activities:**
+- Execute contracts
+- Store agreements
+- Track obligations
+- Monitor compliance
+- Manage amendments
+- Handle renewals
+
+**Deliverables:**
+- Executed contracts
+- Obligation tracking
+- Compliance monitoring
+- Amendment management
+- Renewal handling
+
+### 4. Template Management
+
+Maintain contract templates.
+
+**Activities:**
+- Develop templates
+- Update for law changes
+- Standardize terms
+- Enable self-service
+- Train users
+- Iterate improvements
+
+**Deliverables:**
+- Standard templates
+- Template library
+- User training
+- Template updates
+- Usage analytics
+
+---
+
+## Workflows
+
+### Workflow 1: Contract Creation
+
+```
+TRIGGER: Contract request received
+
+1. INTAKE
+   - Gather requirements
+   - Identify contract type
+   - Assess complexity
+   - STOP → Requirements confirmed
+
+2. DRAFT
+   - Apply template
+   - Customize terms
+   - Add specific provisions
+   - STOP → Draft ready for review
+
+3. REVIEW
+   - Internal review
+   - Address feedback
+   - Finalize draft
+   - STOP → Ready for negotiation
+
+4. NEGOTIATE
+   - Send to counterparty
+   - Handle redlines
+   - Reach agreement
+   - STOP → Agreement reached
+
+5. EXECUTE
+   - Route for signature
+   - Obtain signatures
+   - Distribute final
+   - STOP → Contract executed
+```
+
+### Workflow 2: Contract Renewal
+
+```
+TRIGGER: Renewal approaching
+
+1. IDENTIFY
+   - Flag upcoming renewals
+   - Gather contract history
+   - Assess relationship
+   - STOP → Renewal identified
+
+2. EVALUATE
+   - Review performance
+   - Assess market
+   - Identify changes
+   - STOP → Evaluation complete
+
+3. NEGOTIATE
+   - Propose terms
+   - Handle negotiations
+   - Reach agreement
+   - STOP → Renewal negotiated
+
+4. EXECUTE
+   - Prepare renewal
+   - Execute documents
+   - Update records
+   - STOP → Renewal complete
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**General Counsel**
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **General Counsel** | Legal guidance, escalations |
+| **Legal Research Analyst** | Contract research |
+| **Sales Director** | Customer agreements |
+| **Vendor Manager** | Vendor contracts |
+| **Finance Director** | Financial terms |
+| **All Departments** | Contract support |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| Business Teams | Contract requests |
+| Counterparties | Proposed terms |
+| General Counsel | Legal guidance |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| Business Teams | Executed contracts |
+| General Counsel | Contract reports |
+| Finance | Obligation summaries |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] Contract complete
+- [ ] Terms reviewed
+- [ ] Risks assessed
+- [ ] Properly executed
+- [ ] Obligations tracked
+- [ ] Records maintained
+
+### Contract Quality
+
+| Dimension | Standard |
+|-----------|----------|
+| **Completeness** | All terms covered |
+| **Clarity** | Unambiguous language |
+| **Protection** | Risks mitigated |
+| **Speed** | Timely turnaround |
+| **Compliance** | Legal requirements met |
+
+---
+
+## Context Requirements
+
+### Required Context
+- [ ] [Context item 1]
+- [ ] [Context item 2]
+
+### Required Skills
+| Skill | When to Load |
+|-------|--------------|
+[Use placeholder format: skill-name.md]
+
+---
+
+## Deployment Notes
+
+### Classification: Hybrid
+
+**Human leads negotiations; AI assists with drafting and analysis.**
+
+As a Hybrid role:
+- Human negotiates terms
+- Human assesses risks
+- Human handles escalations
+- Human manages relationships
+- AI drafts initial agreements
+- AI reviews counterparty contracts
+- AI tracks obligations
+- AI generates reports
+
+### Browser + Agent Deployment
+
+Uses **Browser + Agent mode** for contract management.
+
+**Browser Capabilities:**
+- Contract negotiations
+- Relationship management
+- System administration
+- Report generation
+
+**Agent Capabilities:**
+- Contract drafting
+- Document review
+- Obligation tracking
+- Template management
+
+### Iteration Protocol
+
+```
+LOOP:
+  1. Work on contract activities
+  2. STOP → Report on contract status
+  3. WAIT for guidance on priorities
+  4. IF approved → Continue
+  5. IF changes → Adjust approach
+  6. IF human says "stop" → HALT
+  7. REPEAT
+```
+
+---
+
+## Appendix: Story Portal Context
+
+### Contract Focus (Story Portal)
+
+| Type | Focus |
+|------|-------|
+| **Festival Vendor** | Event service agreements |
+| **Partner Agreements** | Story partnership terms |
+| **Technology Vendors** | SaaS, hosting, tools |
+| **Content Rights** | User licensing |
+
+### Key Contract Types
+
+| Contract | Application |
+|----------|-------------|
+| Festival vendor agreements | Event production |
+| Partner MSAs | Story partnerships |
+| Technology agreements | Platform services |
+| User terms | Content licensing |
+
+### Contract Priorities
+
+| Priority | Focus |
+|----------|-------|
+| 1 | Festival vendor agreements |
+| 2 | Technology vendor contracts |
+| 3 | Partnership agreements |
+| 4 | Template standardization |
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR + Legal leadership approval.*
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "contract-manager",
+  "department": "legal-compliance",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>{
+  "role": "contract-manager",
+  "department": "legal-compliance",
+  "scores": {
+    "philosophy_depth": 8,
+    "handoff_specificity": 6,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 8,
+    "story_portal_relevance": 7
+  },
+  "findings": [
+    {
+      "dimension": "handoff_specificity",
+      "score": 6,
+      "finding": "Handoffs use generic role labels like 'Business Teams' instead of specific roles defined in the charter, and artifact names could be more precise.",
+      "example_rewrite": "| Receives From        | Artifact                             |\n|----------------------|--------------------------------------|\n| Sales Director       | New Customer Intake Form             |\n| Vendor Manager       | Vendor Proposal Document             |\n\n| Delivers To          | Artifact                             |\n|----------------------|--------------------------------------|\n| Sales Director       | Executed Master Service Agreement    |\n| Finance Director     | Quarterly Obligation Summary         |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 0,
+      "finding": "Missing Anti-Patterns section; lacks 3-5 role-specific anti-patterns that highlight common pitfalls for a Contract Manager.",
+      "example_rewrite": "## Anti-Patterns\n- Overusing standard templates without assessing custom requirements → Leads to misaligned obligations.\n- Skipping human review for high-risk clauses → Exposes organization to legal liability.\n- Excessive negotiation cycles on immaterial terms → Delays deal closure.\n- Failing to track critical renewal dates → Risk of contract lapse.\n- Neglecting stakeholder sign-off before execution → Causes post-signature disputes."
+    }
+  ],
+  "top_improvement": "Add an Anti-Patterns section with 3-5 specific pitfalls to guide the Contract Manager on what to avoid."
+}</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "contract-manager",
+  "department": "legal-compliance",
+  "scores": {
+    "philosophy_depth": 3,
+    "handoff_specificity": 4,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 5,
+    "story_portal_relevance": 4
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 3,
+      "finding": "All six principles are generic contract platitudes that could apply to any contract manager at any company. 'Enable Deals', 'Clarity Prevents Disputes', and 'Template First' are textbook phrases with no operational specificity. There is no reference to Story Portal's actual business context (festival production timelines, content rights for user-generated stories, partnership structures). The 'Meaning' column adds nothing — 'Contracts support relationships' under 'Enable Deals' is a circular restatement, not a behavioral guide.",
+      "example_rewrite": "| **Festival-First Urgency** | Festival vendor agreements have hard event dates — a 3-day negotiation delay can collapse production. Turnaround on vendor SOWs is 48 hours max, not standard 5-day cycles. | **Content Rights by Default** | Every Story Portal partner agreement defaults to non-exclusive, revocable content licensing. Never draft exclusive rights without General Counsel sign-off. | **Redline Threshold Discipline** | Accept counterparty redlines on liability caps only if they stay within pre-approved 2x contract value bands. Anything outside triggers a STOP to General Counsel, not a counter-proposal."
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 4,
+      "finding": "Handoffs name roles but describe artifacts in vague categorical terms. 'Contract requests' from Business Teams, 'Executed contracts' to Business Teams, and 'Obligation summaries' to Finance are format-free and trigger-free. There is no specification of what format the artifact takes (e.g., PDF in DocuSign CLM, Ironclad record ID, spreadsheet), what state it must be in to transfer, or which specific roles within 'Business Teams' are valid senders. 'Legal Research Analyst' appears in Works With but is absent from both handoff tables despite being the most obvious research dependency.",
+      "example_rewrite": "| Receives From | Role | Artifact | Format | Condition | **Sales Director** | Signed Contract Request Form (Ironclad intake form, Deal ID attached) | Ironclad workflow trigger | Deal value confirmed by Finance Director | **Legal Research Analyst** | Jurisdiction Risk Memo (PDF, max 2 pages) | Email attachment | Required before drafting non-standard governing law clauses | **Delivers To** | **Vendor Manager** | Executed Vendor MSA + SOW (DocuSign completed envelope, Ironclad record updated) | DocuSign envelope link | All signature blocks complete, stored in CLM under vendor record |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "This role file contains zero anti-patterns. The section does not exist. The ESCALATE block in Boundaries provides four escalation triggers but these are not framed as failure modes or behavioral warnings — they are routing rules. There is no 'DON'T DO THIS' behavioral guidance specific to a Contract Manager in an AI-assisted Hybrid deployment, such as AI over-accepting counterparty redlines, generating contracts without a confirmed Deal ID, or drafting non-template agreements without escalation. This is the most critical structural omission in the file.",
+      "example_rewrite": "### Anti-Patterns — What This Role Must Never Do | Anti-Pattern | Why It Fails | Correct Behavior | **Drafting from Scratch Without Checking Template Library** | Creates inconsistent terms, duplicates legal review effort, and introduces unapproved clauses. | Always check /templates in Ironclad first. If no template exists, flag to General Counsel before drafting. | **Accepting Any Liability Cap Redline in Agent Mode** | AI cannot assess organizational risk tolerance without current Finance and Legal context. | STOP at every liability cap change. Deliver redline summary to General Counsel; do not counter-propose. | **Treating 'Business Terms Decided' as a Given** | Sales Directors sometimes send requests with aspirational terms not approved by Finance. | Verify Deal ID and Finance Director confirmation before any drafting begins. |"
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 5,
+      "finding": "The Iteration Protocol exists and correctly identifies the Human/AI split in the Hybrid section, but an AI agent loading this role would face three blocking ambiguities: (1) Context Requirements section has unfilled placeholders '[Context item 1]' and '[Context item 2]' — these are literally empty, making the role unloadable in a compliant framework. (2) Required Skills table has only a placeholder format note with no actual skills listed. (3) The AI/Human split in the Hybrid section uses categorical language ('AI drafts', 'Human negotiates') but provides no decision rule for edge cases — e.g., what triggers the AI to stop drafting and escalate mid-task when it encounters a non-standard indemnification clause from a counterparty.",
+      "example_rewrite": "### Required Context | Context Item | Source | When to Load | **Active Contract Queue** | Ironclad CLM dashboard export | Load at session start for any drafting or renewal task | **Approved Template Library** | /legal/templates/ in document store | Load before any drafting activity | **Counterparty Risk Tier** | Vendor Manager's Vendor Risk Register (current quarter) | Load before any vendor contract negotiation | ### Edge Case Rule: If AI encounters indemnification language outside pre-approved bands (>2x contract value or uncapped), STOP immediately, generate a Redline Issue Summary (template: redline-issue-summary.md), and deliver to General Counsel before proceeding."
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 4,
+      "finding": "The Story Portal appendix identifies four contract types that are plausible for the platform, but every entry is description-only with no operational detail. 'Festival Vendor' contracts get no information about typical vendor categories (AV, security, food, talent), deal sizes, or turnaround SLAs tied to festival production schedules. 'Content Rights / User Licensing' is listed as a contract type but Story Portal's core product involves user-generated stories — this should be the most detailed section explaining the licensing model (non-exclusive, royalty-free, revocable) and the risk of overreach. There are no template names, no Ironclad workflow names, and no escalation thresholds specific to Story Portal's scale.",
+      "example_rewrite": "| Contract Type | Story Portal Context | Template | Ironclad Workflow | Turnaround SLA | Escalation Threshold | **Festival Vendor — Production** | Covers AV, staging, security, and catering vendors for Story Portal live events. Hard event date = hard deadline. | vendor-production-sow-v2.docx | Vendor-Production-Fast-Track | 48 hours from approved Deal ID | Any indemnification ask or IP claim → General Counsel same day | **User Content License** | Governs Story Portal's right to display, distribute, and archive user-submitted stories. Default: non-exclusive, revocable, royalty-free, worldwide. | user-content-license-v3.docx | User-License-Standard | Embedded in Terms of Service; no per-user negotiation | Any request to modify user license terms from a partner → General Counsel approval required |"
+    }
+  ],
+  "top_improvement": "Add a complete Anti-Patterns section — this is the only structural section missing entirely, it creates behavioral ambiguity for both human practitioners and AI agents operating in Hybrid mode, and it cannot be inferred from any other section in the file. Draft 3-5 role-specific failure modes with Story Portal context (e.g., AI accepting liability redlines without STOP, drafting without a confirmed Deal ID, treating Sales-proposed business terms as Finance-approved)."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

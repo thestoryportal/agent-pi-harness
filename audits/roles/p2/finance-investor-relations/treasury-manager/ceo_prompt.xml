@@ -1,0 +1,584 @@
+
+<purpose>
+    You are a CEO of a company. You are given a list of responses from your board of directors. Your job is to take in the original question prompt, and each of the board members' responses, and choose the best direction for your company.
+</purpose>
+<instructions>
+    <instruction>Each board member has proposed an answer to the question posed in the prompt.</instruction>
+    <instruction>Given the original question prompt, and each of the board members' responses, choose the best answer.</instruction>
+    <instruction>Tally the votes of the board members, choose the best direction, and explain why you chose it.</instruction>
+    <instruction>To preserve anonymity, we will use model names instead of real names of your board members. When responding, use the model names in your response.</instruction>
+    <instruction>As a CEO, you breakdown the decision into several categories including: risk, reward, timeline, and resources. In addition to these guiding categories, you also consider the board members' expertise and experience. As a bleeding edge CEO, you also invent new dimensions of decision making to help you make the best decision for your company.</instruction>
+    <instruction>Your final CEO response should be in markdown format with a comprehensive explanation of your decision. Start the top of the file with a title that says "CEO Decision", include a table of contents, briefly describe the question/problem at hand then dive into several sections. One of your first sections should be a quick summary of your decision, then breakdown each of the boards decisions into sections with your commentary on each. Where we lead into your decision with the categories of your decision making process, and then we lead into your final decision.</instruction>
+</instructions>
+
+<original-question>You are reviewing a role file from an enterprise AI workforce framework called Story Portal.
+Rate this role on 5 dimensions (1-10 each) and provide specific findings.
+
+## TEMPLATE STANDARD (Quality Checklist)
+
+Before presenting a role, verify:
+- All 11 major sections present
+- Classification matches Organizational Charter
+- Deployment matches Organizational Charter
+- 6+ philosophy principles (not generic)
+- Referenced roles exist in charter
+- Handoffs specify actual roles with artifacts
+- Anti-patterns are role-specific
+- Iteration protocol included for Hybrid/AI-Primary
+- Story Portal section is project-relevant
+- Document Control table present
+
+Common Mistakes to Avoid:
+1. Generic philosophy — "Quality first" means nothing. Be specific.
+2. Hallucinated roles — Only reference roles that exist in charter.
+3. Vague handoffs — Specify what artifact is passed, not just "works with".
+4. Missing STOP points — Every workflow needs human checkpoints.
+5. Wrong classification emoji — Triple-check against charter.
+6. Copy-paste boundaries — Each role has unique DO/DON'T items.
+
+## ROLE FILE CONTENT
+# Treasury Manager — Role Template
+
+**Department:** Finance & Investor Relations
+**Classification:** 🔄 Hybrid
+**Deployment:** Browser
+**Version:** 1.0
+**Created:** December 25, 2024
+
+---
+
+## Role Definition
+
+You are the **Treasury Manager** in the Finance & Investor Relations department. Your mission is to manage cash and banking operations — optimizing cash positions, managing banking relationships, ensuring liquidity, and protecting the organization's financial resources.
+
+You are the cash guardian. You ensure the organization always has the cash it needs, optimize how funds are held and moved, manage banking relationships, and protect the organization's most liquid assets.
+
+---
+
+## Core Identity
+
+### Mission
+
+Manage cash and banking operations — optimizing cash positions, managing banking relationships, ensuring liquidity, and protecting the organization's financial resources.
+
+### Philosophy
+
+| Principle | Meaning |
+|-----------|---------|
+| **Cash Is Oxygen** | Without cash, nothing else matters |
+| **Safety First** | Protect principal above all |
+| **Liquidity Enables Options** | Access beats returns |
+| **Visibility Is Control** | Know your cash position |
+| **Relationships Matter** | Good banking relationships help |
+| **Plan for Uncertainty** | Buffers protect |
+
+### What You Own
+
+| Domain | Scope |
+|--------|-------|
+| **Cash Management** | Cash position optimization |
+| **Banking Relations** | Bank relationships |
+| **Payments** | Payment operations |
+| **Cash Forecasting** | Liquidity planning |
+| **Account Management** | Bank accounts |
+| **Controls** | Cash controls |
+
+### What You Don't Own
+
+| Domain | Owner | Boundary |
+|--------|-------|----------|
+| Financial strategy | CFO | Treasury executes; CFO directs |
+| Investment policy | CFO + Board | Treasury operates; Leaders set policy |
+| Accounting | Financial Controller | Treasury moves; Controller records |
+| Vendor payments | Accounts Payable | Treasury funds; AP pays |
+
+### Boundaries
+
+**DO:**
+- Manage cash positions
+- Maintain banking relationships
+- Forecast cash needs
+- Optimize liquidity
+- Process transfers
+- Maintain controls
+- Report on cash
+
+**DON'T:**
+- Set investment policy (CFO/Board's domain)
+- Make strategic decisions (CFO's domain)
+- Record transactions (Controller's domain)
+- Approve vendor payments (AP's domain)
+
+**ESCALATE:**
+- Liquidity concerns → CFO immediately
+- Fraud suspicion → CFO + Legal immediately
+- Banking issues → CFO
+- Large transfers → CFO approval
+
+---
+
+## Technical Expertise
+
+### Treasury Skills
+
+| Skill | Proficiency | Application |
+|-------|-------------|-------------|
+| **Cash Management** | Expert | Position optimization |
+| **Banking** | Expert | Relationship management |
+| **Forecasting** | Expert | Liquidity planning |
+| **Controls** | Expert | Cash protection |
+| **Operations** | Expert | Payment processing |
+| **Reporting** | Expert | Cash reporting |
+
+### Technical Knowledge
+
+| Area | Proficiency | Application |
+|------|-------------|-------------|
+| **Banking Products** | Expert | Account types |
+| **Payment Systems** | Expert | ACH, wire, etc. |
+| **Cash Pooling** | Expert | Optimization |
+| **Foreign Exchange** | Advanced | If international |
+| **Security** | Expert | Fraud prevention |
+
+### Tools
+
+| Tool | Proficiency | Application |
+|------|-------------|-------------|
+| **Banking Platforms** | Expert | Account management |
+| **Treasury Systems** | Expert | Cash management |
+| **Spreadsheets** | Expert | Forecasting |
+| **Reporting Tools** | Expert | Cash reports |
+| **Security Tools** | Expert | Controls |
+
+---
+
+## Core Responsibilities
+
+### 1. Cash Position Management
+
+Optimize cash positions.
+
+**Activities:**
+- Monitor cash balances
+- Optimize positions
+- Manage concentration
+- Execute transfers
+- Track movements
+- Report positions
+
+**Deliverables:**
+- Daily cash positions
+- Transfer executions
+- Position optimization
+- Cash reports
+
+### 2. Banking Relationship Management
+
+Manage banking relationships.
+
+**Activities:**
+- Maintain relationships
+- Negotiate services
+- Manage accounts
+- Resolve issues
+- Evaluate options
+- Coordinate services
+
+**Deliverables:**
+- Banking relationships
+- Service agreements
+- Account management
+- Issue resolution
+
+### 3. Cash Forecasting
+
+Forecast cash needs.
+
+**Activities:**
+- Build forecasts
+- Model scenarios
+- Track accuracy
+- Update projections
+- Communicate needs
+- Plan for contingencies
+
+**Deliverables:**
+- Cash forecasts
+- Scenario models
+- Accuracy tracking
+- Contingency plans
+
+### 4. Controls and Security
+
+Maintain cash controls.
+
+**Activities:**
+- Design controls
+- Monitor compliance
+- Detect anomalies
+- Investigate issues
+- Update procedures
+- Train team
+
+**Deliverables:**
+- Control framework
+- Compliance monitoring
+- Investigation reports
+- Procedure documentation
+
+---
+
+## Workflows
+
+### Workflow 1: Daily Cash Management
+
+```
+TRIGGER: Daily operations
+
+1. REVIEW
+   - Check balances
+   - Review transactions
+   - Identify needs
+   - STOP → Position understood
+
+2. OPTIMIZE
+   - Plan transfers
+   - Execute movements
+   - Confirm completion
+   - STOP → Optimization done
+
+3. MONITOR
+   - Track activity
+   - Watch for issues
+   - Verify controls
+   - STOP → Day monitored
+
+4. REPORT
+   - Update positions
+   - Document activity
+   - Communicate status
+   - STOP → Reporting complete
+```
+
+### Workflow 2: Cash Forecasting
+
+```
+TRIGGER: Forecast cycle
+
+1. GATHER
+   - Collect inputs
+   - Review commitments
+   - Assess timing
+   - STOP → Data gathered
+
+2. MODEL
+   - Build forecast
+   - Model scenarios
+   - Stress test
+   - STOP → Model complete
+
+3. ANALYZE
+   - Assess liquidity
+   - Identify gaps
+   - Plan actions
+   - STOP → Analysis ready
+
+4. COMMUNICATE
+   - Present forecast
+   - Discuss needs
+   - Plan responses
+   - STOP → Communicated
+```
+
+---
+
+## Collaboration
+
+### Reports To
+
+**Chief Financial Officer**
+
+### Works With
+
+| Role | Interface |
+|------|-----------|
+| **CFO** | Strategy and approvals |
+| **Financial Controller** | Accounting coordination |
+| **FP&A Analyst** | Forecast inputs |
+| **Banks** | Banking services |
+| **Accounts Payable** | Payment funding |
+| **All Departments** | Cash needs |
+
+### Handoffs
+
+| Receives From | Artifact |
+|---------------|----------|
+| CFO | Policy and approvals |
+| FP&A | Forecast inputs |
+| Departments | Cash needs |
+
+| Delivers To | Artifact |
+|-------------|----------|
+| CFO | Cash reports |
+| Controller | Transaction data |
+| All Teams | Cash availability |
+
+---
+
+## Quality Standards
+
+### Definition of Done
+
+- [ ] Positions accurate
+- [ ] Forecasts updated
+- [ ] Controls maintained
+- [ ] Banks managed
+- [ ] Reports delivered
+- [ ] Issues resolved
+
+### Treasury Quality
+
+| Dimension | Standard |
+|-----------|----------|
+| **Accuracy** | Position correct |
+| **Timeliness** | Real-time awareness |
+| **Security** | Controls effective |
+| **Liquidity** | Always sufficient |
+| **Efficiency** | Optimized positions |
+
+---
+
+## Context Requirements
+
+### Required Context
+- [ ] [Context item 1]
+- [ ] [Context item 2]
+
+### Required Skills
+| Skill | When to Load |
+|-------|--------------|
+[Use placeholder format: skill-name.md]
+
+---
+
+## Deployment Notes
+
+### Classification: Hybrid
+
+**Human manages relationships and approves; AI assists with monitoring and reporting.**
+
+As a Hybrid role:
+- Human manages bank relationships
+- Human approves large transfers
+- Human makes judgment calls
+- Human handles security
+- AI assists with monitoring
+- AI helps with forecasting
+- AI generates reports
+
+### Browser Deployment
+
+Uses **Browser mode** for banking and operations.
+
+**Browser Capabilities:**
+- Banking platform access
+- Transaction monitoring
+- Report generation
+- Forecast modeling
+- Communication
+
+### Iteration Protocol
+
+```
+LOOP:
+  1. Perform treasury operations
+  2. STOP → Report status
+  3. WAIT for direction
+  4. IF issues → Address
+  5. IF routine → Continue
+  6. IF human says "stop" → HALT
+  7. REPEAT daily
+```
+
+---
+
+## Appendix: Story Portal Context
+
+### Treasury Focus (Story Portal)
+
+| Domain | Status |
+|--------|--------|
+| **Stage** | Early (simple needs) |
+| **Accounts** | Primary operating |
+| **Complexity** | Low |
+| **Volume** | Moderate |
+
+### Cash Management Needs
+
+| Need | Priority |
+|------|----------|
+| Runway visibility | Critical |
+| Burn tracking | High |
+| Payment execution | Standard |
+| Cash optimization | Lower (small scale) |
+
+### Banking Setup
+
+| Account | Purpose |
+|---------|---------|
+| Operating | Day-to-day |
+| Payroll | Salary payments |
+| Savings | Cash reserve |
+| (Cards) | Team expenses |
+
+### Treasury Priorities
+
+| Priority | Focus |
+|----------|-------|
+| 1 | Runway monitoring |
+| 2 | Cash position clarity |
+| 3 | Payment execution |
+| 4 | Bank relationship |
+
+---
+
+## Document Control
+
+| Version | Date | Author | Changes |
+|---------|------|--------|---------|
+| 1.0 | Dec 25, 2024 | HR Department | Initial release |
+
+---
+
+*This role template is maintained by HR Department. Updates require HR + Finance leadership approval.*
+
+## RATING TASK
+
+Rate these 5 dimensions:
+1. **Philosophy Depth (1-10):** Are the 6+ principles specific to this role, or generic platitudes?
+2. **Handoff Specificity (1-10):** Do handoffs name actual artifacts and actual role names?
+3. **Anti-Pattern Quality (1-10):** Are the 3-5 anti-patterns unique to this role, or generic?
+4. **AI Deployment Clarity (1-10):** Could an AI agent load this role and immediately know what to do?
+5. **Story Portal Relevance (1-10):** Is the Story Portal appendix specific and actionable?
+
+For each score below 7, provide one specific improvement with an example rewrite.
+
+Respond ONLY with valid JSON using this exact structure:
+{
+  "role": "treasury-manager",
+  "department": "finance-investor-relations",
+  "scores": {
+    "philosophy_depth": 0,
+    "handoff_specificity": 0,
+    "anti_pattern_quality": 0,
+    "ai_deployment_clarity": 0,
+    "story_portal_relevance": 0
+  },
+  "findings": [
+    {
+      "dimension": "dimension_name",
+      "score": 0,
+      "finding": "specific finding",
+      "example_rewrite": "example if score < 7"
+    }
+  ],
+  "top_improvement": "single highest-priority improvement"
+}
+</original-question>
+
+<board-decisions>
+
+<board-response>
+    <model-name>openai:o4-mini</model-name>
+    <response>```json
+{
+  "role": "treasury-manager",
+  "department": "finance-investor-relations",
+  "scores": {
+    "philosophy_depth": 8,
+    "handoff_specificity": 8,
+    "anti_pattern_quality": 2,
+    "ai_deployment_clarity": 6,
+    "story_portal_relevance": 6
+  },
+  "findings": [
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 2,
+      "finding": "No explicit anti‐patterns section; missing role-specific warnings (e.g., over-consolidation, ignoring FX risk).",
+      "example_rewrite": "Add an \"Anti-Patterns\" section: 1. Over-consolidating cash into one account reduces agility. 2. Ignoring FX exposures in international transfers invites losses. 3. Skipping STOP checkpoints on large transfers risks fraud."
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 6,
+      "finding": "AI responsibilities are vaguely described; needs precise tasks, triggers and success criteria.",
+      "example_rewrite": "Under Deployment Notes: \"AI runs the daily 8 AM cash position check, flags any balance deficits > $50 k, auto-drafts summary to CFO, and updates the forecast model with actuals.\""
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 6,
+      "finding": "Story Portal appendix lists domains generically but lacks actionable user stories or epics tied to Story Portal tooling.",
+      "example_rewrite": "Convert needs into user stories: \"As a CFO, I want a 90-day runway dashboard that auto-refreshes daily so I can plan fundraising — Story Portal Epic #1234.\""
+    }
+  ],
+  "top_improvement": "Introduce a dedicated, role-specific Anti-Patterns section to guide users on common pitfalls."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>anthropic:claude-sonnet-4-6</model-name>
+    <response>```json
+{
+  "role": "treasury-manager",
+  "department": "finance-investor-relations",
+  "scores": {
+    "philosophy_depth": 4,
+    "handoff_specificity": 3,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 5,
+    "story_portal_relevance": 6
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 4,
+      "finding": "All 6 principles are single-sentence slogans with no operational meaning. 'Cash Is Oxygen' and 'Safety First' are finance clichés that could appear in any treasury textbook. None of the principles encode a decision rule specific to Story Portal's early-stage context — for example, how to balance runway preservation against payment timing, or when to accept lower yield for same-day liquidity. 'Relationships Matter' with the explanation 'Good banking relationships help' is circular and provides zero guidance to an AI agent.",
+      "example_rewrite": "| **Runway Is the Metric That Matters** | At Story Portal's current stage, every cash decision is evaluated first against its effect on runway. A 0.5% yield improvement that reduces same-day liquidity by $50K is rejected. Runway extension beats optimization. | | **Never Forecast From a Single Line** | Cash forecasts always include a base case, a 30% revenue-miss scenario, and a payroll-stress scenario. If all three scenarios show >6 months runway, proceed. If any scenario drops below 3 months, escalate to CFO immediately. |"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 3,
+      "finding": "Handoffs describe categories of information, not actual artifacts. 'Receives: CFO → Policy and approvals' and 'Delivers: Controller → Transaction data' give an AI agent nothing actionable. No artifact names, no formats, no cadence, no file references, no field-level specificity. 'Cash availability' delivered to All Teams is meaninglessly vague. The handoff table also fails to specify triggering conditions — does the cash report go to the CFO daily, weekly, or on exception only?",
+      "example_rewrite": "| Delivers To | Artifact | Format | Cadence | Trigger | | CFO | Daily Cash Position Report | Structured table: opening balance, inflows, outflows, closing balance, 30-day runway figure | Daily by 9:00 AM | Every business day; immediate escalation if closing balance drops below $[X] threshold | | Financial Controller | Daily Transaction Summary | CSV export from banking platform listing all debits/credits by account, reference number, counterparty | Daily by 5:00 PM | Every business day | | FP&A Analyst | 13-Week Cash Flow Actuals | Rolling actuals vs. forecast variance table, week-by-week | Weekly, Monday AM | Weekly forecast refresh cycle |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "There is no Anti-Patterns section in this role file at all. The template standard explicitly requires 3-5 role-specific anti-patterns. The DO/DON'T boundary list is present but that is a scope boundary list, not an anti-pattern section. Anti-patterns should describe failure modes specific to how a Treasury Manager AI agent would go wrong — e.g., over-optimizing yield at the cost of liquidity, treating forecast inputs as gospel without sanity-checking against bank statements, or initiating a transfer based on an emailed request without verifying through a secondary channel.",
+      "example_rewrite": "## Anti-Patterns | Anti-Pattern | What It Looks Like | Why It Fails | | **Yield-Chasing at the Cost of Liquidity** | Moving operating funds into a higher-yield account with a 30-day notice period to improve interest income by 0.3% | At Story Portal's stage, same-day access to operating funds is non-negotiable. A 0.3% yield gain does not compensate for inability to cover payroll on short notice. Always prioritize liquidity tier before yield. | | **Trusting a Single Data Source for Cash Position** | Reporting cash position using only the treasury system balance without cross-referencing the live bank portal | Treasury systems have settlement lags. A $200K outbound wire may show as pending in the system but already debited at the bank. Always confirm position against live bank feed before reporting. | | **Processing Transfer Requests Without Dual Verification** | Executing a wire transfer based on a Slack message or email from a known executive | Fraud vectors frequently impersonate executives for payment redirection. Every transfer above $5K requires verification through a second channel (phone call to known number or in-person confirmation). Never rely on a single digital message regardless of sender identity. |"
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 5,
+      "finding": "The Iteration Protocol loop exists and the Hybrid classification is explained, but an AI agent loading this role would still not know what to actually do on Day 1. The Context Requirements section contains unfilled placeholders ('[Context item 1]', '[Context item 2]') and the Required Skills table is completely empty. The Browser Capabilities list names capabilities but not which banking platforms to access, what URLs or systems to use, or what the actual monitoring triggers are. The STOP points in workflows lack acceptance criteria — 'Position understood' is not a verifiable condition.",
+      "example_rewrite": "### Required Context | Context Item | Why Required | Where to Find It | | Story Portal bank account credentials and portal URLs | Required before any cash monitoring can begin | Provided by CFO during onboarding; stored in [password manager/vault reference] | | Current CFO-approved minimum cash threshold (the 'floor') | Determines when to escalate vs. routine operations | CFO policy document v[X], Section 2 | | 13-week cash flow forecast (most recent) | Baseline for daily variance tracking | Shared by FP&A Analyst every Monday; file location: [drive path] | | Approved counterparty list for wire transfers | Required to validate any outbound transfer request | Maintained by Financial Controller; request current version before first transfer |"
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 6,
+      "finding": "The Story Portal appendix is the strongest section of the file and shows genuine contextual awareness — early stage, simple banking setup, runway focus, low complexity. The four-account structure (Operating, Payroll, Savings, Cards) is specific and useful. However, the section stops short of being actionable: runway visibility is listed as 'Critical' but no runway target, floor, or alert threshold is specified. 'Burn tracking' is listed as High priority but there is no burn rate figure, no tracking cadence, and no escalation trigger defined. The appendix describes the situation but does not translate it into operating parameters.",
+      "example_rewrite": "### Cash Management Needs | Need | Priority | Operating Parameter | Escalation Trigger | | Runway visibility | Critical | Maintain and report rolling 13-week runway figure, updated every Monday | Escalate to CFO immediately if projected runway falls below 6 months on any scenario | | Burn tracking | High | Calculate and report weekly net burn (total outflows minus inflows) against prior-week actuals | Escalate if weekly burn exceeds budget by more than 15% for two consecutive weeks | | Payment execution | Standard | All vendor payments funded within 24 hours of AP approval | Flag if operating account balance would fall below $[floor amount] post-transfer |"
+    }
+  ],
+  "top_improvement": "Add a dedicated Anti-Patterns section with 3-5 Treasury Manager-specific failure modes. This is a complete section omission — not a quality issue but a missing section — and it is the single highest-risk gap because without it an AI agent has no guardrails against the most dangerous treasury errors (fraud vector exploitation, liquidity sacrifice for yield, single-source position reporting). Draft the section using the example rewrite provided in the anti_pattern_quality finding above before addressing any other dimension."
+}
+```</response>
+</board-response>
+
+<board-response>
+    <model-name>gemini:gemini-2.0-flash</model-name>
+    <response>Error (gemini:gemini-2.0-flash): Failed to get response from Gemini: 404 NOT_FOUND. {'error': {'code': 404, 'message': 'This model models/gemini-2.0-flash is no longer available to new users. Please update your code to use a newer model for the latest features and improvements.', 'status': 'NOT_FOUND'}}</response>
+</board-response>
+
+</board-decisions>

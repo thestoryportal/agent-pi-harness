@@ -1,0 +1,46 @@
+```json
+{
+  "role": "deal-desk-analyst",
+  "department": "sales",
+  "scores": {
+    "philosophy_depth": 3,
+    "handoff_specificity": 4,
+    "anti_pattern_quality": 1,
+    "ai_deployment_clarity": 5,
+    "story_portal_relevance": 4
+  },
+  "findings": [
+    {
+      "dimension": "philosophy_depth",
+      "score": 3,
+      "finding": "All 6 principles are generic business platitudes that could appear in any sales, finance, or operations role. 'Enable Speed', 'Data-Driven', and 'Compliance First' appear verbatim in dozens of role templates across industries. None of the principles encode Deal Desk-specific trade-off logic — for example, how to balance discount pressure against margin floors, or when mission alignment justifies below-threshold pricing in a festival/sponsorship context.",
+      "example_rewrite": "| **Discount Discipline Over Deal Velocity** | A fast approval on a bad discount is worse than a slow approval on a protected margin. Never route a deal below 40% gross margin threshold without a written business case from the AE, regardless of close-date pressure. | | **Precedent Awareness** | Every exception sets a pricing precedent. Before approving a non-standard discount, check the last 90 days of deals in the same segment — a 10% one-time carve-out becomes the new anchor in the next negotiation. | | **Structure Before Terms** | Fix the deal structure (multi-year, bundled SKUs, usage tiers) before negotiating price. A well-structured deal at list price beats a discounted single-year deal every time for LTV. |"
+    },
+    {
+      "dimension": "handoff_specificity",
+      "score": 4,
+      "finding": "Handoff artifacts are named at a category level only ('Deal requests', 'Pricing guidelines', 'Approved pricing') with no specification of format, system of record, required fields, or completion criteria. 'Deal requests' could mean a Slack message or a fully populated CPQ quote — the AI agent cannot distinguish. Additionally, 'Sales Ops' appears as a delivery target in the handoff table but is not listed as a collaborator in the Works With section, creating an inconsistency. No handoff specifies what a STOP point looks like in artifact terms.",
+      "example_rewrite": "| Receives From | Artifact | Format | Required Fields |\n|---|---|---|---|\n| Account Executive | Deal Request | CPQ Quote Draft (Salesforce Opportunity Stage = 'Proposal') | Account name, ARR, requested discount %, close date, competitive flag |\n| Finance | Pricing Guidelines | Discount Authority Matrix PDF (quarterly release) | Tier thresholds, margin floors by product line, approval authority by deal size |\n\n| Delivers To | Artifact | Format | Completion Signal |\n|---|---|---|---|\n| Account Executive | Approved Pricing Summary | CPQ Quote (status = 'Deal Desk Approved') + Slack notification | All discount fields populated, margin % visible, approval tier logged |\n| Finance | Deal Data Export | Salesforce report (weekly, Friday 5pm) | Closed-won deals with final ARR, discount %, and deal type |"
+    },
+    {
+      "dimension": "anti_pattern_quality",
+      "score": 1,
+      "finding": "The role file contains NO dedicated Anti-Patterns section at all — this is a complete omission of a required template section. The DO/DON'T boundary list in 'Boundaries' is the closest proxy, but it lists domain ownership rules ('Don't negotiate deals') rather than behavioral failure modes. There are zero role-specific anti-patterns such as approval-chain bypassing, retroactive deal restructuring, precedent-setting exceptions without documentation, or shadow discounting via contract terms.",
+      "example_rewrite": "## Anti-Patterns\n\n| Anti-Pattern | Why It Fails | Correct Behavior |\n|---|---|---|\n| **Rubber-Stamp Approvals** | Routing deals through approval tiers without flagging margin risk because 'the AE needs it today' destroys pricing integrity and teaches reps to compress timelines to bypass scrutiny. | Flag every deal below 42% GM regardless of close pressure. Document the flag. Let the approver decide — not the deal desk. |\n| **Exception Creep** | Approving a one-time structural exception (e.g., splitting annual contract into quarterly payments) without tagging it as an exception in the CRM means it silently becomes standard. | Every non-standard term must be tagged 'Exception' in Salesforce with a business justification field completed before routing. |\n| **Pricing by Relationship** | Offering better terms to strategic accounts because they 'feel important' without data backing creates a two-tier system Legal and Finance cannot defend. | All pricing decisions reference the Discount Authority Matrix. Relationship value is documented as a business case, not assumed. |\n| **Analysis Paralysis on Time-Sensitive Deals** | Running exhaustive scenario modeling on a $15K deal with a same-day deadline misallocates effort and loses the deal. | Deals under $25K ARR use the standard fast-track template (15-min review). Reserve full analysis for deals over $100K or with non-standard terms. |"
+    },
+    {
+      "dimension": "ai_deployment_clarity",
+      "score": 5,
+      "finding": "The Iteration Protocol exists but is skeletal — it does not define what constitutes an 'exception' that triggers a STOP, what threshold values the AI should apply autonomously vs. escalate, or what the AI should output at each loop step. The Agent Capabilities table lists capabilities without decision logic (e.g., 'Policy checking' — but what policy, and what does a pass/fail look like?). An AI agent loading this role cannot determine: at what discount percentage to auto-approve vs. STOP, what format to use for the analysis output, or how to behave when a deal spans multiple deal types (e.g., festival partnership + technology integration).",
+      "example_rewrite": "### Iteration Protocol\n\n```\nLOOP:\n  1. RECEIVE deal request\n     - Confirm CPQ Quote is in 'Submitted for Deal Desk' stage\n     - IF missing required fields → STOP, return to AE with field checklist\n\n  2. ANALYZE pricing\n     - Calculate gross margin % using [Product Cost Table v2]\n     - Compare requested discount to Discount Authority Matrix tier\n     - IF discount ≤ Tier 1 threshold AND GM ≥ 42% → AUTO-APPROVE, proceed to step 5\n     - IF discount > Tier 1 OR GM < 42% → proceed to step 3\n\n  3. GENERATE recommendation memo\n     - Output: Deal Desk Analysis (standard template)\n     - Include: requested vs. recommended discount, GM at each scenario, precedent flag (Y/N)\n\n  4. STOP → Route to human approver\n     - Tier 2 deals → Sales Director\n     - Tier 3 / exceptions → CRO\n     - Attach analysis memo to Salesforce approval record\n\n  5. CAPTURE decision\n     - Log approved terms to CRM\n     - Notify AE via Slack with approved CPQ link\n     - IF rejected → return to step 3 with revision notes\n\n  6. REPEAT on next queued deal\n```"
+    },
+    {
+      "dimension": "story_portal_relevance",
+      "score": 4,
+      "finding": "The Story Portal appendix names the correct deal categories (Festival Partnerships, Sponsorships, Technology Partners, Grants) but provides no actionable decision rules, dollar thresholds, or approval paths specific to Story Portal's business model. 'Mission alignment → Flexible for aligned partners' is not a policy — it is a sentiment. The appendix does not address Story Portal-specific constraints such as grant compliance requirements that override standard discount logic, or how festival partnership pricing interacts with sponsorship tiers. Deal Priority 1 and 2 are listed without defining what 'structure' or 'optimization' means in these contexts.",
+      "example_rewrite": "### Story Portal Deal Framework\n\n| Deal Type | Standard Terms | Mission Discount Authority | Approval Path | Compliance Flag |\n|---|---|---|---|---|\n| Festival Partnership | Annual license, value-based pricing anchored to attendance tier | Up to 25% below list for Tier 1 cultural festivals (501c3 verified) | Sales Director | Require impact metrics commitment in contract |\n| Sponsorship | 12-month minimum, activation deliverables defined | No discounting — structure value-adds (content, placement) instead | Deal Desk autonomous up to $50K | Activation deliverables must be in SOW before approval |\n| Technology Partner | Co-sell or reseller margin structure | Standard partner program tiers apply — no ad hoc discounts | Standard fast-track | Partner agreement must be countersigned before deal desk reviews |\n| Grant-Funded Deals | Match grant period (often non-standard) | Pricing must comply with grant funder terms — override standard matrix | STOP → Finance + Legal review required | Grant compliance documentation attached to every deal |"
+    }
+  ],
+  "top_improvement": "Add a dedicated Anti-Patterns section with 4 Deal Desk-specific failure modes. This is a complete section omission that leaves the AI agent with no behavioral guardrails — it cannot distinguish between a legitimate fast-track approval and a rubber-stamp bypass of margin controls. Without anti-patterns, the role's compliance and margin-protection mission cannot be operationalized by an AI agent."
+}
+```
