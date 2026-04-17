@@ -1178,6 +1178,7 @@ The `feedback_disler_authoritative.md` rule says "Tier 1 full-clones are byte-le
 | 28 | SP16 voice-loop upstream runtime security posture — 6 Tier 1 byte-identical findings (S-01/S-03/S-05/S-06/S-08/S-09 from /harness-review). Documented, not patched. | SP16 r1 post-review | 2026-04-14 | active | Every upstream change; re-run /harness-review |
 | 29 | SP15 E2B sandbox apps upstream runtime security posture — 9 findings (S-01..S-09). **Scope reduced 2026-04-15 via Exception 30** — 7 findings RESOLVED by deletion; only S-04 (cc_in_sandbox + sandbox_fundamentals/09) and S-06 (sandbox_mcp) remain active and dormant. | SP15 r1 post-review → SP15 r2 | 2026-04-15 | active (scope reduced) | Every upstream change; re-run /harness-review |
 | 30 | SP15 custom Phase 2 audit workflow deprecation — obox subtree deleted (`apps/sandbox_workflows/`, `apps/sandbox_agent_working_dir/`, `.claude/commands/prime_obox.md`). Breaks byte-identical parity for the obox sub-scope. Resolves 7 of 9 Exception 29 findings. | SP15 r2 | 2026-04-15 | active (permanent) | None — structural |
+| 31 | `apps/listen/main.py` localhost bind hardening — `0.0.0.0` → `127.0.0.1` per CSO security review 2026-04-17. One-line deviation from SP8 byte-identical upstream. Eliminates LAN/remote RCE surface on the unauthenticated listen server. | SP8 r1 post-audit | 2026-04-17 | active (permanent) | None — security hardening |
 
 ## How to close an exception
 
@@ -1762,3 +1763,33 @@ The following files were also deleted 2026-04-15 as part of the custom Phase 2 w
 - (This exception) no further action — removal is structural
 - (SP15 r2 downstream) when reviewing the 2 remaining Exception 29 findings (S-04, S-06), note that the attack surface is now limited to `apps/cc_in_sandbox/`, `apps/sandbox_fundamentals/09_claude_code_agent.py`, and `apps/sandbox_mcp/server.py`
 - (Cross-SP) if a future round re-imports `apps/sandbox_workflows/` or similar, check this exception first — reinstatement requires explicit user authorization
+
+---
+
+## Exception 31 — `apps/listen/main.py` localhost bind hardening
+
+**Path(s):**
+- `apps/listen/main.py:123` — `uvicorn.run(app, host=...)` parameter
+
+**SP audit round:** SP8 r1 post-audit security hardening (2026-04-17)
+
+**Decision date:** 2026-04-17
+
+**Status:** active (permanent — deliberate security hardening)
+
+**Rationale:**
+
+The CSO security review (2026-04-16) identified `apps/listen/main.py` binding to `0.0.0.0:7600` with no authentication middleware as a remote code execution surface. The listen server exposes 5 unauthenticated HTTP endpoints including `POST /job` (spawns a Claude Code session via tmux) and `POST /jobs/clear`. Binding to all interfaces on a machine with LAN or internet exposure allows any network peer to spawn arbitrary Claude Code sessions or clear running jobs.
+
+Changing `host="0.0.0.0"` to `host="127.0.0.1"` eliminates the LAN/remote attack vector while preserving full local functionality. The Drive and Direct apps that call the listen server operate over localhost and are unaffected.
+
+**Tier 1 parity impact:**
+
+Upstream `disler/mac-mini-agent` binds to `0.0.0.0` with no auth middleware. The SoT §SP8 line 48 explicitly documented "bind `0.0.0.0`". This change is a one-line deliberate deviation from byte-identical parity, authorized via CSO security review.
+
+**Review cadence:** permanent — not re-evaluated per audit round. Reinstatement of `0.0.0.0` requires explicit user authorization and a compensating control (auth middleware or firewall rule).
+
+**Related findings:**
+- S-01 (`worker.py` tmux prompt injection) — pre-existing; localhost binding reduces reachability
+- S-03 (CSRF on `POST /jobs/clear`) — pre-existing; browser CSRF still reachable via localhost
+- Exception 29 — SP15 E2B sandbox security posture (separate surface)
