@@ -373,6 +373,13 @@ bashToolPatterns:
     reason: SQL DELETE with specific ID
     ask: true
 
+  # ---------------------------------------------------------------------------
+  # SKILLS MARKETPLACE REQUIRING CONFIRMATION (ask: true)
+  # ---------------------------------------------------------------------------
+  - pattern: '\bskills\s+'
+    reason: Accesses skills.sh marketplace (find, install, update, remove)
+    ask: true
+
 # ---------------------------------------------------------------------------
 # ZERO ACCESS PATHS - No read, write, or any access allowed
 # ---------------------------------------------------------------------------
@@ -473,6 +480,13 @@ zeroAccessPaths:
 # Enforced by: Bash, Edit, Write tools
 # Supports glob patterns: *.lock, *.min.js
 readOnlyPaths:
+  # ---------------------------------------------------------------------------
+  # CLAUDE CODE CONFIG (AI must stop and report — user approves edits manually)
+  # ---------------------------------------------------------------------------
+  - "*/.claude/settings.json"
+  - "*/.claude/settings.local.json"
+  - "*/damage-control/patterns.yaml"
+
   # ---------------------------------------------------------------------------
   # SYSTEM DIRECTORIES
   # ---------------------------------------------------------------------------

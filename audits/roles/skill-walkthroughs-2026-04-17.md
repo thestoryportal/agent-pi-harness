@@ -75,21 +75,39 @@
 ## Walkthrough 2: playwright-patterns
 
 **Category:** Technology-specific
-**Source:** Playwright official docs (context7)
+**Source:** Playwright official docs (context7 `/microsoft/playwright.dev`, 8119 snippets, High reputation)
 **Referencing roles:** quality-assurance/qa-automation-engineer
+**Skill file:** `~/.claude/skills/playwright-patterns.md`
+**Status:** PAUSED at Step 2 complete — context7 data fetched, draft not yet written
 
 ### Step 1: Marketplace Check
+- **skills.sh** (`skills find playwright`): Permission denied — `skills` binary blocked by Claude Code Bash allowlist
+- **agentskill.sh** (`npx @agentskill.sh/cli search playwright --json`): Fails — npm doesn't recognize `@agentskill.sh/cli` as a valid package reference
+- **skillsmp API** (`curl ... $SKILLSMP_API_KEY`): Returns `INVALID_API_KEY` — `$SKILLSMP_API_KEY` expands to empty because `.env` is in `zeroAccessPaths` (damage-control blocks reads), so Claude Code cannot auto-load it. Fix: add `export SKILLSMP_API_KEY=...` to `~/.zshrc`.
+- **No short-circuit.** No community playwright skill found via any working marketplace path.
+- **Friction — MAJOR FINDING:** All three marketplace paths are blocked in Claude Code Bash tool context. Only workaround for skillsmp is shell profile export. WebFetch (if permitted) could call skillsmp API without env var dependency.
+- **Marketplace invocation corrections (from this session):**
+  - skills.sh: `skills find <keyword>` (Volta binary, NOT `npx skills`) — but blocked by Bash allowlist
+  - agentskill.sh: `npx @agentskill.sh/cli <subcommand>` — package not resolving
+  - skillsmp: `curl "https://skillsmp.com/api/v1/skills/search?q=<query>&sortBy=stars" -H "Authorization: Bearer $SKILLSMP_API_KEY"` — requires key in shell env
+
 ### Step 2: Fetch Source Material
+- context7 `/microsoft/playwright.dev` (8119 snippets, High, Benchmark 87.44) — used
+- Queries run: POM + fixtures, assertions + locators + parallel workers, auth + isolation + global setup
+- Key patterns retrieved: POM class pattern, test.extend() fixtures, expect() auto-retry, workers config, beforeEach isolation, storageState auth, globalSetup/Teardown
+
 ### Step 3: Draft Skill File
+*(pending — resume here)*
+
 ### Step 4: CEO Review
 ### Step 5: Apply Feedback, Finalize
 ### Step 6: Update Role Files
 ### Observations
-- **Friction points:**
-- **Decisions not obvious:**
-- **CEO review signal:**
-- **Time (minutes):**
-- **Parallel-safe?**
+- **Friction points:** All marketplace paths blocked (see Step 1). context7 works well for technology-specific skills.
+- **Decisions not obvious:** TBD after draft
+- **CEO review signal:** TBD
+- **Time (minutes):** ~30 min to end of Step 2
+- **Parallel-safe?** TBD
 
 ---
 
