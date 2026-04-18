@@ -216,7 +216,7 @@ python -c "import yaml; yaml.safe_load(open('patterns.yaml'))"
         "hooks": [
           {
             "type": "command",
-            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/damage-control/bash-tool-damage-control.py",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/damage-control/bash_damage_control.py",
             "timeout": 5
           }
         ]
@@ -237,7 +237,7 @@ python -c "import yaml; yaml.safe_load(open('patterns.yaml'))"
         "hooks": [
           {
             "type": "command",
-            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/damage-control/bash-tool-damage-control.py",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/damage-control/bash_damage_control.py",
             "timeout": 5
           }
         ]
@@ -247,7 +247,7 @@ python -c "import yaml; yaml.safe_load(open('patterns.yaml'))"
         "hooks": [
           {
             "type": "command",
-            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/damage-control/edit-tool-damage-control.py",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/damage-control/edit_damage_control.py",
             "timeout": 5
           }
         ]
@@ -257,7 +257,7 @@ python -c "import yaml; yaml.safe_load(open('patterns.yaml'))"
         "hooks": [
           {
             "type": "command",
-            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/damage-control/write-tool-damage-control.py",
+            "command": "\"$CLAUDE_PROJECT_DIR\"/.claude/hooks/damage-control/write_damage_control.py",
             "timeout": 5
           }
         ]
@@ -322,7 +322,7 @@ Test a hook directly from the command line:
 
 ```bash
 echo '{"tool_name":"Bash","tool_input":{"command":"rm -rf /"}}' | \
-  .claude/hooks/damage-control/bash-tool-damage-control.py
+  .claude/hooks/damage-control/bash_damage_control.py
 
 echo $?  # Should print 2 (blocked)
 ```
@@ -375,12 +375,12 @@ This shows hook execution details.
 
 ```
 ~/.claude/
-├── settings.json                    # Hook configuration
-└── hooks/
+├── settings.json                    # Skill configuration
+└── skills/
     └── damage-control/
-        ├── bash-tool-damage-control.py
-        ├── edit-tool-damage-control.py
-        ├── write-tool-damage-control.py
+        ├── bash_damage_control.py
+        ├── edit_damage_control.py
+        ├── write_damage_control.py
         ├── permission-request-damage-control.py
         └── patterns.yaml
 ```
@@ -392,11 +392,11 @@ your-project/
 └── .claude/
     ├── settings.json                # Hook configuration
     ├── settings.local.json          # Personal overrides (gitignored)
-    └── hooks/
+    └── skills/
         └── damage-control/
-            ├── bash-tool-damage-control.py
-            ├── edit-tool-damage-control.py
-            ├── write-tool-damage-control.py
+            ├── bash_damage_control.py
+            ├── edit_damage_control.py
+            ├── write_damage_control.py
             ├── permission-request-damage-control.py
             └── patterns.yaml
 ```

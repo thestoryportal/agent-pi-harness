@@ -89,11 +89,11 @@ REQUIRED_HOOKS = [
       # the absolute path (pathlib semantics), so run_health_checks handles                   
       # these correctly without any changes to its logic.                                     
       str(Path(PROJECT_DIR) /
-  ".claude/skills/damage-control/hooks/damage-control-python/bash_damage_control.py"),
+  ".claude/hooks/damage-control/hooks/damage-control-python/bash_damage_control.py"),
       str(Path(PROJECT_DIR) /
-  ".claude/skills/damage-control/hooks/damage-control-python/edit_damage_control.py"),
+  ".claude/hooks/damage-control/hooks/damage-control-python/edit_damage_control.py"),
       str(Path(PROJECT_DIR) /
-  ".claude/skills/damage-control/hooks/damage-control-python/write_damage_control.py"),
+  ".claude/hooks/damage-control/hooks/damage-control-python/write_damage_control.py"),
   ]
 
 

@@ -489,7 +489,7 @@ Keep as exception. The upstream justfile is scaffolding for a *different* demo r
 **Decision:** D8 (Option C, structured in-session audit), SP2 round 1 (2026-04-13)
 
 **Path(s):**
-- `.claude/skills/damage-control/patterns.yaml` — the canonical (post-Phase-E) damage-control rule file. ArhuGula form is 899 lines vs upstream `disler/claude-code-damage-control` at 610 lines. Net delta: +289 lines / 53 hunks.
+- `.claude/hooks/damage-control/patterns.yaml` — the canonical (post-Phase-E) damage-control rule file. ArhuGula form is 899 lines vs upstream `disler/claude-code-damage-control` at 610 lines. Net delta: +289 lines / 53 hunks.
 
 **SP audit round:** SP2 round 1, Phase F D8 audit (2026-04-13)
 **Decision date:** 2026-04-13
@@ -689,22 +689,22 @@ The above remains under Exception 14's umbrella (no separate exception number ne
 **Decision:** D1=B, SP2 round 1 decision gate (2026-04-13)
 
 **Path(s):**
-- `.claude/skills/damage-control/hooks/damage-control-python/bash_damage_control.py` (upstream: `bash-tool-damage-control.py`)
-- `.claude/skills/damage-control/hooks/damage-control-python/edit_damage_control.py` (upstream: `edit-tool-damage-control.py`)
-- `.claude/skills/damage-control/hooks/damage-control-python/write_damage_control.py` (upstream: `write-tool-damage-control.py`)
+- `.claude/hooks/damage-control/hooks/damage-control-python/bash_damage_control.py` (upstream: `bash_damage_control.py`)
+- `.claude/hooks/damage-control/hooks/damage-control-python/edit_damage_control.py` (upstream: `edit_damage_control.py`)
+- `.claude/hooks/damage-control/hooks/damage-control-python/write_damage_control.py` (upstream: `write_damage_control.py`)
 
 **SP audit round:** SP2 round 1 (2026-04-13)
 **Decision date:** 2026-04-13
 
 **Rationale:**
 
-The upstream `disler/claude-code-damage-control` repo names these hook files with the hyphenated form `bash-tool-damage-control.py`, following the project-wide CLAUDE.md naming convention `lowercase-with-hyphens` for authored files. ArhuGula's CLAUDE.md §Naming explicitly carves out an exception for hook files: **"Hook files: underscores (e.g., `session_start.py`)"**. Per that convention, every other hook file in `.claude/hooks/` uses underscores: `session_start.py`, `pre_tool_use.py`, `post_tool_use.py`, `permission_request.py`, `_base.py`, etc.
+The upstream `disler/claude-code-damage-control` repo names these hook files with the hyphenated form `bash_damage_control.py`, following the project-wide CLAUDE.md naming convention `lowercase-with-hyphens` for authored files. ArhuGula's CLAUDE.md §Naming explicitly carves out an exception for hook files: **"Hook files: underscores (e.g., `session_start.py`)"**. Per that convention, every other hook file in `.claude/hooks/` uses underscores: `session_start.py`, `pre_tool_use.py`, `post_tool_use.py`, `permission_request.py`, `_base.py`, etc.
 
 The 3 damage-control hooks ARE hook files — they are loaded by `settings.json` PreToolUse matchers and execute as the security gate for Bash, Edit, and Write tools. Keeping them in underscore form aligns with ArhuGula's existing hook-file convention. Upstream uses hyphenated form because their convention is consistent across all files; ArhuGula's split convention (hyphens for authored, underscores for hooks) is a deliberate carve-out.
 
-The underscore form also drops the upstream `tool-` infix. Upstream uses `bash-tool-damage-control.py` because the longer name emphasizes which Claude Code tool the hook is gating. ArhuGula uses `bash_damage_control.py` because the `damage_control` substring is already unambiguous and the `tool` infix adds noise. This is a stylistic micro-decision but consistent with ArhuGula's existing terse naming.
+The underscore form also drops the upstream `tool-` infix. Upstream uses `bash_damage_control.py` because the longer name emphasizes which Claude Code tool the hook is gating. ArhuGula uses `bash_damage_control.py` because the `damage_control` substring is already unambiguous and the `tool` infix adds noise. This is a stylistic micro-decision but consistent with ArhuGula's existing terse naming.
 
-**Phase E architectural note:** these 3 files moved during SP2 Phase E from `.claude/hooks/` to `.claude/skills/damage-control/hooks/damage-control-python/` as part of the D6/D7 architectural switchover. The exception applies at their new (post-Phase-E) location. The 7-file readOnlyPaths list in patterns.yaml (D10=A, restored in Phase H) references the post-Phase-E paths.
+**Phase E architectural note:** these 3 files moved during SP2 Phase E from `.claude/hooks/` to `.claude/hooks/damage-control/hooks/damage-control-python/` as part of the D6/D7 architectural switchover. The exception applies at their new (post-Phase-E) location. The 7-file readOnlyPaths list in patterns.yaml (D10=A, restored in Phase H) references the post-Phase-E paths.
 
 **Review cadence:** None. This is a permanent stylistic exception — the rationale (CLAUDE.md §Naming hook-file carve-out) is structural to ArhuGula's conventions. If CLAUDE.md ever drops the hook-file underscore exception, this exception becomes invalid and the files should be renamed to upstream form.
 
@@ -823,7 +823,7 @@ The damage-control `pre_tool_use.py` hook (wired in `.claude/hooks/pre_tool_use.
 **Why not resolved in SP4 r1:**
 SP4 r1 ran in autonomous audit mode per `feedback_audit_autonomy.md`. Damage-control hard stops are explicitly listed as a pause trigger, so the file was skipped and documented here rather than bypassed. Resolving this requires a user decision on one of three paths:
 
-1. **Expand E1 pathExclusions** — add `.env*.sample` (and possibly `.envrc.sample`) to `.claude/skills/damage-control/patterns.yaml` E1 field. This is a `patterns.yaml` edit and therefore routes through SP2 round 2 or a targeted Phase J addendum to SP2 r1.
+1. **Expand E1 pathExclusions** — add `.env*.sample` (and possibly `.envrc.sample`) to `.claude/hooks/damage-control/patterns.yaml` E1 field. This is a `patterns.yaml` edit and therefore routes through SP2 round 2 or a targeted Phase J addendum to SP2 r1.
 2. **Manual user revert** — the user runs `cp` or equivalent from a privileged shell (outside Claude Code) to make the file byte-identical to upstream.
 3. **Reclassify the file as ArhuGula-specific** — if ArhuGula's `.env.sample` is a deliberate divergence (e.g., different keys than upstream), document the delta here as permanent drift after user inspection.
 
@@ -846,7 +846,7 @@ The SP2 r1 Phase F pathExclusions list was scoped to files matching the `*.examp
 
 ### Resolution record (2026-04-14)
 
-User authorized adding 3 new patterns to `pathExclusions` in `.claude/skills/damage-control/patterns.yaml`:
+User authorized adding 3 new patterns to `pathExclusions` in `.claude/hooks/damage-control/patterns.yaml`:
 
 ```yaml
 pathExclusions:
@@ -1184,7 +1184,7 @@ The `feedback_disler_authoritative.md` rule says "Tier 1 full-clones are byte-le
 | 30 | SP15 custom Phase 2 audit workflow deprecation — obox subtree deleted (`apps/sandbox_workflows/`, `apps/sandbox_agent_working_dir/`, `.claude/commands/prime_obox.md`). Breaks byte-identical parity for the obox sub-scope. Resolves 7 of 9 Exception 29 findings. | SP15 r2 | 2026-04-15 | active (permanent) | None — structural |
 | 31 | `apps/listen/main.py` localhost bind hardening — `0.0.0.0` → `127.0.0.1` per CSO security review 2026-04-17. One-line deviation from SP8 byte-identical upstream. Eliminates LAN/remote RCE surface on the unauthenticated listen server. | SP8 r1 post-audit | 2026-04-17 | active (permanent) | None — security hardening |
 | 32 | `setup_maintenance.py` ArhuGula-adapted maintenance routine (per-app uv sync, observe prune, patterns.yaml validation, hook health check) — Tier 3 carve-out | SP r2 post-audit | 2026-04-17 | active (permanent) | None — Tier 3 structural |
-| 33 | `patterns.yaml` circular trust gap — all 4 `load_patterns()` functions prefer global `~/.claude/skills/damage-control/patterns.yaml` (chmod 444) over project-local. Closes SP2 Gap 1. | SP r2 | 2026-04-17 | **RESOLVED** | — |
+| 33 | `patterns.yaml` circular trust gap — all 4 `load_patterns()` functions prefer global `~/.claude/hooks/damage-control/patterns.yaml` (chmod 444) over project-local. Closes SP2 Gap 1. | SP r2 | 2026-04-17 | **RESOLVED** | — |
 | 34 | `pre_tool_use.py` Grep directory traversal — `_check_grep_traversal()` added. Closes SP2 Gap 2. | SP r2 | 2026-04-17 | **RESOLVED** | — |
 | 35 | O06 Scribe agent — permanent DEFERRED. No Tier 1 source in any full-clone; playbook-only (Tier 2). O09/O11 precedent. SP r2 2026-04-17. | SP9 r1 + SP r2 | 2026-04-17 | active (permanent DEFERRED) | Quarterly Disler repo check |
 | 36 | `post_tool_use.py` + `stop.py` log_dir path fix (S-NEW-01, commit `ae252c1`) — `Path.cwd()` → `Path(__file__).parent.parent` to prevent unprotected CWD-relative log writes | SP r2 | 2026-04-17 | active (permanent) | None (permanent security fix) |
@@ -1841,7 +1841,7 @@ ArhuGula-adapted replacement:
 2. **Observe log pruning** — delegates to `apps/observe/prune.py` (byte-identical upstream from
    `disler/hooks-mastery`) to prune `events.jsonl` per `OBSERVE_RETENTION_DAYS` (default 7 days).
 3. **patterns.yaml YAML validation** — loads and parses
-   `.claude/skills/damage-control/patterns.yaml` via `pyyaml` to catch syntax errors before they
+   `.claude/hooks/damage-control/patterns.yaml` via `pyyaml` to catch syntax errors before they
    silently break all damage-control hooks at next session.
 4. **Hook health check** — mirrors `session_start.py`'s `REQUIRED_HOOKS` list and re-runs
    `--health-check` on all 17 hooks; surfaces any broken hooks in the maintenance summary.
@@ -1878,15 +1878,15 @@ hooks-mastery or install-maintain update.
 **Tier:** Tier 3 — ArhuGula security hardening (non-Disler)
 **Files affected:**
 - `.claude/hooks/pre_tool_use.py` — `load_patterns()`
-- `.claude/skills/damage-control/hooks/damage-control-python/bash_damage_control.py` — `load_patterns()`
-- `.claude/skills/damage-control/hooks/damage-control-python/edit_damage_control.py` — `load_patterns()`
-- `.claude/skills/damage-control/hooks/damage-control-python/write_damage_control.py` — `load_patterns()`
-- `~/.claude/skills/damage-control/patterns.yaml` — new global OS-protected copy (chmod 444)
+- `.claude/hooks/damage-control/hooks/damage-control-python/bash_damage_control.py` — `load_patterns()`
+- `.claude/hooks/damage-control/hooks/damage-control-python/edit_damage_control.py` — `load_patterns()`
+- `.claude/hooks/damage-control/hooks/damage-control-python/write_damage_control.py` — `load_patterns()`
+- `~/.claude/hooks/damage-control/patterns.yaml` — new global OS-protected copy (chmod 444)
 
 **Gap description:**
 
 All four damage-control hooks loaded `patterns.yaml` from the project-local path
-`{PROJECT_DIR}/.claude/skills/damage-control/patterns.yaml`. That file also defines
+`{PROJECT_DIR}/.claude/hooks/damage-control/patterns.yaml`. That file also defines
 `readOnlyPaths`, which includes itself. An adaptive agent could break circular trust by:
 1. Editing `patterns.yaml` first (removing its own `readOnlyPaths` entry)
 2. Then editing any hook or other protected file freely
@@ -1897,7 +1897,7 @@ was documented. The project-local copy cannot protect itself from within.
 **Fix:**
 
 All four `load_patterns()` functions now prefer a global copy at
-`~/.claude/skills/damage-control/patterns.yaml` when that file exists, falling back to
+`~/.claude/hooks/damage-control/patterns.yaml` when that file exists, falling back to
 the project-local copy for environments where the global copy is absent:
 
 ```python
@@ -1910,9 +1910,9 @@ The global copy is protected at the OS level via `chmod 444`, which the Claude C
 cannot override regardless of what `patterns.yaml` itself says. The required setup step is:
 
 ```bash
-mkdir -p ~/.claude/skills/damage-control
-cp {PROJECT_DIR}/.claude/skills/damage-control/patterns.yaml ~/.claude/skills/damage-control/patterns.yaml
-chmod 444 ~/.claude/skills/damage-control/patterns.yaml
+mkdir -p ~/.claude/hooks/damage-control
+cp {PROJECT_DIR}/.claude/hooks/damage-control/patterns.yaml ~/.claude/hooks/damage-control/patterns.yaml
+chmod 444 ~/.claude/hooks/damage-control/patterns.yaml
 ```
 
 **Identicality impact:**

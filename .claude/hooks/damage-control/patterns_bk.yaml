@@ -751,7 +751,7 @@ readOnlyPaths:
   # decision gate resolution + SP1 resume-pass + Phase D-G work. The original
   # `.claude/hooks/*.py` glob is replaced by an explicit 7-file security-
   # critical list per D10=A. After Phase E, the bash/edit/write damage-
-  # control hook files live under .claude/skills/damage-control/, so 3 of
+  # control hook files live under .claude/hooks/damage-control/, so 3 of
   # the 7 entries point at skill paths instead of the old project paths.
   # The other 4 (session_start, permission_request, pre_tool_use, _base)
   # remain at the project location per SP1 D6 (catch-all + utility hooks).
@@ -760,11 +760,11 @@ readOnlyPaths:
   - ".claude/hooks/permission_request.py"
   - ".claude/hooks/pre_tool_use.py"
   - ".claude/hooks/_base.py"
-  - ".claude/skills/damage-control/hooks/damage-control-python/bash_damage_control.py"
-  - ".claude/skills/damage-control/hooks/damage-control-python/edit_damage_control.py"
-  - ".claude/skills/damage-control/hooks/damage-control-python/write_damage_control.py"
+  - ".claude/hooks/damage-control/hooks/damage-control-python/bash_damage_control.py"
+  - ".claude/hooks/damage-control/hooks/damage-control-python/edit_damage_control.py"
+  - ".claude/hooks/damage-control/hooks/damage-control-python/write_damage_control.py"
   - ".claude/settings.json"
-  - ".claude/skills/damage-control/patterns.yaml"
+  - ".claude/hooks/damage-control/patterns.yaml"
 
   # ---------------------------------------------------------------------------
   # LOCK FILES — Never manually edit, use package managers

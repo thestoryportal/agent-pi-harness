@@ -236,7 +236,7 @@ ext-agent-team:
 ext-system-select:
     pi -e extensions/system-select.ts -e extensions/minimal.ts -e extensions/theme-cycler.ts
 
-# 12. Launch with Damage-Control safety auditing
+# 12. Launch with damage-control safety auditing
 ext-damage-control:
     pi -e extensions/damage-control.ts -e extensions/minimal.ts -e extensions/theme-cycler.ts
 

@@ -6,7 +6,7 @@
 """PreToolUse hook: Bash tool damage control.
 
 Blocks dangerous bash commands and enforces path protection via patterns.yaml.
-Adapted from disler/claude-code-damage-control bash-tool-damage-control.py.
+Adapted from disler/claude-code-damage-control bash_damage_control.py.
 
 Exit codes: 0=allow (or ask via JSON), 2=block.
 This is a security-critical hook — never exit 1.
@@ -44,12 +44,14 @@ PROJECT_ROOT = str(Path(PROJECT_DIR).resolve())
 WRITE_PATTERNS = [
     (r'>\s*{path}', "write"),
     (r'\btee\s+(?!.*-a).*{path}', "write"),
+    (r'\bpython[23]?\b.*\bopen\s*\([^)]*{path}[^)]*,\s*[\'"]w', "python-write"),
 ]
 
 APPEND_PATTERNS = [
     (r'>>\s*{path}', "append"),
     (r'\btee\s+-a\s+.*{path}', "append"),
     (r'\btee\s+.*-a.*{path}', "append"),
+    (r'\bpython[23]?\b.*\bopen\s*\([^)]*{path}[^)]*,\s*[\'"]a', "python-append"),
 ]
 
 EDIT_PATTERNS = [

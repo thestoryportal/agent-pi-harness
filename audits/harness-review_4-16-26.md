@@ -21,7 +21,7 @@
 ## Resolved Since 2026-04-14 Review
 
 **S-01-OLD · patterns.yaml self-lock** — CONFIRMED RESOLVED
-`.claude/skills/damage-control/patterns.yaml:767`
+`.claude/hooks/damage-control/patterns.yaml:767`
 `readOnlyPaths` now includes `patterns.yaml` itself. The prior P0 (rulebook could be silently cleared by a single Edit) is closed.
 
 ---
@@ -80,7 +80,7 @@ The three skill-located damage-control hooks (`bash_damage_control.py`, `edit_da
 ### P2 — Security (Defense-in-Depth)
 
 **S-NEW-03 · Bash exclusion allowlist could pass symlink through hooks dir**
-`.claude/skills/damage-control/patterns.yaml:932-937`
+`.claude/hooks/damage-control/patterns.yaml:932-937`
 
 `bashToolExclusions` permits `cat .*\.claude/hooks/` with `.*` wildcard. A symlink at `.claude/hooks/mylink -> ../../.env` would produce `cat .claude/hooks/mylink` which matches the exclusion and allows the cat while the OS resolves the symlink to `.env`. The `ln` check in `bash_damage_control.py` validates argument paths are within the project but does not verify the symlink *target* is not a zero-access path.
 

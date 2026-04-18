@@ -119,7 +119,7 @@
 | agentic-finance-review | `.claude/settings.json` | Exception 7 |
 | bowser | `.claude/settings.json` | Exception 7 |
 | bowser | `justfile` | Exception 27 |
-| claude-code-damage-control | `.claude/skills/damage-control/patterns.yaml` | Exception 14 |
+| claude-code-damage-control | `.claude/hooks/damage-control/patterns.yaml` | Exception 14 |
 | claude-code-hooks-mastery | `.claude/hooks/notification.py` | Exception 16 |
 | claude-code-hooks-mastery | `.claude/hooks/permission_request.py` | Exception 8 |
 | claude-code-hooks-mastery | `.claude/hooks/post_tool_use.py` | Exception 16 |
@@ -364,9 +364,9 @@
 | bowser | `images/four-layer-stack.gif` |
 | bowser | `specs/init-automation.md` |
 | claude-code-damage-control | `.claude/commands/prime.md` |
-| claude-code-damage-control | `.claude/skills/damage-control/hooks/damage-control-python/bash-tool-damage-control.py` |
-| claude-code-damage-control | `.claude/skills/damage-control/hooks/damage-control-python/edit-tool-damage-control.py` |
-| claude-code-damage-control | `.claude/skills/damage-control/hooks/damage-control-python/write-tool-damage-control.py` |
+| claude-code-damage-control | `.claude/hooks/damage-control/hooks/damage-control-python/bash_damage_control.py` |
+| claude-code-damage-control | `.claude/hooks/damage-control/hooks/damage-control-python/edit_damage_control.py` |
+| claude-code-damage-control | `.claude/hooks/damage-control/hooks/damage-control-python/write_damage_control.py` |
 | claude-code-damage-control | `CLAUDE.md` |
 | claude-code-damage-control | `ai_docs/README.md` |
 | claude-code-damage-control | `apps/mock_db/refresh_db.py` |

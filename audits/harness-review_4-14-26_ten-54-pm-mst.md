@@ -24,7 +24,7 @@
 
 `patterns.yaml` is the rulebook for every blocking decision in all 4 hooks. It loads on every hook call. It is **not** in `readOnlyPaths`. An agent can emit one Edit call to this file, clear all rules, and the next Bash/Write/Read call passes with zero resistance. This is the "patterns.yaml isn't locked (round-9)" finding noted in your SP2 architectural follow-ups memory — still open.
 
-**Fix:** Add `.claude/skills/damage-control/patterns.yaml` to `readOnlyPaths` in patterns.yaml itself.
+**Fix:** Add `.claude/hooks/damage-control/patterns.yaml` to `readOnlyPaths` in patterns.yaml itself.
 
 ---
 
@@ -41,7 +41,7 @@
 
 **S-03 · `ValueError` in `PurePath.match()` is fail-open, not fail-closed**
 `.claude/hooks/pre_tool_use.py:67-75`
-`.claude/skills/damage-control/hooks/damage-control-python/edit_damage_control.py:79-82`
+`.claude/hooks/damage-control/hooks/damage-control-python/edit_damage_control.py:79-82`
 
 When a zeroAccessPaths pattern raises `ValueError`, the `except` block does `pass` then `return False`. For a block-list, `False` = no match = **allow**. The comment says "fail closed" — it is not. An invalid pattern (e.g. bare `[`) silently stops blocking for that rule.
 
@@ -52,7 +52,7 @@ When a zeroAccessPaths pattern raises `ValueError`, the `except` block does `pas
 **S-04 · Damage-control hooks removed from health check — missing file = silent fail-open**
 `.claude/hooks/session_start.py:81-94`
 
-The three damage-control hooks were moved to `.claude/skills/damage-control/hooks/damage-control-python/` and were explicitly removed from `REQUIRED_HOOKS`. If these files are absent (fresh clone, partial setup, or deliberate deletion), `uv run` on a missing file exits 1, which Claude Code treats as pass-through — the Bash/Edit/Write protection layers are silently disabled for the session. CLAUDE.md promises "Health check: `session_start.py` validates all hooks at session start."
+The three damage-control hooks were moved to `.claude/hooks/damage-control/hooks/damage-control-python/` and were explicitly removed from `REQUIRED_HOOKS`. If these files are absent (fresh clone, partial setup, or deliberate deletion), `uv run` on a missing file exits 1, which Claude Code treats as pass-through — the Bash/Edit/Write protection layers are silently disabled for the session. CLAUDE.md promises "Health check: `session_start.py` validates all hooks at session start."
 
 **Fix:** Add the skill-path hook files to `REQUIRED_HOOKS` by absolute path. Also known from SP2 architectural follow-ups memory.
 
@@ -84,7 +84,7 @@ The health check runs `uv run <hook> --health-check` on all REQUIRED_HOOKS. Only
 ### P2 — Medium
 
 **S-05 · Pipe splitter doesn't handle process substitution `<(...)` or heredoc bodies**
-`.claude/skills/damage-control/hooks/damage-control-python/bash_damage_control.py:166-221`
+`.claude/hooks/damage-control/hooks/damage-control-python/bash_damage_control.py:166-221`
 
 `cat <(cat .env)` runs the nested `cat .env` in a subshell that the splitter never tokenizes. The zero-access `.env` check doesn't fire.
 
@@ -93,16 +93,16 @@ The health check runs `uv run <hook> --health-check` on all REQUIRED_HOOKS. Only
 ---
 
 **S-07 · `python-settings.json` references non-existent hook paths**
-`.claude/skills/damage-control/hooks/damage-control-python/python-settings.json:9,24,33`
+`.claude/hooks/damage-control/hooks/damage-control-python/python-settings.json:9,24,33`
 
-The sample config references the old `damage-control/bash-tool-damage-control.py` path (wrong directory, wrong filename). Any new project created from this template deploys with silently missing damage-control protection.
+The sample config references the old `damage-control/bash_damage_control.py` path (wrong directory, wrong filename). Any new project created from this template deploys with silently missing damage-control protection.
 
 **Fix:** Update paths to `skills/damage-control/hooks/damage-control-python/bash_damage_control.py`.
 
 ---
 
 **S-08 · `bashToolExclusions` rm patterns are over-broad**
-`.claude/skills/damage-control/patterns.yaml` (rm exclusion patterns)
+`.claude/hooks/damage-control/patterns.yaml` (rm exclusion patterns)
 
 `\brm\s+.*__pycache__` matches `rm -rf apps/safe/__pycache__/../../hooks/pre_tool_use.py` because `.*` consumes the traversal. The exclusion fires before the destructive-rm block.
 
@@ -134,16 +134,16 @@ Local `install.md` is a documented inline merge of two upstream files, self-docu
 ### P3 — Minor / Nits
 
 **S-06 · pathExclusion traversal protection works correctly but by accident (undocumented)**
-`.claude/skills/damage-control/hooks/damage-control-python/bash_damage_control.py:282-293`
+`.claude/hooks/damage-control/hooks/damage-control-python/bash_damage_control.py:282-293`
 
 `normpath()` eliminates traversal components before exclusion matching, making `cat .env.example/../.env` bypass impossible by construction — but the comment doesn't say so. Add a 1-line comment to document this invariant.
 
 ---
 
 **S-09 · `patterns.yaml` header comment says wrong location**
-`.claude/skills/damage-control/patterns.yaml:2`
+`.claude/hooks/damage-control/patterns.yaml:2`
 
-`# Location: .claude/hooks/patterns.yaml` is stale (moved to `.claude/skills/damage-control/`).
+`# Location: .claude/hooks/patterns.yaml` is stale (moved to `.claude/hooks/damage-control/`).
 
 ---
 
@@ -199,11 +199,11 @@ Runtime artifacts sitting next to source. Consider redirecting to `.claude/logs/
 ## Files Inspected by Security
 
 - `.claude/hooks/pre_tool_use.py`
-- `.claude/skills/damage-control/hooks/damage-control-python/bash_damage_control.py`
-- `.claude/skills/damage-control/hooks/damage-control-python/edit_damage_control.py`
-- `.claude/skills/damage-control/hooks/damage-control-python/write_damage_control.py`
-- `.claude/skills/damage-control/hooks/damage-control-python/python-settings.json`
+- `.claude/hooks/damage-control/hooks/damage-control-python/bash_damage_control.py`
+- `.claude/hooks/damage-control/hooks/damage-control-python/edit_damage_control.py`
+- `.claude/hooks/damage-control/hooks/damage-control-python/write_damage_control.py`
+- `.claude/hooks/damage-control/hooks/damage-control-python/python-settings.json`
 - `.claude/settings.json`
 - `.claude/hooks/session_start.py`
 - `.claude/hooks/_base.py`
-- `.claude/skills/damage-control/patterns.yaml`
+- `.claude/hooks/damage-control/patterns.yaml`

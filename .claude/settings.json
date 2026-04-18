@@ -1,45 +1,48 @@
 {
-  "statusLine": {
-    "type": "command",
-    "command": "uv run $CLAUDE_PROJECT_DIR/.claude/status_lines/status_line_v6.py",
-    "padding": 0
-  },
   "permissions": {
     "allow": [
-      "Bash(mkdir:*)",
-      "Bash(uv:*)",
-      "Bash(find:*)",
-      "Bash(mv:*)",
-      "Bash(grep:*)",
-      "Bash(npm:*)",
-      "Bash(ls:*)",
-      "Write",
-      "Edit",
-      "Bash(chmod:*)",
-      "Bash(touch:*)",
-      "Bash(brew:*)",
-      "Bash(tmux:*)",
-      "Bash(just:*)",
-      "Bash(yq:*)",
-      "Bash(node:*)",
-      "Bash(xcode-select:*)",
-      "Bash(which:*)",
-      "Bash(test:*)",
-      "Bash(cp:*)",
-      "Bash(cat:*)",
-      "Skill"
+      "Bash(git add -A)",
+      "Bash(git commit -m *)",
+      "Bash(rm /Users/robertrhu/Projects/arhugula/.git/index.lock)",
+      "Bash(rm /Users/robertrhu/Projects/arhugula/.git/index.lock && git add -A)",
+      "mcp__plugin_context7_context7__resolve-library-id",
+      "mcp__plugin_context7_context7__query-docs",
+      "Skill",
+      "mcp__pocket-pick__pocket_add",
+      "mcp__pocket-pick__pocket_find",
+      "mcp__pocket-pick__pocket_get",
+      "mcp__pocket-pick__pocket_list",
+      "mcp__pocket-pick__pocket_list_tags",
+      "mcp__pocket-pick__pocket_list_ids",
+      "mcp__pocket-pick__pocket_remove",
+      "mcp__pocket-pick__pocket_to_file_by_id",
+      "mcp__pocket-pick__pocket_add_file",
+      "mcp__pocket-pick__pocket_backup",
+      "mcp__just-prompt__*"
     ],
-    "deny": []
+
+    "deny": [],
+
+    "defaultMode": "default",
+      "additionalDirectories": [
+        "/Users/robertrhu/.claude/plans",
+        "/Users/robertrhu/.claude/roles",
+        "/Users/robertrhu/.claude/skills"
+      ]
   },
-  "hooks": {
-    "PreToolUse": [
+    
+  "hooks": {                                                                                                                                  
+    "PreToolUse": [                                        
       {
         "matcher": "Bash",
-
         "hooks": [
           {
             "type": "command",
-            "command": "uv run \"$CLAUDE_PROJECT_DIR\"/.claude/skills/damage-control/hooks/damage-control-python/bash_damage_control.py"
+            "command": "/Users/robertrhu/.claude/hooks/rtk-rewrite.sh"
+          },
+          {
+            "type": "command",
+            "command": "uv run \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/damage-control/hooks/damage-control-python/bash_damage_control.py"
           }
         ]
       },
@@ -48,7 +51,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "uv run \"$CLAUDE_PROJECT_DIR\"/.claude/skills/damage-control/hooks/damage-control-python/edit_damage_control.py"
+            "command": "uv run \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/damage-control/hooks/damage-control-python/edit_damage_control.py"
           }
         ]
       },
@@ -57,7 +60,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "uv run \"$CLAUDE_PROJECT_DIR\"/.claude/skills/damage-control/hooks/damage-control-python/write_damage_control.py"
+            "command": "uv run \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/damage-control/hooks/damage-control-python/write_damage_control.py"
           }
         ]
       },
@@ -202,5 +205,58 @@
         ]
       }
     ]
-  }
+  },
+  
+  "statusLine": {
+    "type": "command",
+    "command": "bash /Users/robertrhu/.claude/statusline-command.sh"
+  },
+    
+  "enabledPlugins": {
+    "context7@claude-plugins-official": true,
+    "learn@agentskill-sh": true
+  },
+    
+  "extraKnownMarketplaces": {
+    "compound-engineering-plugin": {
+      "source": {
+        "source": "github",
+        "repo": "EveryInc/compound-engineering-plugin"
+      }
+    },
+      
+    "karpathy-skills": {
+      "source": {
+        "source": "github",
+        "repo": "forrestchang/andrej-karpathy-skills"
+      }
+    },
+      
+    "agentskill-sh": {
+      "source": {
+        "source": "url",
+        "url": "https://agentskill.sh/marketplace.json"
+      }
+    }
+  },
+    
+  "sandbox": {
+    "filesystem": {
+      "allowWrite": [
+        "/Users/robertrhu/.claude/roles",
+        "/Users/robertrhu/.claude/skills"
+      ]
+    }
+  },
+    
+  "effortLevel": "high",
+  "advisorModel": "opus",
+  "voice": {
+    "enabled": false,
+    "mode": "hold"
+  },
+    
+  "skipDangerousModePermissionPrompt": true,
+  "voiceEnabled": false,
+  "model": "sonnet"
 }

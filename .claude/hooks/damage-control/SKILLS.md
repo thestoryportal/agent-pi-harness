@@ -1,5 +1,5 @@
 ---
-name: Damage Control
+name: damage-control
 description: Install, configure, and manage the Claude Code Damage Control security hooks system. Use when user mentions damage control, security hooks, protected paths, blocked commands, install security, or modify protection settings.
 ---
 
@@ -21,7 +21,7 @@ This skill helps users deploy and manage the Damage Control security system, whi
 ## Skill Structure
 
 ```
-.claude/skills/damage-control/
+.claude/hooks/damage-control/
 ├── SKILL.md                     # This file
 ├── patterns.yaml                # Shared security patterns (single source of truth)
 ├── cookbook/
@@ -33,11 +33,11 @@ This skill helps users deploy and manage the Damage Control security system, whi
 │   └── build_for_windows.md
 ├── hooks/
 │   ├── damage-control-python/   # Python/UV implementation
-│   │   ├── bash-tool-damage-control.py
-│   │   ├── edit-tool-damage-control.py
-│   │   ├── write-tool-damage-control.py
+│   │   ├── bash_damage_control.py
+│   │   ├── edit_damage_control.py
+│   │   ├── write_damage_control.py
 │   │   ├── python-settings.json
-│   │   └── test-damage-control.py
+│   │   └── test_damage_control.py
 │   └── damage-control-typescript/  # Bun/TypeScript implementation
 │       ├── bash-tool-damage-control.ts
 │       ├── edit-tool-damage-control.ts
@@ -62,9 +62,9 @@ The install workflow copies hooks and creates settings based on the chosen level
 └── hooks/
     └── damage-control/
         ├── patterns.yaml
-        ├── bash-tool-damage-control.py (or .ts)
-        ├── edit-tool-damage-control.py
-        └── write-tool-damage-control.py
+        ├── bash_damage_control.py (or .ts)
+        ├── edit_damage_control.py
+        └── write_damage_control.py
 ```
 
 ### Project Hooks
@@ -75,9 +75,9 @@ The install workflow copies hooks and creates settings based on the chosen level
     └── hooks/
         └── damage-control/
             ├── patterns.yaml
-            ├── bash-tool-damage-control.py (or .ts)
-            ├── edit-tool-damage-control.py
-            └── write-tool-damage-control.py
+            ├── bash_damage_control.py (or .ts)
+            ├── edit_damage_control.py
+            └── write_damage_control.py
 ```
 
 ### Project Personal Hooks
@@ -88,9 +88,9 @@ The install workflow copies hooks and creates settings based on the chosen level
     └── hooks/
         └── damage-control/
             ├── patterns.yaml
-            ├── bash-tool-damage-control.py (or .ts)
-            ├── edit-tool-damage-control.py
-            └── write-tool-damage-control.py
+            ├── bash_damage_control.py (or .ts)
+            ├── edit_damage_control.py
+            └── write_damage_control.py
 ```
 
 ---

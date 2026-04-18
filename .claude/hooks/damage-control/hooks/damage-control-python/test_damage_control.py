@@ -10,24 +10,24 @@ Tests damage control hooks via CLI or interactive mode.
 
 Usage:
   # Interactive mode - test Bash, Edit, Write hooks interactively
-  uv run test-damage-control.py -i
-  uv run test-damage-control.py --interactive
+  uv run test_damage_control.py -i
+  uv run test_damage_control.py --interactive
 
   # CLI mode - test a single command
-  uv run test-damage-control.py <hook> <tool_name> <command_or_path> [--expect-blocked|--expect-allowed]
+  uv run test_damage_control.py <hook> <tool_name> <command_or_path> [--expect-blocked|--expect-allowed]
 
 Examples:
   # Interactive mode
-  uv run test-damage-control.py -i
+  uv run test_damage_control.py -i
 
   # Test bash hook blocks rm -rf
-  uv run test-damage-control.py bash Bash "rm -rf /tmp" --expect-blocked
+  uv run test_damage_control.py bash Bash "rm -rf /tmp" --expect-blocked
 
   # Test edit hook blocks zero-access path
-  uv run test-damage-control.py edit Edit "~/.ssh/id_rsa" --expect-blocked
+  uv run test_damage_control.py edit Edit "~/.ssh/id_rsa" --expect-blocked
 
   # Test bash allows safe command
-  uv run test-damage-control.py bash Bash "ls -la" --expect-allowed
+  uv run test_damage_control.py bash Bash "ls -la" --expect-allowed
 
 Exit codes:
   0 = Test passed (expectation matched)
@@ -52,7 +52,7 @@ import fnmatch
 
 spec = importlib.util.spec_from_file_location(
     "bash_tool",
-    Path(__file__).parent / "bash-tool-damage-control.py"
+    Path(__file__).parent / "bash_damage_control.py"
 )
 bash_tool = importlib.util.module_from_spec(spec)
 spec.loader.exec_module(bash_tool)
@@ -322,9 +322,9 @@ def run_interactive_mode():
 def get_hook_path(hook_type: str) -> Path:
     """Get path to hook script."""
     hooks = {
-        "bash": "bash-tool-damage-control.py",
-        "edit": "edit-tool-damage-control.py",
-        "write": "write-tool-damage-control.py",
+        "bash": "bash_damage_control.py",
+        "edit": "edit_damage_control.py",
+        "write": "write_damage_control.py",
     }
     if hook_type not in hooks:
         print(f"Error: Unknown hook type '{hook_type}'. Use: {list(hooks.keys())}")

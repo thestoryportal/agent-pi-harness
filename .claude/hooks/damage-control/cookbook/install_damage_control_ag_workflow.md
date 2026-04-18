@@ -9,7 +9,7 @@ Guide the user through installing the Damage Control security hooks system at th
 
 ## Variables
 
-SKILL_DIR: .claude/skills/damage-control
+SKILL_DIR: .claude/hooks/damage-control
 PATTERNS_FILE: SKILL_DIR/patterns.yaml
 GLOBAL_SETTINGS: ~/.claude/settings.json
 PROJECT_SETTINGS: .claude/settings.json

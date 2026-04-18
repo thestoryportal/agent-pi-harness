@@ -42,8 +42,8 @@ The damage-control security hooks system is installed as part of the
 standard initialization flow above. The hook chain is wired in
 `.claude/settings.json` (PreToolUse Bash/Edit/Write matchers) and points
 at the canonical hook copies under
-`.claude/skills/damage-control/hooks/damage-control-python/`. The shared
-rule file lives at `.claude/skills/damage-control/patterns.yaml`.
+`.claude/hooks/damage-control/hooks/damage-control-python/`. The shared
+rule file lives at `.claude/hooks/damage-control/patterns.yaml`.
 
 Source: merged from `disler/claude-code-damage-control` upstream
 `install.md` per SP2 D12=A. The upstream file's substantive content was
@@ -53,4 +53,4 @@ workflow that ArhuGula uses for the rest of the project initialization.
 
 To install or update the damage control system specifically (e.g. after
 upgrading the skill from a fresh upstream pull), invoke `Skill(damage-control)`
-which the global skill catalog routes to `.claude/skills/damage-control/SKILL.md`.
+which the global skill catalog routes to `.claude/hooks/damage-control/SKILL.md`.

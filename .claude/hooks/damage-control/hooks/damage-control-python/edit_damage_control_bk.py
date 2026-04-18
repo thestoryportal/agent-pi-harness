@@ -3,13 +3,13 @@
 # requires-python = ">=3.12"
 # dependencies = ["pyyaml"]
 # ///
-"""PreToolUse hook: Write tool damage control.
+"""PreToolUse hook: Edit tool damage control.
 
-Blocks writes to protected files via zeroAccessPaths, readOnlyPaths, and noDeletePaths.
-noDeletePaths trigger ask (overwrite confirmation) rather than block.
-Adapted from disler/claude-code-damage-control write-tool-damage-control.py.
+Blocks edits to protected files via zeroAccessPaths and readOnlyPaths.
+Covers Edit, MultilineEdit, and NotebookEdit tools.
+Adapted from disler/claude-code-damage-control edit_damage_control.py.
 
-Exit codes: 0=allow (or ask via JSON), 2=block.
+Exit codes: 0=allow, 2=block.
 This is a security-critical hook — never exit 1.
 """
 
@@ -28,7 +28,7 @@ try:
 except Exception:
     sys.exit(2)
 
-HOOK_NAME = "write_damage_control.py"
+HOOK_NAME = "edit_damage_control.py"
 handle_health_check(HOOK_NAME)
 
 PROJECT_ROOT = str(Path(PROJECT_DIR).resolve())
@@ -97,9 +97,9 @@ def match_path(file_path: str, pattern: str) -> bool:
 def check_path(file_path: str, rules: dict[str, Any]) -> tuple[str, str | None]:
     """Check if file_path is blocked. Returns (decision, reason)."""
     # E1 (SP2 Phase F, 2026-04-13): pathExclusions short-circuit. Files
-    # matching an exclusion bypass all zero-access / read-only / no-delete
-    # checks. Used for safe template files (.env.example, .envrc.example)
-    # that downstream projects need to write for new-project setup.
+    # matching an exclusion bypass all zero-access / read-only checks.
+    # Used for safe template files (.env.example, .envrc.example) that
+    # downstream projects need to read for new-project setup.
     for excl in rules.get("pathExclusions", []):
         if match_path(file_path, excl):
             return "allow", None
@@ -107,17 +107,12 @@ def check_path(file_path: str, rules: dict[str, Any]) -> tuple[str, str | None]:
     # Check zero-access paths first (no access at all)
     for zero_path in rules.get("zeroAccessPaths", []):
         if match_path(file_path, zero_path):
-            return "block", f"Write blocked: zero-access path {zero_path}"
+            return "block", f"Edit blocked: zero-access path {zero_path}"
 
-    # Check read-only paths (writes not allowed)
+    # Check read-only paths (edits not allowed)
     for readonly in rules.get("readOnlyPaths", []):
         if match_path(file_path, readonly):
-            return "block", f"Write blocked: read-only path {readonly}"
-
-    # Check no-delete paths (overwrite triggers ask)
-    for no_delete in rules.get("noDeletePaths", []):
-        if match_path(file_path, no_delete):
-            return "ask", f"Overwriting file in accumulation-only path. Confirm? ({file_path})"
+            return "block", f"Edit blocked: read-only path {readonly}"
 
     return "allow", None
 
@@ -131,7 +126,7 @@ def load_patterns() -> dict:
 
 
 def main():
-    logger = Logger("write_damage_control")
+    logger = Logger("edit_damage_control")
     start_time = time.monotonic()
 
     input_data = read_stdin()
@@ -143,8 +138,8 @@ def main():
     tool_name = input_data.get("tool_name", "")
     tool_input = input_data.get("tool_input", {})
 
-    # Only check Write tool
-    if tool_name != "Write":
+    # Check Edit, MultilineEdit, and NotebookEdit tools
+    if tool_name not in ("Edit", "MultilineEdit", "NotebookEdit"):
         sys.exit(0)
 
     file_path = tool_input.get("file_path", "")
@@ -166,18 +161,7 @@ def main():
     if reason:
         payload["reason"] = reason
 
-    if decision == "ask":
-        emit_event("PreToolUse", HOOK_NAME, 0, payload, elapsed)
-        logger.log(f"ASK: {tool_name} — {reason}")
-        print(json.dumps({
-            "hookSpecificOutput": {
-                "hookEventName": "PreToolUse",
-                "permissionDecision": "ask",
-                "permissionDecisionReason": reason,
-            }
-        }))
-        sys.exit(0)
-    elif decision == "block":
+    if decision == "block":
         emit_event("PreToolUse", HOOK_NAME, 2, payload, elapsed)
         logger.log(f"BLOCKED: {tool_name} — {reason}")
         print(json.dumps({"error": reason}), file=sys.stderr)

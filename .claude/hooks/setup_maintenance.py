@@ -34,9 +34,9 @@ REQUIRED_HOOKS = [
     "notification.py", "stop.py", "user_prompt_submit.py", "pre_compact.py",
     "subagent_start.py", "subagent_stop.py", "session_end.py",
     "permission_request.py", "post_tool_use_failure.py",
-    str(Path(PROJECT_DIR) / ".claude/skills/damage-control/hooks/damage-control-python/bash_damage_control.py"),
-    str(Path(PROJECT_DIR) / ".claude/skills/damage-control/hooks/damage-control-python/edit_damage_control.py"),
-    str(Path(PROJECT_DIR) / ".claude/skills/damage-control/hooks/damage-control-python/write_damage_control.py"),
+    str(Path(PROJECT_DIR) / ".claude/hooks/damage-control/hooks/damage-control-python/bash_damage_control.py"),
+    str(Path(PROJECT_DIR) / ".claude/hooks/damage-control/hooks/damage-control-python/edit_damage_control.py"),
+    str(Path(PROJECT_DIR) / ".claude/hooks/damage-control/hooks/damage-control-python/write_damage_control.py"),
 ]
 
 
@@ -97,7 +97,7 @@ def main() -> None:
 
     # 3. Validate damage-control patterns.yaml
     log("\n>>> Validating patterns.yaml...")
-    patterns_path = Path(PROJECT_DIR) / ".claude/skills/damage-control/patterns.yaml"
+    patterns_path = Path(PROJECT_DIR) / ".claude/hooks/damage-control/patterns.yaml"
     if patterns_path.exists():
         try:
             yaml.safe_load(patterns_path.read_text())

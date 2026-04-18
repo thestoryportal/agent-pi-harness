@@ -279,7 +279,7 @@ def check_mcp_tool(tool_name: str) -> tuple[str, str | None]:
 
 def load_patterns() -> dict:
     # Gap 1 (SP2 AR3): prefer OS-protected global copy to break circular trust.
-    # If ~/.claude/skills/damage-control/patterns.yaml exists (chmod 444),
+    # If ~/.claude/hooks/damage-control/patterns.yaml exists (chmod 444),
     # an agent cannot modify it even after editing the project-local copy.
     global_path = Path.home() / ".claude" / "skills" / "damage-control" / "patterns.yaml"
     local_path = Path(PROJECT_DIR) / ".claude" / "skills" / "damage-control" / "patterns.yaml"

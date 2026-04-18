@@ -18,7 +18,7 @@ PATTERNS_FILE: .claude/hooks/damage-control/patterns.yaml (if in project) or ~/.
 - For each pattern/path, call the test script with appropriate arguments
 - The test script echoes JSON into the hooks - it does NOT run actual commands
 - Track pass/fail counts and report summary at the end
-- Use the Python test script (`uv run test-damage-control.py`) or TypeScript (`bun run test-damage-control.ts`)
+- Use the Python test script (`uv run test_damage_control.py`) or TypeScript (`bun run test-damage-control.ts`)
 
 **IMPORTANT**: You are testing the hooks by piping mock data into them. DO NOT run actual dangerous commands. No actual dangerous commands are executed.
 
@@ -33,7 +33,7 @@ PATTERNS_FILE: .claude/hooks/damage-control/patterns.yaml (if in project) or ~/.
 ### Step 1: Determine Runtime
 
 1. Check which runtime is installed by looking at the hooks directory:
-   - If `.py` files exist → use `uv run test-damage-control.py`
+   - If `.py` files exist → use `uv run test_damage_control.py`
    - If `.ts` files exist → use `bun run test-damage-control.ts`
 
 2. Set TEST_CMD to the appropriate command
@@ -62,13 +62,13 @@ PATTERNS_FILE: .claude/hooks/damage-control/patterns.yaml (if in project) or ~/.
 
 6. Run each test:
 ```bash
-uv run [HOOKS_DIR]/test-damage-control.py bash Bash "[test_command]" --expect-blocked
+uv run [HOOKS_DIR]/test_damage_control.py bash Bash "[test_command]" --expect-blocked
 ```
 
 7. Also test that safe commands are allowed:
 ```bash
-uv run [HOOKS_DIR]/test-damage-control.py bash Bash "ls -la" --expect-allowed
-uv run [HOOKS_DIR]/test-damage-control.py bash Bash "git status" --expect-allowed
+uv run [HOOKS_DIR]/test_damage_control.py bash Bash "ls -la" --expect-allowed
+uv run [HOOKS_DIR]/test_damage_control.py bash Bash "git status" --expect-allowed
 ```
 
 ### Step 4: Test zeroAccessPaths
@@ -77,13 +77,13 @@ uv run [HOOKS_DIR]/test-damage-control.py bash Bash "git status" --expect-allowe
 
 ```bash
 # Test bash access (read)
-uv run [HOOKS_DIR]/test-damage-control.py bash Bash "cat [path]/test" --expect-blocked
+uv run [HOOKS_DIR]/test_damage_control.py bash Bash "cat [path]/test" --expect-blocked
 
 # Test edit access
-uv run [HOOKS_DIR]/test-damage-control.py edit Edit "[path]/test.txt" --expect-blocked
+uv run [HOOKS_DIR]/test_damage_control.py edit Edit "[path]/test.txt" --expect-blocked
 
 # Test write access
-uv run [HOOKS_DIR]/test-damage-control.py write Write "[path]/test.txt" --expect-blocked
+uv run [HOOKS_DIR]/test_damage_control.py write Write "[path]/test.txt" --expect-blocked
 ```
 
 ### Step 5: Test readOnlyPaths
@@ -92,16 +92,16 @@ uv run [HOOKS_DIR]/test-damage-control.py write Write "[path]/test.txt" --expect
 
 ```bash
 # Test bash read - should be ALLOWED
-uv run [HOOKS_DIR]/test-damage-control.py bash Bash "cat [path]" --expect-allowed
+uv run [HOOKS_DIR]/test_damage_control.py bash Bash "cat [path]" --expect-allowed
 
 # Test bash write - should be BLOCKED
-uv run [HOOKS_DIR]/test-damage-control.py bash Bash "echo test > [path]/test" --expect-blocked
+uv run [HOOKS_DIR]/test_damage_control.py bash Bash "echo test > [path]/test" --expect-blocked
 
 # Test edit - should be BLOCKED
-uv run [HOOKS_DIR]/test-damage-control.py edit Edit "[path]/test.txt" --expect-blocked
+uv run [HOOKS_DIR]/test_damage_control.py edit Edit "[path]/test.txt" --expect-blocked
 
 # Test write - should be BLOCKED
-uv run [HOOKS_DIR]/test-damage-control.py write Write "[path]/test.txt" --expect-blocked
+uv run [HOOKS_DIR]/test_damage_control.py write Write "[path]/test.txt" --expect-blocked
 ```
 
 ### Step 6: Test noDeletePaths
@@ -110,10 +110,10 @@ uv run [HOOKS_DIR]/test-damage-control.py write Write "[path]/test.txt" --expect
 
 ```bash
 # Test bash delete - should be BLOCKED
-uv run [HOOKS_DIR]/test-damage-control.py bash Bash "rm [path]/test.txt" --expect-blocked
+uv run [HOOKS_DIR]/test_damage_control.py bash Bash "rm [path]/test.txt" --expect-blocked
 
 # Test bash write - should be ALLOWED (noDeletePaths allows writes)
-uv run [HOOKS_DIR]/test-damage-control.py bash Bash "echo test > [path]/test.txt" --expect-allowed
+uv run [HOOKS_DIR]/test_damage_control.py bash Bash "echo test > [path]/test.txt" --expect-allowed
 ```
 
 ### Step 7: Test PermissionRequest Hook
@@ -128,43 +128,43 @@ The permission hook uses different output:
 
 ```bash
 # SQL DELETE with WHERE - should ASK for confirmation
-uv run [HOOKS_DIR]/test-damage-control.py permission Bash "DELETE FROM users WHERE id=1" --expect-ask
+uv run [HOOKS_DIR]/test_damage_control.py permission Bash "DELETE FROM users WHERE id=1" --expect-ask
 
 # SQL DELETE FROM - should ASK
-uv run [HOOKS_DIR]/test-damage-control.py permission Bash "sqlite3 test.db 'DELETE FROM users WHERE active=0'" --expect-ask
+uv run [HOOKS_DIR]/test_damage_control.py permission Bash "sqlite3 test.db 'DELETE FROM users WHERE active=0'" --expect-ask
 ```
 
 **MongoDB delete operations** - should force user confirmation:
 
 ```bash
 # MongoDB deleteOne - should ASK
-uv run [HOOKS_DIR]/test-damage-control.py permission Bash "db.users.deleteOne({id: 1})" --expect-ask
+uv run [HOOKS_DIR]/test_damage_control.py permission Bash "db.users.deleteOne({id: 1})" --expect-ask
 
 # MongoDB deleteMany - should ASK
-uv run [HOOKS_DIR]/test-damage-control.py permission Bash "db.users.deleteMany({active: false})" --expect-ask
+uv run [HOOKS_DIR]/test_damage_control.py permission Bash "db.users.deleteMany({active: false})" --expect-ask
 ```
 
 **Redis delete operations** - should force user confirmation:
 
 ```bash
 # Redis DEL - should ASK
-uv run [HOOKS_DIR]/test-damage-control.py permission Bash "redis-cli DEL mykey" --expect-ask
+uv run [HOOKS_DIR]/test_damage_control.py permission Bash "redis-cli DEL mykey" --expect-ask
 
 # Redis FLUSHDB - should ASK
-uv run [HOOKS_DIR]/test-damage-control.py permission Bash "redis-cli FLUSHDB" --expect-ask
+uv run [HOOKS_DIR]/test_damage_control.py permission Bash "redis-cli FLUSHDB" --expect-ask
 ```
 
 **Safe operations** - should auto-allow:
 
 ```bash
 # SELECT query - should ALLOW
-uv run [HOOKS_DIR]/test-damage-control.py permission Bash "SELECT * FROM users" --expect-allow
+uv run [HOOKS_DIR]/test_damage_control.py permission Bash "SELECT * FROM users" --expect-allow
 
 # Regular bash command - should ALLOW
-uv run [HOOKS_DIR]/test-damage-control.py permission Bash "ls -la" --expect-allow
+uv run [HOOKS_DIR]/test_damage_control.py permission Bash "ls -la" --expect-allow
 
 # Git command - should ALLOW
-uv run [HOOKS_DIR]/test-damage-control.py permission Bash "git status" --expect-allow
+uv run [HOOKS_DIR]/test_damage_control.py permission Bash "git status" --expect-allow
 ```
 
 ### Step 8: Compile Results

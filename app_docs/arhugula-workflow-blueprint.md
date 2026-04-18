@@ -170,11 +170,11 @@ just harness-review
 ```
 .claude/settings.json                                  ← Hook wiring
 .claude/hooks/pre_tool_use.py                          ← Catch-all: Read/Glob/Grep + MCP gates
-.claude/skills/damage-control/hooks/damage-control-python/
+.claude/hooks/damage-control/hooks/damage-control-python/
     bash_damage_control.py                             ← Bash command gate
     edit_damage_control.py                             ← Edit/MultilineEdit/NotebookEdit gate
     write_damage_control.py                            ← Write gate
-.claude/skills/damage-control/patterns.yaml            ← Rule config (blocklist + allowlist)
+.claude/hooks/damage-control/patterns.yaml            ← Rule config (blocklist + allowlist)
 .claude/hooks/_base.py                                 ← Shared Logger + emit_event + run_hook
 ```
 
@@ -261,7 +261,7 @@ emit_event(
 ### 2.6 Implementation Template — Adding a New Block Rule
 
 ```yaml
-# In .claude/skills/damage-control/patterns.yaml
+# In .claude/hooks/damage-control/patterns.yaml
 
 # Block a dangerous Bash pattern:
 dangerousPatterns:

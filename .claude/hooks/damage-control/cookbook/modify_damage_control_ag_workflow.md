@@ -9,7 +9,7 @@ Guide the user through modifying their Damage Control security configuration. Al
 
 ## Variables
 
-SKILL_DIR: .claude/skills/damage-control
+SKILL_DIR: .claude/hooks/damage-control
 GLOBAL_SETTINGS: ~/.claude/settings.json
 GLOBAL_PATTERNS: ~/.claude/hooks/damage-control/patterns.yaml
 PROJECT_SETTINGS: .claude/settings.json

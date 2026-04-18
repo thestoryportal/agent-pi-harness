@@ -39,7 +39,7 @@ require resolution before any production or multi-user deployment.
 
 ## Section 1: Hook & Security Layer
 
-*Coverage: `.claude/hooks/`, `.claude/settings.json`, `.claude/skills/damage-control/`*
+*Coverage: `.claude/hooks/`, `.claude/settings.json`, `.claude/hooks/damage-control/`*
 
 ### S-01 — MCP Homoglyph Bypass in Token-Sequence Check (P2)
 
@@ -713,7 +713,7 @@ the rules. This was flagged in the harness-review action items.
 | 10 | **P1** | `agents/team/builder.md` | Non-blocking lint hooks | Confirm exit 2 on failure; gate further work |
 | 11 | **P1** | `apps/voice/voice_to_claude_code.py` | Ambient prompt injection (Ex. 28) | Add confirmation step before execution |
 | 12 | **P1** | `apps/sandbox_mcp/server.py` | env_vars comma-split injection (Ex. 29) | Validate each pair before extending args |
-| 13 | **P1** | `.claude/skills/damage-control/` + patterns.yaml | patterns.yaml unprotected (Ex. SP2) | Add hash validation at session start |
+| 13 | **P1** | `.claude/hooks/damage-control/` + patterns.yaml | patterns.yaml unprotected (Ex. SP2) | Add hash validation at session start |
 | 14 | **P2** | `hooks/permission_request.py:30–31` | ALLOWED_BASH_PREFIXES out of sync | Sync with settings.json |
 | 15 | **P2** | `hooks/user_prompt_submit.py:78–109` | Relative subprocess path | Use absolute path from CLAUDE_PROJECT_DIR |
 | 16 | **P2** | `hooks/bash_damage_control.py:166–221` | Backtick escaping in command split | Track escape state in split loop |
