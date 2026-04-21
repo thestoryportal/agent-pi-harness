@@ -115,24 +115,30 @@ def main() -> None:
     # ============================================
     # Backend Setup (Python with uv)
     # ============================================
-    logger.log("\n>>> Setting up Python backend...")
-    run(["uv", "sync"], cwd=backend_dir)
-    logger.log("Backend dependencies installed with uv")
-    actions.append("Installed Python backend dependencies with uv")
+    if os.path.exists(backend_dir):
+        logger.log("\n>>> Setting up Python backend...")
+        run(["uv", "sync"], cwd=backend_dir)
+        logger.log("Backend dependencies installed with uv")
+        actions.append("Installed Python backend dependencies with uv")
+
+        # Initialize SQLite database with mock data
+        logger.log("\n>>> Initializing SQLite database...")
+        run(["uv", "run", "python", "init_db.py"], cwd=backend_dir)
+        logger.log("Database initialized at apps/backend/starter.db")
+        actions.append("Initialized SQLite database with mock tasks")
+    else:
+        logger.log("\n>>> No apps/backend found — skipping Python backend setup")
 
     # ============================================
     # Frontend Setup (Vite Vue-TS)
     # ============================================
-    logger.log("\n>>> Setting up Vue-TS frontend...")
-    run(["npm", "install"], cwd=frontend_dir)
-    logger.log("Frontend dependencies installed")
-    actions.append("Installed Vue-TS frontend dependencies")
-
-    # Initialize SQLite database with mock data
-    logger.log("\n>>> Initializing SQLite database...")
-    run(["uv", "run", "python", "init_db.py"], cwd=backend_dir)
-    logger.log("Database initialized at apps/backend/starter.db")
-    actions.append("Initialized SQLite database with mock tasks")
+    if os.path.exists(frontend_dir):
+        logger.log("\n>>> Setting up Vue-TS frontend...")
+        run(["npm", "install"], cwd=frontend_dir)
+        logger.log("Frontend dependencies installed")
+        actions.append("Installed Vue-TS frontend dependencies")
+    else:
+        logger.log("\n>>> No apps/frontend found — skipping Vue-TS frontend setup")
 
     # ============================================
     # Persist environment variables for Claude session

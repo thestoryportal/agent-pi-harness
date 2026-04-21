@@ -4,6 +4,7 @@
       "Bash(git add -A)",
       "Bash(git commit -m *)",
       "Bash(git commit)",
+      "Bash(git -C /Users/robertrhu/Projects/arhugula commit)",
       "mcp__plugin_context7_context7__resolve-library-id",
       "mcp__plugin_context7_context7__query-docs",
       "Skill",
@@ -18,7 +19,9 @@
       "mcp__pocket-pick__pocket_add_file",
       "mcp__pocket-pick__pocket_backup",
       "mcp__just-prompt__*",
-      "WebFetch"
+      "WebFetch",
+      "WebSearch",
+      "Bash(skills find *)"                                                                                                          
     ],
 
     "deny": [],

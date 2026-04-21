@@ -159,4 +159,7 @@ def main() -> None:
 
 
 if __name__ == "__main__":
+    if "--health-check" in sys.argv:
+        print("OK:subagent_start.py")
+        sys.exit(0)
     main()

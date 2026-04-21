@@ -130,4 +130,7 @@ def main():
         sys.exit(0)
 
 if __name__ == '__main__':
+    if "--health-check" in sys.argv:
+        print("OK:notification.py")
+        sys.exit(0)
     main()

@@ -189,4 +189,7 @@ def main():
 
 
 if __name__ == '__main__':
+    if "--health-check" in sys.argv:
+        print("OK:user_prompt_submit.py")
+        sys.exit(0)
     main()
