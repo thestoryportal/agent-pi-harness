@@ -24,13 +24,21 @@
       "Bash(skills find *)"                                                                                                          
     ],
 
-    "deny": [],
+    "deny": [
+      "Read(.env*)",
+      "Edit(.env*)",
+      "Bash(cat *.env*)",
+      "Bash(head *.env*)",
+      "Bash(tail *.env*)",
+      "Bash(less *.env*)",
+      "Bash(more *.env*)"
+    ],
 
     "defaultMode": "default",
       "additionalDirectories": [
-        "/Users/robertrhu/.claude/plans",
-        "/Users/robertrhu/.claude/roles",
-        "/Users/robertrhu/.claude/skills"
+        "/Users/robertrhu/.claude/plans",                                                                                                                         
+        "/Users/robertrhu/.claude/skills",
+        "/Users/robertrhu/Projects/agent-deployment-framework" 
       ]
   },
     
@@ -246,8 +254,8 @@
   "sandbox": {
     "filesystem": {
       "allowWrite": [
-        "/Users/robertrhu/.claude/roles",
-        "/Users/robertrhu/.claude/skills"
+        "/Users/robertrhu/.claude/skills",                                                                                                                        
+        "/Users/robertrhu/Projects/agent-deployment-framework"
       ]
     }
   },

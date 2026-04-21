@@ -1,11 +1,11 @@
 # ArhuGula Skill Catalog — Project Pointer
 #
-# The canonical library catalog lives at ~/.claude/skills/library/library.yaml
+# The canonical library catalog lives at ~/Projects/agent-deployment-framework/skills/library/library.yaml
 # (single global catalog following the-library pattern).
 #
 # This file is retained as a project-level reference pointing to the global catalog.
 # All CRUD operations (/library add, use, push, remove, sync) operate on the global file.
 #
-# To view or edit the catalog: ~/.claude/skills/library/library.yaml
+# To view or edit the catalog: ~/Projects/agent-deployment-framework/skills/library/library.yaml
 
-catalog: ~/.claude/skills/library/library.yaml
+catalog: ~/Projects/agent-deployment-framework/skills/library/library.yaml

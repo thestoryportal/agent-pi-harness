@@ -101,6 +101,9 @@ bashToolPatterns:
 
   - pattern: '\bdd\s+.*of=/dev/'
     reason: dd writing to device
+    
+  - pattern: '\bfind\b.*-delete\b'
+    reason: find -delete (bulk filesystem deletion, bypasses rm patterns)
 
   # ---------------------------------------------------------------------------
   # PROCESS DESTRUCTION
@@ -479,6 +482,11 @@ readOnlyPaths:
   - "*/.claude/settings.json"
   - "*/.claude/settings.local.json"
   - "*/damage-control/patterns.yaml"
+  - "/Users/robertrhu/Projects/agent-deployment-framework/skills/library/library.yaml"                                    
+  - "/Users/robertrhu/Projects/agent-deployment-framework/skills/**/*.md"                                                 
+  - "/Users/robertrhu/Projects/agent-deployment-framework/departments/**/*.md"
+  - "/Users/robertrhu/Projects/agent-deployment-framework/skills/**/*.yaml"
+  - "/Users/robertrhu/Projects/agent-deployment-framework/departments/**/*.yaml"
 
   # ---------------------------------------------------------------------------
   # SYSTEM DIRECTORIES

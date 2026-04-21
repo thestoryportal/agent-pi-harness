@@ -51,7 +51,7 @@ Orchestration is project-defined — Pi, n8n, OpenClaw, or other tools depending
 | Read a slash command | `.claude/commands/` |
 | Check subagent definitions | `.claude/agents/` |
 | Review settings/permissions | `.claude/settings.json` |
-| Check skill catalog | `~/.claude/skills/library/library.yaml` (global catalog) |
+| Check skill catalog | `~/Projects/agent-deployment-framework/skills/library/library.yaml` (global catalog) |
 | View environment config | `.env.example` |
 | Review audit history | `audits/exceptions.md` |
 
