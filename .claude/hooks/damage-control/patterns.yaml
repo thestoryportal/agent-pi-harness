@@ -481,12 +481,7 @@ readOnlyPaths:
   # ---------------------------------------------------------------------------
   - "*/.claude/settings.json"
   - "*/.claude/settings.local.json"
-  - "*/damage-control/patterns.yaml"
-  - "/Users/robertrhu/Projects/agent-deployment-framework/skills/library/library.yaml"                                    
-  - "/Users/robertrhu/Projects/agent-deployment-framework/skills/**/*.md"                                                 
-  - "/Users/robertrhu/Projects/agent-deployment-framework/departments/**/*.md"
-  - "/Users/robertrhu/Projects/agent-deployment-framework/skills/**/*.yaml"
-  - "/Users/robertrhu/Projects/agent-deployment-framework/departments/**/*.yaml"
+  - "*/damage-control/patterns.yaml"                                    
 
   # ---------------------------------------------------------------------------
   # SYSTEM DIRECTORIES
