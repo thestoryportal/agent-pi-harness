@@ -56,5 +56,8 @@ audits/.commit-msg*
 # IDE
 .vscode/
 
+# Nested repos
+graphify/
+
 # Audit session JSON outputs (generated, not source)
 audits/*.json
