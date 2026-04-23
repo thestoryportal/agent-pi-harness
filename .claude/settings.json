@@ -21,7 +21,8 @@
       "mcp__just-prompt__*",
       "WebFetch",
       "WebSearch",
-      "Bash(skills find *)"                                                                                                          
+      "Bash(skills find *)",
+      "AskUserQuestion"
     ],
 
     "deny": [
@@ -267,7 +268,7 @@
     "mode": "hold"
   },
     
-  "skipDangerousModePermissionPrompt": true,
+  "skipDangerousModePermissionPrompt": false,
   "voiceEnabled": false,
   "model": "sonnet"
 }
