@@ -45,19 +45,19 @@
     
   "hooks": {                                                                                                                                  
     "PreToolUse": [                                        
-      {
-        "matcher": "Bash",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "/Users/robertrhu/.claude/hooks/rtk-rewrite.sh"
-          },
-          {
-            "type": "command",
-            "command": "uv run \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/damage-control/hooks/damage-control-python/bash_damage_control.py"
-          }
-        ]
-      },
+      {                                                                                                                 
+          "matcher": "Bash",                                                                                              
+          "hooks": [
+            {"type": "command", "command": "/Users/robertrhu/.claude/hooks/rtk-rewrite.sh"}
+          ]                                                                                                               
+        },
+        {                                                                                                                 
+          "matcher": "Bash",                             
+          "hooks": [
+            {"type": "command", "command": "uv run \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/damage-control/hooks/damage-control-python/bash_damage_control.py"}               
+          ]
+        },
+            
       {
         "matcher": "Edit|MultilineEdit|NotebookEdit",
         "hooks": [
