@@ -69,25 +69,22 @@ bashToolPatterns:
   # ---------------------------------------------------------------------------
   # GIT OPERATIONS — BLOCKED (RTK prevents ask: true from pausing; converted to hard block)
   # ---------------------------------------------------------------------------
-  - pattern: '\bgit\s+push.*\bmain\b'
-    reason: Pushing directly to main branch.
-    
-  - pattern: '\bgit\s+push.*\bmaster\b'
-    reason: Pushing directly to master branch.
-  
-  - pattern: '\bgit\s+checkout\s+--\s*\.'
+  - pattern: '\bgit\s+push\b'
+    reason: All remote pushes blocked — use ! git push ... in terminal (covers push-to-main, push-to-master, --mirror, --prune).
+
+  - pattern: '\bgit\s+checkout\b.*--\s*\.'
     reason: Discards all uncommitted changes
-    
-  - pattern: '\bgit\s+restore\s+\.'
+
+  - pattern: '\bgit\s+restore\b.*\s\.(\s|$)'
     reason: Discards all uncommitted changes
-    
-  - pattern: '\bgit\s+stash\s+drop\b'                                                                                  
+
+  - pattern: '\bgit\s+stash\s+drop\b'
     reason: Permanently deletes a stash
-    
+
   - pattern: '\bgit\s+branch\s+(-[^\s]*)*-D'
     reason: Force deletes branch (even if unmerged)
-    
-  - pattern: '\bgit\s+push\s+\S+\s+--delete\b'                                                                         
+
+  - pattern: '\bgit\s+push\b.*--delete\b'
     reason: Deletes remote branch
 
   - pattern: '\bgit\s+push\s+\S+\s+:\S+'
