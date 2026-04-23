@@ -32,6 +32,7 @@ Projects built with ArhuGula live in their own repos. This harness is the shared
 | **Browser automation** | `hop`, `ui-review`, `automate-amazon`, `summarize-blog` |
 | **Drop zones** | `dropzone` |
 | **Prompt testing** | `eval-builder`, `eval-validator`, `eval-scout`, `eval-all`, `promptfoo-view` |
+| **Eval pipeline (ADF)** | `/eval`, `/eval:view:*`, `/eval:debug:*`, `/eval:create:*`, `/eval:explore:*` (ArhuGula session); `/eval:run:*`, `/eval:manage:*` require ADF session |
 | **Pi integration** | `pi`, `pi-drive`, `pi-listen`, `pi-full`, `ext-*` (16 extensions) |
 | **Steer (Swift GUI)** | `steer-build`, `steer-see`, `steer-apps`, `steer-ocr` |
 | **E2B sandboxes** | `sbx`, `sbx-run`, `sbx-mcp` |
