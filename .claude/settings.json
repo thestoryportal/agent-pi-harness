@@ -222,7 +222,7 @@
   },
   "statusLine": {
     "type": "command",
-    "command": "sh -c 'exec node \"${CLAUDE_PROJECT_DIR:-.}/.claude/helpers/statusline.cjs\"'"
+    "command": "sh -c 'PATH=\"$HOME/.volta/bin:$PATH\" exec node \"${CLAUDE_PROJECT_DIR:-.}/.claude/helpers/statusline.cjs\"'"
   },
   "enabledPlugins": {
     "context7@claude-plugins-official": true,
