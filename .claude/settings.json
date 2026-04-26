@@ -24,7 +24,6 @@
       "Bash(skills find *)",
       "AskUserQuestion"
     ],
-
     "deny": [
       "Read(.env*)",
       "Edit(.env*)",
@@ -34,30 +33,33 @@
       "Bash(less *.env*)",
       "Bash(more *.env*)"
     ],
-
     "defaultMode": "default",
-      "additionalDirectories": [
-        "/Users/robertrhu/.claude/plans",                                                                                                                         
-        "/Users/robertrhu/.claude/skills",
-        "/Users/robertrhu/Projects/agent-deployment-framework" 
-      ]
+    "additionalDirectories": [
+      "/Users/robertrhu/.claude/plans",
+      "/Users/robertrhu/.claude/skills",
+      "/Users/robertrhu/Projects/agent-deployment-framework"
+    ]
   },
-    
-  "hooks": {                                                                                                                                  
-    "PreToolUse": [                                        
-      {                                                                                                                 
-          "matcher": "Bash",                                                                                              
-          "hooks": [
-            {"type": "command", "command": "/Users/robertrhu/.claude/hooks/rtk-rewrite.sh"}
-          ]                                                                                                               
-        },
-        {                                                                                                                 
-          "matcher": "Bash",                             
-          "hooks": [
-            {"type": "command", "command": "uv run \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/damage-control/hooks/damage-control-python/bash_damage_control.py"}               
-          ]
-        },
-            
+  "hooks": {
+    "PreToolUse": [
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "/Users/robertrhu/.claude/hooks/rtk-rewrite.sh"
+          }
+        ]
+      },
+      {
+        "matcher": "Bash",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "uv run \"$CLAUDE_PROJECT_DIR\"/.claude/hooks/damage-control/hooks/damage-control-python/bash_damage_control.py"
+          }
+        ]
+      },
       {
         "matcher": "Edit|MultilineEdit|NotebookEdit",
         "hooks": [
@@ -218,17 +220,14 @@
       }
     ]
   },
-  
   "statusLine": {
     "type": "command",
-    "command": "bash /Users/robertrhu/.claude/statusline-command.sh"
+    "command": "sh -c 'exec node \"${CLAUDE_PROJECT_DIR:-.}/.claude/helpers/statusline.cjs\"'"
   },
-    
   "enabledPlugins": {
     "context7@claude-plugins-official": true,
     "learn@agentskill-sh": true
   },
-    
   "extraKnownMarketplaces": {
     "compound-engineering-plugin": {
       "source": {
@@ -236,14 +235,12 @@
         "repo": "EveryInc/compound-engineering-plugin"
       }
     },
-      
     "karpathy-skills": {
       "source": {
         "source": "github",
         "repo": "forrestchang/andrej-karpathy-skills"
       }
     },
-      
     "agentskill-sh": {
       "source": {
         "source": "url",
@@ -251,23 +248,20 @@
       }
     }
   },
-    
   "sandbox": {
     "filesystem": {
       "allowWrite": [
-        "/Users/robertrhu/.claude/skills",                                                                                                                        
+        "/Users/robertrhu/.claude/skills",
         "/Users/robertrhu/Projects/agent-deployment-framework"
       ]
     }
   },
-    
   "effortLevel": "high",
   "advisorModel": "opus",
   "voice": {
     "enabled": false,
     "mode": "hold"
   },
-    
   "skipDangerousModePermissionPrompt": false,
   "voiceEnabled": false,
   "model": "sonnet"
