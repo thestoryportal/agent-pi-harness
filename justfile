@@ -111,6 +111,19 @@ sfa-metaprompt PURPOSE INSTRUCTIONS:
 sfa-context PROMPT DIR="." EXT="py":
     uv run agents/sfa/sfa_codebase_context_agent_v3.py --prompt "{{PROMPT}}" --directory "{{DIR}}" --extensions "{{EXT}}"
 
+# Codebase context discovery agent — ripgrep backend (faster on large codebases)
+sfa-context-rg PROMPT DIR="." EXT="py":
+    uv run agents/sfa/sfa_codebase_context_agent_w_ripgrep_v3.py --prompt "{{PROMPT}}" --directory "{{DIR}}" --extensions "{{EXT}}"
+
+# Pure file editor (Anthropic Sonnet) — no bash escape; --efficiency flag enables token-efficient mode (~14% reduction)
+sfa-edit PROMPT *flags="":
+    uv run agents/sfa/sfa_file_editor_sonny37_v1.py --prompt "{{PROMPT}}" {{flags}}
+
+# Web scraper (OpenAI + Firecrawl) — structured Pydantic output to a markdown file
+# Requires FIRECRAWL_API_KEY + OPENAI_API_KEY in env.
+sfa-scrape URL PROMPT OUTPUT="scraped.md":
+    uv run agents/sfa/sfa_scrapper_agent_openai_v2.py -u "{{URL}}" -p "{{PROMPT}}" -o "{{OUTPUT}}"
+
 # === Layer 4: Just — infrastructure app recipes ===
 # SP8 recipes match upstream mac-mini-agent justfile interface (byte-identical
 # command patterns). Uses per-app CWD + bare `python main.py` invocations.
@@ -401,3 +414,23 @@ voice:
 #
 # The canonical surface is documented in
 # .claude/skills/agent-sandboxes/SKILL.md (byte-identical upstream).
+
+# === skill-trigger-eval (STE) ===
+# ArhuGula-side wrapper for the ADF skill-trigger-eval pipeline. Runs from
+# ArhuGula because dotenv-load is enabled here, so ANTHROPIC_API_KEY is
+# inherited by the promptfoo subprocess. The actual generator and suites
+# live under ADF (skills/skill-trigger-eval/, eval/promptfoo-suites-trigger/).
+
+_adf_root := "/Users/robertrhu/Projects/agent-deployment-framework"
+
+# Generate suite + run promptfoo eval for a skill's trigger accuracy.
+# Variants file (optional) is auto-detected at skills/<slug>/evals/trigger-variants.json.
+trigger-eval slug *args:
+    @cd {{_adf_root}} && uv run python skills/skill-trigger-eval/scripts/trigger_promptfoo_generator.py --slug {{slug}} {{args}}
+    @ts=$(date -u +%Y%m%dT%H%M%SZ); \
+     out={{_adf_root}}/eval/results-trigger/{{slug}}-$ts.json; \
+     mkdir -p $(dirname "$out"); \
+     cd {{_adf_root}} && npx -y promptfoo@latest eval \
+       -c eval/promptfoo-suites-trigger/{{slug}}-trigger.yaml \
+       -o "$out" --no-progress-bar 2>&1; \
+     echo "RESULTS: $out"

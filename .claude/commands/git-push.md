@@ -1,16 +1,5 @@
 ---
-description: Push ArhuGula main to origin.
-allowed-tools: Bash
+description: Execute the prepared ArhuGula push script (push only — assumes commits already made). Agent must have prepped /tmp/arhugula-push.sh first.
 ---
 
-# Git Push — ArhuGula
-
-Check the current branch with `git branch --show-current` and confirm there are committed changes ahead of origin with `git status`.
-
-Then output this command for the user to run:
-
-```
-! git push origin main
-```
-
-If the branch is not main, adjust the command accordingly and note it.
+!`bash /tmp/arhugula-push.sh`

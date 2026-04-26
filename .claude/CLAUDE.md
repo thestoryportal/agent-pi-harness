@@ -98,3 +98,36 @@ Key routing rules:
 - Architecture review → invoke plan-eng-review
 - Save progress, checkpoint, resume → invoke checkpoint
 - Code quality, health check → invoke health
+- After creating an auto-triggering skill via `/skill-creator`, optionally run `/skill-trigger-eval <slug>` to validate description trigger accuracy against the realistic skill-noise environment. Skip for ADF role-skills (loaded via role context, not auto-triggered).
+
+## Git workflow — two-stage pattern
+
+The git slash commands are **trigger-only**: each one is a tiny `!` shell directive that runs a wrapper script the agent must have prepped first. Eight commands live in `arhugula/.claude/commands/`, four for each repo:
+
+- ArhuGula: `/git-add`, `/git-commit`, `/git-push`, `/git-ship`
+- ADF: `/adf-add`, `/adf-commit`, `/adf-push`, `/adf-ship`
+
+**Workflow:**
+
+1. User signals intent in conversation: "stage these", "commit this", "ship X", "push", etc.
+2. **Agent preps the wrapper script** before the user invokes the trigger:
+   - Inspect `git status` (use `git -C <repo>` for cross-repo)
+   - Check for sensitive files (.env, credentials, secrets, *.pem, *.crt) and refuse to include them
+   - Generate a conventional commit message from the diff (subject under 72 chars; type(scope): description) and write it to `/tmp/<repo>-commit.txt` for commit/ship operations
+   - Write the wrapper script to `/tmp/<repo>-<op>.sh` with `set -euo pipefail`, `cd <repo path>`, and the operation-specific git commands using SPECIFIC FILE NAMES (never `-A` or `.`)
+   - Confirm the current branch via `git -C <repo> branch --show-current` for push/ship; adjust the script if not `main`
+3. Agent reports: "Ready — run `/<repo>-<op>` to execute."
+4. User invokes the trigger slash command. Its `!` directive runs the prepared script in the user's shell.
+
+**Wrapper script paths the agent must use exactly:**
+
+| Operation | ArhuGula path | ADF path |
+|---|---|---|
+| add (stage only) | `/tmp/arhugula-add.sh` | `/tmp/adf-add.sh` |
+| commit (stage + commit) | `/tmp/arhugula-commit.sh` (+ `/tmp/arhugula-commit.txt`) | `/tmp/adf-commit.sh` (+ `/tmp/adf-commit.txt`) |
+| push (push only) | `/tmp/arhugula-push.sh` | `/tmp/adf-push.sh` |
+| ship (stage + commit + push) | `/tmp/arhugula-ship.sh` (+ `/tmp/arhugula-commit.txt`) | `/tmp/adf-ship.sh` (+ `/tmp/adf-commit.txt`) |
+
+**Why this pattern (Anthropic-aligned):**
+
+Per Anthropic's Claude Code guidance (engineering/claude-code.md): bash + text_editor agents should be paired with "a constrained working directory and a command allowlist if the agent operates on untrusted code." The two-stage pattern keeps execution authority on the user's side (`!` shell directive runs in user's authorized shell, bypassing the agent's Bash allowlist), while the agent's prep work flows through the existing damage-control hooks (Read/Edit/Write all gated). No agent-side bash allowlist expansion needed — the safety boundary stays at the manual-approval model Anthropic recommends, just optimized for one-paste ergonomics.
